@@ -2,9 +2,9 @@
 <resources>
 
     <string name="app_name">Superbaby</string>
-    <string name="title_section1">Section A</string>
-    <string name="title_section2">Section B</string>
-    <string name="title_section3">Section C</string>
+    <string name="title_section1">Section AA</string>
+    <string name="title_section2">Section BB</string>
+    <string name="title_section3">Section CC</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
