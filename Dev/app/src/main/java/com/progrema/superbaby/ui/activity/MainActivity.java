@@ -1,21 +1,19 @@
-package com.progrema.superbaby.ui;
+package com.progrema.superbaby.ui.activity;
 
-import android.app.Activity;
-;
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.TextView;
 import com.progrema.superbaby.R;
+import com.progrema.superbaby.ui.fragment.*;
 
-public class HomeActivity extends Activity
+;
+
+public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
@@ -28,10 +26,21 @@ public class HomeActivity extends Activity
      */
     private CharSequence mTitle;
 
+    /**
+     * Used to locate the fragment position
+     */
+    private static final int POSITION_HOME_FRAGMENT = 0;
+    private static final int POSITION_MILK_FRAGMENT = 1;
+    private static final int POSITION_FOOD_FRAGMENT = 2;
+    private static final int POSITION_DIAPER_FRAGMENT = 3;
+    private static final int POSITION_SLEEP_FRAGMENT = 4;
+    private static final int POSITION_PUMPING_FRAGMENT = 5;
+    private static final int POSITION_VACCINE_FRAGMENT = 6;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_main);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -45,25 +54,69 @@ public class HomeActivity extends Activity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
+
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
+
+        // fragment module
+        Fragment module = null;
+
+        switch(position){
+            case POSITION_HOME_FRAGMENT:
+                module = HomeFragment.getInstance(this);
+                break;
+            case POSITION_MILK_FRAGMENT:
+                module = MilkFragment.getInstance(this);
+                break;
+            case POSITION_FOOD_FRAGMENT:
+                module = FoodFragment.getInstance(this);
+                break;
+            case POSITION_DIAPER_FRAGMENT:
+                module = DiaperFragment.getInstance(this);
+                break;
+            case POSITION_SLEEP_FRAGMENT:
+                module = SleepFragment.getInstance(this);
+                break;
+            case POSITION_PUMPING_FRAGMENT:
+                module = PumpingFragment.getInstance(this);
+                break;
+            case POSITION_VACCINE_FRAGMENT:
+                module = VaccineFragment.getInstance(this);
+                break;
+        }
+
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .replace(R.id.container, module)
                 .commit();
+
     }
 
     public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_section1);
+
+        switch(number){
+            case POSITION_HOME_FRAGMENT:
+                mTitle = getString(R.string.title_home_fragment);
                 break;
-            case 2:
-                mTitle = getString(R.string.title_section2);
+            case POSITION_MILK_FRAGMENT:
+                mTitle = getString(R.string.title_milk_fragment);
                 break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
+            case POSITION_FOOD_FRAGMENT:
+                mTitle = getString(R.string.title_food_fragment);
+                break;
+            case POSITION_DIAPER_FRAGMENT:
+                mTitle = getString(R.string.title_diaper_fragment);
+                break;
+            case POSITION_SLEEP_FRAGMENT:
+                mTitle = getString(R.string.title_sleep_fragment);
+                break;
+            case POSITION_PUMPING_FRAGMENT:
+                mTitle = getString(R.string.title_pumping_fragment);
+                break;
+            case POSITION_VACCINE_FRAGMENT:
+                mTitle = getString(R.string.title_vaccine_fragment);
                 break;
         }
+
     }
 
     public void restoreActionBar() {
@@ -97,48 +150,6 @@ public class HomeActivity extends Activity
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((HomeActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
-        }
     }
 
 }

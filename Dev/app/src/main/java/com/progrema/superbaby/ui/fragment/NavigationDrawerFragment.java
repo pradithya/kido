@@ -1,4 +1,4 @@
-package com.progrema.superbaby.ui;
+package com.progrema.superbaby.ui.fragment;
 
 ;
 import android.app.Activity;
@@ -103,9 +103,13 @@ public class NavigationDrawerFragment extends Fragment {
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
                 new String[]{
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
+                        getString(R.string.title_home_fragment),
+                        getString(R.string.title_milk_fragment),
+                        getString(R.string.title_food_fragment),
+                        getString(R.string.title_diaper_fragment),
+                        getString(R.string.title_sleep_fragment),
+                        getString(R.string.title_pumping_fragment),
+                        getString(R.string.title_vaccine_fragment)
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
