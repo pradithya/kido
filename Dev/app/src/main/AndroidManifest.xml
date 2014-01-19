@@ -16,6 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider android:authorities="com.progrema.superbaby"
+                  android:name="com.progrema.superbaby.provider.BabyLogProvider"/>
     </application>
 
 </manifest>

@@ -78,6 +78,8 @@ public class BabyLogContract {
         String NAME = "name";
     }
 
+    public static final String CONTENT_AUTHORITY = "com.progrema.superbaby";
+
     public static class User implements UserColumns, BaseColumns{}
 
     public static class UserBabyMap implements UserBabyMapColumns, BaseColumns{}

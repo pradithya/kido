@@ -120,4 +120,9 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db, int i, int i2) {
 
     }
+
+    public static void deleteDataBase(Context context){
+        context.deleteDatabase(DATABASE_NAME);
+    }
+
 }
