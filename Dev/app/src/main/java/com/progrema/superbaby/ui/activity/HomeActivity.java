@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -13,7 +14,7 @@ import com.progrema.superbaby.ui.fragment.*;
 
 ;
 
-public class MainActivity extends Activity
+public class HomeActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
@@ -37,10 +38,15 @@ public class MainActivity extends Activity
     private static final int POSITION_PUMPING_FRAGMENT = 5;
     private static final int POSITION_VACCINE_FRAGMENT = 6;
 
+    /**
+     * Used for Intent Extra message
+     */
+    public static final String INTENT_SELECT_FRAGMENT = "select_fragment";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -63,31 +69,29 @@ public class MainActivity extends Activity
 
         switch(position){
             case POSITION_HOME_FRAGMENT:
-                module = HomeFragment.getInstance(this);
+                module = TimelineLogFragment.getInstance(this);
                 break;
             case POSITION_MILK_FRAGMENT:
-                module = MilkFragment.getInstance(this);
+                module = MilkLogFragment.getInstance(this);
                 break;
             case POSITION_FOOD_FRAGMENT:
-                module = FoodFragment.getInstance(this);
+                module = FoodLogFragment.getInstance(this);
                 break;
             case POSITION_DIAPER_FRAGMENT:
-                module = DiaperFragment.getInstance(this);
+                module = DiaperLogFragment.getInstance(this);
                 break;
             case POSITION_SLEEP_FRAGMENT:
-                module = SleepFragment.getInstance(this);
+                module = SleepLogFragment.getInstance(this);
                 break;
             case POSITION_PUMPING_FRAGMENT:
-                module = PumpingFragment.getInstance(this);
+                module = PumpingLogFragment.getInstance(this);
                 break;
             case POSITION_VACCINE_FRAGMENT:
-                module = VaccineFragment.getInstance(this);
+                module = VaccineLogFragment.getInstance(this);
                 break;
         }
 
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, module)
-                .commit();
+        fragmentManager.beginTransaction().replace(R.id.home_activity_container, module).commit();
 
     }
 
@@ -95,7 +99,7 @@ public class MainActivity extends Activity
 
         switch(number){
             case POSITION_HOME_FRAGMENT:
-                mTitle = getString(R.string.title_home_fragment);
+                mTitle = getString(R.string.title_timeline_fragment);
                 break;
             case POSITION_MILK_FRAGMENT:
                 mTitle = getString(R.string.title_milk_fragment);
@@ -142,13 +146,25 @@ public class MainActivity extends Activity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+
+        switch (item.getItemId()){
+            case R.id.action_example:
+                return true;
+
+            case R.id.action_settings:
+                return true;
+
+            case R.id.action_new_baby:
+                Intent intent = new Intent(this, InputActivity.class);
+                intent.putExtra(HomeActivity.INTENT_SELECT_FRAGMENT, BabyInputFragment.INTENT);
+                startActivity(intent);
+                return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

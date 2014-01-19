@@ -11,25 +11,25 @@ import com.progrema.superbaby.R;
 /**
  * Created by iqbalpakeh on 18/1/14.
  */
-public class VaccineFragment extends Fragment{
+public class MilkLogFragment extends Fragment{
 
-    private static VaccineFragment singletonVaccineFragment = null;
+    private static MilkLogFragment singletonMilkLogFragment = null;
 
-    public VaccineFragment(Context context){
+    public MilkLogFragment(Context context){
 
     }
 
-    public static synchronized VaccineFragment getInstance(Context context){
-        if (singletonVaccineFragment == null) {
-            singletonVaccineFragment = new VaccineFragment(context.getApplicationContext());
+    public static synchronized MilkLogFragment getInstance(Context context){
+        if (singletonMilkLogFragment == null) {
+            singletonMilkLogFragment = new MilkLogFragment(context.getApplicationContext());
         }
-        return singletonVaccineFragment;
+        return singletonMilkLogFragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_vaccine, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_milk_log, container, false);
         return rootView;
     }
 

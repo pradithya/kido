@@ -103,7 +103,7 @@ public class NavigationDrawerFragment extends Fragment {
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
                 new String[]{
-                        getString(R.string.title_home_fragment),
+                        getString(R.string.title_timeline_fragment),
                         getString(R.string.title_milk_fragment),
                         getString(R.string.title_food_fragment),
                         getString(R.string.title_diaper_fragment),

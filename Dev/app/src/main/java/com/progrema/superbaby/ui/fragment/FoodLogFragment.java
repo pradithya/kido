@@ -11,25 +11,25 @@ import com.progrema.superbaby.R;
 /**
  * Created by iqbalpakeh on 18/1/14.
  */
-public class FoodFragment extends Fragment {
+public class FoodLogFragment extends Fragment {
 
-    private static FoodFragment singletonFoodFragment = null;
+    private static FoodLogFragment singletonFoodLogFragment = null;
 
-    public FoodFragment(Context context){
+    public FoodLogFragment(Context context){
 
     }
 
-    public static synchronized FoodFragment getInstance(Context context){
-        if (singletonFoodFragment == null) {
-            singletonFoodFragment = new FoodFragment(context.getApplicationContext());
+    public static synchronized FoodLogFragment getInstance(Context context){
+        if (singletonFoodLogFragment == null) {
+            singletonFoodLogFragment = new FoodLogFragment(context.getApplicationContext());
         }
-        return singletonFoodFragment;
+        return singletonFoodLogFragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_food, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_food_log, container, false);
         return rootView;
     }
 

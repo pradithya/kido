@@ -1,5 +1,6 @@
 package com.progrema.superbaby.provider;
 
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
@@ -80,24 +81,57 @@ public class BabyLogContract {
 
     public static final String CONTENT_AUTHORITY = "com.progrema.superbaby";
 
-    public static class User implements UserColumns, BaseColumns{}
+    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
-    public static class UserBabyMap implements UserBabyMapColumns, BaseColumns{}
+    private static final String PATH_USER = "user";
+    private static final String PATH_USER_BABY_MAP = "user_baby_map";
+    private static final String PATH_BABY = "baby";
+    private static final String PATH_MILK = "milk";
+    private static final String PATH_SLEEP = "sleep";
+    private static final String PATH_DIAPER ="diaper";
+    private static final String PATH_VACCINE = "vaccine";
+    private static final String PATH_FOOD = "food";
+    private static final String PATH_FOOD_DETAILS = "food_details";
+    private static final String PATH_FOOD_TYPE ="food_type";
 
-    public static class Baby implements BabyColumns, BaseColumns{}
+    public static class User implements UserColumns, BaseColumns{
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_USER).build();
+    }
 
-    public static class Milk implements MilkColumns, BaseColumns{}
+    public static class UserBabyMap implements UserBabyMapColumns, BaseColumns{
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_USER_BABY_MAP).build();
+    }
 
-    public static class Sleep implements SleepColumns, BaseColumns{}
+    public static class Baby implements BabyColumns, BaseColumns{
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_BABY).build();
+    }
 
-    public static class Diaper implements DiaperColumns, BaseColumns{}
+    public static class Milk implements MilkColumns, BaseColumns{
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_MILK).build();
+    }
 
-    public static class Vaccine implements VaccineColumns, BaseColumns{}
+    public static class Sleep implements SleepColumns, BaseColumns{
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_SLEEP).build();
+    }
 
-    public static class Food implements FoodColumns, BaseColumns{}
+    public static class Diaper implements DiaperColumns, BaseColumns{
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_DIAPER).build();
+    }
 
-    public static class FoodDetails implements FoodDetailsColumns, BaseColumns{}
+    public static class Vaccine implements VaccineColumns, BaseColumns{
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_VACCINE).build();
+    }
 
-    public static class FoodType implements FoodTypeColumns, BaseColumns{}
+    public static class Food implements FoodColumns, BaseColumns{
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_FOOD).build();
+    }
+
+    public static class FoodDetails implements FoodDetailsColumns, BaseColumns{
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_FOOD_DETAILS).build();
+    }
+
+    public static class FoodType implements FoodTypeColumns, BaseColumns{
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_FOOD_TYPE).build();
+    }
 
 }

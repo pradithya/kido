@@ -2,16 +2,20 @@
 <resources>
 
     <string name="app_name">Superbaby</string>
-    <string name="title_home_fragment">Home Fragment</string>
-    <string name="title_milk_fragment">Milk Fragment</string>
-    <string name="title_food_fragment">Food Fragment</string>
-    <string name="title_diaper_fragment">Diaper Fragment</string>
-    <string name="title_sleep_fragment">Sleep Fragment</string>
-    <string name="title_pumping_fragment">Pumping Fragment</string>
-    <string name="title_vaccine_fragment">Vaccine Fragment</string>
+
+    <string name="title_timeline_fragment">Timeline</string>
+    <string name="title_milk_fragment">Milk</string>
+    <string name="title_food_fragment">Food</string>
+    <string name="title_diaper_fragment">Diaper</string>
+    <string name="title_sleep_fragment">Sleep</string>
+    <string name="title_pumping_fragment">Pumping</string>
+    <string name="title_vaccine_fragment">Vaccine</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
+    <string name="action_new_baby">New Baby</string>
 
 </resources>
