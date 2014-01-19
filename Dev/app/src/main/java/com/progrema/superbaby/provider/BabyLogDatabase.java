@@ -46,12 +46,15 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
         db.execSQL("CREATE TABLE " + Tables.USER + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + UserColumns.USER_ID + " TEXT NOT NULL,"
-                + UserColumns.PASSWORD + " TEXT NOT NULL" + " )");
+                + UserColumns.PASSWORD + " TEXT NOT NULL,"
+                + " UNIQUE (" + UserColumns.USER_ID + ") ON CONFLICT FAIL)");
 
         db.execSQL("CREATE TABLE " + Tables.USER_BABY_MAP + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + UserBabyMapColumns.USER_ID + " TEXT NOT NULL,"
-                + UserBabyMapColumns.BABY_ID + " TEXT NOT NULL" + " )");
+                + UserBabyMapColumns.BABY_ID + " TEXT NOT NULL,"
+                + " UNIQUE (" + UserBabyMapColumns.USER_ID + ") ON CONFLICT FAIL,"
+                + " UNIQUE (" + UserBabyMapColumns.BABY_ID + ") ON CONFLICT FAIL)");
 
         db.execSQL("CREATE TABLE " + Tables.BABY + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -61,7 +64,8 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
                 + BabyColumns.SEX + " TEXT NOT NULL,"
                 + BabyColumns.HEIGHT + " TEXT NOT NULL,"
                 + BabyColumns.WEIGHT + " TEXT NOT NULL,"
-                + BabyColumns.PHOTO + " TExt NOT NULL" + " )");
+                + BabyColumns.PHOTO + " TEXT NOT NULL,"
+                + " UNIQUE (" + BabyColumns.BABY_ID + ") ON CONFLICT FAIL)");
 
         db.execSQL("CREATE TABLE " + Tables.MILK + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -70,21 +74,27 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
                 + MilkColumns.TIMESTAMP + " TEXT NOT NULL,"
                 + MilkColumns.DURATION + " TEXT NOT NULL,"
                 + MilkColumns.SIDES + " TEXT NOT NULL,"
-                + MilkColumns.VOLUME + " TEXT NOT NULL" + " )");
+                + MilkColumns.VOLUME + " TEXT NOT NULL,"
+                + " UNIQUE (" + MilkColumns.ACTIVITY_ID + ") ON CONFLICT FAIL,"
+                + " UNIQUE (" + MilkColumns.BABY_ID + ") ON CONFLICT FAIL)");
 
         db.execSQL("CREATE TABLE " + Tables.SLEEP + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + SleepColumns.ACTIVITY_ID + " TEXT NOT NULL,"
                 + SleepColumns.BABY_ID + " TEXT NOT NULL,"
                 + SleepColumns.TIMESTAMP + " TEXT NOT NULL,"
-                + SleepColumns.DURATION + " TEXT NOT NULL" + " )");
+                + SleepColumns.DURATION + " TEXT NOT NULL,"
+                + " UNIQUE (" + SleepColumns.ACTIVITY_ID + ") ON CONFLICT FAIL,"
+                + " UNIQUE (" + SleepColumns.BABY_ID + ") ON CONFLICT FAIL)");
 
         db.execSQL("CREATE TABLE " + Tables.DIAPER + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + DiaperColumns.ACTIVITY_ID + " TEXT NOT NULL,"
                 + DiaperColumns.BABY_ID + " TEXT NOT NULL,"
                 + DiaperColumns.TIMESTAMP + " TEXT NOT NULL,"
-                + DiaperColumns.TYPE + " TEXT NOT NULL" + " )");
+                + DiaperColumns.TYPE + " TEXT NOT NULL,"
+                + " UNIQUE (" + DiaperColumns.ACTIVITY_ID + ") ON CONFLICT FAIL,"
+                + " UNIQUE (" + DiaperColumns.BABY_ID + ") ON CONFLICT FAIL)");
 
         db.execSQL("CREATE TABLE " + Tables.VACCINE + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -94,25 +104,32 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
                 + VaccineColumns.LOCATION + " TEXT NOT NULL,"
                 + VaccineColumns.NOTES + " TEXT NOT NULL,"
                 + VaccineColumns.TIMESTAMP + " TEXT NOT NULL,"
-                + VaccineColumns.REMINDER_TIME + " TEXT NOT NULL" + " )");
+                + VaccineColumns.REMINDER_TIME + " TEXT NOT NULL,"
+                + " UNIQUE (" + VaccineColumns.ACTIVITY_ID + ") ON CONFLICT FAIL,"
+                + " UNIQUE (" + VaccineColumns.BABY_ID + ") ON CONFLICT FAIL)");
 
         db.execSQL("CREATE TABLE " + Tables.FOOD + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + FoodColumns.ACTIVITY_ID + " TEXT NOT NULL,"
                 + FoodColumns.BABY_ID + " TEXT NOT NULL,"
                 + FoodColumns.TIMESTAMP + " TEXT NOT NULL,"
-                + FoodColumns.DURATION + " TEXT NOT NULL" + " )");
+                + FoodColumns.DURATION + " TEXT NOT NULL,"
+                + " UNIQUE (" + FoodColumns.ACTIVITY_ID + ") ON CONFLICT FAIL,"
+                + " UNIQUE (" + FoodColumns.BABY_ID + ") ON CONFLICT FAIL)");
 
         db.execSQL("CREATE TABLE " + Tables.FOOD_DETAILS + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + FoodDetailsColumns.ACTIVITY_ID + " TEXT NOT NULL,"
                 + FoodDetailsColumns.FOOD_TYPE + " TEXT NOT NULL,"
-                + FoodDetailsColumns.QUANTITY + " TEXT NOT NULL" + " )");
+                + FoodDetailsColumns.QUANTITY + " TEXT NOT NULL,"
+                + " UNIQUE (" + FoodDetailsColumns.ACTIVITY_ID + ") ON CONFLICT FAIL)");
 
         db.execSQL("CREATE TABLE " + Tables.FOOD_TYPE + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + FoodTypeColumns.FOOD_TYPE + " TEXT NOT NULL,"
                 + FoodTypeColumns.NAME + " TEXT NOT NULL" + " )");
+
+        //TODO: to implement foreign key constraint of each table by using TRIGGER!!
 
     }
 
