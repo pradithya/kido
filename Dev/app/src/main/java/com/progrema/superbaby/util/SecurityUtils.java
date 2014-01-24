@@ -8,6 +8,7 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by aria on 23/1/14.
+ * @author aria
  */
 public class SecurityUtils {
 

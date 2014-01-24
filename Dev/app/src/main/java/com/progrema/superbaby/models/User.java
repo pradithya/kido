@@ -6,14 +6,16 @@ import com.progrema.superbaby.util.SecurityUtils;
 
 /**
  * Created by iqbalpakeh on 21/1/14.
+ * @author aria
+ * @author iqbalpakeh
  */
 public class User extends BaseModel {
 
     /**
-     * User private datas
+     * User private data
      */
     private String userId;
-    private String password; //TODO: implement password encryption
+    private String password;
     private String securityQuestion;
     private String securityAnswer;
 
