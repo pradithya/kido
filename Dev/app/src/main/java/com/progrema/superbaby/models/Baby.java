@@ -8,7 +8,7 @@ import android.os.Parcel;
 public class Baby extends BaseModel {
 
     /**
-     * Baby privates datas
+     * Baby private properties
      */
     private int babyId;
     private String name;
@@ -16,7 +16,7 @@ public class Baby extends BaseModel {
     private String sex;
     private String height;
     private String weight;
-    private String photo;
+    private String photo; //TODO: generate the URI from the path
 
     /**
      * Standard basic constructor for non-parcel
@@ -75,6 +75,10 @@ public class Baby extends BaseModel {
 
     }
 
+    /**
+     * This field is needed by Android to create new objects
+     * individually or as arrays
+     */
     public static final Creator CREATOR = new Creator<Baby>(){
         @Override
         public Baby createFromParcel(Parcel parcel) {
@@ -87,58 +91,128 @@ public class Baby extends BaseModel {
         }
     };
 
+    /**
+     * Get babyId property
+     *
+     * @return babyId
+     */
     public int getBabyId() {
         return babyId;
     }
 
+    /**
+     * Set babyId property
+     *
+     * @param babyId baby id
+     */
     public void setBabyId(int babyId) {
         this.babyId = babyId;
     }
 
+    /**
+     * Get name property
+     *
+     * @return name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Set name property
+     *
+     * @param name baby name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Get birthday property
+     *
+     * @return baby birthday
+     */
     public String getBirthday() {
         return birthday;
     }
 
+    /**
+     * Set birthday property
+     *
+     * @param birthday baby birthday
+     */
     public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
+    /**
+     * Get sex property
+     *
+     * @return baby sex
+     */
     public String getSex() {
         return sex;
     }
 
+    /**
+     * Set sex property
+     *
+     * @param sex baby sex
+     */
     public void setSex(String sex) {
         this.sex = sex;
     }
 
+    /**
+     * Get height property
+     *
+     * @return height baby height
+     */
     public String getHeight() {
         return height;
     }
 
+    /**
+     * Set height property
+     *
+     * @param height baby property
+     */
     public void setHeight(String height) {
         this.height = height;
     }
 
+    /**
+     * Get weight property
+     *
+     * @return baby weight
+     */
     public String getWeight() {
         return weight;
     }
 
+    /**
+     * Set weight property
+     *
+     * @param weight baby weight
+     */
     public void setWeight(String weight) {
         this.weight = weight;
     }
 
+    /**
+     * Get photo property
+     *
+     * @return baby photo
+     */
     public String getPhoto() {
         return photo;
     }
 
+    /**
+     * Set photo property
+     *
+     * @param photo baby photo
+     */
     public void setPhoto(String photo) {
         this.photo = photo;
     }
