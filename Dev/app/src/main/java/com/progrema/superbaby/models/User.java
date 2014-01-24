@@ -2,16 +2,22 @@ package com.progrema.superbaby.models;
 
 import android.os.Parcel;
 
+import com.progrema.superbaby.util.SecurityUtils;
+
 /**
  * Created by iqbalpakeh on 21/1/14.
+ * @author aria
+ * @author iqbalpakeh
  */
 public class User extends BaseModel {
 
     /**
-     * User private datas
+     * User private data
      */
     private String userId;
-    private String password; //TODO: implement password encryption
+    private String password;
+    private String securityQuestion;
+    private String securityAnswer;
 
     /**
      * Standard basic constructor for non-parcel
@@ -43,6 +49,8 @@ public class User extends BaseModel {
         // Write each field into parcel
         parcel.writeString(userId);
         parcel.writeString(password);
+        parcel.writeString(securityQuestion);
+        parcel.writeString(securityAnswer);
 
     }
 
@@ -57,6 +65,8 @@ public class User extends BaseModel {
         // was written to the parcel
         userId = parcel.readString();
         password = parcel.readString();
+        securityQuestion = parcel.readString();
+        securityAnswer = parcel.readString();
 
     }
 
@@ -73,19 +83,61 @@ public class User extends BaseModel {
         }
     };
 
+
     public String getUserId() {
         return userId;
     }
 
+    /**
+     * change name
+     */
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
+    /* unsafe function
     public String getPassword() {
         return password;
+    }*/
+
+    /**
+     * used in changing password
+     * @param inputPlainText
+     */
+    public void setPassword(String inputPlainText) {
+        this.password = SecurityUtils.computeSHA1(password);
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    /**
+     * used in changing password
+     * @return
+     */
+    public String getSecurityQuestion() {
+        return securityQuestion;
+    }
+
+    /**
+     * changing security question
+     */
+    public void setSecurityQuestion(String securityQuestion) {
+        this.securityQuestion = securityQuestion;
+    }
+
+    /**
+     * used everytime user log in
+     * @param inputPlainText
+     * @return
+     */
+    public boolean verifyPassword(String inputPlainText){
+        return (SecurityUtils.computeSHA1(inputPlainText).compareTo(password) == 0);
+    }
+
+    /**
+     *
+     * @param inputPlainText
+     * @return
+     */
+    public boolean verifySecurityQuestion(String inputPlainText){
+        return (SecurityUtils.computeSHA1(inputPlainText).compareTo(securityAnswer) == 0);
     }
 }
