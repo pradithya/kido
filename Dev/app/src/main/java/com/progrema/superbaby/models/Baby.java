@@ -2,21 +2,18 @@ package com.progrema.superbaby.models;
 
 import android.os.Parcel;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by iqbalpakeh on 20/1/14.
  */
-public class Baby extends BaseModel {
+public class Baby extends BaseActor {
 
     /**
-     * Baby privates datas
+     * Baby privates data
      */
-    private int babyId;
-    private String name;
-    private String birthday;
-    private String sex;
-    private String height;
-    private String weight;
-    private String photo;
+    private Calendar birthday;
 
     /**
      * Standard basic constructor for non-parcel
@@ -24,7 +21,6 @@ public class Baby extends BaseModel {
      *
      */
     public Baby(){
-        super();
     }
 
     /**
@@ -42,18 +38,13 @@ public class Baby extends BaseModel {
      *
      * @param parcel parcel from which to re-create object
      */
-    private void readFromParcel(Parcel parcel){
+    public void readFromParcel(Parcel parcel){
 
         // read each field parcel the order that it
         // was written to the parcel
-        babyId = parcel.readInt();
-        name = parcel.readString();
-        birthday = parcel.readString();
-        sex = parcel.readString();
-        height = parcel.readString();
-        weight = parcel.readString();
-        photo = parcel.readString();
-
+        super.readFromParcel(parcel);
+        birthday = Calendar.getInstance();
+        birthday.setTimeInMillis(Long.valueOf(parcel.readString()));
     }
 
     @Override
@@ -65,13 +56,8 @@ public class Baby extends BaseModel {
     public void writeToParcel(Parcel parcel, int i) {
 
         // write each field into the parcel
-        parcel.writeInt(babyId);
-        parcel.writeString(name);
-        parcel.writeString(birthday);
-        parcel.writeString(sex);
-        parcel.writeString(height);
-        parcel.writeString(weight);
-        parcel.writeString(photo);
+        super.writeToParcel(parcel,i);
+        parcel.writeString(String.valueOf(birthday.getTimeInMillis())); //in timeinmillis format
 
     }
 
@@ -87,59 +73,21 @@ public class Baby extends BaseModel {
         }
     };
 
-    public int getBabyId() {
-        return babyId;
+    public String getBirthdayInString() {
+        return birthday.toString();
     }
 
-    public void setBabyId(int babyId) {
-        this.babyId = babyId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getBirthday() {
-        return birthday;
+    public Calendar getBirthdayInCalendar() {
+       return birthday;
     }
 
     public void setBirthday(String birthday) {
-        this.birthday = birthday;
+        this.birthday = Calendar.getInstance();
+        this.birthday.setTimeInMillis(Long.valueOf(birthday));
     }
 
-    public String getSex() {
-        return sex;
+    public void setBirthday(Date dateOfBirth){
+        birthday.setTime(dateOfBirth);
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public String getHeight() {
-        return height;
-    }
-
-    public void setHeight(String height) {
-        this.height = height;
-    }
-
-    public String getWeight() {
-        return weight;
-    }
-
-    public void setWeight(String weight) {
-        this.weight = weight;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
 }

@@ -2,19 +2,21 @@ package com.progrema.superbaby.models;
 
 import android.os.Parcel;
 
-import java.util.Calendar;
-
 /**
  * Created by iqbalpakeh on 22/1/14.
  * @author aria
  * @author iqbalpakeh
  */
-public class Diaper extends BaseModel{
+public class Diaper extends BaseActivity{
 
-    private String activityID;
-    private String timeStamp;
     private DiaperType type;
 
+    /**
+     * enumeration for diaper type
+     * use this instead of directly referring to the string value
+     * to get the string value use .getTitle method
+     * to convert a  string to one of the enumeration enlisted here, use : DiaperType.valueOf(String s)
+     */
     public enum DiaperType {
         POO("POO"),
         PEE("PEE"),
@@ -30,41 +32,8 @@ public class Diaper extends BaseModel{
         }
     }
 
-    /**
-     * Called from constructor to create this object from parcel
-     *
-     * @param parcel parcel from which to re-create object
-     */
-    public void readFromParcel(Parcel parcel){
-        activityID = parcel.readString();
-        timeStamp = parcel.readString();
-        type = DiaperType.valueOf(parcel.readString());
-    }
-
-    public String getActivityID(){
-        return this.activityID;
-    }
-
-    public String getTimeStampInString(){
-        return timeStamp;
-    }
-
-    public Calendar getTimeStampInCalendar(){
-        Calendar time = Calendar.getInstance();
-        time.setTimeInMillis(Long.parseLong(timeStamp));
-        return time;
-    }
-
     public DiaperType getType(){
         return type;
-    }
-
-    public void setTimeStamp(Calendar newTime){
-        timeStamp = String.valueOf(newTime.getTimeInMillis());
-    }
-
-    public void setTimeStamp(String newTime){
-        this.timeStamp = newTime;
     }
 
     public void setType(DiaperType newType){
@@ -78,10 +47,18 @@ public class Diaper extends BaseModel{
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(activityID);
-        parcel.writeString(timeStamp);
+        super.writeToParcel(parcel,i);
         parcel.writeString(type.getTitle());
     }
 
-
+    /**
+     * Called from constructor to create this object from parcel
+     *
+     * @param parcel parcel from which to re-create object
+     */
+    @Override
+    public void readFromParcel(Parcel parcel){
+       super.readFromParcel(parcel);
+       type = DiaperType.valueOf(parcel.readString());
+    }
 }

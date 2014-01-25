@@ -9,12 +9,11 @@ import com.progrema.superbaby.util.SecurityUtils;
  * @author aria
  * @author iqbalpakeh
  */
-public class User extends BaseModel {
+public class User extends BaseActor {
 
     /**
      * User private data
      */
-    private String userId;
     private String password;
     private String securityQuestion;
     private String securityAnswer;
@@ -25,7 +24,6 @@ public class User extends BaseModel {
      *
      */
     public User(){
-        super();
     }
 
     /**
@@ -47,7 +45,7 @@ public class User extends BaseModel {
     public void writeToParcel(Parcel parcel, int i) {
 
         // Write each field into parcel
-        parcel.writeString(userId);
+        super.writeToParcel(parcel,i);
         parcel.writeString(password);
         parcel.writeString(securityQuestion);
         parcel.writeString(securityAnswer);
@@ -59,11 +57,11 @@ public class User extends BaseModel {
      *
      * @param parcel parcel from which to re-create object
      */
-    private void readFromParcel(Parcel parcel){
+    public void readFromParcel(Parcel parcel){
 
         // read each field parcel the order that it
         // was written to the parcel
-        userId = parcel.readString();
+        super.readFromParcel(parcel);
         password = parcel.readString();
         securityQuestion = parcel.readString();
         securityAnswer = parcel.readString();
@@ -82,18 +80,6 @@ public class User extends BaseModel {
             return new User[size];
         }
     };
-
-
-    public String getUserId() {
-        return userId;
-    }
-
-    /**
-     * change name
-     */
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     /* unsafe function
     public String getPassword() {

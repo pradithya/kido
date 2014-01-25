@@ -1,5 +1,6 @@
 package com.progrema.superbaby.models;
 
+import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
@@ -10,18 +11,25 @@ abstract public class BaseModel implements Parcelable{
     /**
      * logical flag containing object deletion status
      */
-    protected boolean isDeleted;
+    protected long ID;
 
     public BaseModel(){
-        isDeleted = false;
+
     }
 
-    public void deleteObject(boolean input){
-        isDeleted = input;
+    public long getID() {
+        return ID;
     }
 
-    public boolean isObjectDelete(){
-        return isDeleted;
+    public void setID(long ID) {
+        this.ID = ID;
     }
 
+    public void writeToParcel(Parcel parcel, int i){
+        parcel.writeLong(ID);
+    }
+
+    public void readFromParcel(Parcel parcel){
+        ID = parcel.readLong();
+    }
 }
