@@ -17,15 +17,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ui.activity.InputActivity"
-            android:label="Input"
-            android:parentActivityName=".ui.activity.HomeActivity">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".ui.activity.HomeActivity"/>
-        </activity>
-
         <provider
             android:authorities="com.progrema.superbaby"
             android:name="com.progrema.superbaby.provider.BabyLogProvider"/>

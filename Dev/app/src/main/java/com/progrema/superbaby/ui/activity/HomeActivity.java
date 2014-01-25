@@ -4,7 +4,6 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -37,11 +36,6 @@ public class HomeActivity extends Activity
     private static final int POSITION_SLEEP_FRAGMENT = 4;
     private static final int POSITION_PUMPING_FRAGMENT = 5;
     private static final int POSITION_VACCINE_FRAGMENT = 6;
-
-    /**
-     * Used for Intent Extra message
-     */
-    public static final String INTENT_SELECT_FRAGMENT = "select_fragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,34 +85,8 @@ public class HomeActivity extends Activity
                 break;
         }
 
-        fragmentManager.beginTransaction().replace(R.id.home_activity_container, module).commit();
-
-    }
-
-    public void onSectionAttached(int number) {
-
-        switch(number){
-            case POSITION_HOME_FRAGMENT:
-                mTitle = getString(R.string.title_timeline_fragment);
-                break;
-            case POSITION_MILK_FRAGMENT:
-                mTitle = getString(R.string.title_milk_fragment);
-                break;
-            case POSITION_FOOD_FRAGMENT:
-                mTitle = getString(R.string.title_food_fragment);
-                break;
-            case POSITION_DIAPER_FRAGMENT:
-                mTitle = getString(R.string.title_diaper_fragment);
-                break;
-            case POSITION_SLEEP_FRAGMENT:
-                mTitle = getString(R.string.title_sleep_fragment);
-                break;
-            case POSITION_PUMPING_FRAGMENT:
-                mTitle = getString(R.string.title_pumping_fragment);
-                break;
-            case POSITION_VACCINE_FRAGMENT:
-                mTitle = getString(R.string.title_vaccine_fragment);
-                break;
+        if(module != null){
+            fragmentManager.beginTransaction().replace(R.id.home_activity_container, module).commit();
         }
 
     }
@@ -159,9 +127,6 @@ public class HomeActivity extends Activity
                 return true;
 
             case R.id.action_new_baby:
-                Intent intent = new Intent(this, InputActivity.class);
-                intent.putExtra(HomeActivity.INTENT_SELECT_FRAGMENT, BabyInputFragment.INTENT);
-                startActivity(intent);
                 return true;
         }
 

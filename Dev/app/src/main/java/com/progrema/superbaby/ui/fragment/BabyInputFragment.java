@@ -13,13 +13,9 @@ import com.progrema.superbaby.R;
  */
 public class BabyInputFragment extends Fragment {
 
-    public static final String INTENT = "intent_baby_input_fragment";
-
     private static BabyInputFragment singletonBabyInputFragment = null;
 
-    public BabyInputFragment(Context context){
-
-    }
+    public BabyInputFragment(Context context){}
 
     public static synchronized BabyInputFragment getInstance(Context context){
         if (singletonBabyInputFragment == null) {

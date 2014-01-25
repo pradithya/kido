@@ -8,7 +8,14 @@
     <TextView android:id="@+id/fragment_sleep_title_sample"
               android:text="Sleep Fragment"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:gravity="center"/>
+
+    <Button
+            android:id="@+id/button_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start"
+            android:layout_gravity="center"/>
 
 </LinearLayout>

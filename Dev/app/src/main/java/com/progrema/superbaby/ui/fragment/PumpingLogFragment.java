@@ -15,9 +15,7 @@ public class PumpingLogFragment extends Fragment{
 
     private static PumpingLogFragment singletonPumpingLogFragment = null;
 
-    public PumpingLogFragment(Context context){
-
-    }
+    public PumpingLogFragment(Context context){}
 
     public static synchronized PumpingLogFragment getInstance(Context context){
         if (singletonPumpingLogFragment == null) {

@@ -13,13 +13,9 @@ import com.progrema.superbaby.R;
  */
 public class PumpingInputFragment extends Fragment{
 
-    public static final String INTENT = "intent_pumping_input_fragment";
-
     private static PumpingInputFragment singletonPumpingInputFragment = null;
 
-    public PumpingInputFragment(Context context){
-
-    }
+    public PumpingInputFragment(Context context){}
 
     public static synchronized PumpingInputFragment getInstance(Context context){
         if (singletonPumpingInputFragment == null) {

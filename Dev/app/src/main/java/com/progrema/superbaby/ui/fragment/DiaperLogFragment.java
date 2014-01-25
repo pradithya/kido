@@ -15,9 +15,7 @@ public class DiaperLogFragment extends Fragment{
 
     private static DiaperLogFragment singletonDiaperLogFragment = null;
 
-    public DiaperLogFragment(Context context){
-
-    }
+    public DiaperLogFragment(Context context){}
 
     public static synchronized DiaperLogFragment getInstance(Context context){
         if (singletonDiaperLogFragment == null) {

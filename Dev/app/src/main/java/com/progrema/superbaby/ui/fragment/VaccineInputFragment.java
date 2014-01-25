@@ -13,13 +13,9 @@ import com.progrema.superbaby.R;
  */
 public class VaccineInputFragment extends Fragment{
 
-    public static final String INTENT = "intent_vaccine_input_fragment";
-
     private static VaccineInputFragment singletonVaccineInputFragment = null;
 
-    public VaccineInputFragment(Context context){
-
-    }
+    public VaccineInputFragment(Context context){}
 
     public static synchronized VaccineInputFragment getInstance(Context context){
         if (singletonVaccineInputFragment == null) {

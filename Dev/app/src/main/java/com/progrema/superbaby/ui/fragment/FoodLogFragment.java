@@ -15,9 +15,7 @@ public class FoodLogFragment extends Fragment {
 
     private static FoodLogFragment singletonFoodLogFragment = null;
 
-    public FoodLogFragment(Context context){
-
-    }
+    public FoodLogFragment(Context context){}
 
     public static synchronized FoodLogFragment getInstance(Context context){
         if (singletonFoodLogFragment == null) {
