@@ -11,6 +11,8 @@ public class BabyLogContract {
     interface UserColumns{
         String USER_ID = "user_id";
         String PASSWORD = "password";
+        String SEC_QUESTION = "security_question";
+        String SEC_ANSWER = "security_answer";
     }
 
     interface UserBabyMapColumns{
@@ -23,12 +25,9 @@ public class BabyLogContract {
         String NAME = "name";
         String BIRTHDAY = "birthday";
         String SEX = "sex";
-        String HEIGHT = "height";
-        String WEIGHT = "weight";
-        String PHOTO = "photo";
     }
 
-    interface MilkColumns{
+    interface NursingColumns {
         String ACTIVITY_ID = "activity_id";
         String BABY_ID = "baby_id";
         String TIMESTAMP = "timestamp";
@@ -54,10 +53,10 @@ public class BabyLogContract {
     interface VaccineColumns{
         String ACTIVITY_ID = "activity_id";
         String BABY_ID = "baby_id";
+        String TIMESTAMP = "timestamp";
         String VACCINE_NAME = "vaccine_name";
         String LOCATION = "location";
         String NOTES = "notes";
-        String TIMESTAMP = "timestamp";
         String REMINDER_TIME = "reminder_time";
     }
 
@@ -79,6 +78,21 @@ public class BabyLogContract {
         String NAME = "name";
     }
 
+    interface MeasurementTable{
+        String MEASUREMENT_ID = "measurement_id";
+        String BABY_ID  = "baby_id";
+        String TIMESTAMP = "timestamp";
+        String HEIGHT = "height";
+        String WEIGHT = "weight";
+    }
+
+    interface PhotoTable{
+        String PHOTO_ID = "photo_id";
+        String BABY_ID = "baby_id";
+        String TIMESTAMP = "timestamp";
+        String PHOTO_LOCATION = "photo_location";
+    }
+
     public static final String CONTENT_AUTHORITY = "com.progrema.superbaby";
 
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
@@ -93,6 +107,8 @@ public class BabyLogContract {
     private static final String PATH_FOOD = "food";
     private static final String PATH_FOOD_DETAILS = "food_details";
     private static final String PATH_FOOD_TYPE ="food_type";
+    private static final String PATH_MEASUREMENT = "measurement";
+    private static final String PATH_PHOTO = "photo";
 
     public static class User implements UserColumns, BaseColumns{
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_USER).build();
@@ -106,7 +122,7 @@ public class BabyLogContract {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_BABY).build();
     }
 
-    public static class Milk implements MilkColumns, BaseColumns{
+    public static class Nursing implements NursingColumns, BaseColumns{
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_MILK).build();
     }
 
@@ -132,6 +148,14 @@ public class BabyLogContract {
 
     public static class FoodType implements FoodTypeColumns, BaseColumns{
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_FOOD_TYPE).build();
+    }
+
+    public static class Measurement implements MeasurementTable, BaseColumns{
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_MEASUREMENT).build();
+    }
+
+    public static class Photo implements PhotoTable, BaseColumns{
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_PHOTO).build();
     }
 
 }

@@ -26,18 +26,43 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
         String USER = "user";
         String USER_BABY_MAP = "user_baby_map";
         String BABY = "baby";
-        String MILK = "milk";
+        String NURSING = "nursing";
         String SLEEP = "sleep";
         String DIAPER = "diaper";
         String VACCINE = "vaccine";
         String FOOD = "food";
         String FOOD_DETAILS = "food_details";
         String FOOD_TYPE = "food_type";
+        String MEASUREMENT = "measurement";
+        String PHOTO = "photo";
     }
 
     public BabyLogDatabase(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         mContext = context;
+    }
+
+    private interface Triggers {
+        // Deletes from all activities table, when corresponding baby deleted
+        String BABY_NURSING_DELETE = "baby_nursing_delete";
+        String BABY_SLEEP_DELETE = "baby_sleep_delete";
+        String BABY_DIAPER_DELETE = "baby_diaper_delete";
+        String BABY_VACCINE_DELETE = "baby_vaccine_delete";
+        String BABY_FOOD_DELETE = "baby_food_delete";
+        String BABY_USER_DELETE = "baby_user_delete";
+        String BABY_MEASUREMENT_DELETE = "baby_measurement_delete";
+        String BABY_PHOTO_DELETE = "baby_photo_delete";
+    }
+
+    private interface Qualified {
+        String BABY_DIAPER = Tables.DIAPER + "." + Diaper.BABY_ID;
+        String BABY_SLEEP = Tables.SLEEP + "." + Sleep.BABY_ID;
+        String BABY_NURSING = Tables.NURSING + "." + Nursing.BABY_ID;
+        String BABY_VACCINE = Tables.VACCINE + "." + Vaccine.BABY_ID;
+        String BABY_FOOD = Tables.FOOD + "." + Food.BABY_ID;
+        String BABY_USER_MAP = Tables.USER_BABY_MAP + "." + UserBabyMap.BABY_ID;
+        String BABY_MEASUREMENT = Tables.MEASUREMENT + "." + Measurement.BABY_ID;
+        String BABY_PHOTO = Tables.PHOTO + "." + Photo.BABY_ID;
     }
 
     @Override
@@ -51,10 +76,8 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
 
         db.execSQL("CREATE TABLE " + Tables.USER_BABY_MAP + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + UserBabyMapColumns.USER_ID + " TEXT NOT NULL,"
-                + UserBabyMapColumns.BABY_ID + " TEXT NOT NULL,"
-                + " UNIQUE (" + UserBabyMapColumns.USER_ID + ") ON CONFLICT FAIL,"
-                + " UNIQUE (" + UserBabyMapColumns.BABY_ID + ") ON CONFLICT FAIL)");
+                + " FOREIGN KEY(" + UserBabyMapColumns.USER_ID + ") REFERENCES" + Tables.USER + "(" + UserColumns.USER_ID + ")"
+                + " FOREIGN KEY(" + UserBabyMapColumns.BABY_ID + ") REFERENCES" + Tables.BABY + "(" + BabyColumns.BABY_ID + ")" +")");
 
         db.execSQL("CREATE TABLE " + Tables.BABY + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -62,21 +85,18 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
                 + BabyColumns.NAME + " TEXT NOT NULL,"
                 + BabyColumns.BIRTHDAY + " TEXT NOT NULL,"
                 + BabyColumns.SEX + " TEXT NOT NULL,"
-                + BabyColumns.HEIGHT + " TEXT NOT NULL,"
-                + BabyColumns.WEIGHT + " TEXT NOT NULL,"
-                + BabyColumns.PHOTO + " TEXT NOT NULL,"
                 + " UNIQUE (" + BabyColumns.BABY_ID + ") ON CONFLICT FAIL)");
 
-        db.execSQL("CREATE TABLE " + Tables.MILK + " ("
+        db.execSQL("CREATE TABLE " + Tables.NURSING + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + MilkColumns.ACTIVITY_ID + " TEXT NOT NULL,"
-                + MilkColumns.BABY_ID + " TEXT NOT NULL,"
-                + MilkColumns.TIMESTAMP + " TEXT NOT NULL,"
-                + MilkColumns.DURATION + " TEXT NOT NULL,"
-                + MilkColumns.SIDES + " TEXT NOT NULL,"
-                + MilkColumns.VOLUME + " TEXT NOT NULL,"
-                + " UNIQUE (" + MilkColumns.ACTIVITY_ID + ") ON CONFLICT FAIL,"
-                + " UNIQUE (" + MilkColumns.BABY_ID + ") ON CONFLICT FAIL)");
+                + NursingColumns.ACTIVITY_ID + " TEXT NOT NULL,"
+                + NursingColumns.BABY_ID + " TEXT NOT NULL,"
+                + NursingColumns.TIMESTAMP + " TEXT NOT NULL,"
+                + NursingColumns.DURATION + " TEXT NOT NULL,"
+                + NursingColumns.SIDES + " TEXT NOT NULL,"
+                + NursingColumns.VOLUME + " TEXT NOT NULL,"
+                + " UNIQUE (" + NursingColumns.ACTIVITY_ID + ") ON CONFLICT FAIL,"
+                + " FOREIGN KEY(" + UserBabyMapColumns.BABY_ID + ") REFERENCES" + Tables.BABY + "(" + BabyColumns.BABY_ID + ")" +")");
 
         db.execSQL("CREATE TABLE " + Tables.SLEEP + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -85,7 +105,7 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
                 + SleepColumns.TIMESTAMP + " TEXT NOT NULL,"
                 + SleepColumns.DURATION + " TEXT NOT NULL,"
                 + " UNIQUE (" + SleepColumns.ACTIVITY_ID + ") ON CONFLICT FAIL,"
-                + " UNIQUE (" + SleepColumns.BABY_ID + ") ON CONFLICT FAIL)");
+                + " FOREIGN KEY(" + UserBabyMapColumns.BABY_ID + ") REFERENCES" + Tables.BABY + "(" + BabyColumns.BABY_ID + ")" +")");
 
         db.execSQL("CREATE TABLE " + Tables.DIAPER + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -94,7 +114,7 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
                 + DiaperColumns.TIMESTAMP + " TEXT NOT NULL,"
                 + DiaperColumns.TYPE + " TEXT NOT NULL,"
                 + " UNIQUE (" + DiaperColumns.ACTIVITY_ID + ") ON CONFLICT FAIL,"
-                + " UNIQUE (" + DiaperColumns.BABY_ID + ") ON CONFLICT FAIL)");
+                + " FOREIGN KEY(" + UserBabyMapColumns.BABY_ID + ") REFERENCES" + Tables.BABY + "(" + BabyColumns.BABY_ID + ")" +")");
 
         db.execSQL("CREATE TABLE " + Tables.VACCINE + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -106,7 +126,22 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
                 + VaccineColumns.TIMESTAMP + " TEXT NOT NULL,"
                 + VaccineColumns.REMINDER_TIME + " TEXT NOT NULL,"
                 + " UNIQUE (" + VaccineColumns.ACTIVITY_ID + ") ON CONFLICT FAIL,"
-                + " UNIQUE (" + VaccineColumns.BABY_ID + ") ON CONFLICT FAIL)");
+                + " FOREIGN KEY(" + UserBabyMapColumns.BABY_ID + ") REFERENCES" + Tables.BABY + "(" + BabyColumns.BABY_ID + ")" +")");
+
+        db.execSQL("CREATE TABLE " + Tables.MEASUREMENT + " ("
+                + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + Measurement.MEASUREMENT_ID + " TEXT NOT NULL,"
+                + Measurement.HEIGHT + "REAL,"
+                + Measurement.WEIGHT + "REAL,"
+                + Measurement.TIMESTAMP + " TEXT NOT NULL,"
+                + " FOREIGN KEY(" + UserBabyMapColumns.BABY_ID + ") REFERENCES" + Tables.BABY + "(" + BabyColumns.BABY_ID + ")" +")");
+
+
+        db.execSQL("CREATE TABLE " + Tables.PHOTO + " ("
+                + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + Photo.PHOTO_ID + " TEXT NOT NULL,"
+                + Photo.TIMESTAMP + " TEXT NOT NULL,"
+                + " FOREIGN KEY(" + UserBabyMapColumns.BABY_ID + ") REFERENCES" + Tables.BABY + "(" + BabyColumns.BABY_ID + ")" +")");
 
         db.execSQL("CREATE TABLE " + Tables.FOOD + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -115,7 +150,7 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
                 + FoodColumns.TIMESTAMP + " TEXT NOT NULL,"
                 + FoodColumns.DURATION + " TEXT NOT NULL,"
                 + " UNIQUE (" + FoodColumns.ACTIVITY_ID + ") ON CONFLICT FAIL,"
-                + " UNIQUE (" + FoodColumns.BABY_ID + ") ON CONFLICT FAIL)");
+                + " FOREIGN KEY(" + UserBabyMapColumns.BABY_ID + ") REFERENCES" + Tables.BABY + "(" + BabyColumns.BABY_ID + ")" +")");
 
         db.execSQL("CREATE TABLE " + Tables.FOOD_DETAILS + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -129,8 +164,67 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
                 + FoodTypeColumns.FOOD_TYPE + " TEXT NOT NULL,"
                 + FoodTypeColumns.NAME + " TEXT NOT NULL" + " )");
 
-        //TODO: to implement foreign key constraint of each table by using TRIGGER!!
+        db.execSQL("CREATE TABLE " + Tables.FOOD_TYPE + " ("
+                + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + FoodTypeColumns.FOOD_TYPE + " TEXT NOT NULL,"
+                + FoodTypeColumns.NAME + " TEXT NOT NULL" + " )");
 
+        //trigger for delete on baby table
+        db.execSQL("CREATE TRIGGER " + Triggers.BABY_DIAPER_DELETE
+                + " AFTER DELETE ON " +  Tables.BABY
+                + " FOR EACH ROW BEGIN "
+                + " DELETE FROM " + Tables.DIAPER
+                + " WHERE " + Qualified.BABY_DIAPER + "=old." + Baby.BABY_ID
+                + ";" + " END;");
+
+        db.execSQL("CREATE TRIGGER " + Triggers.BABY_NURSING_DELETE
+                + " AFTER DELETE ON " +  Tables.BABY
+                + " FOR EACH ROW BEGIN "
+                + " DELETE FROM " + Tables.NURSING
+                + " WHERE " + Qualified.BABY_NURSING + "=old." + Baby.BABY_ID
+                + ";" + " END;");
+
+        db.execSQL("CREATE TRIGGER " + Triggers.BABY_SLEEP_DELETE
+                + " AFTER DELETE ON " +  Tables.BABY
+                + " FOR EACH ROW BEGIN "
+                + " DELETE FROM " + Tables.SLEEP
+                + " WHERE " + Qualified.BABY_SLEEP + "=old." + Baby.BABY_ID
+                + ";" + " END;");
+
+        db.execSQL("CREATE TRIGGER " + Triggers.BABY_FOOD_DELETE
+                + " AFTER DELETE ON " +  Tables.BABY
+                + " FOR EACH ROW BEGIN "
+                + " DELETE FROM " + Tables.FOOD
+                + " WHERE " + Qualified.BABY_FOOD + "=old." + Baby.BABY_ID
+                + ";" + " END;");
+
+        db.execSQL("CREATE TRIGGER " + Triggers.BABY_VACCINE_DELETE
+                + " AFTER DELETE ON " +  Tables.BABY
+                + " FOR EACH ROW BEGIN "
+                + " DELETE FROM " + Tables.VACCINE
+                + " WHERE " + Qualified.BABY_VACCINE + "=old." + Baby.BABY_ID
+                + ";" + " END;");
+
+        db.execSQL("CREATE TRIGGER " + Triggers.BABY_USER_DELETE
+                + " AFTER DELETE ON " +  Tables.BABY
+                + " FOR EACH ROW BEGIN "
+                + " DELETE FROM " + Tables.USER_BABY_MAP
+                + " WHERE " + Qualified.BABY_USER_MAP+ "=old." + Baby.BABY_ID
+                + ";" + " END;");
+
+        db.execSQL("CREATE TRIGGER " + Triggers.BABY_MEASUREMENT_DELETE
+                + " AFTER DELETE ON " +  Tables.BABY
+                + " FOR EACH ROW BEGIN "
+                + " DELETE FROM " + Tables.MEASUREMENT
+                + " WHERE " + Qualified.BABY_MEASUREMENT+ "=old." + Baby.BABY_ID
+                + ";" + " END;");
+
+        db.execSQL("CREATE TRIGGER " + Triggers.BABY_PHOTO_DELETE
+                + " AFTER DELETE ON " +  Tables.BABY
+                + " FOR EACH ROW BEGIN "
+                + " DELETE FROM " + Tables.PHOTO
+                + " WHERE " + Qualified.BABY_PHOTO+ "=old." + Baby.BABY_ID
+                + ";" + " END;");
     }
 
     @Override
