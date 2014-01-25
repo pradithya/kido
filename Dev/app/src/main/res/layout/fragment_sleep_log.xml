@@ -5,11 +5,29 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <TextView android:id="@+id/fragment_sleep_title_sample"
-              android:text="Sleep Fragment"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:gravity="center"/>
+    <TextView
+            android:id="@+id/show_last_activity_id_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Last Activity Id Input"/>
+
+    <TextView
+            android:id="@+id/show_last_baby_id_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Last Baby Id Input"/>
+
+    <TextView
+            android:id="@+id/show_last_timestamp_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Last Timestamp Input"/>
+
+    <TextView
+            android:id="@+id/show_last_duration_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Last Duration Input"/>
 
     <Button
             android:id="@+id/button_start"

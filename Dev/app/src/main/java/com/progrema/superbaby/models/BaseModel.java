@@ -8,9 +8,6 @@ import android.os.Parcelable;
  */
 abstract public class BaseModel implements Parcelable{
 
-    /**
-     * logical flag containing object deletion status
-     */
     protected long ID;
 
     public BaseModel(){

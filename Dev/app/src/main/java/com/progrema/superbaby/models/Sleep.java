@@ -7,18 +7,13 @@ import android.os.Parcel;
  */
 public class Sleep extends BaseModel{
 
-    private long duration;
+    private String activityId;
+    private String babyId;
+    private String timeStamp;
+    private String duration;
 
     void Sleep(Parcel parcel){
         readFromParcel(parcel);
-    }
-
-    public long getDuration() {
-        return duration;
-    }
-
-    public void setDuration(long duration) {
-        this.duration = duration;
     }
 
     @Override
@@ -29,11 +24,45 @@ public class Sleep extends BaseModel{
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         super.writeToParcel(parcel,i);
-        parcel.writeLong(duration);
+        parcel.writeString(duration);
     }
 
     public void readFromParcel(Parcel parcel){
         super.readFromParcel(parcel);
-        duration = parcel.readLong();
+        duration = parcel.readString();
     }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public String getActivityId() {
+        return activityId;
+    }
+
+    public void setActivityId(String activityId) {
+        this.activityId = activityId;
+    }
+
+    public String getBabyId() {
+        return babyId;
+    }
+
+    public void setBabyId(String babyId) {
+        this.babyId = babyId;
+    }
+
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+
 }

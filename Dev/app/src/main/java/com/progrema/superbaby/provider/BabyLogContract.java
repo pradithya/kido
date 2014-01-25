@@ -128,6 +128,10 @@ public class BabyLogContract {
 
     public static class Sleep implements SleepColumns, BaseColumns{
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_SLEEP).build();
+
+        public static Uri buildSleepUri(String activityId){
+            return CONTENT_URI.buildUpon().appendPath(activityId).build();
+        }
     }
 
     public static class Diaper implements DiaperColumns, BaseColumns{
