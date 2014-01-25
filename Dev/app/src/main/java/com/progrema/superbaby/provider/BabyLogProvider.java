@@ -25,6 +25,8 @@ public class BabyLogProvider extends ContentProvider{
     private static final int FOOD = 800;
     private static final int FOOD_DETAILS = 900;
     private static final int FOOD_TYPE = 1000;
+    private static final int MEASUREMENT = 1100;
+    private static final int PHOTO = 1200;
 
     private static UriMatcher buildUriMatcher(){
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -49,6 +51,10 @@ public class BabyLogProvider extends ContentProvider{
         matcher.addURI(authority, "food_details", FOOD_DETAILS);
 
         matcher.addURI(authority, "food_type", FOOD_TYPE);
+
+        matcher.addURI(authority, "measurement", MEASUREMENT);
+
+        matcher.addURI(authority, "photo", PHOTO);
 
         return matcher;
     }

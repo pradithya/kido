@@ -3,6 +3,7 @@ package com.progrema.superbaby.provider;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
 import android.provider.BaseColumns;
 
 import com.progrema.superbaby.provider.BabyLogContract.*;
@@ -42,7 +43,7 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
         mContext = context;
     }
 
-    private interface Triggers {
+    private interface TriggersName {
         // Deletes from all activities table, when corresponding baby deleted
         String BABY_NURSING_DELETE = "baby_nursing_delete";
         String BABY_SLEEP_DELETE = "baby_sleep_delete";
@@ -170,61 +171,66 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
                 + FoodTypeColumns.NAME + " TEXT NOT NULL" + " )");
 
         //trigger for delete on baby table
-        db.execSQL("CREATE TRIGGER " + Triggers.BABY_DIAPER_DELETE
+        db.execSQL("CREATE TRIGGER " + TriggersName.BABY_DIAPER_DELETE
                 + " AFTER DELETE ON " +  Tables.BABY
                 + " FOR EACH ROW BEGIN "
                 + " DELETE FROM " + Tables.DIAPER
                 + " WHERE " + Qualified.BABY_DIAPER + "=old." + Baby.BABY_ID
                 + ";" + " END;");
 
-        db.execSQL("CREATE TRIGGER " + Triggers.BABY_NURSING_DELETE
+        db.execSQL("CREATE TRIGGER " + TriggersName.BABY_NURSING_DELETE
                 + " AFTER DELETE ON " +  Tables.BABY
                 + " FOR EACH ROW BEGIN "
                 + " DELETE FROM " + Tables.NURSING
                 + " WHERE " + Qualified.BABY_NURSING + "=old." + Baby.BABY_ID
                 + ";" + " END;");
 
-        db.execSQL("CREATE TRIGGER " + Triggers.BABY_SLEEP_DELETE
+        db.execSQL("CREATE TRIGGER " + TriggersName.BABY_SLEEP_DELETE
                 + " AFTER DELETE ON " +  Tables.BABY
                 + " FOR EACH ROW BEGIN "
                 + " DELETE FROM " + Tables.SLEEP
                 + " WHERE " + Qualified.BABY_SLEEP + "=old." + Baby.BABY_ID
                 + ";" + " END;");
 
-        db.execSQL("CREATE TRIGGER " + Triggers.BABY_FOOD_DELETE
+        db.execSQL("CREATE TRIGGER " + TriggersName.BABY_FOOD_DELETE
                 + " AFTER DELETE ON " +  Tables.BABY
                 + " FOR EACH ROW BEGIN "
                 + " DELETE FROM " + Tables.FOOD
                 + " WHERE " + Qualified.BABY_FOOD + "=old." + Baby.BABY_ID
                 + ";" + " END;");
 
-        db.execSQL("CREATE TRIGGER " + Triggers.BABY_VACCINE_DELETE
+        db.execSQL("CREATE TRIGGER " + TriggersName.BABY_VACCINE_DELETE
                 + " AFTER DELETE ON " +  Tables.BABY
                 + " FOR EACH ROW BEGIN "
                 + " DELETE FROM " + Tables.VACCINE
                 + " WHERE " + Qualified.BABY_VACCINE + "=old." + Baby.BABY_ID
                 + ";" + " END;");
 
-        db.execSQL("CREATE TRIGGER " + Triggers.BABY_USER_DELETE
+        db.execSQL("CREATE TRIGGER " + TriggersName.BABY_USER_DELETE
                 + " AFTER DELETE ON " +  Tables.BABY
                 + " FOR EACH ROW BEGIN "
                 + " DELETE FROM " + Tables.USER_BABY_MAP
                 + " WHERE " + Qualified.BABY_USER_MAP+ "=old." + Baby.BABY_ID
                 + ";" + " END;");
 
-        db.execSQL("CREATE TRIGGER " + Triggers.BABY_MEASUREMENT_DELETE
+        db.execSQL("CREATE TRIGGER " + TriggersName.BABY_MEASUREMENT_DELETE
                 + " AFTER DELETE ON " +  Tables.BABY
                 + " FOR EACH ROW BEGIN "
                 + " DELETE FROM " + Tables.MEASUREMENT
                 + " WHERE " + Qualified.BABY_MEASUREMENT+ "=old." + Baby.BABY_ID
                 + ";" + " END;");
 
-        db.execSQL("CREATE TRIGGER " + Triggers.BABY_PHOTO_DELETE
+        db.execSQL("CREATE TRIGGER " + TriggersName.BABY_PHOTO_DELETE
                 + " AFTER DELETE ON " +  Tables.BABY
                 + " FOR EACH ROW BEGIN "
                 + " DELETE FROM " + Tables.PHOTO
                 + " WHERE " + Qualified.BABY_PHOTO+ "=old." + Baby.BABY_ID
                 + ";" + " END;");
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
+            db.setForeignKeyConstraintsEnabled(true);
+        }
+
     }
 
     @Override
@@ -234,6 +240,24 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
 
     public static void deleteDataBase(Context context){
         context.deleteDatabase(DATABASE_NAME);
+    }
+
+    @Override
+    public SQLiteDatabase getReadableDatabase(){
+        SQLiteDatabase db = super.getReadableDatabase();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
+            db.setForeignKeyConstraintsEnabled(true);
+        }
+        return db;
+    }
+
+    @Override
+    public SQLiteDatabase getWritableDatabase(){
+        SQLiteDatabase db = super.getWritableDatabase();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
+            db.setForeignKeyConstraintsEnabled(true);
+        }
+        return db;
     }
 
 }
