@@ -113,10 +113,12 @@ public class SleepLogFragment extends Fragment
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
         if(cursor.getCount() > 0){
-            showActivityId.setText(cursor.getString(0));
-            showBabyId.setText(cursor.getString(1));
-            showLastTimeInput.setText(cursor.getString(2));
-            showLastDurationInput.setText(cursor.getString(3));
+            if(cursor.moveToFirst()){
+                showActivityId.setText(cursor.getString(0));
+                showBabyId.setText(cursor.getString(1));
+                showLastTimeInput.setText(cursor.getString(2));
+                showLastDurationInput.setText(cursor.getString(3));
+            }
         }
     }
 
