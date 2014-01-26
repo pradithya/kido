@@ -1,19 +1,17 @@
 package com.progrema.superbaby.ui.activity;
 
 import android.app.ActionBar;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.ui.fragment.*;
 
-;
-
-public class HomeActivity extends Activity
+public class HomeActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
@@ -56,7 +54,7 @@ public class HomeActivity extends Activity
     public void onNavigationDrawerItemSelected(int position) {
 
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
         // fragment module
         Fragment module = null;

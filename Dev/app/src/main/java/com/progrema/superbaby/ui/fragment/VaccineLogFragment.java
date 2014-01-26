@@ -1,8 +1,8 @@
 package com.progrema.superbaby.ui.fragment;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +11,7 @@ import com.progrema.superbaby.R;
 /**
  * Created by iqbalpakeh on 18/1/14.
  */
-public class VaccineLogFragment extends Fragment{
+public class VaccineLogFragment extends Fragment {
 
     private static VaccineLogFragment singletonVaccineLogFragment = null;
 

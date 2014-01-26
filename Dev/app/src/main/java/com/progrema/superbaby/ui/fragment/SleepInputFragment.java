@@ -1,10 +1,10 @@
 package com.progrema.superbaby.ui.fragment;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,19 +83,16 @@ public class SleepInputFragment extends Fragment implements View.OnClickListener
 
         /** Store to DB */
         Sleep sleep = new Sleep();
-        sleep.setActivityId(activityIdInputBuffer);
-        sleep.setBabyId(babyIdInputBuffer);
         sleep.setTimeStamp(timestampInputBuffer);
-        sleep.setDuration(durationInputBuffer);
+        sleep.setDuration(Long.parseLong(durationInputBuffer));
 
         ContentValues values = new ContentValues();
-        values.put(BabyLogContract.Sleep.ACTIVITY_ID, sleep.getActivityId());
-        values.put(BabyLogContract.Sleep.BABY_ID, sleep.getBabyId());
-        values.put(BabyLogContract.Sleep.TIMESTAMP, sleep.getTimeStamp());
+        values.put(BabyLogContract.Sleep.ACTIVITY_ID, activityIdInputBuffer);
+        values.put(BabyLogContract.Sleep.BABY_ID, babyIdInputBuffer);
+        values.put(BabyLogContract.Sleep.TIMESTAMP, sleep.getTimeStampInString());
         values.put(BabyLogContract.Sleep.DURATION, sleep.getDuration());
 
-        getActivity().getContentResolver()
-                .insert(BabyLogContract.Sleep.buildSleepUri(BabyLogContract.Sleep.ACTIVITY_ID), values);
+        getActivity().getContentResolver().insert(BabyLogContract.Sleep.CONTENT_URI, values);
 
         /** Go back to sleep log fragment */
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();

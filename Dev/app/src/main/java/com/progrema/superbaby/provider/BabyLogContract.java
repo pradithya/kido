@@ -132,6 +132,7 @@ public class BabyLogContract {
         public static Uri buildSleepUri(String activityId){
             return CONTENT_URI.buildUpon().appendPath(activityId).build();
         }
+
     }
 
     public static class Diaper implements DiaperColumns, BaseColumns{

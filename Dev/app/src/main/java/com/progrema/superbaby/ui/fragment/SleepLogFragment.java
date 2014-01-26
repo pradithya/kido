@@ -1,11 +1,11 @@
 package com.progrema.superbaby.ui.fragment;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.BaseColumns;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -29,6 +29,9 @@ public class SleepLogFragment extends Fragment
     private TextView showBabyId;
     private TextView showLastTimeInput;
     private TextView showLastDurationInput;
+
+    private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
+    private static final int LOADER_ID = 1;
 
     private interface SleepQuery{
         String[] PROJECTION  = {
@@ -65,6 +68,11 @@ public class SleepLogFragment extends Fragment
         showBabyId = (TextView) rootView.findViewById(R.id.show_last_baby_id_input);
         showLastTimeInput = (TextView) rootView.findViewById(R.id.show_last_timestamp_input);
         showLastDurationInput = (TextView) rootView.findViewById(R.id.show_last_duration_input);
+
+        // prepare loader
+        mCallbacks = this;
+        LoaderManager lm = getLoaderManager();
+        lm.initLoader(LOADER_ID, null, mCallbacks);
 
         return rootView;
     }
@@ -104,10 +112,12 @@ public class SleepLogFragment extends Fragment
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        showActivityId.setText(cursor.getString(0));
-        showBabyId.setText(cursor.getString(1));
-        showLastTimeInput.setText(cursor.getString(2));
-        showLastDurationInput.setText(cursor.getString(3));
+        if(cursor.getCount() > 0){
+            showActivityId.setText(cursor.getString(0));
+            showBabyId.setText(cursor.getString(1));
+            showLastTimeInput.setText(cursor.getString(2));
+            showLastDurationInput.setText(cursor.getString(3));
+        }
     }
 
     @Override

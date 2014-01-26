@@ -77,12 +77,18 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
                 + UserColumns.SEC_ANSWER + " TEXT NOT NULL,"
                 + " UNIQUE (" + UserColumns.USER_ID + ") ON CONFLICT FAIL)");
 
+        /*
         db.execSQL("CREATE TABLE " + Tables.USER_BABY_MAP + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + UserBabyMapColumns.USER_ID + " TEXT NOT NULL,"
                 + UserBabyMapColumns.BABY_ID + " TEXT NOT NULL,"
                 + " FOREIGN KEY (" + UserBabyMapColumns.USER_ID + ") REFERENCES " + Tables.USER + " (" + UserColumns.USER_ID + "),"
                 + " FOREIGN KEY (" + UserBabyMapColumns.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BabyColumns.BABY_ID + ")" +")");
+        */
+        db.execSQL("CREATE TABLE " + Tables.USER_BABY_MAP + " ("
+                + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + UserBabyMapColumns.USER_ID + " TEXT NOT NULL,"
+                + UserBabyMapColumns.BABY_ID + " TEXT NOT NULL)");
 
         db.execSQL("CREATE TABLE " + Tables.BABY + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -92,6 +98,7 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
                 + BabyColumns.SEX + " TEXT NOT NULL,"
                 + " UNIQUE (" + BabyColumns.BABY_ID + ") ON CONFLICT FAIL)");
 
+        /*
         db.execSQL("CREATE TABLE " + Tables.NURSING + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + NursingColumns.ACTIVITY_ID + " TEXT NOT NULL,"
@@ -102,7 +109,18 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
                 + NursingColumns.VOLUME + " TEXT NOT NULL,"
                 + " UNIQUE (" + NursingColumns.ACTIVITY_ID + ") ON CONFLICT FAIL,"
                 + " FOREIGN KEY (" + NursingColumns.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BabyColumns.BABY_ID + ")" +")");
+        */
 
+        db.execSQL("CREATE TABLE " + Tables.NURSING + " ("
+                + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + NursingColumns.ACTIVITY_ID + " TEXT NOT NULL,"
+                + NursingColumns.BABY_ID + " TEXT NOT NULL,"
+                + NursingColumns.TIMESTAMP + " TEXT NOT NULL,"
+                + NursingColumns.DURATION + " TEXT NOT NULL,"
+                + NursingColumns.SIDES + " TEXT NOT NULL,"
+                + NursingColumns.VOLUME + " TEXT NOT NULL)");
+
+        /*
         db.execSQL("CREATE TABLE " + Tables.SLEEP + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + SleepColumns.ACTIVITY_ID + " TEXT NOT NULL,"
@@ -111,7 +129,17 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
                 + SleepColumns.DURATION + " TEXT NOT NULL,"
                 + " UNIQUE (" + SleepColumns.ACTIVITY_ID + ") ON CONFLICT FAIL,"
                 + " FOREIGN KEY (" + SleepColumns.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BabyColumns.BABY_ID + ")" +")");
+        */
 
+        /** dummy sleep table */
+        db.execSQL("CREATE TABLE " + Tables.SLEEP + " ("
+                + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + SleepColumns.ACTIVITY_ID + " TEXT NOT NULL,"
+                + SleepColumns.BABY_ID + " TEXT NOT NULL,"
+                + SleepColumns.TIMESTAMP + " TEXT NOT NULL,"
+                + SleepColumns.DURATION + " TEXT NOT NULL)");
+
+        /*
         db.execSQL("CREATE TABLE " + Tables.DIAPER + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + DiaperColumns.ACTIVITY_ID + " TEXT NOT NULL,"
@@ -120,7 +148,16 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
                 + DiaperColumns.TYPE + " TEXT NOT NULL,"
                 + " UNIQUE (" + DiaperColumns.ACTIVITY_ID + ") ON CONFLICT FAIL,"
                 + " FOREIGN KEY (" + DiaperColumns.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BabyColumns.BABY_ID + ")" +")");
+        */
 
+        db.execSQL("CREATE TABLE " + Tables.DIAPER + " ("
+                + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + DiaperColumns.ACTIVITY_ID + " TEXT NOT NULL,"
+                + DiaperColumns.BABY_ID + " TEXT NOT NULL,"
+                + DiaperColumns.TIMESTAMP + " TEXT NOT NULL,"
+                + DiaperColumns.TYPE + " TEXT NOT NULL)");
+
+        /*
         db.execSQL("CREATE TABLE " + Tables.VACCINE + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + VaccineColumns.ACTIVITY_ID + " TEXT NOT NULL,"
@@ -132,7 +169,18 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
                 + VaccineColumns.REMINDER_TIME + " TEXT NOT NULL,"
                 + " UNIQUE (" + VaccineColumns.ACTIVITY_ID + ") ON CONFLICT FAIL,"
                 + " FOREIGN KEY (" + VaccineColumns.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BabyColumns.BABY_ID + ")" +")");
+        */
+        db.execSQL("CREATE TABLE " + Tables.VACCINE + " ("
+                + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + VaccineColumns.ACTIVITY_ID + " TEXT NOT NULL,"
+                + VaccineColumns.BABY_ID + " TEXT NOT NULL,"
+                + VaccineColumns.VACCINE_NAME + " TEXT NOT NULL,"
+                + VaccineColumns.LOCATION + " TEXT NOT NULL,"
+                + VaccineColumns.NOTES + " TEXT NOT NULL,"
+                + VaccineColumns.TIMESTAMP + " TEXT NOT NULL,"
+                + VaccineColumns.REMINDER_TIME + " TEXT NOT NULL)");
 
+        /*
         db.execSQL("CREATE TABLE " + Tables.MEASUREMENT + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + Measurement.MEASUREMENT_ID + " TEXT NOT NULL,"
@@ -141,7 +189,17 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
                 + Measurement.WEIGHT +  " REAL,"
                 + Measurement.TIMESTAMP + " TEXT NOT NULL,"
                 + " FOREIGN KEY (" + Measurement.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BabyColumns.BABY_ID + ")" +")");
+        */
 
+        db.execSQL("CREATE TABLE " + Tables.MEASUREMENT + " ("
+                + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + Measurement.MEASUREMENT_ID + " TEXT NOT NULL,"
+                + Measurement.BABY_ID + " TEXT NOT NULL,"
+                + Measurement.HEIGHT + " REAL,"
+                + Measurement.WEIGHT +  " REAL,"
+                + Measurement.TIMESTAMP + " TEXT NOT NULL)");
+
+        /*
         db.execSQL("CREATE TABLE " + Tables.PHOTO + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + Photo.PHOTO_ID + " TEXT NOT NULL,"
@@ -150,7 +208,15 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
                 + Photo.PHOTO_LOCATION + " TEXT NOT NULL,"
                 + " UNIQUE (" + Photo.PHOTO_ID + ") ON CONFLICT FAIL,"
                 + " FOREIGN KEY (" + Photo.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BabyColumns.BABY_ID + ")" +")");
+        */
+        db.execSQL("CREATE TABLE " + Tables.PHOTO + " ("
+                + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + Photo.PHOTO_ID + " TEXT NOT NULL,"
+                + Photo.BABY_ID + " TEXT NOT NULL,"
+                + Photo.TIMESTAMP + " TEXT NOT NULL,"
+                + Photo.PHOTO_LOCATION + " TEXT NOT NULL)");
 
+        /*
         db.execSQL("CREATE TABLE " + Tables.FOOD + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + FoodColumns.ACTIVITY_ID + " TEXT NOT NULL,"
@@ -159,6 +225,13 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
                 + FoodColumns.DURATION + " TEXT NOT NULL,"
                 + " UNIQUE (" + FoodColumns.ACTIVITY_ID + ") ON CONFLICT FAIL,"
                 + " FOREIGN KEY (" + FoodColumns.BABY_ID + ") REFERENCES " + Tables.BABY + "(" + BabyColumns.BABY_ID + ")" +")");
+        */
+        db.execSQL("CREATE TABLE " + Tables.FOOD + " ("
+                + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + FoodColumns.ACTIVITY_ID + " TEXT NOT NULL,"
+                + FoodColumns.BABY_ID + " TEXT NOT NULL,"
+                + FoodColumns.TIMESTAMP + " TEXT NOT NULL,"
+                + FoodColumns.DURATION + " TEXT NOT NULL)");
 
         db.execSQL("CREATE TABLE " + Tables.FOOD_DETAILS + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"

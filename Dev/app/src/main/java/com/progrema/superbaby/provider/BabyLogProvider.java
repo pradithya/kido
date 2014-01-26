@@ -89,7 +89,6 @@ public class BabyLogProvider extends ContentProvider{
         switch (match){
             case SLEEP: {
                 final SelectionBuilder builder = new SelectionBuilder();
-                selectionArgs[0] = selectionArgs[0] + "%";
                 builder.table(BabyLogDatabase.Tables.SLEEP);
                 builder.where(selection, selectionArgs);
 
