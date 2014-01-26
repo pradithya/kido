@@ -5,7 +5,7 @@ import android.os.Parcel;
 /**
  * Created by iqbalpakeh on 22/1/14.
  */
-public class Sleep extends BaseModel{
+public class Sleep extends BaseActivity{
 
     private long duration;
 
