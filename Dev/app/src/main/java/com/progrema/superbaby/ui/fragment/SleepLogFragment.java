@@ -1,8 +1,12 @@
 package com.progrema.superbaby.ui.fragment;
 
+import android.app.Activity;
 import android.content.Context;
+import android.database.ContentObservable;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.BaseColumns;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -19,6 +23,8 @@ import com.progrema.superbaby.provider.BabyLogContract;
 
 /**
  * Created by iqbalpakeh on 18/1/14.
+ * @author aria
+ * @author iqbalpakeh
  */
 public class SleepLogFragment extends Fragment
         implements View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor>{
@@ -29,6 +35,16 @@ public class SleepLogFragment extends Fragment
     private TextView showBabyId;
     private TextView showLastTimeInput;
     private TextView showLastDurationInput;
+    private final ContentObserver mObserver = new ContentObserver(new Handler()) {
+        @Override
+        public void onChange(boolean selfChange) {
+            if (getActivity() == null){
+                return;
+            }
+            /*restart loader everytime the observer any changes*/
+            getLoaderManager().restartLoader(LOADER_ID,null,mCallbacks);
+        }
+    };
 
     private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     private static final int LOADER_ID = 1;
@@ -89,6 +105,18 @@ public class SleepLogFragment extends Fragment
         }
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        activity.getContentResolver().registerContentObserver(BabyLogContract.Sleep.CONTENT_URI, true, mObserver);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        getActivity().getContentResolver().unregisterContentObserver(mObserver);
+    }
+
     private void handleStartButton(){
 
         // jump to sleep input fragment
@@ -112,13 +140,14 @@ public class SleepLogFragment extends Fragment
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        if(cursor.getCount() > 0){
-            if(cursor.moveToFirst()){
-                showActivityId.setText(cursor.getString(0));
-                showBabyId.setText(cursor.getString(1));
-                showLastTimeInput.setText(cursor.getString(2));
-                showLastDurationInput.setText(cursor.getString(3));
-            }
+
+        if ( cursor.getCount() > 0){
+            /*show last inserted row*/
+            cursor.moveToLast();
+            showActivityId.setText(cursor.getString(0));
+            showBabyId.setText(cursor.getString(1));
+            showLastTimeInput.setText(cursor.getString(2));
+            showLastDurationInput.setText(cursor.getString(3));
         }
     }
 

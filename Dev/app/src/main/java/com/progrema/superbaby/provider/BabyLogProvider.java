@@ -9,9 +9,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.provider.BaseColumns;
 import com.progrema.superbaby.util.SelectionBuilder;
-
+import com.progrema.superbaby.provider.BabyLogContract.Sleep;
 /**
  * Created by iqbalpakeh on 18/1/14.
+ * @author aria
+ * @author iqbalpakeh
  */
 public class BabyLogProvider extends ContentProvider{
 
@@ -88,19 +90,19 @@ public class BabyLogProvider extends ContentProvider{
 
         switch (match){
             case SLEEP: {
-                final SelectionBuilder builder = new SelectionBuilder();
-                builder.table(BabyLogDatabase.Tables.SLEEP);
-                builder.where(selection, selectionArgs);
+                final SelectionBuilder builder = buildExpandableSelection(uri, match);
+                //builder.table(BabyLogDatabase.Tables.SLEEP);
+                //builder.where(selection, selectionArgs);
 
-                projection = new String[]{
+               /* projection = new String[]{
                         BaseColumns._ID,
                         BabyLogContract.SleepColumns.ACTIVITY_ID,
                         BabyLogContract.SleepColumns.BABY_ID,
                         BabyLogContract.SleepColumns.TIMESTAMP,
                         BabyLogContract.SleepColumns.DURATION
-                };
+                };*/
 
-                return builder.query(db, projection, null, null, BabyLogContract.SleepColumns.ACTIVITY_ID, null);
+                return builder.where(selection,selectionArgs).query(db,projection,sortOrder);
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -116,14 +118,14 @@ public class BabyLogProvider extends ContentProvider{
     @Override
     public Uri insert(Uri uri, ContentValues contentValues) {
 
-        final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
 
         switch (match){
             case SLEEP: {
                 db.insertOrThrow(BabyLogDatabase.Tables.SLEEP, null, contentValues);
                 notifyChange(uri);
-                return BabyLogContract.Sleep.buildSleepUri(BabyLogContract.Sleep.ACTIVITY_ID);
+                return BabyLogContract.Sleep.buildSleepUri(contentValues.getAsString(Sleep.ACTIVITY_ID));
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -152,4 +154,19 @@ public class BabyLogProvider extends ContentProvider{
         Context context = getContext();
         context.getContentResolver().notifyChange(uri, null);
     }
+
+    private  SelectionBuilder buildExpandableSelection(Uri uri, int match){
+        final SelectionBuilder builder = new SelectionBuilder();
+        switch(match){
+            case SLEEP: {
+                return builder.table(BabyLogDatabase.Tables.SLEEP);
+            }
+            default : {
+                return null;
+            }
+        }
+
+    }
+
+
 }
