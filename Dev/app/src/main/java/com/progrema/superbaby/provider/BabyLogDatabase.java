@@ -134,8 +134,7 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
         /** dummy sleep table */
         db.execSQL("CREATE TABLE " + Tables.SLEEP + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + SleepColumns.ACTIVITY_ID + " TEXT NOT NULL,"
-                + SleepColumns.BABY_ID + " TEXT NOT NULL,"
+                + SleepColumns.BABY_ID + " INTEGER,"
                 + SleepColumns.TIMESTAMP + " TEXT NOT NULL,"
                 + SleepColumns.DURATION + " TEXT NOT NULL)");
 

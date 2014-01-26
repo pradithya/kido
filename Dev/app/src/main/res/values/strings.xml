@@ -18,4 +18,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_new_baby">New Baby</string>
 
+    <string name="hour_abreviation">h</string>
+    <string name="minute_abreviation">m</string>
+
 </resources>

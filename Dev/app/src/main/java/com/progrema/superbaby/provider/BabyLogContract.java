@@ -37,7 +37,6 @@ public class BabyLogContract {
     }
 
     interface SleepColumns{
-        String ACTIVITY_ID = "activity_id";
         String BABY_ID = "baby_id";
         String TIMESTAMP = "timestamp";
         String DURATION = "duration";

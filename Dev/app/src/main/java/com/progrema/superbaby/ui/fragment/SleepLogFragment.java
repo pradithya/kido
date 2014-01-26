@@ -17,8 +17,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CursorAdapter;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import com.progrema.superbaby.R;
+import com.progrema.superbaby.adapter.SleepHistoryCursorAdapter;
 import com.progrema.superbaby.provider.BabyLogContract;
 
 /**
@@ -31,10 +35,10 @@ public class SleepLogFragment extends Fragment
 
     private static SleepLogFragment singletonSleepLogFragment = null;
     private Button startButton;
-    private TextView showActivityId;
-    private TextView showBabyId;
-    private TextView showLastTimeInput;
-    private TextView showLastDurationInput;
+
+    private ListView sleepHistoryList;
+    private SleepHistoryCursorAdapter mAdapter;
+
     private final ContentObserver mObserver = new ContentObserver(new Handler()) {
         @Override
         public void onChange(boolean selfChange) {
@@ -52,7 +56,7 @@ public class SleepLogFragment extends Fragment
     private interface SleepQuery{
         String[] PROJECTION  = {
                 BaseColumns._ID,
-                BabyLogContract.Sleep.ACTIVITY_ID,
+//                BabyLogContract.Sleep.ACTIVITY_ID,
                 BabyLogContract.Sleep.BABY_ID,
                 BabyLogContract.Sleep.TIMESTAMP,
                 BabyLogContract.Sleep.DURATION
@@ -79,11 +83,11 @@ public class SleepLogFragment extends Fragment
         startButton = (Button)rootView.findViewById(R.id.button_start);
         startButton.setOnClickListener(this);
 
-        // get TextView object
-        showActivityId = (TextView) rootView.findViewById(R.id.show_last_activity_id_input);
-        showBabyId = (TextView) rootView.findViewById(R.id.show_last_baby_id_input);
-        showLastTimeInput = (TextView) rootView.findViewById(R.id.show_last_timestamp_input);
-        showLastDurationInput = (TextView) rootView.findViewById(R.id.show_last_duration_input);
+
+        sleepHistoryList = (ListView) rootView.findViewById(R.id.sleep_activity_list);
+        mAdapter = new SleepHistoryCursorAdapter(getActivity(),null, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+        mAdapter.setLayout(R.layout.sleep_history_item);
+        sleepHistoryList.setAdapter(mAdapter);
 
         // prepare loader
         mCallbacks = this;
@@ -134,7 +138,7 @@ public class SleepLogFragment extends Fragment
                                            SleepQuery.PROJECTION,
                                            null,
                                            null,
-                                           BabyLogContract.Sleep.ACTIVITY_ID);
+                                           BabyLogContract.Sleep._ID);
         return cl;
     }
 
@@ -143,16 +147,13 @@ public class SleepLogFragment extends Fragment
 
         if ( cursor.getCount() > 0){
             /*show last inserted row*/
-            cursor.moveToLast();
-            showActivityId.setText(cursor.getString(0));
-            showBabyId.setText(cursor.getString(1));
-            showLastTimeInput.setText(cursor.getString(2));
-            showLastDurationInput.setText(cursor.getString(3));
+            cursor.moveToFirst();
+            mAdapter.swapCursor(cursor);
         }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
-
+        mAdapter.swapCursor(null);
     }
 }

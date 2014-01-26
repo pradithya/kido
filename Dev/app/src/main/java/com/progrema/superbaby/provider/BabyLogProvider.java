@@ -125,7 +125,7 @@ public class BabyLogProvider extends ContentProvider{
             case SLEEP: {
                 db.insertOrThrow(BabyLogDatabase.Tables.SLEEP, null, contentValues);
                 notifyChange(uri);
-                return BabyLogContract.Sleep.buildSleepUri(contentValues.getAsString(Sleep.ACTIVITY_ID));
+                return BabyLogContract.Sleep.buildSleepUri(contentValues.getAsString(BaseColumns._ID));
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
