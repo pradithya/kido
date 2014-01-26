@@ -5,4 +5,34 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <EditText
+            android:id="@+id/activity_id_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Activity Id Input"/>
+
+    <EditText
+            android:id="@+id/baby_id_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Baby Id Input"/>
+
+    <EditText
+            android:id="@+id/timestamp_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Time Input"/>
+
+    <EditText
+            android:id="@+id/duration_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Duration Input"/>
+
+    <Button
+            android:id="@+id/button_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Done"/>
+
 </LinearLayout>

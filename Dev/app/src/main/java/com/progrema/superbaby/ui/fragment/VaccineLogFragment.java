@@ -15,9 +15,7 @@ public class VaccineLogFragment extends Fragment{
 
     private static VaccineLogFragment singletonVaccineLogFragment = null;
 
-    public VaccineLogFragment(Context context){
-
-    }
+    public VaccineLogFragment(Context context){}
 
     public static synchronized VaccineLogFragment getInstance(Context context){
         if (singletonVaccineLogFragment == null) {

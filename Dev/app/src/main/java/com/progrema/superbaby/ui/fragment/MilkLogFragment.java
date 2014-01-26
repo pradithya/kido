@@ -15,9 +15,7 @@ public class MilkLogFragment extends Fragment{
 
     private static MilkLogFragment singletonMilkLogFragment = null;
 
-    public MilkLogFragment(Context context){
-
-    }
+    public MilkLogFragment(Context context){}
 
     public static synchronized MilkLogFragment getInstance(Context context){
         if (singletonMilkLogFragment == null) {

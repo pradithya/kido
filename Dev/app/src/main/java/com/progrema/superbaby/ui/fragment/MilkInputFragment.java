@@ -13,13 +13,9 @@ import com.progrema.superbaby.R;
  */
 public class MilkInputFragment extends Fragment {
 
-    public static final String INTENT = "intent_milk_input_fragment";
-
     private static MilkInputFragment singletonMilkInputFragment = null;
 
-    public MilkInputFragment(Context context){
-
-    }
+    public MilkInputFragment(Context context){}
 
     public static synchronized MilkInputFragment getInstance(Context context){
         if (singletonMilkInputFragment == null) {

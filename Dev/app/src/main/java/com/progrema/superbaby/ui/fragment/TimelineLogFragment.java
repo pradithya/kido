@@ -15,9 +15,7 @@ public class TimelineLogFragment extends Fragment{
 
     private static TimelineLogFragment singletonTimelineLogFragment = null;
 
-    public TimelineLogFragment(Context context){
-
-    }
+    public TimelineLogFragment(Context context){}
 
     public static synchronized TimelineLogFragment getInstance(Context context){
         if (singletonTimelineLogFragment == null) {

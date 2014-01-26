@@ -81,11 +81,6 @@ public class User extends BaseActor {
         }
     };
 
-    /* unsafe function
-    public String getPassword() {
-        return password;
-    }*/
-
     /**
      * used in changing password
      * @param inputPlainText

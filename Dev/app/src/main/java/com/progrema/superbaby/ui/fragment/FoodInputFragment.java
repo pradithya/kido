@@ -13,13 +13,9 @@ import com.progrema.superbaby.R;
  */
 public class FoodInputFragment extends Fragment {
 
-    public static final String INTENT = "intent_food_input_fragment";
-
     private static FoodInputFragment singletonFoodInputFragment = null;
 
-    public FoodInputFragment(Context context){
-
-    }
+    public FoodInputFragment(Context context){}
 
     public static synchronized FoodInputFragment getInstance(Context context){
         if (singletonFoodInputFragment == null) {
