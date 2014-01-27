@@ -29,11 +29,8 @@ public class HomeActivity extends FragmentActivity
      */
     private static final int POSITION_HOME_FRAGMENT = 0;
     private static final int POSITION_MILK_FRAGMENT = 1;
-    private static final int POSITION_FOOD_FRAGMENT = 2;
-    private static final int POSITION_DIAPER_FRAGMENT = 3;
-    private static final int POSITION_SLEEP_FRAGMENT = 4;
-    private static final int POSITION_PUMPING_FRAGMENT = 5;
-    private static final int POSITION_VACCINE_FRAGMENT = 6;
+    private static final int POSITION_DIAPER_FRAGMENT = 2;
+    private static final int POSITION_SLEEP_FRAGMENT = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,20 +63,11 @@ public class HomeActivity extends FragmentActivity
             case POSITION_MILK_FRAGMENT:
                 module = MilkLogFragment.getInstance(this);
                 break;
-            case POSITION_FOOD_FRAGMENT:
-                module = FoodLogFragment.getInstance(this);
-                break;
             case POSITION_DIAPER_FRAGMENT:
                 module = DiaperLogFragment.getInstance(this);
                 break;
             case POSITION_SLEEP_FRAGMENT:
                 module = SleepLogFragment.getInstance(this);
-                break;
-            case POSITION_PUMPING_FRAGMENT:
-                module = PumpingLogFragment.getInstance(this);
-                break;
-            case POSITION_VACCINE_FRAGMENT:
-                module = VaccineLogFragment.getInstance(this);
                 break;
         }
 
