@@ -51,7 +51,7 @@ public class FormatUtils {
         long hour = TimeUnit.MILLISECONDS.toHours(dur);
         long min;
         if (hour != 0){
-             min = TimeUnit.MILLISECONDS.toMinutes(dur % hour);
+             min = TimeUnit.MILLISECONDS.toMinutes(dur % TimeUnit.HOURS.toMillis(hour));
         }else{
              min = TimeUnit.MILLISECONDS.toMinutes(dur);
         }
