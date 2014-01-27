@@ -8,7 +8,7 @@ import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Utility class for formatting output
+ * Utility class for output formatting
  * Created by aria on 26/1/14.
  */
 public class FormatUtils
@@ -24,7 +24,7 @@ public class FormatUtils
      * @param duration in timemillis format
      * @return "HH:MM - HH:MM" format
      */
-    public static String formatTimeboundary (String startTime, String duration)
+    public static String formatTimeBoundary(String startTime, String duration)
     {
         String retVal = "";
         Calendar cal = Calendar.getInstance();

@@ -59,7 +59,8 @@ public class HomeActivity extends FragmentActivity
         // fragment module
         Fragment module = null;
 
-        switch(position){
+        switch(position)
+        {
             case POSITION_HOME_FRAGMENT:
                 module = TimelineLogFragment.getInstance(this);
                 break;
