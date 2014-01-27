@@ -4,7 +4,7 @@
     <string name="app_name">Superbaby</string>
 
     <string name="title_timeline_fragment">Timeline</string>
-    <string name="title_milk_fragment">Milk</string>
+    <string name="title_nursing_fragment">Nursing</string>
     <string name="title_food_fragment">Food</string>
     <string name="title_diaper_fragment">Diaper</string>
     <string name="title_sleep_fragment">Sleep</string>
