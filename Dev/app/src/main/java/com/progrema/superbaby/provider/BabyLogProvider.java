@@ -10,6 +10,9 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import com.progrema.superbaby.util.SelectionBuilder;
 import com.progrema.superbaby.provider.BabyLogContract.Sleep;
+
+import static android.content.ContentValues.*;
+
 /**
  * Created by iqbalpakeh on 18/1/14.
  * @author aria
@@ -33,17 +36,9 @@ public class BabyLogProvider extends ContentProvider{
 
     private static final int DIAPER = 600;
 
-    private static final int VACCINE = 700;
+    private static final int MEASUREMENT = 700;
 
-    private static final int FOOD = 800;
-
-    private static final int FOOD_DETAILS = 900;
-
-    private static final int FOOD_TYPE = 1000;
-
-    private static final int MEASUREMENT = 1100;
-
-    private static final int PHOTO = 1200;
+    private static final int PHOTO = 800;
 
     private static UriMatcher buildUriMatcher(){
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -60,14 +55,6 @@ public class BabyLogProvider extends ContentProvider{
         matcher.addURI(authority, "sleep", SLEEP);
 
         matcher.addURI(authority, "diaper", DIAPER);
-
-        matcher.addURI(authority, "vaccine", VACCINE);
-
-        matcher.addURI(authority, "food", FOOD);
-
-        matcher.addURI(authority, "food_details", FOOD_DETAILS);
-
-        matcher.addURI(authority, "food_type", FOOD_TYPE);
 
         matcher.addURI(authority, "measurement", MEASUREMENT);
 
@@ -123,6 +110,14 @@ public class BabyLogProvider extends ContentProvider{
 
         switch (match){
             case SLEEP: {
+                /*add new activity sleep to activity table*/
+                ContentValues values = new ContentValues();
+                values.put(BabyLogContract.ActivityColumns.BABY_ID, contentValues.getAsString(BabyLogContract.SleepColumns.BABY_ID));
+                values.put(BabyLogContract.ActivityColumns.ACTIVITY_TYPE, BabyLogContract.Activity.TYPE_SLEEP);
+                long actId = db.insertOrThrow(BabyLogDatabase.Tables.ACTIVITY,null,values);
+
+                /*add sleep details to sleep table*/
+                contentValues.put(BabyLogContract.SleepColumns.ACTIVITY_ID, actId);
                 db.insertOrThrow(BabyLogDatabase.Tables.SLEEP, null, contentValues);
                 notifyChange(uri);
                 return BabyLogContract.Sleep.buildSleepUri(contentValues.getAsString(BaseColumns._ID));
