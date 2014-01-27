@@ -20,17 +20,23 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by iqbalpakeh on 20/1/14.
  */
-public class SleepInputFragment extends Fragment implements View.OnClickListener{
+public class SleepInputFragment extends Fragment implements View.OnClickListener
+{
 
     private static SleepInputFragment singletonSleepInputFragment = null;
     private Button done;
     private EditText babyIdInput;
     private EditText durationInput;
 
-    public SleepInputFragment(Context context){}
+    public SleepInputFragment(Context context)
+    {
+        /** Empty constructor */
+    }
 
-    public static synchronized SleepInputFragment getInstance(Context context){
-        if (singletonSleepInputFragment == null) {
+    public static synchronized SleepInputFragment getInstance(Context context)
+    {
+        if (singletonSleepInputFragment == null)
+        {
             singletonSleepInputFragment = new SleepInputFragment(context.getApplicationContext());
         }
         return singletonSleepInputFragment;
@@ -38,7 +44,8 @@ public class SleepInputFragment extends Fragment implements View.OnClickListener
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
 
         // inflate fragment layout
         View rootView = inflater.inflate(R.layout.fragment_sleep_input, container, false);
@@ -55,10 +62,10 @@ public class SleepInputFragment extends Fragment implements View.OnClickListener
     }
 
     @Override
-    public void onClick(View view) {
-
-        switch(view.getId()){
-
+    public void onClick(View view)
+    {
+        switch(view.getId())
+        {
             case R.id.button_done:
                 handleDoneButton();
                 break;
@@ -67,8 +74,8 @@ public class SleepInputFragment extends Fragment implements View.OnClickListener
 
     }
 
-    private void handleDoneButton(){
-
+    private void handleDoneButton()
+    {
         String babyIdInputBuffer;
         String durationInputBuffer;
 

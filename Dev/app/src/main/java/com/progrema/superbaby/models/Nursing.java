@@ -6,62 +6,75 @@ import android.os.Parcel;
  * Created by iqbalpakeh on 22/1/14.
  * @author aria
  */
-public class Nursing extends BaseActivity{
+public class Nursing extends BaseActivity
+{
 
     private long duration;
     private NursingType type;
     private float volume;
 
-    public enum NursingType{
+    public enum NursingType
+    {
         LEFT("LEFT"),
         RIGHT("RIGHT"),
         FORMULA("FORMULA");
 
         private String title;
-        NursingType(String title){
+        NursingType(String title)
+        {
             this.title = title;
         }
 
-        public String getTitle(){
+        public String getTitle()
+        {
             return this.title;
         }
     }
 
-    Nursing (Parcel parcel){
+    Nursing (Parcel parcel)
+    {
         readFromParcel(parcel);
     }
 
-    public long getDuration() {
+    public long getDuration()
+    {
         return duration;
     }
 
-    public void setDuration(long duration) {
+    public void setDuration(long duration)
+    {
         this.duration = duration;
     }
 
-    public NursingType getType() {
+    public NursingType getType()
+    {
         return type;
     }
 
-    public void setType(NursingType type) {
+    public void setType(NursingType type)
+    {
         this.type = type;
     }
 
-    public float getVolume() {
+    public float getVolume()
+    {
         return volume;
     }
 
-    public void setVolume(float volume) {
+    public void setVolume(float volume)
+    {
         this.volume = volume;
     }
 
     @Override
-    public int describeContents() {
+    public int describeContents()
+    {
         return 0;
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
+    public void writeToParcel(Parcel parcel, int i)
+    {
         super.writeToParcel(parcel,i);
         parcel.writeLong(duration);
         parcel.writeString(type.getTitle());
@@ -69,7 +82,8 @@ public class Nursing extends BaseActivity{
     }
 
     @Override
-    public void readFromParcel(Parcel parcel){
+    public void readFromParcel(Parcel parcel)
+    {
         super.readFromParcel(parcel);
         duration = parcel.readLong();
         type = NursingType.valueOf(parcel.readString());

@@ -11,14 +11,20 @@ import com.progrema.superbaby.R;
 /**
  * Created by iqbalpakeh on 20/1/14.
  */
-public class MilkInputFragment extends Fragment {
+public class MilkInputFragment extends Fragment
+{
 
     private static MilkInputFragment singletonMilkInputFragment = null;
 
-    public MilkInputFragment(Context context){}
+    public MilkInputFragment(Context context)
+    {
+        /** Empty constructor */
+    }
 
-    public static synchronized MilkInputFragment getInstance(Context context){
-        if (singletonMilkInputFragment == null) {
+    public static synchronized MilkInputFragment getInstance(Context context)
+    {
+        if (singletonMilkInputFragment == null)
+        {
             singletonMilkInputFragment = new MilkInputFragment(context.getApplicationContext());
         }
         return singletonMilkInputFragment;
@@ -26,7 +32,8 @@ public class MilkInputFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         View rootView = inflater.inflate(R.layout.fragment_milk_input, container, false);
         return rootView;
     }

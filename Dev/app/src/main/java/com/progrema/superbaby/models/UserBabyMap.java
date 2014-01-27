@@ -8,12 +8,14 @@ import android.os.Parcel;
 public class UserBabyMap extends BaseModel{
 
     @Override
-    public int describeContents() {
+    public int describeContents()
+    {
         return 0;
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
+    public void writeToParcel(Parcel parcel, int i)
+    {
 
     }
 }

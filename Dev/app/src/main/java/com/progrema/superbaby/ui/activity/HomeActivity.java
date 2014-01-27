@@ -12,7 +12,8 @@ import com.progrema.superbaby.R;
 import com.progrema.superbaby.ui.fragment.*;
 
 public class HomeActivity extends FragmentActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks
+{
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -33,7 +34,8 @@ public class HomeActivity extends FragmentActivity
     private static final int POSITION_SLEEP_FRAGMENT = 3;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
@@ -48,7 +50,8 @@ public class HomeActivity extends FragmentActivity
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(int position) {
+    public void onNavigationDrawerItemSelected(int position)
+    {
 
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -71,13 +74,15 @@ public class HomeActivity extends FragmentActivity
                 break;
         }
 
-        if(module != null){
+        if(module != null)
+        {
             fragmentManager.beginTransaction().replace(R.id.home_activity_container, module).commit();
         }
 
     }
 
-    public void restoreActionBar() {
+    public void restoreActionBar()
+    {
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
@@ -86,8 +91,10 @@ public class HomeActivity extends FragmentActivity
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        if (!mNavigationDrawerFragment.isDrawerOpen())
+        {
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
@@ -99,13 +106,15 @@ public class HomeActivity extends FragmentActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
 
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
 
-        switch (item.getItemId()){
+        switch (item.getItemId())
+        {
             case R.id.action_example:
                 return true;
 
