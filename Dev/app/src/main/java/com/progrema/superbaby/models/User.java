@@ -23,7 +23,9 @@ public class User extends BaseActor {
      * object creation
      *
      */
-    public User(){
+    public User()
+    {
+        /** Empty constructor */
     }
 
     /**
@@ -32,24 +34,25 @@ public class User extends BaseActor {
      *
      * @param parcel parcel instance
      */
-    public User(Parcel parcel){
+    public User(Parcel parcel)
+    {
         readFromParcel(parcel);
     }
 
     @Override
-    public int describeContents() {
+    public int describeContents()
+    {
         return 0;
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
-
+    public void writeToParcel(Parcel parcel, int i)
+    {
         // Write each field into parcel
         super.writeToParcel(parcel,i);
         parcel.writeString(password);
         parcel.writeString(securityQuestion);
         parcel.writeString(securityAnswer);
-
     }
 
     /**
@@ -57,26 +60,28 @@ public class User extends BaseActor {
      *
      * @param parcel parcel from which to re-create object
      */
-    public void readFromParcel(Parcel parcel){
-
+    public void readFromParcel(Parcel parcel)
+    {
         // read each field parcel the order that it
         // was written to the parcel
         super.readFromParcel(parcel);
         password = parcel.readString();
         securityQuestion = parcel.readString();
         securityAnswer = parcel.readString();
-
     }
 
 
-    public static final Creator CREATOR = new Creator<User>(){
+    public static final Creator CREATOR = new Creator<User>()
+    {
         @Override
-        public User createFromParcel(Parcel parcel) {
+        public User createFromParcel(Parcel parcel)
+        {
             return new User(parcel);
         }
 
         @Override
-        public User[] newArray(int size) {
+        public User[] newArray(int size)
+        {
             return new User[size];
         }
     };
@@ -85,7 +90,8 @@ public class User extends BaseActor {
      * used in changing password
      * @param inputPlainText
      */
-    public void setPassword(String inputPlainText) {
+    public void setPassword(String inputPlainText)
+    {
         this.password = SecurityUtils.computeSHA1(password);
     }
 
@@ -93,14 +99,16 @@ public class User extends BaseActor {
      * used in changing password
      * @return
      */
-    public String getSecurityQuestion() {
+    public String getSecurityQuestion()
+    {
         return securityQuestion;
     }
 
     /**
      * changing security question
      */
-    public void setSecurityQuestion(String securityQuestion) {
+    public void setSecurityQuestion(String securityQuestion)
+    {
         this.securityQuestion = securityQuestion;
     }
 
@@ -109,7 +117,8 @@ public class User extends BaseActor {
      * @param inputPlainText
      * @return
      */
-    public boolean verifyPassword(String inputPlainText){
+    public boolean verifyPassword(String inputPlainText)
+    {
         return (SecurityUtils.computeSHA1(inputPlainText).compareTo(password) == 0);
     }
 
@@ -118,7 +127,8 @@ public class User extends BaseActor {
      * @param inputPlainText
      * @return
      */
-    public boolean verifySecurityQuestion(String inputPlainText){
+    public boolean verifySecurityQuestion(String inputPlainText)
+    {
         return (SecurityUtils.computeSHA1(inputPlainText).compareTo(securityAnswer) == 0);
     }
 }

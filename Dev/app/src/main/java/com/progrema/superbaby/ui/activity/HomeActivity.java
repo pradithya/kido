@@ -12,7 +12,8 @@ import com.progrema.superbaby.R;
 import com.progrema.superbaby.ui.fragment.*;
 
 public class HomeActivity extends FragmentActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks
+{
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -29,14 +30,12 @@ public class HomeActivity extends FragmentActivity
      */
     private static final int POSITION_HOME_FRAGMENT = 0;
     private static final int POSITION_MILK_FRAGMENT = 1;
-    private static final int POSITION_FOOD_FRAGMENT = 2;
-    private static final int POSITION_DIAPER_FRAGMENT = 3;
-    private static final int POSITION_SLEEP_FRAGMENT = 4;
-    private static final int POSITION_PUMPING_FRAGMENT = 5;
-    private static final int POSITION_VACCINE_FRAGMENT = 6;
+    private static final int POSITION_DIAPER_FRAGMENT = 2;
+    private static final int POSITION_SLEEP_FRAGMENT = 3;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
@@ -51,7 +50,8 @@ public class HomeActivity extends FragmentActivity
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(int position) {
+    public void onNavigationDrawerItemSelected(int position)
+    {
 
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -66,30 +66,23 @@ public class HomeActivity extends FragmentActivity
             case POSITION_MILK_FRAGMENT:
                 module = MilkLogFragment.getInstance(this);
                 break;
-            case POSITION_FOOD_FRAGMENT:
-                module = FoodLogFragment.getInstance(this);
-                break;
             case POSITION_DIAPER_FRAGMENT:
                 module = DiaperLogFragment.getInstance(this);
                 break;
             case POSITION_SLEEP_FRAGMENT:
                 module = SleepLogFragment.getInstance(this);
                 break;
-            case POSITION_PUMPING_FRAGMENT:
-                module = PumpingLogFragment.getInstance(this);
-                break;
-            case POSITION_VACCINE_FRAGMENT:
-                module = VaccineLogFragment.getInstance(this);
-                break;
         }
 
-        if(module != null){
+        if(module != null)
+        {
             fragmentManager.beginTransaction().replace(R.id.home_activity_container, module).commit();
         }
 
     }
 
-    public void restoreActionBar() {
+    public void restoreActionBar()
+    {
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
@@ -98,8 +91,10 @@ public class HomeActivity extends FragmentActivity
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        if (!mNavigationDrawerFragment.isDrawerOpen())
+        {
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
@@ -111,13 +106,15 @@ public class HomeActivity extends FragmentActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
 
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
 
-        switch (item.getItemId()){
+        switch (item.getItemId())
+        {
             case R.id.action_example:
                 return true;
 

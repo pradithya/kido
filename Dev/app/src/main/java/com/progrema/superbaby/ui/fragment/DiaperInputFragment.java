@@ -11,14 +11,20 @@ import com.progrema.superbaby.R;
 /**
  * Created by iqbalpakeh on 20/1/14.
  */
-public class DiaperInputFragment extends Fragment{
+public class DiaperInputFragment extends Fragment
+{
 
     private static DiaperInputFragment singletonDiaperInputFragment = null;
 
-    public DiaperInputFragment(Context context){}
+    public DiaperInputFragment(Context context)
+    {
+        /** Empty constructor */
+    }
 
-    public static synchronized DiaperInputFragment getInstance(Context context){
-        if (singletonDiaperInputFragment == null) {
+    public static synchronized DiaperInputFragment getInstance(Context context)
+    {
+        if (singletonDiaperInputFragment == null)
+        {
             singletonDiaperInputFragment = new DiaperInputFragment(context.getApplicationContext());
         }
         return singletonDiaperInputFragment;
@@ -26,7 +32,8 @@ public class DiaperInputFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         View rootView = inflater.inflate(R.layout.fragment_diaper_input, container, false);
         return rootView;
     }

@@ -2,7 +2,6 @@ package com.progrema.superbaby.ui.fragment;
 
 import android.app.Activity;
 import android.content.Context;
-import android.database.ContentObservable;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -19,8 +18,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.SleepHistoryCursorAdapter;
 import com.progrema.superbaby.provider.BabyLogContract;
@@ -31,7 +28,8 @@ import com.progrema.superbaby.provider.BabyLogContract;
  * @author iqbalpakeh
  */
 public class SleepLogFragment extends Fragment
-        implements View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor>{
+        implements View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor>
+{
 
     private static SleepLogFragment singletonSleepLogFragment = null;
     private Button startButton;
@@ -39,7 +37,8 @@ public class SleepLogFragment extends Fragment
     private ListView sleepHistoryList;
     private SleepHistoryCursorAdapter mAdapter;
 
-    private final ContentObserver mObserver = new ContentObserver(new Handler()) {
+    private final ContentObserver mObserver = new ContentObserver(new Handler())
+    {
         @Override
         public void onChange(boolean selfChange) {
             if (getActivity() == null){
@@ -53,20 +52,27 @@ public class SleepLogFragment extends Fragment
     private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     private static final int LOADER_ID = 1;
 
-    private interface SleepQuery{
-        String[] PROJECTION  = {
-                BaseColumns._ID,
-//                BabyLogContract.Sleep.ACTIVITY_ID,
-                BabyLogContract.Sleep.BABY_ID,
-                BabyLogContract.Sleep.TIMESTAMP,
-                BabyLogContract.Sleep.DURATION
+    private interface SleepQuery
+    {
+        String[] PROJECTION  =
+        {
+            BaseColumns._ID,
+          //BabyLogContract.Sleep.ACTIVITY_ID,
+            BabyLogContract.Sleep.BABY_ID,
+            BabyLogContract.Sleep.TIMESTAMP,
+            BabyLogContract.Sleep.DURATION
         };
     }
 
-    public SleepLogFragment(Context context){}
+    public SleepLogFragment(Context context)
+    {
+        /** Empty constructor */
+    }
 
-    public static synchronized SleepLogFragment getInstance(Context context){
-        if (singletonSleepLogFragment == null) {
+    public static synchronized SleepLogFragment getInstance(Context context)
+    {
+        if (singletonSleepLogFragment == null)
+        {
             singletonSleepLogFragment = new SleepLogFragment(context.getApplicationContext());
         }
         return singletonSleepLogFragment;
@@ -74,7 +80,8 @@ public class SleepLogFragment extends Fragment
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
 
         // inflate fragment layout
         View rootView = inflater.inflate(R.layout.fragment_sleep_log, container, false);
@@ -98,31 +105,32 @@ public class SleepLogFragment extends Fragment
     }
 
     @Override
-    public void onClick(View view) {
-
-        switch(view.getId()){
-
+    public void onClick(View view)
+    {
+        switch(view.getId())
+        {
             case  R.id.button_start:
                 handleStartButton();
                 break;
-
         }
     }
 
     @Override
-    public void onAttach(Activity activity) {
+    public void onAttach(Activity activity)
+    {
         super.onAttach(activity);
         activity.getContentResolver().registerContentObserver(BabyLogContract.Sleep.CONTENT_URI, true, mObserver);
     }
 
     @Override
-    public void onDetach() {
+    public void onDetach()
+    {
         super.onDetach();
         getActivity().getContentResolver().unregisterContentObserver(mObserver);
     }
 
-    private void handleStartButton(){
-
+    private void handleStartButton()
+    {
         // jump to sleep input fragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.home_activity_container, SleepInputFragment.getInstance(getActivity()));
@@ -132,7 +140,8 @@ public class SleepLogFragment extends Fragment
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle)
+    {
         CursorLoader cl = new CursorLoader(getActivity(),
                                            BabyLogContract.Sleep.CONTENT_URI,
                                            SleepQuery.PROJECTION,
@@ -143,7 +152,8 @@ public class SleepLogFragment extends Fragment
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor)
+    {
 
         if ( cursor.getCount() > 0){
             /*show last inserted row*/
@@ -153,7 +163,8 @@ public class SleepLogFragment extends Fragment
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
+    public void onLoaderReset(Loader<Cursor> cursorLoader)
+    {
         mAdapter.swapCursor(null);
     }
 }
