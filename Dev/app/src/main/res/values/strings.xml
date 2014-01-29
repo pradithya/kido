@@ -18,7 +18,18 @@
     <string name="action_settings">Settings</string>
     <string name="action_new_baby">New Baby</string>
 
-    <string name="hour_abreviation">h</string>
-    <string name="minute_abreviation">m</string>
+
+    <!--fragment sleep string-->
+    <string name="date_format">{day}, {date} {month} {year}</string>
+    <string name="duration_format">{hour} h {minute} m</string>
+    <string name="time_span_format">{start} - {end}</string>
+    <string name="night_percentage_string"></string>
+    <string name="nap_percentage_string"></string>
+    <string name="avg_night_sleep_string"></string>
+    <string name="avg_nap_duration_string"></string>
+    <string name="sleep_percentage_string"></string>
+    <string name="active_percentage_string"></string>
+    <string name="avg_sleep_duration_string"></string>
+    <string name="avg_active_duration_string"></string>
 
 </resources>

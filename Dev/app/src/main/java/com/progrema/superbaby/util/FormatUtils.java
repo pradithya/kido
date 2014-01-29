@@ -2,6 +2,7 @@ package com.progrema.superbaby.util;
 
 import android.content.Context;
 import com.progrema.superbaby.R;
+import com.squareup.phrase.Phrase;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -24,7 +25,7 @@ public class FormatUtils
      * @param duration in timemillis format
      * @return "HH:MM - HH:MM" format
      */
-    public static String formatTimeBoundary(String startTime, String duration)
+    public static String formatTimeBoundary(Context context, String startTime, String duration)
     {
         String retVal = "";
         Calendar cal = Calendar.getInstance();
@@ -34,8 +35,12 @@ public class FormatUtils
         cal.setTimeInMillis(Long.parseLong(startTime) + Long.parseLong(duration));
         String end = new SimpleDateFormat("HH:mm").format(cal.getTime());
 
-        retVal = retVal.concat(start + " - " + end);
+        CharSequence formatted = Phrase.from(context.getResources().getString(R.string.time_span_format))
+                .put("start", start)
+                .put("end", end)
+                .format();
 
+        retVal = String.valueOf(formatted);
         return retVal;
     }
 
@@ -59,15 +64,16 @@ public class FormatUtils
              min = TimeUnit.MILLISECONDS.toMinutes(dur);
         }
 
-        retVal = retVal.concat (String.valueOf(hour) + " "
-                + context.getResources().getString(R.string.hour_abreviation) + " "
-                + String.valueOf(min) + " "
-                + context.getResources().getString(R.string.minute_abreviation));
+        CharSequence formatted = Phrase.from(context.getResources().getString(R.string.duration_format))
+                .put("hour", String.valueOf(hour))
+                .put("minute", String.valueOf(min))
+                .format();
 
+        retVal = String.valueOf(formatted);
         return retVal;
     }
 
-    public static String formatTimeStamp(String timeStamp)
+    public static String formatTimeStamp(Context context, String timeStamp)
     {
         String retVal = "";
         Calendar cal = Calendar.getInstance();
@@ -77,8 +83,14 @@ public class FormatUtils
         String month = MONTH_OF_YEAR[cal.get(Calendar.MONTH)];
         String year = String.valueOf(cal.get(Calendar.YEAR));
 
-        retVal = retVal.concat(day + ", " + date + " " + month + " " + year);
+        CharSequence formatted = Phrase.from(context.getResources().getString(R.string.date_format))
+                .put("day", day)
+                .put("date", date)
+                .put("month", month)
+                .put("year", year)
+                .format();
 
+        retVal = String.valueOf(formatted);
         return retVal;
     }
 }

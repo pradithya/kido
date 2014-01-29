@@ -1,9 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/sleep_header_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/sleep_header_left_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/night_percentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/night_percentage_string"/>
+
+            <TextView
+                android:id="@+id/nap_percentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nap_percentage_string"
+                android:layout_below="@id/night_percentage" />
+
+            <TextView
+                android:id="@+id/avg_night_sleep_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/avg_night_sleep_string"
+                android:layout_below="@id/nap_percentage" />
+
+            <TextView
+                android:id="@+id/avg_nap_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/avg_nap_duration_string"
+                android:layout_below="@id/avg_night_sleep_duration" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/sleep_header_rigth_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/sleep_percentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sleep_percentage_string"/>
+
+            <TextView
+                android:id="@+id/active_percentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "@string/active_percentage_string"
+                android:layout_below="@id/sleep_percentage" />
+
+            <TextView
+                android:id="@+id/avg_sleep_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "@string/avg_sleep_duration_string"
+                android:layout_below="@id/active_percentage" />
+
+            <TextView
+                android:id="@+id/avg_active_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/avg_active_duration_string"
+                android:layout_below="@id/avg_sleep_duration" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/sleep_activity_list"
@@ -14,10 +92,10 @@
     </ListView>
 
     <Button
-            android:id="@+id/button_start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Start"
-            android:layout_gravity="center"/>
+        android:id="@+id/button_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:layout_gravity="center" />
 
 </LinearLayout>
