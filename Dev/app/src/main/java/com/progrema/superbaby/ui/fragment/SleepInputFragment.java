@@ -46,7 +46,6 @@ public class SleepInputFragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-
         /** inflate fragment layout */
         View rootView = inflater.inflate(R.layout.fragment_sleep_input, container, false);
 
