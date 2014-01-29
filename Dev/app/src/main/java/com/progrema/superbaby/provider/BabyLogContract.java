@@ -6,9 +6,11 @@ import android.provider.BaseColumns;
 /**
  * Created by iqbalpakeh on 18/1/14.
  */
-public class BabyLogContract {
+public class BabyLogContract
+{
 
-    interface UserColumns{
+    interface UserColumns
+    {
         String USER_ID = "user_id";
         String USER_NAME = "user_name";
         String PASSWORD = "password";
@@ -16,24 +18,28 @@ public class BabyLogContract {
         String SEC_ANSWER = "security_answer";
     }
 
-    interface UserBabyMapColumns{
+    interface UserBabyMapColumns
+    {
         String USER_ID = "user_id";
         String BABY_ID = "baby_id";
     }
 
-    interface BabyColumns{
+    interface BabyColumns
+    {
         String BABY_ID = "baby_id";
         String NAME = "name";
         String BIRTHDAY = "birthday";
         String SEX = "sex";
     }
 
-    interface ActivityColumns{
+    interface ActivityColumns
+    {
         String BABY_ID = "baby_id";
         String ACTIVITY_TYPE = "activity_type";
     }
 
-    interface NursingColumns {
+    interface NursingColumns
+    {
         String ACTIVITY_ID = "activity_id";
         String BABY_ID = "baby_id";
         String TIMESTAMP = "timestamp";
@@ -42,21 +48,24 @@ public class BabyLogContract {
         String VOLUME = "volume";
     }
 
-    interface SleepColumns{
+    interface SleepColumns
+    {
         String ACTIVITY_ID = "activity_id";
         String BABY_ID = "baby_id";
         String TIMESTAMP = "timestamp";
         String DURATION = "duration";
     }
 
-    interface DiaperColumns{
+    interface DiaperColumns
+    {
         String ACTIVITY_ID = "activity_id";
         String BABY_ID = "baby_id";
         String TIMESTAMP = "timestamp";
         String TYPE = "type"; // Wet or Dry or Mix
     }
 
-    interface MeasurementTable{
+    interface MeasurementTable
+    {
         String MEASUREMENT_ID = "activity_id"; //same column name as activity
         String BABY_ID  = "baby_id";
         String TIMESTAMP = "timestamp";
@@ -64,7 +73,8 @@ public class BabyLogContract {
         String WEIGHT = "weight";
     }
 
-    interface PhotoTable{
+    interface PhotoTable
+    {
         String PHOTO_ID = "activity_id"; //same column name as activity
         String BABY_ID = "baby_id";
         String TIMESTAMP = "timestamp";
@@ -85,46 +95,56 @@ public class BabyLogContract {
     private static final String PATH_MEASUREMENT = "measurement";
     private static final String PATH_PHOTO = "photo";
 
-    public static class User implements UserColumns, BaseColumns{
+    public static class User implements UserColumns, BaseColumns
+    {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_USER).build();
     }
 
-    public static class UserBabyMap implements UserBabyMapColumns, BaseColumns{
+    public static class UserBabyMap implements UserBabyMapColumns, BaseColumns
+    {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_USER_BABY_MAP).build();
     }
 
-    public static class Baby implements BabyColumns, BaseColumns{
+    public static class Baby implements BabyColumns, BaseColumns
+    {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_BABY).build();
     }
 
-    public static class Activity implements ActivityColumns, BaseColumns{
+    public static class Activity implements ActivityColumns, BaseColumns
+    {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_ACTIVITY).build();
 
         public static final String TYPE_SLEEP = "SLEEP";
     }
 
-    public static class Nursing implements NursingColumns, BaseColumns{
+    public static class Nursing implements NursingColumns, BaseColumns
+    {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_MILK).build();
     }
 
-    public static class Sleep implements SleepColumns, BaseColumns{
+    public static class Sleep implements SleepColumns, BaseColumns
+    {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_SLEEP).build();
 
-        public static Uri buildSleepUri(String activityId){
+        public static Uri buildSleepUri(String activityId)
+        {
             return CONTENT_URI.buildUpon().appendPath(activityId).build();
         }
 
     }
 
-    public static class Diaper implements DiaperColumns, BaseColumns{
+    public static class Diaper implements DiaperColumns, BaseColumns
+    {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_DIAPER).build();
     }
 
-    public static class Measurement implements MeasurementTable, BaseColumns{
+    public static class Measurement implements MeasurementTable, BaseColumns
+    {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_MEASUREMENT).build();
     }
 
-    public static class Photo implements PhotoTable, BaseColumns{
+    public static class Photo implements PhotoTable, BaseColumns
+    {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_PHOTO).build();
     }
 

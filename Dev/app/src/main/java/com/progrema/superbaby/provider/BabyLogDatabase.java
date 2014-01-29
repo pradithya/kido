@@ -11,7 +11,8 @@ import com.progrema.superbaby.provider.BabyLogContract.*;
 /**
  * Created by iqbalpakeh on 18/1/14.
  */
-public class BabyLogDatabase extends SQLiteOpenHelper{
+public class BabyLogDatabase extends SQLiteOpenHelper
+{
 
     private static final String DATABASE_NAME = "babylog.db";
 
@@ -23,7 +24,8 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
 
     private final Context mContext;
 
-    interface Tables {
+    interface Tables
+    {
         String USER = "user";
         String USER_BABY_MAP = "user_baby_map";
         String BABY = "baby";
@@ -35,12 +37,14 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
         String PHOTO = "photo";
     }
 
-    public BabyLogDatabase(Context context){
+    public BabyLogDatabase(Context context)
+    {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         mContext = context;
     }
 
-    private interface TriggersName {
+    private interface TriggersName
+    {
         // Deletes from all activities table, when corresponding baby deleted
         String BABY_NURSING_DELETE = "baby_nursing_delete";
         String BABY_SLEEP_DELETE = "baby_sleep_delete";
@@ -51,7 +55,8 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
         String BABY_PHOTO_DELETE = "baby_photo_delete";
     }
 
-    private interface Qualified {
+    private interface Qualified
+    {
         String BABY_DIAPER = Tables.DIAPER + "." + Diaper.BABY_ID;
         String BABY_SLEEP = Tables.SLEEP + "." + Sleep.BABY_ID;
         String BABY_NURSING = Tables.NURSING + "." + Nursing.BABY_ID;
@@ -61,8 +66,8 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
-
+    public void onCreate(SQLiteDatabase db)
+    {
         db.execSQL("CREATE TABLE " + Tables.USER + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + UserColumns.USER_NAME + " TEXT NOT NULL,"
@@ -193,27 +198,32 @@ public class BabyLogDatabase extends SQLiteOpenHelper{
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int i, int i2) {
-
+    public void onUpgrade(SQLiteDatabase db, int i, int i2)
+    {
     }
 
-    public static void deleteDataBase(Context context){
+    public static void deleteDataBase(Context context)
+    {
         context.deleteDatabase(DATABASE_NAME);
     }
 
     @Override
-    public SQLiteDatabase getReadableDatabase(){
+    public SQLiteDatabase getReadableDatabase()
+    {
         SQLiteDatabase db = super.getReadableDatabase();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
             db.setForeignKeyConstraintsEnabled(true);
         }
         return db;
     }
 
     @Override
-    public SQLiteDatabase getWritableDatabase(){
+    public SQLiteDatabase getWritableDatabase()
+    {
         SQLiteDatabase db = super.getWritableDatabase();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
             db.setForeignKeyConstraintsEnabled(true);
         }
         return db;
