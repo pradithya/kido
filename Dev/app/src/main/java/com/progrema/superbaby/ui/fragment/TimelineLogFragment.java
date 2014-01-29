@@ -37,8 +37,10 @@ public class TimelineLogFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
+        /** inflate fragment layout */
         View rootView = inflater.inflate(R.layout.fragment_timeline, container, false);
 
+        /** set onClickListener to button */
         buttonQuickSleep = (Button) rootView.findViewById(R.id.quick_button_sleep);
         buttonQuickSleep.setOnClickListener(this);
 
