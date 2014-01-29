@@ -23,9 +23,8 @@ import com.progrema.superbaby.adapter.SleepHistoryCursorAdapter;
 import com.progrema.superbaby.provider.BabyLogContract;
 
 /**
- * Created by iqbalpakeh on 18/1/14.
- * @author aria
- * @author iqbalpakeh
+ * Fragment to log all sleep activity
+ *
  */
 public class SleepLogFragment extends Fragment
         implements View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor>
@@ -33,7 +32,6 @@ public class SleepLogFragment extends Fragment
 
     private static SleepLogFragment singletonSleepLogFragment = null;
     private Button startButton;
-
     private ListView sleepHistoryList;
     private SleepHistoryCursorAdapter mAdapter;
 
@@ -41,10 +39,11 @@ public class SleepLogFragment extends Fragment
     {
         @Override
         public void onChange(boolean selfChange) {
-            if (getActivity() == null){
+            if (getActivity() == null)
+            {
                 return;
             }
-            /*restart loader everytime the observer any changes*/
+            /** restart loader every time the observer any changes */
             getLoaderManager().restartLoader(LOADER_ID,null,mCallbacks);
         }
     };
@@ -57,7 +56,7 @@ public class SleepLogFragment extends Fragment
         String[] PROJECTION  =
         {
             BaseColumns._ID,
-          //BabyLogContract.Sleep.ACTIVITY_ID,
+            //BabyLogContract.Sleep.ACTIVITY_ID,
             BabyLogContract.Sleep.BABY_ID,
             BabyLogContract.Sleep.TIMESTAMP,
             BabyLogContract.Sleep.DURATION
@@ -82,21 +81,20 @@ public class SleepLogFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-
-        // inflate fragment layout
+        /** inflate fragment layout */
         View rootView = inflater.inflate(R.layout.fragment_sleep_log, container, false);
 
-        // set onClickListener to button
+        /** set onClickListener to button */
         startButton = (Button)rootView.findViewById(R.id.button_start);
         startButton.setOnClickListener(this);
 
-
+        /** register content observer and set adapter to list view */
         sleepHistoryList = (ListView) rootView.findViewById(R.id.sleep_activity_list);
         mAdapter = new SleepHistoryCursorAdapter(getActivity(),null, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         mAdapter.setLayout(R.layout.sleep_history_item);
         sleepHistoryList.setAdapter(mAdapter);
 
-        // prepare loader
+        /** prepare loader */
         mCallbacks = this;
         LoaderManager lm = getLoaderManager();
         lm.initLoader(LOADER_ID, null, mCallbacks);
@@ -131,7 +129,7 @@ public class SleepLogFragment extends Fragment
 
     private void handleStartButton()
     {
-        // jump to sleep input fragment
+        /** jump to sleep input fragment */
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.home_activity_container, SleepInputFragment.getInstance(getActivity()));
         fragmentTransaction.addToBackStack(null);
@@ -154,9 +152,9 @@ public class SleepLogFragment extends Fragment
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor)
     {
-
-        if ( cursor.getCount() > 0){
-            /*show last inserted row*/
+        if ( cursor.getCount() > 0)
+        {
+            /** show last inserted row */
             cursor.moveToFirst();
             mAdapter.swapCursor(cursor);
         }

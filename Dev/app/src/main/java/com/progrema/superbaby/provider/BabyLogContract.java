@@ -82,7 +82,6 @@ public class BabyLogContract
     }
 
     public static final String CONTENT_AUTHORITY = "com.progrema.superbaby";
-
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
     private static final String PATH_USER = "user";
@@ -95,33 +94,56 @@ public class BabyLogContract
     private static final String PATH_MEASUREMENT = "measurement";
     private static final String PATH_PHOTO = "photo";
 
+    /**
+     * User table contract class
+     *
+     */
     public static class User implements UserColumns, BaseColumns
     {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_USER).build();
     }
 
+    /**
+     * UserBabyMap table contract class
+     *
+     */
     public static class UserBabyMap implements UserBabyMapColumns, BaseColumns
     {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_USER_BABY_MAP).build();
     }
 
+    /**
+     * Baby table contract class
+     *
+     */
     public static class Baby implements BabyColumns, BaseColumns
     {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_BABY).build();
     }
 
+    /**
+     * Activity table contract class
+     *
+     */
     public static class Activity implements ActivityColumns, BaseColumns
     {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_ACTIVITY).build();
-
         public static final String TYPE_SLEEP = "SLEEP";
     }
 
+    /**
+     * Nursing table contract class
+     *
+     */
     public static class Nursing implements NursingColumns, BaseColumns
     {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_MILK).build();
     }
 
+    /**
+     * Sleep table contract class
+     *
+     */
     public static class Sleep implements SleepColumns, BaseColumns
     {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_SLEEP).build();
@@ -133,16 +155,28 @@ public class BabyLogContract
 
     }
 
+    /**
+     * Diaper table contract class
+     *
+     */
     public static class Diaper implements DiaperColumns, BaseColumns
     {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_DIAPER).build();
     }
 
+    /**
+     * Measurement table contract class
+     *
+     */
     public static class Measurement implements MeasurementTable, BaseColumns
     {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_MEASUREMENT).build();
     }
 
+    /**
+     * Photo table contract class
+     *
+     */
     public static class Photo implements PhotoTable, BaseColumns
     {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_PHOTO).build();

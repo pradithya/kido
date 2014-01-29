@@ -47,14 +47,14 @@ public class SleepInputFragment extends Fragment implements View.OnClickListener
                              Bundle savedInstanceState)
     {
 
-        // inflate fragment layout
+        /** inflate fragment layout */
         View rootView = inflater.inflate(R.layout.fragment_sleep_input, container, false);
 
-        // set onClickListener to button
+        /** set onClickListener to button */
         done = (Button) rootView.findViewById(R.id.button_done);
         done.setOnClickListener(this);
 
-        // get edit text object
+        /** get edit text object */
         babyIdInput = (EditText) rootView.findViewById(R.id.baby_id_input);
         durationInput = (EditText) rootView.findViewById(R.id.duration_input);
 
@@ -93,7 +93,6 @@ public class SleepInputFragment extends Fragment implements View.OnClickListener
         values.put(BabyLogContract.Sleep.BABY_ID, babyIdInputBuffer);
         values.put(BabyLogContract.Sleep.TIMESTAMP, sleep.getTimeStampInString());
         values.put(BabyLogContract.Sleep.DURATION, sleep.getDuration());
-
         getActivity().getContentResolver().insert(BabyLogContract.Sleep.CONTENT_URI, values);
 
         /** Go back to sleep log fragment */
