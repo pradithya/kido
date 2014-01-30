@@ -213,7 +213,7 @@ public class BabyLogDatabase extends SQLiteOpenHelper
         SQLiteDatabase db = super.getReadableDatabase();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            db.setForeignKeyConstraintsEnabled(true);
+            db.setForeignKeyConstraintsEnabled(false);
         }
         return db;
     }
@@ -224,7 +224,7 @@ public class BabyLogDatabase extends SQLiteOpenHelper
         SQLiteDatabase db = super.getWritableDatabase();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            db.setForeignKeyConstraintsEnabled(true);
+            db.setForeignKeyConstraintsEnabled(false);
         }
         return db;
     }
