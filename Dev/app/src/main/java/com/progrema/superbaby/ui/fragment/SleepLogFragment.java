@@ -132,7 +132,6 @@ public class SleepLogFragment extends Fragment
         /** jump to sleep input fragment */
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.home_activity_container, SleepInputFragment.getInstance(getActivity()));
-        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 
     }

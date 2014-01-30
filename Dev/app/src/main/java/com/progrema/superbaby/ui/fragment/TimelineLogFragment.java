@@ -63,7 +63,6 @@ public class TimelineLogFragment extends Fragment implements View.OnClickListene
         /** Jump to stopwatch fragment */
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.home_activity_container, StopwatchFragment.getInstance(getActivity()));
-        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 }
