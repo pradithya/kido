@@ -12,19 +12,19 @@ import com.progrema.superbaby.R;
 /**
  * Created by iqbalpakeh on 18/1/14.
  */
-public class TimelineLogFragment extends Fragment implements View.OnClickListener
+public class TimeLineLogFragment extends Fragment implements View.OnClickListener
 {
 
-    private static TimelineLogFragment singletonTimelineLogFragment = null;
+    private static TimeLineLogFragment singletonTimeLineLogFragment = null;
     private Button buttonQuickSleep;
 
-    public static synchronized TimelineLogFragment getInstance()
+    public static synchronized TimeLineLogFragment getInstance()
     {
-        if (singletonTimelineLogFragment == null)
+        if (singletonTimeLineLogFragment == null)
         {
-            singletonTimelineLogFragment = new TimelineLogFragment();
+            singletonTimeLineLogFragment = new TimeLineLogFragment();
         }
-        return singletonTimelineLogFragment;
+        return singletonTimeLineLogFragment;
     }
 
     @Override

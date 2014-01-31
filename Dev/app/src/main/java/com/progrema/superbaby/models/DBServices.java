@@ -5,6 +5,13 @@ package com.progrema.superbaby.models;
  */
 public interface DBServices
 {
+    /**
+     * Database insert operation
+     */
     public void insert();
+
+    /**
+     * Database delete operation
+     */
     public void delete();
 }
