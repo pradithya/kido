@@ -1,6 +1,5 @@
 package com.progrema.superbaby.ui.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -19,16 +18,11 @@ public class TimelineLogFragment extends Fragment implements View.OnClickListene
     private static TimelineLogFragment singletonTimelineLogFragment = null;
     private Button buttonQuickSleep;
 
-    public TimelineLogFragment(Context context)
-    {
-        /** Empty constructor */
-    }
-
-    public static synchronized TimelineLogFragment getInstance(Context context)
+    public static synchronized TimelineLogFragment getInstance()
     {
         if (singletonTimelineLogFragment == null)
         {
-            singletonTimelineLogFragment = new TimelineLogFragment(context.getApplicationContext());
+            singletonTimelineLogFragment = new TimelineLogFragment();
         }
         return singletonTimelineLogFragment;
     }
@@ -62,7 +56,7 @@ public class TimelineLogFragment extends Fragment implements View.OnClickListene
     {
         /** Jump to stopwatch fragment */
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.home_activity_container, StopwatchFragment.getInstance(getActivity()));
+        fragmentTransaction.replace(R.id.home_activity_container, StopwatchFragment.getInstance());
         fragmentTransaction.commit();
     }
 }

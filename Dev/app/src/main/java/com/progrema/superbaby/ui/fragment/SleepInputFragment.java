@@ -1,7 +1,5 @@
 package com.progrema.superbaby.ui.fragment;
 
-import android.content.ContentValues;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -12,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.models.Sleep;
-import com.progrema.superbaby.provider.BabyLogContract;
 
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
@@ -28,16 +25,11 @@ public class SleepInputFragment extends Fragment implements View.OnClickListener
     private EditText babyIdInput;
     private EditText durationInput;
 
-    public SleepInputFragment(Context context)
-    {
-        /** Empty constructor */
-    }
-
-    public static synchronized SleepInputFragment getInstance(Context context)
+    public static synchronized SleepInputFragment getInstance()
     {
         if (singletonSleepInputFragment == null)
         {
-            singletonSleepInputFragment = new SleepInputFragment(context.getApplicationContext());
+            singletonSleepInputFragment = new SleepInputFragment();
         }
         return singletonSleepInputFragment;
     }
@@ -68,35 +60,31 @@ public class SleepInputFragment extends Fragment implements View.OnClickListener
             case R.id.button_done:
                 handleDoneButton();
                 break;
-
         }
-
     }
 
     private void handleDoneButton()
     {
         String babyIdInputBuffer;
         String durationInputBuffer;
+        Calendar currentTime;
+
+        currentTime = Calendar.getInstance();
 
         /** Get data from UI */
         babyIdInputBuffer = babyIdInput.getText().toString();
         durationInputBuffer = durationInput.getText().toString();
 
         /** Store to DB */
-        Sleep sleep = new Sleep();
-        Calendar currentTime = Calendar.getInstance();
+        Sleep sleep = new Sleep(getActivity());
         sleep.setTimeStamp(String.valueOf(currentTime.getTimeInMillis()));
+        sleep.setBabyID(Long.parseLong(babyIdInputBuffer));
         sleep.setDuration(TimeUnit.SECONDS.toMillis(Long.parseLong(durationInputBuffer)));
-
-        ContentValues values = new ContentValues();
-        values.put(BabyLogContract.Sleep.BABY_ID, babyIdInputBuffer);
-        values.put(BabyLogContract.Sleep.TIMESTAMP, sleep.getTimeStampInString());
-        values.put(BabyLogContract.Sleep.DURATION, sleep.getDuration());
-        getActivity().getContentResolver().insert(BabyLogContract.Sleep.CONTENT_URI, values);
+        sleep.insert();
 
         /** Go back to sleep log fragment */
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.home_activity_container, SleepLogFragment.getInstance(getActivity()));
+        fragmentTransaction.replace(R.id.home_activity_container, SleepLogFragment.getInstance());
         fragmentTransaction.commit();
 
     }

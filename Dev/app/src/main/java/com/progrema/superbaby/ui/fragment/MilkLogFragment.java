@@ -1,6 +1,5 @@
 package com.progrema.superbaby.ui.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,16 +15,11 @@ public class MilkLogFragment extends Fragment
 
     private static MilkLogFragment singletonMilkLogFragment = null;
 
-    public MilkLogFragment(Context context)
-    {
-        /** Empty constructor */
-    }
-
-    public static synchronized MilkLogFragment getInstance(Context context)
+    public static synchronized MilkLogFragment getInstance()
     {
         if (singletonMilkLogFragment == null)
         {
-            singletonMilkLogFragment = new MilkLogFragment(context.getApplicationContext());
+            singletonMilkLogFragment = new MilkLogFragment();
         }
         return singletonMilkLogFragment;
     }

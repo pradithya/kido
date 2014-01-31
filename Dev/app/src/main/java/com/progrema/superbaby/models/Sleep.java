@@ -1,19 +1,22 @@
 package com.progrema.superbaby.models;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.os.Parcel;
+import com.progrema.superbaby.provider.BabyLogContract;
 
-/**
- * Created by iqbalpakeh on 22/1/14.
- * @author aria
- * @author iqbalpakeh
- */
-public class Sleep extends BaseActivity
+public class Sleep extends BaseActivity implements DBServices
 {
-
     private long duration;
 
-    void Sleep(Parcel parcel)
+    public Sleep(Context context)
     {
+        this.context = context;
+    }
+
+    void Sleep(Context context, Parcel parcel)
+    {
+        this.context = context;
         readFromParcel(parcel);
     }
 
@@ -44,5 +47,21 @@ public class Sleep extends BaseActivity
     public void setDuration(long duration)
     {
         this.duration = duration;
+    }
+
+    @Override
+    public void insert()
+    {
+        ContentValues values = new ContentValues();
+        //TODO: how to get the value of ActivityId??
+        values.put(BabyLogContract.Sleep.BABY_ID, getBabyID());
+        values.put(BabyLogContract.Sleep.TIMESTAMP, getTimeStampInString());
+        values.put(BabyLogContract.Sleep.DURATION, getDuration());
+        context.getContentResolver().insert(BabyLogContract.Sleep.CONTENT_URI, values);
+    }
+
+    @Override
+    public void delete()
+    {
     }
 }

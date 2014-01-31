@@ -16,16 +16,11 @@ public class DiaperInputFragment extends Fragment
 
     private static DiaperInputFragment singletonDiaperInputFragment = null;
 
-    public DiaperInputFragment(Context context)
-    {
-        /** Empty constructor */
-    }
-
     public static synchronized DiaperInputFragment getInstance(Context context)
     {
         if (singletonDiaperInputFragment == null)
         {
-            singletonDiaperInputFragment = new DiaperInputFragment(context.getApplicationContext());
+            singletonDiaperInputFragment = new DiaperInputFragment();
         }
         return singletonDiaperInputFragment;
     }

@@ -1,5 +1,6 @@
 package com.progrema.superbaby.models;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -8,8 +9,8 @@ import android.os.Parcelable;
  */
 abstract public class BaseModel implements Parcelable
 {
-
     protected long ID;
+    protected Context context;
 
     public BaseModel()
     {

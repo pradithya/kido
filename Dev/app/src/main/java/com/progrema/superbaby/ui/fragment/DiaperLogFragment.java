@@ -1,6 +1,5 @@
 package com.progrema.superbaby.ui.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,16 +15,11 @@ public class DiaperLogFragment extends Fragment
 
     private static DiaperLogFragment singletonDiaperLogFragment = null;
 
-    public DiaperLogFragment(Context context)
-    {
-        /** Empty constructor */
-    }
-
-    public static synchronized DiaperLogFragment getInstance(Context context)
+    public static synchronized DiaperLogFragment getInstance()
     {
         if (singletonDiaperLogFragment == null)
         {
-            singletonDiaperLogFragment = new DiaperLogFragment(context.getApplicationContext());
+            singletonDiaperLogFragment = new DiaperLogFragment();
         }
         return singletonDiaperLogFragment;
     }

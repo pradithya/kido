@@ -1,6 +1,5 @@
 package com.progrema.superbaby.ui.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -26,16 +25,11 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
     private Button doneButton;
     private TextView durationView;
 
-    public StopwatchFragment(Context context)
-    {
-        /** empty constructor */
-    }
-
-    public static synchronized StopwatchFragment getInstance(Context context)
+    public static synchronized StopwatchFragment getInstance()
     {
         if (singletonStopwatchFragment == null)
         {
-            singletonStopwatchFragment = new StopwatchFragment(context.getApplicationContext());
+            singletonStopwatchFragment = new StopwatchFragment();
         }
         return singletonStopwatchFragment;
     }
@@ -113,7 +107,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
 
         /** Go back to timeline fragment */
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.home_activity_container, TimelineLogFragment.getInstance(getActivity()));
+        fragmentTransaction.replace(R.id.home_activity_container, TimelineLogFragment.getInstance());
         fragmentTransaction.commit();
     }
 

@@ -9,7 +9,6 @@ import java.util.Calendar;
  */
 abstract public class BaseActivity extends BaseModel
 {
-
     protected long babyID; //owner of the activity
     protected String timeStamp;
 

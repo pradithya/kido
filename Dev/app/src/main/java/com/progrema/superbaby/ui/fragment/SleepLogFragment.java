@@ -1,7 +1,6 @@
 package com.progrema.superbaby.ui.fragment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -63,16 +62,11 @@ public class SleepLogFragment extends Fragment
         };
     }
 
-    public SleepLogFragment(Context context)
-    {
-        /** Empty constructor */
-    }
-
-    public static synchronized SleepLogFragment getInstance(Context context)
+    public static synchronized SleepLogFragment getInstance()
     {
         if (singletonSleepLogFragment == null)
         {
-            singletonSleepLogFragment = new SleepLogFragment(context.getApplicationContext());
+            singletonSleepLogFragment = new SleepLogFragment();
         }
         return singletonSleepLogFragment;
     }
@@ -131,7 +125,7 @@ public class SleepLogFragment extends Fragment
     {
         /** jump to sleep input fragment */
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.home_activity_container, SleepInputFragment.getInstance(getActivity()));
+        fragmentTransaction.replace(R.id.home_activity_container, SleepInputFragment.getInstance());
         fragmentTransaction.commit();
 
     }

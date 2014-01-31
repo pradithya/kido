@@ -7,7 +7,7 @@ import android.os.Parcel;
  * @author aria
  * @author iqbalpakeh
  */
-public class Diaper extends BaseActivity
+public class Diaper extends BaseActivity implements DBServices
 {
 
     private DiaperType type;
@@ -69,5 +69,15 @@ public class Diaper extends BaseActivity
     {
        super.readFromParcel(parcel);
        type = DiaperType.valueOf(parcel.readString());
+    }
+
+    @Override
+    public void insert()
+    {
+    }
+
+    @Override
+    public void delete()
+    {
     }
 }

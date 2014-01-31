@@ -6,7 +6,7 @@ import android.os.Parcel;
  * Created by iqbalpakeh on 22/1/14.
  * @author aria
  */
-public class Nursing extends BaseActivity
+public class Nursing extends BaseActivity implements DBServices
 {
 
     private long duration;
@@ -88,5 +88,15 @@ public class Nursing extends BaseActivity
         duration = parcel.readLong();
         type = NursingType.valueOf(parcel.readString());
         volume = parcel.readFloat();
+    }
+
+    @Override
+    public void insert()
+    {
+    }
+
+    @Override
+    public void delete()
+    {
     }
 }

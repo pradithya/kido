@@ -62,16 +62,16 @@ public class HomeActivity extends FragmentActivity
         switch(position)
         {
             case POSITION_HOME_FRAGMENT:
-                module = TimelineLogFragment.getInstance(this);
+                module = TimelineLogFragment.getInstance();
                 break;
             case POSITION_MILK_FRAGMENT:
-                module = MilkLogFragment.getInstance(this);
+                module = MilkLogFragment.getInstance();
                 break;
             case POSITION_DIAPER_FRAGMENT:
-                module = DiaperLogFragment.getInstance(this);
+                module = DiaperLogFragment.getInstance();
                 break;
             case POSITION_SLEEP_FRAGMENT:
-                module = SleepLogFragment.getInstance(this);
+                module = SleepLogFragment.getInstance();
                 break;
         }
 

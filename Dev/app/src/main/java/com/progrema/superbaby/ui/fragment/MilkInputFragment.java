@@ -1,7 +1,6 @@
 package com.progrema.superbaby.ui.fragment;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +15,11 @@ public class MilkInputFragment extends Fragment
 
     private static MilkInputFragment singletonMilkInputFragment = null;
 
-    public MilkInputFragment(Context context)
-    {
-        /** Empty constructor */
-    }
-
-    public static synchronized MilkInputFragment getInstance(Context context)
+    public static synchronized MilkInputFragment getInstance()
     {
         if (singletonMilkInputFragment == null)
         {
-            singletonMilkInputFragment = new MilkInputFragment(context.getApplicationContext());
+            singletonMilkInputFragment = new MilkInputFragment();
         }
         return singletonMilkInputFragment;
     }

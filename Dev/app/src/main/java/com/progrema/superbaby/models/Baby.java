@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * Created by iqbalpakeh on 20/1/14.
  */
-public class Baby extends BaseActor
+public class Baby extends BaseActor implements DBServices
 {
 
     /**
@@ -102,4 +102,13 @@ public class Baby extends BaseActor
         birthday.setTime(dateOfBirth);
     }
 
+    @Override
+    public void insert()
+    {
+    }
+
+    @Override
+    public void delete()
+    {
+    }
 }

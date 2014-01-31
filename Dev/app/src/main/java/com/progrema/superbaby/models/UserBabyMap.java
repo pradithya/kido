@@ -5,8 +5,8 @@ import android.os.Parcel;
 /**
  * Created by iqbalpakeh on 22/1/14.
  */
-public class UserBabyMap extends BaseModel{
-
+public class UserBabyMap extends BaseModel implements DBServices
+{
     @Override
     public int describeContents()
     {
@@ -16,6 +16,15 @@ public class UserBabyMap extends BaseModel{
     @Override
     public void writeToParcel(Parcel parcel, int i)
     {
+    }
 
+    @Override
+    public void insert()
+    {
+    }
+
+    @Override
+    public void delete()
+    {
     }
 }

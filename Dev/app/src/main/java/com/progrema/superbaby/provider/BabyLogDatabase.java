@@ -16,8 +16,12 @@ public class BabyLogDatabase extends SQLiteOpenHelper
 
     private static final String DATABASE_NAME = "babylog.db";
 
-    // NOTE: carefully update onUpgrade() when bumping database versions to make
-    // sure user data is saved.
+    /**
+     * NOTE:
+     * carefully update onUpgrade() when bumping database versions to make
+     * sure user data is saved.
+     *
+     */
 
     private static final int VER_2014_01 = 100; // 1.0
     private static final int DATABASE_VERSION = VER_2014_01;
@@ -76,14 +80,12 @@ public class BabyLogDatabase extends SQLiteOpenHelper
                 + UserColumns.SEC_ANSWER + " TEXT NOT NULL,"
                 + " UNIQUE (" + UserColumns.USER_NAME + ") ON CONFLICT FAIL)");
 
-
         db.execSQL("CREATE TABLE " + Tables.USER_BABY_MAP + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + UserBabyMapColumns.USER_ID + " INTEGER,"
                 + UserBabyMapColumns.BABY_ID + " INTEGER,"
                 + " FOREIGN KEY (" + UserBabyMapColumns.USER_ID + ") REFERENCES " + Tables.USER + " (" + BaseColumns._ID + "),"
                 + " FOREIGN KEY (" + UserBabyMapColumns.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BaseColumns._ID + ")" +")");
-
 
         db.execSQL("CREATE TABLE " + Tables.BABY + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -108,8 +110,6 @@ public class BabyLogDatabase extends SQLiteOpenHelper
                 + " FOREIGN KEY (" + NursingColumns.ACTIVITY_ID + ") REFERENCES " + Tables.ACTIVITY + " (" + BaseColumns._ID + "),"
                 + " FOREIGN KEY (" + NursingColumns.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BaseColumns._ID+ ")" +")");
 
-
-
         db.execSQL("CREATE TABLE " + Tables.SLEEP + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + SleepColumns.ACTIVITY_ID + " TEXT NOT NULL,"
@@ -118,8 +118,6 @@ public class BabyLogDatabase extends SQLiteOpenHelper
                 + SleepColumns.DURATION + " TEXT NOT NULL,"
                 + " FOREIGN KEY (" + SleepColumns.ACTIVITY_ID + ") REFERENCES " + Tables.ACTIVITY + " (" + BaseColumns._ID + "),"
                 + " FOREIGN KEY (" + SleepColumns.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BaseColumns._ID+ ")" +")");
-
-
 
         db.execSQL("CREATE TABLE " + Tables.DIAPER + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -130,7 +128,6 @@ public class BabyLogDatabase extends SQLiteOpenHelper
                 + " FOREIGN KEY (" + DiaperColumns.ACTIVITY_ID + ") REFERENCES " + Tables.ACTIVITY + " (" + BaseColumns._ID + "),"
                 + " FOREIGN KEY (" + DiaperColumns.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BaseColumns._ID+ ")" +")");
 
-
         db.execSQL("CREATE TABLE " + Tables.MEASUREMENT + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + Measurement.MEASUREMENT_ID + " TEXT NOT NULL,"
@@ -139,8 +136,6 @@ public class BabyLogDatabase extends SQLiteOpenHelper
                 + Measurement.WEIGHT +  " REAL,"
                 + " FOREIGN KEY (" + Measurement.MEASUREMENT_ID + ") REFERENCES " + Tables.ACTIVITY + " (" + BaseColumns._ID + "),"
                 + " FOREIGN KEY (" + Measurement.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BaseColumns._ID+ ")" +")");
-
-
 
         db.execSQL("CREATE TABLE " + Tables.PHOTO + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -173,7 +168,6 @@ public class BabyLogDatabase extends SQLiteOpenHelper
                 + " WHERE " + Qualified.BABY_SLEEP + "=old." + Baby.BABY_ID
                 + ";" + " END;");
 
-
         db.execSQL("CREATE TRIGGER " + TriggersName.BABY_USER_DELETE
                 + " AFTER DELETE ON " +  Tables.BABY
                 + " FOR EACH ROW BEGIN "
@@ -194,7 +188,6 @@ public class BabyLogDatabase extends SQLiteOpenHelper
                 + " DELETE FROM " + Tables.PHOTO
                 + " WHERE " + Qualified.BABY_PHOTO+ "=old." + Baby.BABY_ID
                 + ";" + " END;");
-
     }
 
     @Override

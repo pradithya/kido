@@ -9,7 +9,7 @@ import com.progrema.superbaby.util.SecurityUtils;
  * @author aria
  * @author iqbalpakeh
  */
-public class User extends BaseActor {
+public class User extends BaseActor implements DBServices {
 
     /**
      * User private data
@@ -130,5 +130,15 @@ public class User extends BaseActor {
     public boolean verifySecurityQuestion(String inputPlainText)
     {
         return (SecurityUtils.computeSHA1(inputPlainText).compareTo(securityAnswer) == 0);
+    }
+
+    @Override
+    public void insert()
+    {
+    }
+
+    @Override
+    public void delete()
+    {
     }
 }
