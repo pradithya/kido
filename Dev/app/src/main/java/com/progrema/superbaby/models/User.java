@@ -1,5 +1,6 @@
 package com.progrema.superbaby.models;
 
+import android.content.Context;
 import android.os.Parcel;
 
 import com.progrema.superbaby.util.SecurityUtils;
@@ -133,12 +134,12 @@ public class User extends BaseActor implements DBServices {
     }
 
     @Override
-    public void insert()
+    public void insert(Context context)
     {
     }
 
     @Override
-    public void delete()
+    public void delete(Context context)
     {
     }
 }

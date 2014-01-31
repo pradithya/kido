@@ -9,14 +9,8 @@ public class Sleep extends BaseActivity implements DBServices
 {
     private long duration;
 
-    public Sleep(Context context)
+    void Sleep(Parcel parcel)
     {
-        this.context = context;
-    }
-
-    void Sleep(Context context, Parcel parcel)
-    {
-        this.context = context;
         readFromParcel(parcel);
     }
 
@@ -50,10 +44,9 @@ public class Sleep extends BaseActivity implements DBServices
     }
 
     @Override
-    public void insert()
+    public void insert(Context context)
     {
         ContentValues values = new ContentValues();
-        //TODO: how to get the value of ActivityId??
         values.put(BabyLogContract.Sleep.BABY_ID, getBabyID());
         values.put(BabyLogContract.Sleep.TIMESTAMP, getTimeStampInString());
         values.put(BabyLogContract.Sleep.DURATION, getDuration());
@@ -61,7 +54,7 @@ public class Sleep extends BaseActivity implements DBServices
     }
 
     @Override
-    public void delete()
+    public void delete(Context context)
     {
     }
 }

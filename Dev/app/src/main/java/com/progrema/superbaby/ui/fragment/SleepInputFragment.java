@@ -76,11 +76,11 @@ public class SleepInputFragment extends Fragment implements View.OnClickListener
         durationInputBuffer = durationInput.getText().toString();
 
         /** Store to DB */
-        Sleep sleep = new Sleep(getActivity());
+        Sleep sleep = new Sleep();
         sleep.setTimeStamp(String.valueOf(currentTime.getTimeInMillis()));
         sleep.setBabyID(Long.parseLong(babyIdInputBuffer));
         sleep.setDuration(TimeUnit.SECONDS.toMillis(Long.parseLong(durationInputBuffer)));
-        sleep.insert();
+        sleep.insert(getActivity());
 
         /** Go back to sleep log fragment */
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();

@@ -1,5 +1,6 @@
 package com.progrema.superbaby.models;
 
+import android.content.Context;
 import android.os.Parcel;
 
 /**
@@ -91,12 +92,12 @@ public class Nursing extends BaseActivity implements DBServices
     }
 
     @Override
-    public void insert()
+    public void insert(Context context)
     {
     }
 
     @Override
-    public void delete()
+    public void delete(Context context)
     {
     }
 }
