@@ -1,10 +1,7 @@
 package com.progrema.superbaby.ui.fragment;
 
-import android.app.Activity;
-import android.database.ContentObserver;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.BaseColumns;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -15,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CursorAdapter;
 import android.widget.ListView;
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.SleepHistoryCursorAdapter;
@@ -34,6 +30,7 @@ public class SleepLogFragment extends Fragment
     private ListView sleepHistoryList;
     private SleepHistoryCursorAdapter mAdapter;
 
+    /*
     private final ContentObserver mObserver = new ContentObserver(new Handler())
     {
         @Override
@@ -42,10 +39,11 @@ public class SleepLogFragment extends Fragment
             {
                 return;
             }
-            /** restart loader every time the observer any changes */
-            getLoaderManager().restartLoader(LOADER_ID,null,mCallbacks);
+            // restart loader every time the observer any changes
+            getLoaderManager().restartLoader(LOADER_ID, null, mCallbacks);
         }
     };
+    */
 
     private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     private static final int LOADER_ID = 1;
@@ -55,7 +53,7 @@ public class SleepLogFragment extends Fragment
         String[] PROJECTION  =
         {
             BaseColumns._ID,
-            //BabyLogContract.Sleep.ACTIVITY_ID,
+            BabyLogContract.Sleep.ACTIVITY_ID,
             BabyLogContract.Sleep.BABY_ID,
             BabyLogContract.Sleep.TIMESTAMP,
             BabyLogContract.Sleep.DURATION
@@ -84,7 +82,8 @@ public class SleepLogFragment extends Fragment
 
         /** register content observer and set adapter to list view */
         sleepHistoryList = (ListView) rootView.findViewById(R.id.sleep_activity_list);
-        mAdapter = new SleepHistoryCursorAdapter(getActivity(),null, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+        //mAdapter = new SleepHistoryCursorAdapter(getActivity(), null, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+        mAdapter = new SleepHistoryCursorAdapter(getActivity(), null, 0);
         mAdapter.setLayout(R.layout.sleep_history_item);
         sleepHistoryList.setAdapter(mAdapter);
 
@@ -107,6 +106,7 @@ public class SleepLogFragment extends Fragment
         }
     }
 
+    /*
     @Override
     public void onAttach(Activity activity)
     {
@@ -120,6 +120,7 @@ public class SleepLogFragment extends Fragment
         super.onDetach();
         getActivity().getContentResolver().unregisterContentObserver(mObserver);
     }
+    */
 
     private void handleStartButton()
     {
