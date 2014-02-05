@@ -56,6 +56,13 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     {
         // Jump to stopwatch fragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        StopwatchFragment frStopWatch = StopwatchFragment.getInstance();
+
+        /** inform the stopwatch to start counting for sleep*/
+        Bundle bundle=new Bundle();
+        bundle.putString("source", "Sleep");
+        frStopWatch.setArguments(bundle);
+
         fragmentTransaction.replace(R.id.home_activity_container, StopwatchFragment.getInstance());
         fragmentTransaction.commit();
     }

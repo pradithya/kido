@@ -55,6 +55,7 @@ public class FormatUtils
         long dur = Long.parseLong(duration); // in miliseccond
         long hour = TimeUnit.MILLISECONDS.toHours(dur);
         long min;
+        long sec;
         if (hour != 0)
         {
              min = TimeUnit.MILLISECONDS.toMinutes(dur % TimeUnit.HOURS.toMillis(hour));
@@ -64,9 +65,21 @@ public class FormatUtils
              min = TimeUnit.MILLISECONDS.toMinutes(dur);
         }
 
+        if ((min != 0) && (hour != 0))
+        {
+            sec = TimeUnit.MILLISECONDS.toSeconds(dur % TimeUnit.MINUTES.toMillis(min));
+        }else if ((min == 0) && (hour != 0))
+        {
+            sec = TimeUnit.MILLISECONDS.toSeconds(dur % TimeUnit.HOURS.toMillis(hour));
+        }else
+        {
+            sec = TimeUnit.MILLISECONDS.toSeconds(dur);
+        }
+
         CharSequence formatted = Phrase.from(context.getResources().getString(R.string.duration_format))
                 .put("hour", String.valueOf(hour))
                 .put("minute", String.valueOf(min))
+                .put("second", String.valueOf(sec))
                 .format();
 
         retVal = String.valueOf(formatted);

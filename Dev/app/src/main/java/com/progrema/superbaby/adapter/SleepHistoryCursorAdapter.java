@@ -35,9 +35,10 @@ public class SleepHistoryCursorAdapter extends CursorAdapter
     public void bindView(View view, Context context, Cursor cursor)
     {
         long id  = cursor.getLong(0);
-        long babyID = cursor.getLong(1);
-        String timeStamp = cursor.getString(2);
-        String duration = cursor.getString(3);
+        long activityID = cursor.getLong(1);
+        long babyID = cursor.getLong(2);
+        String timeStamp = cursor.getString(3);
+        String duration = cursor.getString(4);
 
         TextView textViewTimeStamp = (TextView) view.findViewById(R.id.history_item_timestamp);
         TextView textViewTimeBoundary = (TextView) view.findViewById(R.id.history_item_timeboundary);

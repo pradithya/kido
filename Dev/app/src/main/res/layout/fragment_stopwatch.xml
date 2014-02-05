@@ -5,6 +5,12 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/stopwatch_title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"/>
+
     <com.progrema.superbaby.widget.stopwatch.Stopwatch
             android:id="@+id/chronometer_widget"
             android:layout_width="match_parent"
@@ -26,10 +32,10 @@
             android:text="Start"
             android:layout_gravity="center"/>
 
-    <Button android:id="@+id/button_stopwatch_stop"
+    <Button android:id="@+id/button_stopwatch_pause"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Stop"
+            android:text="Pause"
             android:layout_gravity="center"/>
 
     <Button android:id="@+id/button_stopwatch_reset"

@@ -21,7 +21,7 @@
 
     <!--fragment sleep string-->
     <string name="date_format">{day}, {date} {month} {year}</string>
-    <string name="duration_format">{hour} h {minute} m</string>
+    <string name="duration_format">{hour} h {minute} m {second} s</string>
     <string name="time_span_format">{start} - {end}</string>
     <string name="night_percentage_string"></string>
     <string name="nap_percentage_string"></string>
