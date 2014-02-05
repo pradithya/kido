@@ -13,25 +13,25 @@ import com.progrema.superbaby.ui.activity.HomeActivity;
 /**
  * Created by iqbalpakeh on 5/2/14.
  */
-public class TutorialTwoFragment extends Fragment implements View.OnClickListener
+public class BabyInputFragment extends Fragment implements View.OnClickListener
 {
-    private static TutorialTwoFragment singletonTutorialTwoFragment = null;
+    private static BabyInputFragment singletonBabyInputFragment = null;
     private Button nextButton;
 
-    public static synchronized TutorialTwoFragment getInstance()
+    public static synchronized BabyInputFragment getInstance()
     {
-        if (singletonTutorialTwoFragment == null)
+        if (singletonBabyInputFragment == null)
         {
-            singletonTutorialTwoFragment = new TutorialTwoFragment();
+            singletonBabyInputFragment = new BabyInputFragment();
         }
-        return singletonTutorialTwoFragment;
+        return singletonBabyInputFragment;
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.fragment_tutorial_two, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_baby_input_login, container, false);
 
-        nextButton = (Button) rootView.findViewById(R.id.fragment_tutorial_two_button_next);
+        nextButton = (Button) rootView.findViewById(R.id.fragment_baby_input_button_done);
         nextButton.setOnClickListener(this);
 
         return rootView;
@@ -42,4 +42,5 @@ public class TutorialTwoFragment extends Fragment implements View.OnClickListene
         // Go to HomeActivity
         startActivity(new Intent(getActivity(), HomeActivity.class));
     }
+
 }

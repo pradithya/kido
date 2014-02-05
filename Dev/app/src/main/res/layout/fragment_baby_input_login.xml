@@ -7,9 +7,10 @@
               android:gravity="bottom">
 
     <Button
-            android:id="@+id/fragment_tutorial_two_button_next"
-            android:layout_width="match_parent"
+            android:id="@+id/fragment_baby_input_button_done"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tutorial Two: Next"/>
+            android:text="Done"
+            android:layout_gravity="center"/>
 
 </LinearLayout>

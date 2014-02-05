@@ -59,7 +59,7 @@ public class AuthenticationFragment extends Fragment implements View.OnClickList
     {
         // dummy function: move to next fragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.login_activity_container, TutorialOneFragment.getInstance());
+        fragmentTransaction.replace(R.id.login_activity_container, BabyInputFragment.getInstance());
         fragmentTransaction.commit();
     }
 
@@ -67,7 +67,7 @@ public class AuthenticationFragment extends Fragment implements View.OnClickList
     {
         // dummy function: move to next fragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.login_activity_container, TutorialOneFragment.getInstance());
+        fragmentTransaction.replace(R.id.login_activity_container, BabyInputFragment.getInstance());
         fragmentTransaction.commit();
     }
 
