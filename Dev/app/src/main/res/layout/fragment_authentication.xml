@@ -21,6 +21,22 @@
             android:hint="User Password"
             android:gravity="center"/>
 
+    <EditText
+            android:id="@+id/fragment_authentication_edit_text_security_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Security Question"
+            android:gravity="center"
+            android:visibility="gone"/>
+
+    <EditText
+            android:id="@+id/fragment_authentication_edit_text_security_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Security Answer"
+            android:gravity="center"
+            android:visibility="gone"/>
+
     <Button
             android:id="@+id/fragment_authentication_button_login"
             android:layout_width="match_parent"
@@ -33,6 +49,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Register"/>
+
+    <Button
+            android:id="@+id/fragment_authentication_button_finish_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Done"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"/>
+
 
 
 </LinearLayout>

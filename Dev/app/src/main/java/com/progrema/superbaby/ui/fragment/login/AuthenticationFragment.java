@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import com.progrema.superbaby.R;
 
 /**
@@ -17,6 +18,11 @@ public class AuthenticationFragment extends Fragment implements View.OnClickList
     private static AuthenticationFragment singletonAuthenticationFragment = null;
     private Button loginButton;
     private Button registerButton;
+    private Button finishRegisterButton;
+    private EditText userName;
+    private EditText userPassword;
+    private EditText securityQuestion;
+    private EditText securityAnswer;
 
     public static synchronized AuthenticationFragment getInstance()
     {
@@ -34,9 +40,15 @@ public class AuthenticationFragment extends Fragment implements View.OnClickList
 
         loginButton = (Button) rootView.findViewById(R.id.fragment_authentication_button_login);
         registerButton = (Button) rootView.findViewById(R.id.fragment_authentication_button_register);
+        finishRegisterButton = (Button) rootView.findViewById(R.id.fragment_authentication_button_finish_register);
+        userName = (EditText) rootView.findViewById(R.id.fragment_authentication_edit_text_name);
+        userPassword = (EditText) rootView.findViewById(R.id.button_stopwatch_pause);
+        securityQuestion = (EditText) rootView.findViewById(R.id.fragment_authentication_edit_text_security_question);
+        securityAnswer = (EditText) rootView.findViewById(R.id.fragment_authentication_edit_text_security_answer);
 
         loginButton.setOnClickListener(this);
         registerButton.setOnClickListener(this);
+        finishRegisterButton.setOnClickListener(this);
 
         return rootView;
     }
@@ -52,6 +64,9 @@ public class AuthenticationFragment extends Fragment implements View.OnClickList
             case  R.id.fragment_authentication_button_register:
                 handleRegisterButton();
                 break;
+            case  R.id.fragment_authentication_button_finish_register:
+                handleFinishRegisterButton();
+                break;
         }
     }
 
@@ -64,6 +79,19 @@ public class AuthenticationFragment extends Fragment implements View.OnClickList
     }
 
     private void handleRegisterButton()
+    {
+        // show remaining object
+        finishRegisterButton.setVisibility(View.VISIBLE);
+        securityQuestion.setVisibility(View.VISIBLE);
+        securityAnswer.setVisibility(View.VISIBLE);
+
+        // hide unnecessary object
+        loginButton.setVisibility(View.GONE);
+        registerButton.setVisibility(View.GONE);
+
+    }
+
+    private void handleFinishRegisterButton()
     {
         // dummy function: move to next fragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
