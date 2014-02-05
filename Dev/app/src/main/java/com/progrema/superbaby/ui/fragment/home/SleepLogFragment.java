@@ -1,4 +1,4 @@
-package com.progrema.superbaby.ui.fragment;
+package com.progrema.superbaby.ui.fragment.home;
 
 import android.database.Cursor;
 import android.os.Bundle;

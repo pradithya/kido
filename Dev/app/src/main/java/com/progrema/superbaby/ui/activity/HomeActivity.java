@@ -9,7 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.ui.fragment.*;
+import com.progrema.superbaby.ui.fragment.home.*;
 
 public class HomeActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks

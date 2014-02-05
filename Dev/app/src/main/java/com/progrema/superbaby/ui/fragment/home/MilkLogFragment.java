@@ -1,4 +1,4 @@
-package com.progrema.superbaby.ui.fragment;
+package com.progrema.superbaby.ui.fragment.home;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
