@@ -10,7 +10,7 @@ import com.progrema.superbaby.util.SecurityUtils;
  * @author aria
  * @author iqbalpakeh
  */
-public class User extends BaseActor implements DBServices {
+public class User extends BaseActor implements IDBServices {
 
     /**
      * User private data

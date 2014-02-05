@@ -5,7 +5,7 @@ import android.content.Context;
 import android.os.Parcel;
 import com.progrema.superbaby.provider.BabyLogContract;
 
-public class Sleep extends BaseActivity implements DBServices
+public class Sleep extends BaseActivity implements IDBServices
 {
     private long duration;
 

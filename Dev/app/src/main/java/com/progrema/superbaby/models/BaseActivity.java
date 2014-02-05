@@ -14,7 +14,6 @@ abstract public class BaseActivity extends BaseModel
 
     public BaseActivity()
     {
-        /** Empty constructor */
     }
 
     public long getBabyID()

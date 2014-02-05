@@ -38,14 +38,14 @@ public class SleepInputFragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        /** inflate fragment layout */
+        // inflate fragment layout
         View rootView = inflater.inflate(R.layout.fragment_sleep_input, container, false);
 
-        /** set onClickListener to button */
+        // set onClickListener to button
         done = (Button) rootView.findViewById(R.id.button_done);
         done.setOnClickListener(this);
 
-        /** get edit text object */
+        // get edit text object
         babyIdInput = (EditText) rootView.findViewById(R.id.baby_id_input);
         durationInput = (EditText) rootView.findViewById(R.id.duration_input);
 
@@ -71,18 +71,18 @@ public class SleepInputFragment extends Fragment implements View.OnClickListener
 
         currentTime = Calendar.getInstance();
 
-        /** Get data from UI */
+        // Get data from UI
         babyIdInputBuffer = babyIdInput.getText().toString();
         durationInputBuffer = durationInput.getText().toString();
 
-        /** Store to DB */
+        // Store to DB
         Sleep sleep = new Sleep();
         sleep.setTimeStamp(String.valueOf(currentTime.getTimeInMillis()));
         sleep.setBabyID(Long.parseLong(babyIdInputBuffer));
         sleep.setDuration(TimeUnit.SECONDS.toMillis(Long.parseLong(durationInputBuffer)));
         sleep.insert(getActivity());
 
-        /** Go back to sleep log fragment */
+        // Go back to sleep log fragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.home_activity_container, SleepLogFragment.getInstance());
         fragmentTransaction.commit();

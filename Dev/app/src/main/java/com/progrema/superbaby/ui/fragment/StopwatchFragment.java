@@ -37,23 +37,23 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        /** inflate fragment layout */
+        // inflate fragment layout
         View rootView = inflater.inflate(R.layout.fragment_stopwatch, container, false);
 
-        /** get object from fragment layout */
+        // get object from fragment layout
         startButton = (Button) rootView.findViewById(R.id.button_stopwatch_start);
         stopButton = (Button) rootView.findViewById(R.id.button_stopwatch_stop);
         resetButton = (Button) rootView.findViewById(R.id.button_stopwatch_reset);
         doneButton = (Button) rootView.findViewById(R.id.button_stopwatch_done);
         durationView = (TextView) rootView.findViewById(R.id.stopwatch_duration_view);
 
-        /** set onClickListener to button */
+        // set onClickListener to button
         startButton.setOnClickListener(this);
         stopButton.setOnClickListener(this);
         resetButton.setOnClickListener(this);
         doneButton.setOnClickListener(this);
 
-        /** get stopwatch */
+        // get stopwatch
         stopwatch = (Stopwatch) rootView.findViewById(R.id.chronometer_widget);
 
         return rootView;
@@ -105,7 +105,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
 
         stopwatch.stop();
 
-        /** Go back to timeline fragment */
+        // Go back to timeline fragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.home_activity_container, TimeLineLogFragment.getInstance());
         fragmentTransaction.commit();

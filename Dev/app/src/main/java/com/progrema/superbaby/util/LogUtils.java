@@ -95,6 +95,5 @@ public class LogUtils
 
     private LogUtils()
     {
-        /** Empty constructor */
     }
 }

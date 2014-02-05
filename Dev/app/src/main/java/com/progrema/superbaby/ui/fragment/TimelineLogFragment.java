@@ -31,10 +31,10 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        /** inflate fragment layout */
+        // inflate fragment layout
         View rootView = inflater.inflate(R.layout.fragment_timeline, container, false);
 
-        /** set onClickListener to button */
+        // set onClickListener to button
         buttonQuickSleep = (Button) rootView.findViewById(R.id.quick_button_sleep);
         buttonQuickSleep.setOnClickListener(this);
 
@@ -54,7 +54,7 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
 
     private void handleQuickSleep()
     {
-        /** Jump to stopwatch fragment */
+        // Jump to stopwatch fragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.home_activity_container, StopwatchFragment.getInstance());
         fragmentTransaction.commit();

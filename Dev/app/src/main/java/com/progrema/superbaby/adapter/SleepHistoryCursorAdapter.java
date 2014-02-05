@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
-
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.util.FormatUtils;
 
@@ -17,7 +16,6 @@ import com.progrema.superbaby.util.FormatUtils;
  */
 public class SleepHistoryCursorAdapter extends CursorAdapter
 {
-
     private LayoutInflater inflater;
     private int layout;
 
@@ -30,7 +28,7 @@ public class SleepHistoryCursorAdapter extends CursorAdapter
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent)
     {
-        return inflater.inflate(layout,parent,false);
+        return inflater.inflate(layout, parent, false);
     }
 
     @Override
@@ -45,10 +43,9 @@ public class SleepHistoryCursorAdapter extends CursorAdapter
         TextView textViewTimeBoundary = (TextView) view.findViewById(R.id.history_item_timeboundary);
         TextView textViewDuration = (TextView) view.findViewById(R.id.history_item_duration);
 
-        textViewTimeStamp.setText(FormatUtils.formatTimeStamp(context,timeStamp));
-        textViewTimeBoundary.setText(FormatUtils.formatTimeBoundary(context,timeStamp, duration));
-        textViewDuration.setText(FormatUtils.formatDuration(context,duration));
-
+        textViewTimeStamp.setText(FormatUtils.formatTimeStamp(context, timeStamp));
+        textViewTimeBoundary.setText(FormatUtils.formatTimeBoundary(context, timeStamp, duration));
+        textViewDuration.setText(FormatUtils.formatDuration(context, duration));
     }
 
     public void setLayout(int newLayout)

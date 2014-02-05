@@ -7,7 +7,7 @@ import android.os.Parcel;
  * Created by iqbalpakeh on 22/1/14.
  * @author aria
  */
-public class Nursing extends BaseActivity implements DBServices
+public class Nursing extends BaseActivity implements IDBServices
 {
 
     private long duration;

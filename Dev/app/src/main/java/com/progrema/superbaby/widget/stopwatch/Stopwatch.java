@@ -49,7 +49,7 @@ public class Stopwatch extends Chronometer implements TimerService
         minutes = 0;
         hours = 0;
 
-        /** wrong format */
+        // wrong format
         if(parts.length < 2 || parts.length > 3)
         {
             return 0;

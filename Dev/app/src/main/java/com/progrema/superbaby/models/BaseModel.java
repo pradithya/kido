@@ -12,7 +12,6 @@ abstract public class BaseModel implements Parcelable
 
     public BaseModel()
     {
-        /** Empty Constructor */
     }
 
     public long getID()

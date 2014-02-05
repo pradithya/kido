@@ -6,7 +6,7 @@ import android.os.Parcel;
 /**
  * Created by iqbalpakeh on 22/1/14.
  */
-public class UserBabyMap extends BaseModel implements DBServices
+public class UserBabyMap extends BaseModel implements IDBServices
 {
     @Override
     public int describeContents()

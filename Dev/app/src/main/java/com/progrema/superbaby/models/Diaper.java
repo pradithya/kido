@@ -8,7 +8,7 @@ import android.os.Parcel;
  * @author aria
  * @author iqbalpakeh
  */
-public class Diaper extends BaseActivity implements DBServices
+public class Diaper extends BaseActivity implements IDBServices
 {
 
     private DiaperType type;

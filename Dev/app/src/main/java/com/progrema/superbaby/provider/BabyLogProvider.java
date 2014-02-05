@@ -10,14 +10,8 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import com.progrema.superbaby.util.SelectionBuilder;
 
-/**
- * Created by iqbalpakeh on 18/1/14.
- * @author aria
- * @author iqbalpakeh
- */
 public class BabyLogProvider extends ContentProvider
 {
-
     private BabyLogDatabase mOpenHelper;
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private static final int USER = 100;
@@ -90,14 +84,14 @@ public class BabyLogProvider extends ContentProvider
         {
             case SLEEP:
             {
-                /*add new activity sleep to activity table*/
+                // add new activity sleep to activity table
                 ContentValues values = new ContentValues();
                 values.put(BabyLogContract.ActivityColumns.BABY_ID,
                         contentValues.getAsString(BabyLogContract.SleepColumns.BABY_ID));
                 values.put(BabyLogContract.ActivityColumns.ACTIVITY_TYPE, BabyLogContract.Activity.TYPE_SLEEP);
-                long actId = db.insertOrThrow(BabyLogDatabase.Tables.ACTIVITY,null,values);
+                long actId = db.insertOrThrow(BabyLogDatabase.Tables.ACTIVITY, null, values);
 
-                /*add sleep details to sleep table*/
+                // add sleep details to sleep table
                 contentValues.put(BabyLogContract.SleepColumns.ACTIVITY_ID, actId);
                 db.insertOrThrow(BabyLogDatabase.Tables.SLEEP, null, contentValues);
                 notifyChange(uri);
@@ -149,10 +143,6 @@ public class BabyLogProvider extends ContentProvider
             {
                 return null;
             }
-
         }
-
     }
-
-
 }

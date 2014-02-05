@@ -57,20 +57,20 @@ public class SleepLogFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        /** inflate fragment layout */
+        // inflate fragment layout
         View rootView = inflater.inflate(R.layout.fragment_sleep_log, container, false);
 
-        /** set onClickListener to button */
+        // set onClickListener to button
         startButton = (Button)rootView.findViewById(R.id.button_start);
         startButton.setOnClickListener(this);
 
-        /** register content observer and set adapter to list view */
+        // register content observer and set adapter to list view
         sleepHistoryList = (ListView) rootView.findViewById(R.id.sleep_activity_list);
         mAdapter = new SleepHistoryCursorAdapter(getActivity(), null, 0);
         mAdapter.setLayout(R.layout.sleep_history_item);
         sleepHistoryList.setAdapter(mAdapter);
 
-        /** prepare loader */
+        // prepare loader
         mCallbacks = this;
         LoaderManager lm = getLoaderManager();
         lm.initLoader(LOADER_ID, null, mCallbacks);
