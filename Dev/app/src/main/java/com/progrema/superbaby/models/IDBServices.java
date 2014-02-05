@@ -5,7 +5,7 @@ import android.content.Context;
 /**
  * Created by iqbalpakeh on 31/1/14.
  */
-public interface DBServices
+public interface IDBServices
 {
     /**
      * Database insert operation

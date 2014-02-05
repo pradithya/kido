@@ -29,22 +29,6 @@ public class SleepLogFragment extends Fragment
     private Button startButton;
     private ListView sleepHistoryList;
     private SleepHistoryCursorAdapter mAdapter;
-
-    /*
-    private final ContentObserver mObserver = new ContentObserver(new Handler())
-    {
-        @Override
-        public void onChange(boolean selfChange) {
-            if (getActivity() == null)
-            {
-                return;
-            }
-            // restart loader every time the observer any changes
-            getLoaderManager().restartLoader(LOADER_ID, null, mCallbacks);
-        }
-    };
-    */
-
     private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     private static final int LOADER_ID = 1;
 
@@ -82,7 +66,6 @@ public class SleepLogFragment extends Fragment
 
         /** register content observer and set adapter to list view */
         sleepHistoryList = (ListView) rootView.findViewById(R.id.sleep_activity_list);
-        //mAdapter = new SleepHistoryCursorAdapter(getActivity(), null, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         mAdapter = new SleepHistoryCursorAdapter(getActivity(), null, 0);
         mAdapter.setLayout(R.layout.sleep_history_item);
         sleepHistoryList.setAdapter(mAdapter);
@@ -105,22 +88,6 @@ public class SleepLogFragment extends Fragment
                 break;
         }
     }
-
-    /*
-    @Override
-    public void onAttach(Activity activity)
-    {
-        super.onAttach(activity);
-        activity.getContentResolver().registerContentObserver(BabyLogContract.Sleep.CONTENT_URI, true, mObserver);
-    }
-
-    @Override
-    public void onDetach()
-    {
-        super.onDetach();
-        getActivity().getContentResolver().unregisterContentObserver(mObserver);
-    }
-    */
 
     private void handleStartButton()
     {
