@@ -15,7 +15,7 @@ import com.progrema.superbaby.R;
 public class SplashScreenFragment extends Fragment
 {
     private static SplashScreenFragment singletonSplashScreenFragment = null;
-    private final int SPLASH_TIME = 4000;
+    private final int SPLASH_TIME = 2000;
     private final String TAG = "SplashActivity";
     private boolean isActive = true;
 
