@@ -9,7 +9,14 @@ public class Sleep extends BaseActivity implements IDBServices
 {
     private long duration;
 
-    void Sleep(Parcel parcel)
+    /**
+     * Empty Constructor
+     */
+    public Sleep()
+    {
+    }
+
+    public Sleep(Parcel parcel)
     {
         readFromParcel(parcel);
     }

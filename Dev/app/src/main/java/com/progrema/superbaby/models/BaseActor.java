@@ -11,6 +11,10 @@ abstract public class BaseActor extends BaseModel
     protected String name;
     protected Sex sex;
 
+    public BaseActor()
+    {
+    }
+
     public String getName()
     {
         return name;
@@ -75,7 +79,7 @@ abstract public class BaseActor extends BaseModel
         // write each field into the parcel
         super.writeToParcel(parcel,i);
         parcel.writeString(name);
-        parcel.writeString(sex.getTitle()); //in timeinmillis format
+        parcel.writeString(sex.getTitle()); //time in milli second format
 
     }
 }

@@ -55,15 +55,23 @@ public class BabyLogProvider extends ContentProvider
 
         switch (match)
         {
+            case USER:
+            {
+                final SelectionBuilder builder = buildExpandableSelection(uri, match);
+                return builder.where(selection, selectionArgs).query(db, projection, sortOrder);
+            }
+
             case SLEEP:
             {
                 final SelectionBuilder builder = buildExpandableSelection(uri, match);
-                return builder.where(selection,selectionArgs).query(db,projection,sortOrder);
+                return builder.where(selection, selectionArgs).query(db, projection, sortOrder);
             }
+
             default:
             {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
             }
+
         }
     }
 
@@ -82,6 +90,13 @@ public class BabyLogProvider extends ContentProvider
 
         switch (match)
         {
+            case USER:
+            {
+                // add user to user table
+                db.insertOrThrow(BabyLogDatabase.Tables.USER, null, contentValues);
+                return BabyLogContract.User.buildUserUri(contentValues.getAsString(BaseColumns._ID));
+            }
+
             case SLEEP:
             {
                 // add new activity sleep to activity table
@@ -97,10 +112,12 @@ public class BabyLogProvider extends ContentProvider
                 notifyChange(uri);
                 return BabyLogContract.Sleep.buildSleepUri(contentValues.getAsString(BaseColumns._ID));
             }
+
             default:
             {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
             }
+
         }
     }
 

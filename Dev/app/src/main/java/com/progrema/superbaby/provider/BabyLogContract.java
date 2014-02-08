@@ -99,6 +99,11 @@ public class BabyLogContract
     public static class User implements UserColumns, BaseColumns
     {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_USER).build();
+
+        public static Uri buildUserUri(String activityId)
+        {
+            return CONTENT_URI.buildUpon().appendPath(activityId).build();
+        }
     }
 
     /**

@@ -1,15 +1,11 @@
 package com.progrema.superbaby.models;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.os.Parcel;
-
+import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.SecurityUtils;
 
-/**
- * Created by iqbalpakeh on 21/1/14.
- * @author aria
- * @author iqbalpakeh
- */
 public class User extends BaseActor implements IDBServices {
 
     /**
@@ -20,13 +16,10 @@ public class User extends BaseActor implements IDBServices {
     private String securityAnswer;
 
     /**
-     * Standard basic constructor for non-parcel
-     * object creation
-     *
+     * Empty Constructor
      */
     public User()
     {
-        /** Empty constructor */
     }
 
     /**
@@ -89,16 +82,27 @@ public class User extends BaseActor implements IDBServices {
 
     /**
      * used in changing password
-     * @param inputPlainText
+     *
+     * @param inputPlainText user's password in plaintext
      */
     public void setPassword(String inputPlainText)
     {
-        this.password = SecurityUtils.computeSHA1(password);
+        this.password = SecurityUtils.computeSHA1(inputPlainText);
     }
 
     /**
      * used in changing password
-     * @return
+     *
+     * @return password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * used in changing password
+     *
+     * @return security question
      */
     public String getSecurityQuestion()
     {
@@ -114,9 +118,31 @@ public class User extends BaseActor implements IDBServices {
     }
 
     /**
-     * used everytime user log in
-     * @param inputPlainText
-     * @return
+     * to get security answer
+     *
+     * @return security answer
+     */
+    public String getSecurityAnswer()
+    {
+        return securityAnswer;
+    }
+
+    /**
+     * set security answer
+     *
+     * @param inputPlainText user's answer
+     */
+    public void setSecurityAnswer(String inputPlainText)
+    {
+        this.securityAnswer = SecurityUtils.computeSHA1(inputPlainText);
+    }
+
+    /**
+     * used every time user log in
+     *
+     * @param inputPlainText user input in plain text
+     *
+     * @return TRUE if comparison is ok, FALSE otherwise
      */
     public boolean verifyPassword(String inputPlainText)
     {
@@ -124,9 +150,11 @@ public class User extends BaseActor implements IDBServices {
     }
 
     /**
+     * used to verify security question
      *
-     * @param inputPlainText
-     * @return
+     * @param inputPlainText user input in plain text
+     *
+     * @return TRUE if comparison is ok, FALSE otherwise
      */
     public boolean verifySecurityQuestion(String inputPlainText)
     {
@@ -136,6 +164,12 @@ public class User extends BaseActor implements IDBServices {
     @Override
     public void insert(Context context)
     {
+        ContentValues values = new ContentValues();
+        values.put(BabyLogContract.User.USER_NAME, getName());
+        values.put(BabyLogContract.User.PASSWORD, getPassword());
+        values.put(BabyLogContract.User.SEC_QUESTION, getSecurityQuestion());
+        values.put(BabyLogContract.User.SEC_ANSWER, getSecurityAnswer());
+        context.getContentResolver().insert(BabyLogContract.User.CONTENT_URI, values);
     }
 
     @Override

@@ -32,4 +32,10 @@
     <string name="avg_sleep_duration_string"></string>
     <string name="avg_active_duration_string"></string>
 
+    <!--warning message-->
+    <string name="ok_message">ok</string>
+    <string name="input_not_complete_message">Please input all required data to register</string>
+    <string name="username_already_exist_message">This user name is already exist</string>
+    <string name="wrong_username_and_password">Wrong Username and Password</string>
+
 </resources>
