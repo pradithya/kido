@@ -11,7 +11,6 @@ public class BabyLogContract
 
     interface UserColumns
     {
-        String USER_ID = "user_id";
         String USER_NAME = "user_name";
         String PASSWORD = "password";
         String SEC_QUESTION = "security_question";
@@ -26,7 +25,6 @@ public class BabyLogContract
 
     interface BabyColumns
     {
-        String BABY_ID = "baby_id";
         String NAME = "name";
         String BIRTHDAY = "birthday";
         String SEX = "sex";

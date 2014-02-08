@@ -151,42 +151,42 @@ public class BabyLogDatabase extends SQLiteOpenHelper
                 + " AFTER DELETE ON " +  Tables.BABY
                 + " FOR EACH ROW BEGIN "
                 + " DELETE FROM " + Tables.DIAPER
-                + " WHERE " + Qualified.BABY_DIAPER + "=old." + Baby.BABY_ID
+                + " WHERE " + Qualified.BABY_DIAPER + "=old." + Diaper.BABY_ID
                 + ";" + " END;");
 
         db.execSQL("CREATE TRIGGER " + TriggersName.BABY_NURSING_DELETE
                 + " AFTER DELETE ON " +  Tables.BABY
                 + " FOR EACH ROW BEGIN "
                 + " DELETE FROM " + Tables.NURSING
-                + " WHERE " + Qualified.BABY_NURSING + "=old." + Baby.BABY_ID
+                + " WHERE " + Qualified.BABY_NURSING + "=old." + Nursing.BABY_ID
                 + ";" + " END;");
 
         db.execSQL("CREATE TRIGGER " + TriggersName.BABY_SLEEP_DELETE
                 + " AFTER DELETE ON " +  Tables.BABY
                 + " FOR EACH ROW BEGIN "
                 + " DELETE FROM " + Tables.SLEEP
-                + " WHERE " + Qualified.BABY_SLEEP + "=old." + Baby.BABY_ID
+                + " WHERE " + Qualified.BABY_SLEEP + "=old." + Sleep.BABY_ID
                 + ";" + " END;");
 
         db.execSQL("CREATE TRIGGER " + TriggersName.BABY_USER_DELETE
                 + " AFTER DELETE ON " +  Tables.BABY
                 + " FOR EACH ROW BEGIN "
                 + " DELETE FROM " + Tables.USER_BABY_MAP
-                + " WHERE " + Qualified.BABY_USER_MAP+ "=old." + Baby.BABY_ID
+                + " WHERE " + Qualified.BABY_USER_MAP+ "=old." + UserBabyMap.BABY_ID
                 + ";" + " END;");
 
         db.execSQL("CREATE TRIGGER " + TriggersName.BABY_MEASUREMENT_DELETE
                 + " AFTER DELETE ON " +  Tables.BABY
                 + " FOR EACH ROW BEGIN "
                 + " DELETE FROM " + Tables.MEASUREMENT
-                + " WHERE " + Qualified.BABY_MEASUREMENT+ "=old." + Baby.BABY_ID
+                + " WHERE " + Qualified.BABY_MEASUREMENT+ "=old." + Measurement.BABY_ID
                 + ";" + " END;");
 
         db.execSQL("CREATE TRIGGER " + TriggersName.BABY_PHOTO_DELETE
                 + " AFTER DELETE ON " +  Tables.BABY
                 + " FOR EACH ROW BEGIN "
                 + " DELETE FROM " + Tables.PHOTO
-                + " WHERE " + Qualified.BABY_PHOTO+ "=old." + Baby.BABY_ID
+                + " WHERE " + Qualified.BABY_PHOTO+ "=old." + Photo.BABY_ID
                 + ";" + " END;");
     }
 

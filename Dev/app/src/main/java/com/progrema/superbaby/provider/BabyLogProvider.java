@@ -87,7 +87,7 @@ public class BabyLogProvider extends ContentProvider
                 // add new activity sleep to activity table
                 ContentValues values = new ContentValues();
                 values.put(BabyLogContract.ActivityColumns.BABY_ID,
-                        contentValues.getAsString(BabyLogContract.SleepColumns.BABY_ID));
+                           contentValues.getAsString(BabyLogContract.SleepColumns.BABY_ID));
                 values.put(BabyLogContract.ActivityColumns.ACTIVITY_TYPE, BabyLogContract.Activity.TYPE_SLEEP);
                 long actId = db.insertOrThrow(BabyLogDatabase.Tables.ACTIVITY, null, values);
 
