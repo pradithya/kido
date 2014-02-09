@@ -2,6 +2,7 @@ package com.progrema.superbaby.ui.fragment.login;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,9 @@ import com.progrema.superbaby.util.SecurityUtils;
  */
 public class LogInFragment extends Fragment implements View.OnClickListener
 {
+    /**
+     * LogInFragment private data
+     */
     private static LogInFragment singletonLogInFragment = null;
     private Button loginButton;
     private Button registerButton;
@@ -32,6 +36,9 @@ public class LogInFragment extends Fragment implements View.OnClickListener
     private EditText userSecurityQuestion;
     private EditText userSecurityAnswer;
 
+    /**
+     * Constant used for username query
+     */
     private interface UserQuery
     {
         String[] PROJECTION  =
@@ -42,8 +49,19 @@ public class LogInFragment extends Fragment implements View.OnClickListener
                         BabyLogContract.User.SEC_QUESTION,
                         BabyLogContract.User.SEC_ANSWER
                 };
+
+        final int OFFSET_ID = 0;
+        final int OFFSET_USER_NAME = 1;
+        final int OFFSET_PASSWORD = 2;
+        final int OFFSET_SEC_QUESTION = 3;
+        final int OFFSET_SEC_ANSWER = 4;
     }
 
+    /**
+     * Get the instance of LogInFragment
+     *
+     * @return LogInFragment instance
+     */
     public static synchronized LogInFragment getInstance()
     {
         if (singletonLogInFragment == null)
@@ -65,6 +83,9 @@ public class LogInFragment extends Fragment implements View.OnClickListener
         userPassword = (EditText) rootView.findViewById(R.id.fragment_authentication_edit_text_password);
         userSecurityQuestion = (EditText) rootView.findViewById(R.id.fragment_authentication_edit_text_security_question);
         userSecurityAnswer = (EditText) rootView.findViewById(R.id.fragment_authentication_edit_text_security_answer);
+
+        userPassword.setTypeface(Typeface.DEFAULT);
+        userSecurityAnswer.setTypeface(Typeface.DEFAULT);
 
         loginButton.setOnClickListener(this);
         registerButton.setOnClickListener(this);
@@ -90,9 +111,12 @@ public class LogInFragment extends Fragment implements View.OnClickListener
         }
     }
 
+    /**
+     * Handle login button
+     */
     private void handleLoginButton()
     {
-        String name, password, secQuestion, secAnswer, userMessage;
+        String name, password, userMessage;
         name = userName.getText().toString();
         password = userPassword.getText().toString();
 
@@ -102,15 +126,17 @@ public class LogInFragment extends Fragment implements View.OnClickListener
         {
             // Go to HomeActivity
             startActivity(new Intent(getActivity(), HomeActivity.class));
+            return;
         }
-        else
-        {
-            // show warning message to user
-            Toast toast = Toast.makeText(getActivity(), userMessage, Toast.LENGTH_LONG);
-            toast.show();
-        }
+
+        // show warning message to user
+        Toast toast = Toast.makeText(getActivity(), userMessage, Toast.LENGTH_LONG);
+        toast.show();
     }
 
+    /**
+     * Handle registration button
+     */
     private void handleRegisterButton()
     {
         // show remaining object
@@ -123,6 +149,9 @@ public class LogInFragment extends Fragment implements View.OnClickListener
         registerButton.setVisibility(View.GONE);
     }
 
+    /**
+     * Handle finish registration button
+     */
     private void handleFinishRegisterButton()
     {
         String name, password, secQuestion, secAnswer, userMessage;
@@ -147,66 +176,124 @@ public class LogInFragment extends Fragment implements View.OnClickListener
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.login_activity_container, BabyInputFragment.getInstance());
             fragmentTransaction.commit();
+            return;
         }
-        else
+        else if (userMessage.equals(getResources().getString(R.string.username_already_exist_message)))
         {
-            // show warning message to user
-            Toast toast = Toast.makeText(getActivity(), userMessage, Toast.LENGTH_LONG);
-            toast.show();
+            // hide unnecessary object
+            finishRegisterButton.setVisibility(View.GONE);
+            userSecurityQuestion.setVisibility(View.GONE);
+            userSecurityAnswer.setVisibility(View.GONE);
+
+            // show remaining object
+            loginButton.setVisibility(View.VISIBLE);
+            registerButton.setVisibility(View.VISIBLE);
         }
 
+        // show warning message to user
+        Toast toast = Toast.makeText(getActivity(), userMessage, Toast.LENGTH_LONG);
+        toast.show();
     }
 
-    private String loginInputCheck(String name, String password)
+    /**
+     * Check user's input during login
+     *
+     * @param userName user's input
+     * @param password user's input
+     * @return message describing condition of checking
+     */
+    private String loginInputCheck(String userName, String password)
     {
         // empty value checking
-        if (name.isEmpty() || password.isEmpty())
+        if (userName.isEmpty() || password.isEmpty())
         {
             return getResources().getString(R.string.input_not_complete_message);
         }
 
-        // wrong username and password checking
-        if (!isUserNamePasswordOk(name, password))
+        // user name is not registered
+        if(usernameQuery(userName).getCount() == 0)
         {
-            return getResources().getString(R.string.wrong_username_and_password);
+            return getResources().getString(R.string.username_is_not_registered_message);
         }
 
+        // username and password verification
+        if (!passwordVerification(userName, password))
+        {
+            return getResources().getString(R.string.wrong_username_and_password_message);
+        }
+
+        // everything is fine
         return getResources().getString(R.string.ok_message);
     }
 
-    private boolean isUserNamePasswordOk(String name, String password)
+    /**
+     * User name and password verification
+     *
+     * @param name user's input
+     * @param password user's input
+     * @return TRUE if verification is okay, FALSE otherwise
+     */
+    private boolean passwordVerification(String name, String password)
     {
         Cursor cursor;
         String passwordHash;
 
-        cursor = queryUserNameFromDB(name);
-        cursor.moveToFirst();
-        passwordHash = cursor.getString(2);
+        // get username from user input and password's hash value from database
+        cursor = usernameQuery(name);
+        if (cursor.getCount() > 0)
+        {
+            cursor.moveToFirst();
+            passwordHash = cursor.getString(UserQuery.OFFSET_PASSWORD);
 
-        return (SecurityUtils.computeSHA1(password).compareTo(passwordHash) == 0);
+            // compare the hash value of stored password and input password
+            return (SecurityUtils.computeSHA1(password).compareTo(passwordHash) == 0);
+        }
+        else
+        {
+            return false;
+        }
+
     }
 
-    private String registerInputCheck(String name, String password, String secQuestion, String secAnswer)
+    /**
+     * Check user's input during registration
+     *
+     * @param userName user's input
+     * @param password user's input
+     * @param secQuestion user's input
+     * @param secAnswer user's input
+     * @return message describing condition of checking
+     */
+    private String registerInputCheck(String userName, String password, String secQuestion, String secAnswer)
     {
         // empty value checking
-        if (name.isEmpty() || password.isEmpty() ||
+        if (userName.isEmpty() || password.isEmpty() ||
                 secQuestion.isEmpty() || secAnswer.isEmpty())
         {
             return getResources().getString(R.string.input_not_complete_message);
         }
 
         // user name already exist checking
-        if(queryUserNameFromDB(name).getCount() > 0)
+        if(usernameQuery(userName).getCount() > 0)
         {
             return getResources().getString(R.string.username_already_exist_message);
         }
 
+        // everything is fine
         return getResources().getString(R.string.ok_message);
     }
 
-    private Cursor queryUserNameFromDB(String name)
+    /**
+     * Query username from data base
+     *
+     * @param userName user input
+     * @return cursor containing user query result
+     */
+    private Cursor usernameQuery(String userName)
     {
-        String [] selectionArgument = {name};
+        //TODO: we should do it on another thread and show the waiting icon
+
+        String [] selectionArgument = {userName};
         return getActivity().getContentResolver().query(BabyLogContract.User.CONTENT_URI,
                 UserQuery.PROJECTION,
                 BabyLogContract.User.USER_NAME + "=?",
