@@ -1,6 +1,7 @@
 package com.progrema.superbaby.ui.activity;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -129,4 +130,12 @@ public class HomeActivity extends FragmentActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        Intent goBackToAndroidLauncher = new Intent(Intent.ACTION_MAIN);
+        goBackToAndroidLauncher.addCategory(Intent.CATEGORY_HOME);
+        goBackToAndroidLauncher.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(goBackToAndroidLauncher);
+    }
 }

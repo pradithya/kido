@@ -1,6 +1,7 @@
 package com.progrema.superbaby.ui.fragment.login;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import com.progrema.superbaby.R;
 import com.progrema.superbaby.models.User;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.ui.activity.HomeActivity;
+import com.progrema.superbaby.ui.activity.LoginActivity;
 import com.progrema.superbaby.util.SecurityUtils;
 
 /**
@@ -84,6 +86,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener
         userSecurityQuestion = (EditText) rootView.findViewById(R.id.fragment_authentication_edit_text_security_question);
         userSecurityAnswer = (EditText) rootView.findViewById(R.id.fragment_authentication_edit_text_security_answer);
 
+        // we use this because of the EditText property of password set the font to be different!!
         userPassword.setTypeface(Typeface.DEFAULT);
         userSecurityAnswer.setTypeface(Typeface.DEFAULT);
 
@@ -124,6 +127,12 @@ public class LogInFragment extends Fragment implements View.OnClickListener
         userMessage = loginInputCheck(name, password);
         if (userMessage.equals(getResources().getString(R.string.ok_message)))
         {
+            // skip login for the next application startup
+            SharedPreferences setting = getActivity().getPreferences(0);
+            SharedPreferences.Editor editor = setting.edit();
+            editor.putBoolean(LoginActivity.PREF_SKIP_LOGIN, true);
+            editor.commit();
+
             // Go to HomeActivity
             startActivity(new Intent(getActivity(), HomeActivity.class));
             return;
@@ -171,6 +180,12 @@ public class LogInFragment extends Fragment implements View.OnClickListener
             user.setSecurityQuestion(secQuestion);
             user.setSecurityAnswer(secAnswer);
             user.insert(getActivity());
+
+            // skip login for the next application startup
+            SharedPreferences setting = getActivity().getPreferences(0);
+            SharedPreferences.Editor editor = setting.edit();
+            editor.putBoolean(LoginActivity.PREF_SKIP_LOGIN, true);
+            editor.commit();
 
             // move to next fragment
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
