@@ -1,53 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/stopwatch_title_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"/>
+        android:gravity="center" />
 
     <com.progrema.superbaby.widget.stopwatch.Stopwatch
-            android:id="@+id/chronometer_widget"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:textSize="22sp"
-            android:gravity="center"/>
+        android:id="@+id/chronometer_widget"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textSize="22sp"
+        android:gravity="center" />
 
     <TextView
-            android:id="@+id/stopwatch_duration_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Total duration"
-            android:gravity="center"/>
+        android:id="@+id/stopwatch_duration_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Total duration"
+        android:gravity="center" />
 
-    <Button android:id="@+id/button_stopwatch_start"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Start"
-            android:layout_gravity="center"/>
+    <Button
+        android:id="@+id/button_stopwatch_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:layout_gravity="center" />
 
-    <Button android:id="@+id/button_stopwatch_pause"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Pause"
-            android:layout_gravity="center"/>
+    <Button
+        android:id="@+id/button_stopwatch_pause"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pause"
+        android:layout_gravity="center" />
 
-    <Button android:id="@+id/button_stopwatch_reset"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Reset"
-            android:layout_gravity="center"/>
+    <Button
+        android:id="@+id/button_stopwatch_reset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reset"
+        android:layout_gravity="center" />
 
-    <Button android:id="@+id/button_stopwatch_done"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Done"
-            android:layout_gravity="center"/>
+    <Button
+        android:id="@+id/button_stopwatch_done"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:layout_gravity="center" />
 
 </LinearLayout>

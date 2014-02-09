@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/fragment_authentication_edit_text_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="User Name"
+        android:gravity="center"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/fragment_authentication_edit_text_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="User Password"
+        android:gravity="center"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/fragment_authentication_edit_text_security_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Security Question"
+        android:gravity="center"
+        android:visibility="gone"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/fragment_authentication_edit_text_security_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Security Answer"
+        android:gravity="center"
+        android:visibility="gone"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/fragment_authentication_button_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/fragment_authentication_button_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Register" />
+
+    <Button
+        android:id="@+id/fragment_authentication_button_finish_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:layout_marginTop="16dp"
+        android:visibility="gone" />
+
+</LinearLayout>

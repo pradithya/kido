@@ -21,7 +21,7 @@
                 android:id="@+id/night_percentage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/night_percentage_string"/>
+                android:text="@string/night_percentage_string" />
 
             <TextView
                 android:id="@+id/nap_percentage"
@@ -56,20 +56,20 @@
                 android:id="@+id/sleep_percentage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/sleep_percentage_string"/>
+                android:text="@string/sleep_percentage_string" />
 
             <TextView
                 android:id="@+id/active_percentage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "@string/active_percentage_string"
+                android:text="@string/active_percentage_string"
                 android:layout_below="@id/sleep_percentage" />
 
             <TextView
                 android:id="@+id/avg_sleep_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "@string/avg_sleep_duration_string"
+                android:text="@string/avg_sleep_duration_string"
                 android:layout_below="@id/active_percentage" />
 
             <TextView
@@ -84,10 +84,10 @@
     </LinearLayout>
 
     <ListView
-            android:id="@+id/sleep_activity_list"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+        android:id="@+id/sleep_activity_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <Button
         android:id="@+id/button_start"
