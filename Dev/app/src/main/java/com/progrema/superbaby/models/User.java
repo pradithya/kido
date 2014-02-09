@@ -134,31 +134,7 @@ public class User extends BaseActor implements IDBServices {
      */
     public void setSecurityAnswer(String inputPlainText)
     {
-        this.securityAnswer = SecurityUtils.computeSHA1(inputPlainText);
-    }
-
-    /**
-     * used every time user log in
-     *
-     * @param inputPlainText user input in plain text
-     *
-     * @return TRUE if comparison is ok, FALSE otherwise
-     */
-    public boolean verifyPassword(String inputPlainText)
-    {
-        return (SecurityUtils.computeSHA1(inputPlainText).compareTo(password) == 0);
-    }
-
-    /**
-     * used to verify security question
-     *
-     * @param inputPlainText user input in plain text
-     *
-     * @return TRUE if comparison is ok, FALSE otherwise
-     */
-    public boolean verifySecurityQuestion(String inputPlainText)
-    {
-        return (SecurityUtils.computeSHA1(inputPlainText).compareTo(securityAnswer) == 0);
+        this.securityAnswer =  SecurityUtils.computeSHA1(inputPlainText);
     }
 
     @Override

@@ -152,10 +152,16 @@ public class BabyLogProvider extends ContentProvider
         final SelectionBuilder builder = new SelectionBuilder();
         switch(match)
         {
+            case USER:
+            {
+                return builder.table(BabyLogDatabase.Tables.USER);
+            }
+
             case SLEEP:
             {
                 return builder.table(BabyLogDatabase.Tables.SLEEP);
             }
+
             default :
             {
                 return null;

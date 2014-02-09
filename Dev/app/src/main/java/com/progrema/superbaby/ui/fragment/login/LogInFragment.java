@@ -1,7 +1,9 @@
 package com.progrema.superbaby.ui.fragment.login;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -12,7 +14,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.models.User;
+import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.ui.activity.HomeActivity;
+import com.progrema.superbaby.util.SecurityUtils;
 
 /**
  * Created by iqbalpakeh on 5/2/14.
@@ -27,6 +31,18 @@ public class LogInFragment extends Fragment implements View.OnClickListener
     private EditText userPassword;
     private EditText userSecurityQuestion;
     private EditText userSecurityAnswer;
+
+    private interface UserQuery
+    {
+        String[] PROJECTION  =
+                {
+                        BaseColumns._ID,
+                        BabyLogContract.User.USER_NAME,
+                        BabyLogContract.User.PASSWORD,
+                        BabyLogContract.User.SEC_QUESTION,
+                        BabyLogContract.User.SEC_ANSWER
+                };
+    }
 
     public static synchronized LogInFragment getInstance()
     {
@@ -79,11 +95,9 @@ public class LogInFragment extends Fragment implements View.OnClickListener
         String name, password, secQuestion, secAnswer, userMessage;
         name = userName.getText().toString();
         password = userPassword.getText().toString();
-        secQuestion = userSecurityQuestion.getText().toString();
-        secAnswer = userSecurityAnswer.getText().toString();
-        userMessage = loginInputCheck(name, password, secQuestion, secAnswer);
 
         // user input checking
+        userMessage = loginInputCheck(name, password);
         if (userMessage.equals(getResources().getString(R.string.ok_message)))
         {
             // Go to HomeActivity
@@ -116,9 +130,9 @@ public class LogInFragment extends Fragment implements View.OnClickListener
         password = userPassword.getText().toString();
         secQuestion = userSecurityQuestion.getText().toString();
         secAnswer = userSecurityAnswer.getText().toString();
-        userMessage = registerInputCheck(name, password, secQuestion, secAnswer);
 
         // user input checking
+        userMessage = registerInputCheck(name, password, secQuestion, secAnswer);
         if (userMessage.equals(getResources().getString(R.string.ok_message)))
         {
             // get input value and store to DB
@@ -143,18 +157,33 @@ public class LogInFragment extends Fragment implements View.OnClickListener
 
     }
 
-    private String loginInputCheck(String name, String password, String secQuestion, String secAnswer)
+    private String loginInputCheck(String name, String password)
     {
         // empty value checking
-        if (name.isEmpty() || password.isEmpty() ||
-                secQuestion.isEmpty() || secAnswer.isEmpty())
+        if (name.isEmpty() || password.isEmpty())
         {
             return getResources().getString(R.string.input_not_complete_message);
         }
 
-        // TODO: wrong username and password checking
+        // wrong username and password checking
+        if (!isUserNamePasswordOk(name, password))
+        {
+            return getResources().getString(R.string.wrong_username_and_password);
+        }
 
         return getResources().getString(R.string.ok_message);
+    }
+
+    private boolean isUserNamePasswordOk(String name, String password)
+    {
+        Cursor cursor;
+        String passwordHash;
+
+        cursor = queryUserNameFromDB(name);
+        cursor.moveToFirst();
+        passwordHash = cursor.getString(2);
+
+        return (SecurityUtils.computeSHA1(password).compareTo(passwordHash) == 0);
     }
 
     private String registerInputCheck(String name, String password, String secQuestion, String secAnswer)
@@ -166,10 +195,22 @@ public class LogInFragment extends Fragment implements View.OnClickListener
             return getResources().getString(R.string.input_not_complete_message);
         }
 
-        // TODO: user name already exist checking. Use register_username_exist if happened!!
-
+        // user name already exist checking
+        if(queryUserNameFromDB(name).getCount() > 0)
+        {
+            return getResources().getString(R.string.username_already_exist_message);
+        }
 
         return getResources().getString(R.string.ok_message);
     }
 
+    private Cursor queryUserNameFromDB(String name)
+    {
+        String [] selectionArgument = {name};
+        return getActivity().getContentResolver().query(BabyLogContract.User.CONTENT_URI,
+                UserQuery.PROJECTION,
+                BabyLogContract.User.USER_NAME + "=?",
+                selectionArgument,
+                BabyLogContract.User.USER_NAME);
+    }
 }

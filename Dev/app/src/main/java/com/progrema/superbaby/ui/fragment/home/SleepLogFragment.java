@@ -35,13 +35,13 @@ public class SleepLogFragment extends Fragment
     private interface SleepQuery
     {
         String[] PROJECTION  =
-        {
-            BaseColumns._ID,
-            BabyLogContract.Sleep.ACTIVITY_ID,
-            BabyLogContract.Sleep.BABY_ID,
-            BabyLogContract.Sleep.TIMESTAMP,
-            BabyLogContract.Sleep.DURATION
-        };
+                {
+                        BaseColumns._ID,
+                        BabyLogContract.Sleep.ACTIVITY_ID,
+                        BabyLogContract.Sleep.BABY_ID,
+                        BabyLogContract.Sleep.TIMESTAMP,
+                        BabyLogContract.Sleep.DURATION
+                };
     }
 
     public static synchronized SleepLogFragment getInstance()
@@ -91,7 +91,7 @@ public class SleepLogFragment extends Fragment
 
     private void handleStartButton()
     {
-        /** jump to sleep input fragment */
+        // jump to sleep input fragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.home_activity_container, SleepInputFragment.getInstance());
         fragmentTransaction.commit();
