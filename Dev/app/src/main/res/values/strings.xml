@@ -35,7 +35,7 @@
     <!--warning message-->
     <string name="ok_message">ok</string>
     <string name="input_not_complete_message">Please input all required data.</string>
-    <string name="username_already_exist_message">This user name is already exist.</string>
+    <string name="username_already_exist_message">This user name is already exist. Please login.</string>
     <string name="wrong_username_and_password_message">Wrong Username and Password.</string>
     <string name="username_is_not_registered_message">This username is not registered. Please register.</string>
 

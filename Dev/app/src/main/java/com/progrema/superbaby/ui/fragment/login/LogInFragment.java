@@ -204,6 +204,8 @@ public class LogInFragment extends Fragment implements View.OnClickListener
      */
     private String loginInputCheck(String userName, String password)
     {
+        Cursor cursor;
+
         // empty value checking
         if (userName.isEmpty() || password.isEmpty())
         {
@@ -211,13 +213,14 @@ public class LogInFragment extends Fragment implements View.OnClickListener
         }
 
         // user name is not registered
-        if(usernameQuery(userName).getCount() == 0)
+        cursor = usernameQuery(userName);
+        if(cursor.getCount() == 0)
         {
             return getResources().getString(R.string.username_is_not_registered_message);
         }
 
         // username and password verification
-        if (!passwordVerification(userName, password))
+        if (!passwordVerification(cursor, password))
         {
             return getResources().getString(R.string.wrong_username_and_password_message);
         }
@@ -229,17 +232,15 @@ public class LogInFragment extends Fragment implements View.OnClickListener
     /**
      * User name and password verification
      *
-     * @param name user's input
+     * @param cursor username and password cursor
      * @param password user's input
      * @return TRUE if verification is okay, FALSE otherwise
      */
-    private boolean passwordVerification(String name, String password)
+    private boolean passwordVerification(Cursor cursor, String password)
     {
-        Cursor cursor;
         String passwordHash;
 
         // get username from user input and password's hash value from database
-        cursor = usernameQuery(name);
         if (cursor.getCount() > 0)
         {
             cursor.moveToFirst();
@@ -266,6 +267,8 @@ public class LogInFragment extends Fragment implements View.OnClickListener
      */
     private String registerInputCheck(String userName, String password, String secQuestion, String secAnswer)
     {
+        Cursor cursor;
+
         // empty value checking
         if (userName.isEmpty() || password.isEmpty() ||
                 secQuestion.isEmpty() || secAnswer.isEmpty())
@@ -274,7 +277,8 @@ public class LogInFragment extends Fragment implements View.OnClickListener
         }
 
         // user name already exist checking
-        if(usernameQuery(userName).getCount() > 0)
+        cursor = usernameQuery(userName);
+        if(cursor.getCount() > 0)
         {
             return getResources().getString(R.string.username_already_exist_message);
         }
@@ -291,7 +295,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener
      */
     private Cursor usernameQuery(String userName)
     {
-        //TODO: we should do it on another thread and show the waiting icon
+        //TODO: we should do query on another thread and show the waiting icon
 
         String [] selectionArgument = {userName};
         return getActivity().getContentResolver().query(BabyLogContract.User.CONTENT_URI,
