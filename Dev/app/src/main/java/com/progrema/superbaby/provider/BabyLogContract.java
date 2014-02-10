@@ -100,7 +100,7 @@ public class BabyLogContract
     {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_USER).build();
 
-        public static Uri buildUserUri(String activityId)
+        public static Uri buildUri(String activityId)
         {
             return CONTENT_URI.buildUpon().appendPath(activityId).build();
         }
@@ -122,6 +122,11 @@ public class BabyLogContract
     public static class Baby implements BabyColumns, BaseColumns
     {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_BABY).build();
+
+        public static Uri buildUri(String activityId)
+        {
+            return CONTENT_URI.buildUpon().appendPath(activityId).build();
+        }
     }
 
     /**
@@ -151,7 +156,7 @@ public class BabyLogContract
     {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_SLEEP).build();
 
-        public static Uri buildSleepUri(String activityId)
+        public static Uri buildUri(String activityId)
         {
             return CONTENT_URI.buildUpon().appendPath(activityId).build();
         }

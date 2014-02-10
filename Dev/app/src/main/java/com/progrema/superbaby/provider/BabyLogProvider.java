@@ -61,6 +61,12 @@ public class BabyLogProvider extends ContentProvider
                 return builder.where(selection, selectionArgs).query(db, projection, sortOrder);
             }
 
+            case BABY:
+            {
+                final SelectionBuilder builder = buildExpandableSelection(uri, match);
+                return builder.where(selection, selectionArgs).query(db, projection, sortOrder);
+            }
+
             case SLEEP:
             {
                 final SelectionBuilder builder = buildExpandableSelection(uri, match);
@@ -94,7 +100,16 @@ public class BabyLogProvider extends ContentProvider
             {
                 // add user to user table
                 db.insertOrThrow(BabyLogDatabase.Tables.USER, null, contentValues);
-                return BabyLogContract.User.buildUserUri(contentValues.getAsString(BaseColumns._ID));
+                return BabyLogContract.User.buildUri(contentValues.getAsString(BaseColumns._ID));
+            }
+
+            case BABY:
+            {
+                //TODO: create User-Baby Map Table here
+
+                // add user to baby table
+                db.insertOrThrow(BabyLogDatabase.Tables.BABY, null, contentValues);
+                return BabyLogContract.Baby.buildUri(contentValues.getAsString(BaseColumns._ID));
             }
 
             case SLEEP:
@@ -110,7 +125,7 @@ public class BabyLogProvider extends ContentProvider
                 contentValues.put(BabyLogContract.SleepColumns.ACTIVITY_ID, actId);
                 db.insertOrThrow(BabyLogDatabase.Tables.SLEEP, null, contentValues);
                 notifyChange(uri);
-                return BabyLogContract.Sleep.buildSleepUri(contentValues.getAsString(BaseColumns._ID));
+                return BabyLogContract.Sleep.buildUri(contentValues.getAsString(BaseColumns._ID));
             }
 
             default:
@@ -155,6 +170,11 @@ public class BabyLogProvider extends ContentProvider
             case USER:
             {
                 return builder.table(BabyLogDatabase.Tables.USER);
+            }
+
+            case BABY:
+            {
+                return builder.table(BabyLogDatabase.Tables.BABY);
             }
 
             case SLEEP:

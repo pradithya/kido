@@ -1,7 +1,10 @@
 package com.progrema.superbaby.models;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.os.Parcel;
+
+import com.progrema.superbaby.provider.BabyLogContract;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -84,7 +87,7 @@ public class Baby extends BaseActor implements IDBServices
 
     public String getBirthdayInString()
     {
-        return birthday.toString();
+        return String.valueOf(birthday.getTimeInMillis());
     }
 
     public Calendar getBirthdayInCalendar()
@@ -106,6 +109,11 @@ public class Baby extends BaseActor implements IDBServices
     @Override
     public void insert(Context context)
     {
+        ContentValues values = new ContentValues();
+        values.put(BabyLogContract.Baby.NAME, getName());
+        values.put(BabyLogContract.Baby.BIRTHDAY, getBirthdayInString());
+        values.put(BabyLogContract.Baby.SEX, getSex().getTitle());
+        context.getContentResolver().insert(BabyLogContract.Baby.CONTENT_URI, values);
     }
 
     @Override
