@@ -67,6 +67,12 @@ public class BabyLogProvider extends ContentProvider
                 return builder.where(selection, selectionArgs).query(db, projection, sortOrder);
             }
 
+            case USER_BABY_MAP:
+            {
+                final SelectionBuilder builder = buildExpandableSelection(uri, match);
+                return builder.where(selection, selectionArgs).query(db, projection, sortOrder);
+            }
+
             case SLEEP:
             {
                 final SelectionBuilder builder = buildExpandableSelection(uri, match);
@@ -98,18 +104,23 @@ public class BabyLogProvider extends ContentProvider
         {
             case USER:
             {
-                // add user to user table
+                // add new user to user table
                 db.insertOrThrow(BabyLogDatabase.Tables.USER, null, contentValues);
                 return BabyLogContract.User.buildUri(contentValues.getAsString(BaseColumns._ID));
             }
 
             case BABY:
             {
-                //TODO: create User-Baby Map Table here
-
-                // add user to baby table
+                // add new baby to baby table
                 db.insertOrThrow(BabyLogDatabase.Tables.BABY, null, contentValues);
                 return BabyLogContract.Baby.buildUri(contentValues.getAsString(BaseColumns._ID));
+            }
+
+            case USER_BABY_MAP:
+            {
+                // add new user-baby map to user-baby map table
+                db.insertOrThrow(BabyLogDatabase.Tables.USER_BABY_MAP, null, contentValues);
+                return BabyLogContract.UserBabyMap.buildUri(contentValues.getAsString(BaseColumns._ID));
             }
 
             case SLEEP:
@@ -175,6 +186,11 @@ public class BabyLogProvider extends ContentProvider
             case BABY:
             {
                 return builder.table(BabyLogDatabase.Tables.BABY);
+            }
+
+            case USER_BABY_MAP:
+            {
+                return builder.table(BabyLogDatabase.Tables.USER_BABY_MAP);
             }
 
             case SLEEP:

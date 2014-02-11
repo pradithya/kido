@@ -1,11 +1,8 @@
 package com.progrema.superbaby.ui.fragment.login;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.provider.BaseColumns;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -14,11 +11,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.models.User;
 import com.progrema.superbaby.provider.BabyLogContract;
-import com.progrema.superbaby.ui.activity.HomeActivity;
-import com.progrema.superbaby.ui.activity.LoginActivity;
+import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.SecurityUtils;
 
 /**
@@ -37,27 +34,6 @@ public class LogInFragment extends Fragment implements View.OnClickListener
     private EditText userPassword;
     private EditText userSecurityQuestion;
     private EditText userSecurityAnswer;
-
-    /**
-     * Constant used for username query
-     */
-    private interface UserQuery
-    {
-        String[] PROJECTION  =
-                {
-                        BaseColumns._ID,
-                        BabyLogContract.User.USER_NAME,
-                        BabyLogContract.User.PASSWORD,
-                        BabyLogContract.User.SEC_QUESTION,
-                        BabyLogContract.User.SEC_ANSWER
-                };
-
-        final int OFFSET_ID = 0;
-        final int OFFSET_USER_NAME = 1;
-        final int OFFSET_PASSWORD = 2;
-        final int OFFSET_SEC_QUESTION = 3;
-        final int OFFSET_SEC_ANSWER = 4;
-    }
 
     /**
      * Get the instance of LogInFragment
@@ -119,22 +95,21 @@ public class LogInFragment extends Fragment implements View.OnClickListener
      */
     private void handleLoginButton()
     {
-        String name, password, userMessage;
-        name = userName.getText().toString();
+        String userName, password, userMessage;
+        userName = this.userName.getText().toString();
         password = userPassword.getText().toString();
 
         // user input checking
-        userMessage = loginInputCheck(name, password);
+        userMessage = loginInputCheck(userName, password);
         if (userMessage.equals(getResources().getString(R.string.ok_message)))
         {
-            // skip login for the next application startup
-            SharedPreferences setting = getActivity().getPreferences(0);
-            SharedPreferences.Editor editor = setting.edit();
-            editor.putBoolean(LoginActivity.PREF_SKIP_LOGIN, true);
-            editor.commit();
+            // save active user in preference
+            ActiveContext.setActiveUser(getActivity(), userName);
 
-            // Go to HomeActivity
-            startActivity(new Intent(getActivity(), HomeActivity.class));
+            // move to baby input fragment
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.login_activity_container, BabyInputFragment.getInstance());
+            fragmentTransaction.commit();
             return;
         }
 
@@ -148,6 +123,35 @@ public class LogInFragment extends Fragment implements View.OnClickListener
      */
     private void handleRegisterButton()
     {
+        inflateRegisterPage();
+    }
+
+    /**
+     * Inflate the login page interface
+     */
+    private void inflateLoginPage()
+    {
+        // clear input
+        clearInput();
+
+        // hide unnecessary object
+        finishRegisterButton.setVisibility(View.GONE);
+        userSecurityQuestion.setVisibility(View.GONE);
+        userSecurityAnswer.setVisibility(View.GONE);
+
+        // show remaining object
+        loginButton.setVisibility(View.VISIBLE);
+        registerButton.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Inflate the register page interface
+     */
+    private void inflateRegisterPage()
+    {
+        // clear input
+        clearInput();
+
         // show remaining object
         finishRegisterButton.setVisibility(View.VISIBLE);
         userSecurityQuestion.setVisibility(View.VISIBLE);
@@ -156,6 +160,17 @@ public class LogInFragment extends Fragment implements View.OnClickListener
         // hide unnecessary object
         loginButton.setVisibility(View.GONE);
         registerButton.setVisibility(View.GONE);
+    }
+
+    /**
+     * Clear user input
+     */
+    private void clearInput()
+    {
+        userName.setText("");
+        userPassword.setText("");
+        userSecurityQuestion.setText("");
+        userSecurityAnswer.setText("");
     }
 
     /**
@@ -181,28 +196,12 @@ public class LogInFragment extends Fragment implements View.OnClickListener
             user.setSecurityAnswer(secAnswer);
             user.insert(getActivity());
 
-            // skip login for the next application startup
-            SharedPreferences setting = getActivity().getPreferences(0);
-            SharedPreferences.Editor editor = setting.edit();
-            editor.putBoolean(LoginActivity.PREF_SKIP_LOGIN, true);
-            editor.commit();
-
-            // move to next fragment
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.login_activity_container, BabyInputFragment.getInstance());
-            fragmentTransaction.commit();
+            inflateLoginPage();
             return;
         }
         else if (userMessage.equals(getResources().getString(R.string.username_already_exist_message)))
         {
-            // hide unnecessary object
-            finishRegisterButton.setVisibility(View.GONE);
-            userSecurityQuestion.setVisibility(View.GONE);
-            userSecurityAnswer.setVisibility(View.GONE);
-
-            // show remaining object
-            loginButton.setVisibility(View.VISIBLE);
-            registerButton.setVisibility(View.VISIBLE);
+            inflateLoginPage();
         }
 
         // show warning message to user
@@ -259,7 +258,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener
         if (cursor.getCount() > 0)
         {
             cursor.moveToFirst();
-            passwordHash = cursor.getString(UserQuery.OFFSET_PASSWORD);
+            passwordHash = cursor.getString(BabyLogContract.User.Query.OFFSET_PASSWORD);
 
             // compare the hash value of stored password and input password
             return (SecurityUtils.computeSHA1(password).compareTo(passwordHash) == 0);
@@ -314,7 +313,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener
 
         String [] selectionArgument = {userName};
         return getActivity().getContentResolver().query(BabyLogContract.User.CONTENT_URI,
-                UserQuery.PROJECTION,
+                BabyLogContract.User.Query.PROJECTION,
                 BabyLogContract.User.USER_NAME + "=?",
                 selectionArgument,
                 BabyLogContract.User.USER_NAME);

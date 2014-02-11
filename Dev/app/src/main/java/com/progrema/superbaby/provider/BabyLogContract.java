@@ -100,6 +100,23 @@ public class BabyLogContract
     {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_USER).build();
 
+        public interface Query
+        {
+            String[] PROJECTION  =
+                    {
+                            BaseColumns._ID,
+                            BabyLogContract.User.USER_NAME,
+                            BabyLogContract.User.PASSWORD,
+                            BabyLogContract.User.SEC_QUESTION,
+                            BabyLogContract.User.SEC_ANSWER
+                    };
+            final int OFFSET_ID = 0;
+            final int OFFSET_USER_NAME = 1;
+            final int OFFSET_PASSWORD = 2;
+            final int OFFSET_SEC_QUESTION = 3;
+            final int OFFSET_SEC_ANSWER = 4;
+        }
+
         public static Uri buildUri(String activityId)
         {
             return CONTENT_URI.buildUpon().appendPath(activityId).build();
@@ -113,6 +130,11 @@ public class BabyLogContract
     public static class UserBabyMap implements UserBabyMapColumns, BaseColumns
     {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_USER_BABY_MAP).build();
+
+        public static Uri buildUri(String activityId)
+        {
+            return CONTENT_URI.buildUpon().appendPath(activityId).build();
+        }
     }
 
     /**
@@ -122,6 +144,21 @@ public class BabyLogContract
     public static class Baby implements BabyColumns, BaseColumns
     {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_BABY).build();
+
+        public interface Query
+        {
+            String[] PROJECTION  =
+                    {
+                            BaseColumns._ID,
+                            Baby.NAME,
+                            Baby.BIRTHDAY,
+                            Baby.SEX
+                    };
+            final int OFFSET_ID = 0;
+            final int OFFSET_NAME = 1;
+            final int OFFSET_BIRTHDAY = 2;
+            final int OFFSET_SEX = 3;
+        }
 
         public static Uri buildUri(String activityId)
         {
@@ -155,6 +192,23 @@ public class BabyLogContract
     public static class Sleep implements SleepColumns, BaseColumns
     {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_SLEEP).build();
+
+        public interface Query
+        {
+            String[] PROJECTION  =
+                    {
+                            BaseColumns._ID,
+                            Sleep.ACTIVITY_ID,
+                            Sleep.BABY_ID,
+                            Sleep.TIMESTAMP,
+                            Sleep.DURATION
+                    };
+            final int OFFSET_ID = 0;
+            final int OFFSET_ACTIVITY_ID = 1;
+            final int OFFSET_BABY_ID = 2;
+            final int OFFSET_TIMESTAMP = 3;
+            final int OFFSET_DURATION = 4;
+        }
 
         public static Uri buildUri(String activityId)
         {

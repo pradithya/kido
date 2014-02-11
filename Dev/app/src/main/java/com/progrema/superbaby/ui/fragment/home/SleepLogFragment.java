@@ -2,7 +2,6 @@ package com.progrema.superbaby.ui.fragment.home;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.BaseColumns;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
@@ -13,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.SleepHistoryCursorAdapter;
 import com.progrema.superbaby.provider.BabyLogContract;
@@ -31,18 +31,6 @@ public class SleepLogFragment extends Fragment
     private SleepHistoryCursorAdapter mAdapter;
     private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     private static final int LOADER_ID = 1;
-
-    private interface SleepQuery
-    {
-        String[] PROJECTION  =
-                {
-                        BaseColumns._ID,
-                        BabyLogContract.Sleep.ACTIVITY_ID,
-                        BabyLogContract.Sleep.BABY_ID,
-                        BabyLogContract.Sleep.TIMESTAMP,
-                        BabyLogContract.Sleep.DURATION
-                };
-    }
 
     public static synchronized SleepLogFragment getInstance()
     {
@@ -103,7 +91,7 @@ public class SleepLogFragment extends Fragment
     {
         CursorLoader cl = new CursorLoader(getActivity(),
                                            BabyLogContract.Sleep.CONTENT_URI,
-                                           SleepQuery.PROJECTION,
+                                           BabyLogContract.Sleep.Query.PROJECTION,
                                            null,
                                            null,
                                            BabyLogContract.Sleep._ID);

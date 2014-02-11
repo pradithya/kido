@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.ui.fragment.login.SplashScreenFragment;
 
@@ -14,6 +15,7 @@ import com.progrema.superbaby.ui.fragment.login.SplashScreenFragment;
  */
 public class LoginActivity extends FragmentActivity
 {
+    public static final String PREF_LOGIN = "prefLogin";
     public static final String PREF_SKIP_LOGIN = "skipLogin";
 
     @Override
@@ -23,7 +25,7 @@ public class LoginActivity extends FragmentActivity
         setContentView(R.layout.activity_login);
 
         // decide whether we skip login or not
-        SharedPreferences setting = getPreferences(0);
+        SharedPreferences setting = getSharedPreferences(PREF_LOGIN, 0);
         boolean isSkipLogin = setting.getBoolean(PREF_SKIP_LOGIN, false);
 
         if (isSkipLogin)
