@@ -77,12 +77,6 @@ public class BabyInputFragment extends Fragment implements View.OnClickListener
         // save active baby in preference
         ActiveContext.setActiveBaby(getActivity(), babyName);
 
-        // create user-baby map table here
-        UserBabyMap map = new UserBabyMap();
-        map.setBabyId(ActiveContext.getActiveBaby(getActivity()).getID());
-        map.setUserId(ActiveContext.getActiveUser(getActivity()).getID());
-        map.insert(getActivity());
-
         // skip login for the next application startup
         SharedPreferences setting = getActivity().getSharedPreferences(LoginActivity.PREF_LOGIN, 0);
         SharedPreferences.Editor editor = setting.edit();

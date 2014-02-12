@@ -112,15 +112,20 @@ public class BabyLogProvider extends ContentProvider
             case BABY:
             {
                 // add new baby to baby table
-                db.insertOrThrow(BabyLogDatabase.Tables.BABY, null, contentValues);
-                return BabyLogContract.Baby.buildUri(contentValues.getAsString(BaseColumns._ID));
-            }
-
-            case USER_BABY_MAP:
-            {
                 // add new user-baby map to user-baby map table
-                db.insertOrThrow(BabyLogDatabase.Tables.USER_BABY_MAP, null, contentValues);
-                return BabyLogContract.UserBabyMap.buildUri(contentValues.getAsString(BaseColumns._ID));
+                ContentValues babyValue = new ContentValues();
+                babyValue.put(BabyLogContract.Baby.NAME, contentValues.getAsString(BabyLogContract.Baby.NAME));
+                babyValue.put(BabyLogContract.Baby.BIRTHDAY, contentValues.getAsString(BabyLogContract.Baby.BIRTHDAY));
+                babyValue.put(BabyLogContract.Baby.SEX, contentValues.getAsString(BabyLogContract.Baby.SEX));
+
+                long babyID = db.insertOrThrow(BabyLogDatabase.Tables.BABY, null, babyValue);
+
+                ContentValues userBabyMap = new ContentValues();
+                userBabyMap.put(BabyLogContract.UserBabyMap.USER_ID, contentValues.getAsLong(BabyLogContract.UserBabyMap.USER_ID));
+                userBabyMap.put(BabyLogContract.UserBabyMap.BABY_ID, babyID);
+
+                db.insertOrThrow(BabyLogDatabase.Tables.USER_BABY_MAP, null, userBabyMap);
+                return BabyLogContract.Baby.buildUri(contentValues.getAsString(BaseColumns._ID));
             }
 
             case SLEEP:

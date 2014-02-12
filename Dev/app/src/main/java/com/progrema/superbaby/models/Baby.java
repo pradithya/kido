@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Parcel;
 
 import com.progrema.superbaby.provider.BabyLogContract;
+import com.progrema.superbaby.util.ActiveContext;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -109,10 +110,24 @@ public class Baby extends BaseActor implements IDBServices
     @Override
     public void insert(Context context)
     {
+        User user = ActiveContext.getActiveUser(context);
         ContentValues values = new ContentValues();
         values.put(BabyLogContract.Baby.NAME, getName());
         values.put(BabyLogContract.Baby.BIRTHDAY, getBirthdayInString());
         values.put(BabyLogContract.Baby.SEX, getSex().getTitle());
+        values.put(BabyLogContract.UserBabyMap.USER_ID, user.getID());
+
+        context.getContentResolver().insert(BabyLogContract.Baby.CONTENT_URI, values);
+    }
+
+    public void insert(long userID, Context context)
+    {
+        ContentValues values = new ContentValues();
+        values.put(BabyLogContract.Baby.NAME, getName());
+        values.put(BabyLogContract.Baby.BIRTHDAY, getBirthdayInString());
+        values.put(BabyLogContract.Baby.SEX, getSex().getTitle());
+        values.put(BabyLogContract.UserBabyMap.USER_ID, userID);
+
         context.getContentResolver().insert(BabyLogContract.Baby.CONTENT_URI, values);
     }
 
