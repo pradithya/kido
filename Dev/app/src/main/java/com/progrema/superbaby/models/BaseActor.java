@@ -7,34 +7,62 @@ import android.os.Parcel;
  */
 abstract public class BaseActor extends BaseModel
 {
-
+    /**
+     * Protected field of BaseActor class
+     */
     protected String name;
     protected Sex sex;
 
+    /**
+     * BaseActor constructor
+     */
     public BaseActor()
     {
     }
 
+    /**
+     * get actor name
+     *
+     * @return actor's name
+     */
     public String getName()
     {
         return name;
     }
 
+    /**
+     * set actor name
+     *
+     * @param name actor's name
+     */
     public void setName(String name)
     {
         this.name = name;
     }
 
+    /**
+     * Get actor's sex type
+     *
+     * @return actor's sex type
+     */
     public Sex getSex()
     {
         return sex;
     }
 
+    /**
+     * Set actor's sex type
+     *
+     * @param sex
+     */
     public void setSex(Sex sex)
     {
         this.sex = sex;
     }
 
+    /**
+     * Sex Type
+     */
     public enum Sex
     {
         MALE("MALE"),

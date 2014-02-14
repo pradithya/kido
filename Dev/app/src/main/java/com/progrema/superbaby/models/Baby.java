@@ -86,22 +86,42 @@ public class Baby extends BaseActor implements IDBServices
         }
     };
 
+    /**
+     * Get baby birthday in string format
+     *
+     * @return baby birthday in string format
+     */
     public String getBirthdayInString()
     {
         return String.valueOf(birthday.getTimeInMillis());
     }
 
+    /**
+     * Get calendar object describing baby birthday
+     *
+     * @return calendar object
+     */
     public Calendar getBirthdayInCalendar()
     {
        return birthday;
     }
 
+    /**
+     * set baby birthday in string format
+     *
+     * @param birthday baby birthday
+     */
     public void setBirthday(String birthday)
     {
         this.birthday = Calendar.getInstance();
         this.birthday.setTimeInMillis(Long.valueOf(birthday));
     }
 
+    /**
+     * set baby birthday in Date object
+     *
+     * @param dateOfBirth Date object of baby birthday
+     */
     public void setBirthday(Date dateOfBirth)
     {
         birthday.setTime(dateOfBirth);
@@ -116,17 +136,6 @@ public class Baby extends BaseActor implements IDBServices
         values.put(BabyLogContract.Baby.BIRTHDAY, getBirthdayInString());
         values.put(BabyLogContract.Baby.SEX, getSex().getTitle());
         values.put(BabyLogContract.UserBabyMap.USER_ID, user.getID());
-
-        context.getContentResolver().insert(BabyLogContract.Baby.CONTENT_URI, values);
-    }
-
-    public void insert(long userID, Context context)
-    {
-        ContentValues values = new ContentValues();
-        values.put(BabyLogContract.Baby.NAME, getName());
-        values.put(BabyLogContract.Baby.BIRTHDAY, getBirthdayInString());
-        values.put(BabyLogContract.Baby.SEX, getSex().getTitle());
-        values.put(BabyLogContract.UserBabyMap.USER_ID, userID);
 
         context.getContentResolver().insert(BabyLogContract.Baby.CONTENT_URI, values);
     }

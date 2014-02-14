@@ -10,10 +10,16 @@ import com.progrema.superbaby.models.User;
 import com.progrema.superbaby.provider.BabyLogContract;
 
 /**
+ * ActiveContext class holds the active user and the baby. This object can be called anytime from
+ * application because it uses android preference class to store the value.
+ *
  * Created by iqbalpakeh on 10/2/14.
  */
 public class ActiveContext
 {
+    /**
+     * preference name of the active context object
+     */
     private static final String PREF_CONTEXT = "prefContext";
     private static final String PREF_BABY_ID = "prefBabyId";
     private static final String PREF_BABY_NAME = "prefBabyName";
@@ -22,6 +28,12 @@ public class ActiveContext
     private static final String PREF_USER_ID = "prefUserId";
     private static final String PREF_USER_NAME = "prefUserName";
 
+    /**
+     * Set the active baby
+     *
+     * @param context application context
+     * @param babyName active baby name
+     */
     public static void setActiveBaby(Context context, String babyName)
     {
         Cursor cursor = babyQuery(context, babyName);
@@ -36,6 +48,12 @@ public class ActiveContext
         editor.commit();
     }
 
+    /**
+     * Return the active Baby object
+     *
+     * @param context application context
+     * @return active Baby object
+     */
     public static Baby getActiveBaby(Context context)
     {
         SharedPreferences setting = context.getSharedPreferences(PREF_CONTEXT, 0);
@@ -55,6 +73,12 @@ public class ActiveContext
         return baby;
     }
 
+    /**
+     * Set active user
+     *
+     * @param context application context
+     * @param userName active user's name
+     */
     public static void setActiveUser(Context context, String userName)
     {
         Cursor cursor = userQuery(context, userName);
@@ -67,6 +91,12 @@ public class ActiveContext
         editor.commit();
     }
 
+    /**
+     * Get active User object
+     *
+     * @param context application context
+     * @return active User object
+     */
     public static User getActiveUser(Context context)
     {
         SharedPreferences setting = context.getSharedPreferences(PREF_CONTEXT, 0);
@@ -77,6 +107,13 @@ public class ActiveContext
         return user;
     }
 
+    /**
+     * query user data from database
+     *
+     * @param context application context
+     * @param username user name
+     * @return cursor holding the user data from database
+     */
     private static Cursor userQuery(Context context, String username)
     {
         //TODO: we should do query on another thread and show the waiting icon
@@ -89,6 +126,13 @@ public class ActiveContext
                BabyLogContract.User.USER_NAME);
     }
 
+    /**
+     * query baby data from database
+     *
+     * @param context application context
+     * @param babyName baby name
+     * @return cursor holding baby data from database
+     */
     private static Cursor babyQuery(Context context, String babyName)
     {
         //TODO: we should do query on another thread and show the waiting icon
