@@ -1,6 +1,8 @@
 package com.progrema.superbaby.adapter.navigationdrawer;
 
+import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * Created by iqbalpakeh on 15/2/14.
@@ -56,7 +58,10 @@ public abstract class Item
     /**
      * inflate view
      *
-     * @param view parent view
+     * @param context application context
+     * @param view view to inflate
+     * @param viewGroup parent view
+     * @return inflated view
      */
-    public abstract void inflate(View view);
+    public abstract View inflate(Context context, View view, ViewGroup viewGroup);
 }

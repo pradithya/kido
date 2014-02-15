@@ -1,7 +1,6 @@
 package com.progrema.superbaby.adapter.navigationdrawer;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -35,12 +34,6 @@ public class NavigationDrawerArrayAdapter extends ArrayAdapter<Item>
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        Item item = items.get(position);
-        convertView = inflater.inflate(item.getLayout(), parent, false);
-        item.inflate(convertView);
-
-        return convertView;
-
+        return items.get(position).inflate(context, convertView, parent);
     }
 }

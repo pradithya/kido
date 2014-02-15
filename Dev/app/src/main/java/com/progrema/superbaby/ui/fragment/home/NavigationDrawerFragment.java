@@ -2,8 +2,10 @@ package com.progrema.superbaby.ui.fragment.home;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -22,10 +24,10 @@ import android.widget.Toast;
 
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.navigationdrawer.ActionItem;
-import com.progrema.superbaby.adapter.navigationdrawer.BabyNameItem;
 import com.progrema.superbaby.adapter.navigationdrawer.Item;
 import com.progrema.superbaby.adapter.navigationdrawer.NavigationDrawerArrayAdapter;
 import com.progrema.superbaby.adapter.navigationdrawer.UserNameItem;
+import com.progrema.superbaby.provider.BabyLogContract;
 
 import java.util.ArrayList;
 
@@ -116,11 +118,18 @@ public class NavigationDrawerFragment extends Fragment
         ArrayList<Item> items = new ArrayList<Item>();
 
         // prepare user name
-        items.add(new UserNameItem("User Iqbal"));
+        Cursor cursor = userQuery(getActivity());
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext())
+        {
+            items.add(new UserNameItem(cursor.getString(BabyLogContract.User.Query.OFFSET_USER_NAME)));
+        }
 
         // prepare baby name
-        items.add(new BabyNameItem("Baby Safiya"));
-        items.add(new BabyNameItem("Baby Miranti"));
+        cursor = babyQuery(getActivity());
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext())
+        {
+            items.add(new UserNameItem(cursor.getString(BabyLogContract.Baby.Query.OFFSET_NAME)));
+        }
 
         // prepare action supported
         items.add(new ActionItem(getString(R.string.title_timeline_fragment)));
@@ -135,20 +144,23 @@ public class NavigationDrawerFragment extends Fragment
         return mDrawerListView;
     }
 
-//    private Cursor userQuery(Context context)
-//    {
-//        return context.getContentResolver().query(BabyLogContract.User.CONTENT_URI,
-//                BabyLogContract.User.Query.PROJECTION,
-//                null,
-//                null,
-//                BabyLogContract.User.USER_NAME);
-//    }
-//
-//    private Cursor babyQuery()
-//    {
-//        Cursor cursor;
-//        return cursor;
-//    }
+    private Cursor userQuery(Context context)
+    {
+        return context.getContentResolver().query(BabyLogContract.User.CONTENT_URI,
+                BabyLogContract.User.Query.PROJECTION,
+                null,
+                null,
+                BabyLogContract.User.USER_NAME);
+    }
+
+    private Cursor babyQuery(Context context)
+    {
+        return context.getContentResolver().query(BabyLogContract.Baby.CONTENT_URI,
+                BabyLogContract.Baby.Query.PROJECTION,
+                null,
+                null,
+                BabyLogContract.Baby.NAME);
+    }
 
     public boolean isDrawerOpen()
     {
