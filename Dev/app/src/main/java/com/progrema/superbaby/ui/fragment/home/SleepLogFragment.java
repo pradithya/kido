@@ -52,7 +52,7 @@ public class SleepLogFragment extends Fragment
         startButton = (Button)rootView.findViewById(R.id.button_start);
         startButton.setOnClickListener(this);
 
-        // register content observer and set adapter to list view
+        // set adapter to list view
         sleepHistoryList = (ListView) rootView.findViewById(R.id.sleep_activity_list);
         mAdapter = new SleepHistoryCursorAdapter(getActivity(), null, 0);
         mAdapter.setLayout(R.layout.sleep_history_item);

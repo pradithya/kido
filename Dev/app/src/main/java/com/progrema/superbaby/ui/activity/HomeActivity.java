@@ -9,8 +9,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.ui.fragment.home.*;
+import com.progrema.superbaby.ui.fragment.home.DiaperLogFragment;
+import com.progrema.superbaby.ui.fragment.home.MilkLogFragment;
+import com.progrema.superbaby.ui.fragment.home.NavigationDrawerFragment;
+import com.progrema.superbaby.ui.fragment.home.SleepLogFragment;
+import com.progrema.superbaby.ui.fragment.home.TimeLineLogFragment;
 
 public class HomeActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks
@@ -41,7 +46,7 @@ public class HomeActivity extends FragmentActivity
         setContentView(R.layout.activity_home);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getFragmentManager().findFragmentById(R.id.navigation_drawer);
+                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
         // Set up the drawer.
@@ -124,6 +129,7 @@ public class HomeActivity extends FragmentActivity
                 return true;
 
             case R.id.action_new_baby:
+                handleNewBaby();
                 return true;
         }
 
@@ -137,5 +143,14 @@ public class HomeActivity extends FragmentActivity
         goBackToAndroidLauncher.addCategory(Intent.CATEGORY_HOME);
         goBackToAndroidLauncher.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(goBackToAndroidLauncher);
+    }
+
+    private void handleNewBaby()
+    {
+        // Go to Baby input fragment in LoginActivity
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra(LoginActivity.INTENT_NEW_BABY_REQUEST, true);
+        startActivity(intent);
+        finish();
     }
 }
