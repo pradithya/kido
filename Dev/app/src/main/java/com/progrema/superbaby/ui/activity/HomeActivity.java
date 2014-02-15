@@ -56,7 +56,7 @@ public class HomeActivity extends FragmentActivity
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(int position)
+    public void onNavigationDrawerItemSelected(int position, int calibration)
     {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -64,7 +64,7 @@ public class HomeActivity extends FragmentActivity
         // fragment module
         Fragment module = null;
 
-        switch(position)
+        switch(position - calibration)
         {
             case POSITION_HOME_FRAGMENT:
                 module = TimeLineLogFragment.getInstance();

@@ -65,6 +65,7 @@ public class NavigationDrawerFragment extends Fragment
     private View mFragmentContainerView;
 
     private int mCurrentSelectedPosition = 0;
+    private int mPositionCalibration = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
@@ -107,9 +108,11 @@ public class NavigationDrawerFragment extends Fragment
     {
         mDrawerListView = (ListView) inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
-        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
                 selectItem(position);
             }
         });
@@ -130,6 +133,8 @@ public class NavigationDrawerFragment extends Fragment
         {
             items.add(new UserNameItem(cursor.getString(BabyLogContract.Baby.Query.OFFSET_NAME)));
         }
+
+        mPositionCalibration = items.size();
 
         // prepare action supported
         items.add(new ActionItem(getString(R.string.title_timeline_fragment)));
@@ -262,7 +267,7 @@ public class NavigationDrawerFragment extends Fragment
         }
         if (mCallbacks != null)
         {
-            mCallbacks.onNavigationDrawerItemSelected(position);
+            mCallbacks.onNavigationDrawerItemSelected(position, mPositionCalibration);
         }
     }
 
@@ -357,6 +362,6 @@ public class NavigationDrawerFragment extends Fragment
         /**
          * Called when an item in the navigation drawer is selected.
          */
-        void onNavigationDrawerItemSelected(int position);
+        void onNavigationDrawerItemSelected(int position, int calibration);
     }
 }
