@@ -58,7 +58,6 @@ public class HomeActivity extends FragmentActivity
     @Override
     public void onNavigationDrawerItemSelected(int position)
     {
-
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
 

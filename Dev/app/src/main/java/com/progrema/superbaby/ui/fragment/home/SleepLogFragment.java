@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.adapter.SleepHistoryCursorAdapter;
+import com.progrema.superbaby.adapter.sleephistory.SleepHistoryCursorAdapter;
 import com.progrema.superbaby.provider.BabyLogContract;
 
 /**

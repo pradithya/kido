@@ -17,11 +17,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.progrema.superbaby.R;
+import com.progrema.superbaby.adapter.navigationdrawer.ActionItem;
+import com.progrema.superbaby.adapter.navigationdrawer.BabyNameItem;
+import com.progrema.superbaby.adapter.navigationdrawer.Item;
+import com.progrema.superbaby.adapter.navigationdrawer.NavigationDrawerArrayAdapter;
+import com.progrema.superbaby.adapter.navigationdrawer.UserNameItem;
+
+import java.util.ArrayList;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -106,20 +112,43 @@ public class NavigationDrawerFragment extends Fragment
             }
         });
 
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
-                getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                new String[]{
-                        getString(R.string.title_timeline_fragment),
-                        getString(R.string.title_nursing_fragment),
-                        getString(R.string.title_diaper_fragment),
-                        getString(R.string.title_sleep_fragment),
-                }));
+        // set array list
+        ArrayList<Item> items = new ArrayList<Item>();
 
+        // prepare user name
+        items.add(new UserNameItem("User Iqbal"));
+
+        // prepare baby name
+        items.add(new BabyNameItem("Baby Safiya"));
+        items.add(new BabyNameItem("Baby Miranti"));
+
+        // prepare action supported
+        items.add(new ActionItem(getString(R.string.title_timeline_fragment)));
+        items.add(new ActionItem(getString(R.string.title_nursing_fragment)));
+        items.add(new ActionItem(getString(R.string.title_diaper_fragment)));
+        items.add(new ActionItem(getString(R.string.title_sleep_fragment)));
+
+        // set adapter
+        NavigationDrawerArrayAdapter adapter = new NavigationDrawerArrayAdapter(getActivity(), items);
+        mDrawerListView.setAdapter(adapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }
+
+//    private Cursor userQuery(Context context)
+//    {
+//        return context.getContentResolver().query(BabyLogContract.User.CONTENT_URI,
+//                BabyLogContract.User.Query.PROJECTION,
+//                null,
+//                null,
+//                BabyLogContract.User.USER_NAME);
+//    }
+//
+//    private Cursor babyQuery()
+//    {
+//        Cursor cursor;
+//        return cursor;
+//    }
 
     public boolean isDrawerOpen()
     {
