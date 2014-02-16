@@ -11,9 +11,9 @@ import com.progrema.superbaby.R;
 /**
  * Created by iqbalpakeh on 15/2/14.
  */
-public class SectionItem extends Item
+public class Section extends Item
 {
-    public SectionItem(String text)
+    public Section(String text)
     {
         this.setText(text);
         this.setLayout(R.layout.navigation_drawer_section_item);

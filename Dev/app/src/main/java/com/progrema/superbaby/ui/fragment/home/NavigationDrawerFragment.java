@@ -23,11 +23,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.adapter.navigationdrawer.ActionItem;
+import com.progrema.superbaby.adapter.navigationdrawer.Action;
+import com.progrema.superbaby.adapter.navigationdrawer.Baby;
 import com.progrema.superbaby.adapter.navigationdrawer.Item;
-import com.progrema.superbaby.adapter.navigationdrawer.NavigationDrawerArrayAdapter;
-import com.progrema.superbaby.adapter.navigationdrawer.UserNameItem;
+import com.progrema.superbaby.adapter.navigationdrawer.NavigationDrawerAdapter;
+import com.progrema.superbaby.adapter.navigationdrawer.Section;
+import com.progrema.superbaby.adapter.navigationdrawer.User;
 import com.progrema.superbaby.provider.BabyLogContract;
+import com.progrema.superbaby.util.ActiveContext;
 
 import java.util.ArrayList;
 
@@ -63,9 +66,11 @@ public class NavigationDrawerFragment extends Fragment
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerListView;
     private View mFragmentContainerView;
+    private NavigationDrawerAdapter adapter;
+    private ArrayList<Item> items;
 
     private int mCurrentSelectedPosition = 0;
-    private int mPositionCalibration = 0;
+    private int mActionPositionOffset = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
@@ -118,32 +123,39 @@ public class NavigationDrawerFragment extends Fragment
         });
 
         // set array list
-        ArrayList<Item> items = new ArrayList<Item>();
+        items = new ArrayList<Item>();
 
         // prepare user name
         Cursor cursor = userQuery(getActivity());
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext())
         {
-            items.add(new UserNameItem(cursor.getString(BabyLogContract.User.Query.OFFSET_USER_NAME)));
+            items.add(new User(cursor.getString(BabyLogContract.User.Query.OFFSET_USER_NAME)));
         }
+
+        // add section divider
+        items.add(new Section("*** USER SECTION ***"));
 
         // prepare baby name
         cursor = babyQuery(getActivity());
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext())
         {
-            items.add(new UserNameItem(cursor.getString(BabyLogContract.Baby.Query.OFFSET_NAME)));
+            items.add(new Baby(cursor.getString(BabyLogContract.Baby.Query.OFFSET_NAME)));
         }
 
-        mPositionCalibration = items.size();
+        // add section divider
+        items.add(new Section("*** BABY SECTION ***"));
+
+        // get calibration variable for selected action
+        mActionPositionOffset = items.size();
 
         // prepare action supported
-        items.add(new ActionItem(getString(R.string.title_timeline_fragment)));
-        items.add(new ActionItem(getString(R.string.title_nursing_fragment)));
-        items.add(new ActionItem(getString(R.string.title_diaper_fragment)));
-        items.add(new ActionItem(getString(R.string.title_sleep_fragment)));
+        items.add(new Action(getString(R.string.title_timeline_fragment)));
+        items.add(new Action(getString(R.string.title_nursing_fragment)));
+        items.add(new Action(getString(R.string.title_diaper_fragment)));
+        items.add(new Action(getString(R.string.title_sleep_fragment)));
 
         // set adapter
-        NavigationDrawerArrayAdapter adapter = new NavigationDrawerArrayAdapter(getActivity(), items);
+        adapter = new NavigationDrawerAdapter(getActivity(), items);
         mDrawerListView.setAdapter(adapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
@@ -267,7 +279,21 @@ public class NavigationDrawerFragment extends Fragment
         }
         if (mCallbacks != null)
         {
-            mCallbacks.onNavigationDrawerItemSelected(position, mPositionCalibration);
+            if(position < mActionPositionOffset)
+            {
+                if (items != null)
+                {
+                    // Change the active baby context and move to time line fragment
+                    ActiveContext.setActiveBaby(getActivity(), items.get(position).getText());
+                    adapter.notifyDataSetChanged();
+                    mCallbacks.onNavigationDrawerItemSelected(mActionPositionOffset, mActionPositionOffset);
+                }
+            }
+            else
+            {
+                // move to the selected fragment
+                mCallbacks.onNavigationDrawerItemSelected(position, mActionPositionOffset);
+            }
         }
     }
 

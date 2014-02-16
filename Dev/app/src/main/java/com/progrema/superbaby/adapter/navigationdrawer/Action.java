@@ -11,12 +11,12 @@ import com.progrema.superbaby.R;
 /**
  * Created by iqbalpakeh on 15/2/14.
  */
-public class UserNameItem extends Item
+public class Action extends Item
 {
-    public UserNameItem(String text)
+    public Action(String text)
     {
         this.setText(text);
-        this.setLayout(R.layout.navigation_drawer_user_item);
+        this.setLayout(R.layout.navigation_drawer_action_item);
     }
 
     /**
@@ -33,9 +33,9 @@ public class UserNameItem extends Item
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(getLayout(), viewGroup, false);
 
-        TextView userNameTextView;
-        userNameTextView = (TextView) view.findViewById(R.id.user_name_type_view);
-        userNameTextView.setText(getText());
+        TextView actionTextView;
+        actionTextView = (TextView) view.findViewById(R.id.action_type_view);
+        actionTextView.setText(getText());
 
         return view;
     }

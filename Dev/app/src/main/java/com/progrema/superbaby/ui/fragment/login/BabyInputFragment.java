@@ -13,7 +13,6 @@ import android.widget.EditText;
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.models.Baby;
 import com.progrema.superbaby.models.BaseActor;
-import com.progrema.superbaby.models.UserBabyMap;
 import com.progrema.superbaby.ui.activity.HomeActivity;
 import com.progrema.superbaby.ui.activity.LoginActivity;
 import com.progrema.superbaby.util.ActiveContext;
@@ -85,6 +84,7 @@ public class BabyInputFragment extends Fragment implements View.OnClickListener
 
         // Go to HomeActivity
         startActivity(new Intent(getActivity(), HomeActivity.class));
+        getActivity().finish();
     }
 
 }

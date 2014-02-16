@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.adapter.sleephistory.SleepHistoryCursorAdapter;
+import com.progrema.superbaby.adapter.sleephistory.SleepHistoryAdapter;
 import com.progrema.superbaby.provider.BabyLogContract;
 
 /**
@@ -28,7 +28,7 @@ public class SleepLogFragment extends Fragment
     private static SleepLogFragment singletonSleepLogFragment = null;
     private Button startButton;
     private ListView sleepHistoryList;
-    private SleepHistoryCursorAdapter mAdapter;
+    private SleepHistoryAdapter mAdapter;
     private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     private static final int LOADER_ID = 1;
 
@@ -54,7 +54,7 @@ public class SleepLogFragment extends Fragment
 
         // set adapter to list view
         sleepHistoryList = (ListView) rootView.findViewById(R.id.sleep_activity_list);
-        mAdapter = new SleepHistoryCursorAdapter(getActivity(), null, 0);
+        mAdapter = new SleepHistoryAdapter(getActivity(), null, 0);
         mAdapter.setLayout(R.layout.sleep_history_item);
         sleepHistoryList.setAdapter(mAdapter);
 

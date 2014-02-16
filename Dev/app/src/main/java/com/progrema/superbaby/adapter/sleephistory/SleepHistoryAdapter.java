@@ -14,12 +14,12 @@ import com.progrema.superbaby.util.FormatUtils;
 /**
  * Created by aria on 26/1/14.
  */
-public class SleepHistoryCursorAdapter extends CursorAdapter
+public class SleepHistoryAdapter extends CursorAdapter
 {
     private LayoutInflater inflater;
     private int layout;
 
-    public SleepHistoryCursorAdapter(Context context, Cursor c, int flags)
+    public SleepHistoryAdapter(Context context, Cursor c, int flags)
     {
         super(context, c, flags);
         inflater = LayoutInflater.from(context);
