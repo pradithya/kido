@@ -111,7 +111,7 @@ public class BabyLogContract
                             BabyLogContract.User.SEC_ANSWER
                     };
             final int OFFSET_ID = 0;
-            final int OFFSET_USER_NAME = 1;
+            final int OFFSET_NAME = 1;
             final int OFFSET_PASSWORD = 2;
             final int OFFSET_SEC_QUESTION = 3;
             final int OFFSET_SEC_ANSWER = 4;

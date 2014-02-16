@@ -1,4 +1,4 @@
-package com.progrema.superbaby.adapter.navigationdrawer;
+package com.progrema.superbaby.adapter.navigation;
 
 import android.content.Context;
 import android.view.View;

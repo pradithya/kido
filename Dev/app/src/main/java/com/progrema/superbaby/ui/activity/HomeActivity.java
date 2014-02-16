@@ -13,18 +13,18 @@ import android.view.MenuItem;
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.ui.fragment.home.DiaperLogFragment;
 import com.progrema.superbaby.ui.fragment.home.MilkLogFragment;
-import com.progrema.superbaby.ui.fragment.home.NavigationDrawerFragment;
+import com.progrema.superbaby.ui.fragment.home.NavigationFragment;
 import com.progrema.superbaby.ui.fragment.home.SleepLogFragment;
 import com.progrema.superbaby.ui.fragment.home.TimeLineLogFragment;
 
 public class HomeActivity extends FragmentActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks
+        implements NavigationFragment.NavigationDrawerCallbacks
 {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
-    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private NavigationFragment mNavigationFragment;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -45,12 +45,12 @@ public class HomeActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
+        mNavigationFragment = (NavigationFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
         // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
+        mNavigationFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
     }
@@ -99,7 +99,7 @@ public class HomeActivity extends FragmentActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        if (!mNavigationDrawerFragment.isDrawerOpen())
+        if (!mNavigationFragment.isDrawerOpen())
         {
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer

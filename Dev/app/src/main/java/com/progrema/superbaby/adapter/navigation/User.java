@@ -1,4 +1,4 @@
-package com.progrema.superbaby.adapter.navigationdrawer;
+package com.progrema.superbaby.adapter.navigation;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,12 +11,12 @@ import com.progrema.superbaby.R;
 /**
  * Created by iqbalpakeh on 15/2/14.
  */
-public class Section extends Item
+public class User extends Item
 {
-    public Section(String text)
+    public User(String text)
     {
         this.setText(text);
-        this.setLayout(R.layout.navigation_drawer_section_item);
+        this.setLayout(R.layout.navigation_drawer_user_item);
     }
 
     /**
@@ -33,9 +33,9 @@ public class Section extends Item
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(getLayout(), viewGroup, false);
 
-        TextView sectionTextView;
-        sectionTextView = (TextView) view.findViewById(R.id.section_type_view);
-        sectionTextView.setText(getText());
+        TextView userNameTextView;
+        userNameTextView = (TextView) view.findViewById(R.id.user_name_type_view);
+        userNameTextView.setText(getText());
 
         return view;
     }

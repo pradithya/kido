@@ -1,4 +1,4 @@
-package com.progrema.superbaby.adapter.navigationdrawer;
+package com.progrema.superbaby.adapter.navigation;
 
 import android.content.Context;
 import android.view.View;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Created by iqbalpakeh on 15/2/14.
  */
-public class NavigationDrawerAdapter extends ArrayAdapter<Item>
+public class NavigationAdapter extends ArrayAdapter<Item>
 {
     /**
      * private field
@@ -24,7 +24,7 @@ public class NavigationDrawerAdapter extends ArrayAdapter<Item>
      * @param context application context
      * @param items items holding list of Item object
      */
-    public NavigationDrawerAdapter(Context context, ArrayList<Item> items)
+    public NavigationAdapter(Context context, ArrayList<Item> items)
     {
         super(context, 0, items);
         this.items = items;

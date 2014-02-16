@@ -87,7 +87,7 @@ public class ActiveContext
 
         cursor.moveToFirst();
         editor.putLong(PREF_USER_ID, cursor.getLong(BabyLogContract.User.Query.OFFSET_ID));
-        editor.putString(PREF_USER_NAME, cursor.getString(BabyLogContract.User.Query.OFFSET_USER_NAME));
+        editor.putString(PREF_USER_NAME, cursor.getString(BabyLogContract.User.Query.OFFSET_NAME));
         editor.commit();
     }
 

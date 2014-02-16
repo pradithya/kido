@@ -23,12 +23,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.adapter.navigationdrawer.Action;
-import com.progrema.superbaby.adapter.navigationdrawer.Baby;
-import com.progrema.superbaby.adapter.navigationdrawer.Item;
-import com.progrema.superbaby.adapter.navigationdrawer.NavigationDrawerAdapter;
-import com.progrema.superbaby.adapter.navigationdrawer.Section;
-import com.progrema.superbaby.adapter.navigationdrawer.User;
+import com.progrema.superbaby.adapter.navigation.Action;
+import com.progrema.superbaby.adapter.navigation.Baby;
+import com.progrema.superbaby.adapter.navigation.Item;
+import com.progrema.superbaby.adapter.navigation.NavigationAdapter;
+import com.progrema.superbaby.adapter.navigation.Section;
+import com.progrema.superbaby.adapter.navigation.User;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 
@@ -39,7 +39,7 @@ import java.util.ArrayList;
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationDrawerFragment extends Fragment
+public class NavigationFragment extends Fragment
 {
 
     /**
@@ -62,21 +62,18 @@ public class NavigationDrawerFragment extends Fragment
      * Helper component that ties the action bar to the navigation drawer.
      */
     private ActionBarDrawerToggle mDrawerToggle;
-
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerListView;
     private View mFragmentContainerView;
-    private NavigationDrawerAdapter adapter;
+    private NavigationAdapter adapter;
     private ArrayList<Item> items;
-
     private int mCurrentSelectedPosition = 0;
     private int mActionPositionOffset = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
-    public NavigationDrawerFragment()
+    public NavigationFragment()
     {
-        /** Empty constructor */
     }
 
     @Override
@@ -111,8 +108,7 @@ public class NavigationDrawerFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState)
     {
-        mDrawerListView = (ListView) inflater.inflate(
-                R.layout.fragment_navigation_drawer, container, false);
+        mDrawerListView = (ListView) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
@@ -122,6 +118,8 @@ public class NavigationDrawerFragment extends Fragment
             }
         });
 
+        // TODO: to be improved!!
+
         // set array list
         items = new ArrayList<Item>();
 
@@ -129,7 +127,7 @@ public class NavigationDrawerFragment extends Fragment
         Cursor cursor = userQuery(getActivity());
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext())
         {
-            items.add(new User(cursor.getString(BabyLogContract.User.Query.OFFSET_USER_NAME)));
+            items.add(new User(cursor.getString(BabyLogContract.User.Query.OFFSET_NAME)));
         }
 
         // add section divider
@@ -155,7 +153,7 @@ public class NavigationDrawerFragment extends Fragment
         items.add(new Action(getString(R.string.title_sleep_fragment)));
 
         // set adapter
-        adapter = new NavigationDrawerAdapter(getActivity(), items);
+        adapter = new NavigationAdapter(getActivity(), items);
         mDrawerListView.setAdapter(adapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
@@ -226,7 +224,8 @@ public class NavigationDrawerFragment extends Fragment
             }
 
             @Override
-            public void onDrawerOpened(View drawerView) {
+            public void onDrawerOpened(View drawerView)
+            {
                 super.onDrawerOpened(drawerView);
                 if (!isAdded())
                 {
@@ -258,7 +257,8 @@ public class NavigationDrawerFragment extends Fragment
         mDrawerLayout.post(new Runnable()
         {
             @Override
-            public void run() {
+            public void run()
+            {
                 mDrawerToggle.syncState();
             }
         });
@@ -279,17 +279,14 @@ public class NavigationDrawerFragment extends Fragment
         }
         if (mCallbacks != null)
         {
-            if(position < mActionPositionOffset)
+            if((position < mActionPositionOffset) && (items != null) && (items.get(position) instanceof Baby))
             {
-                if (items != null)
-                {
-                    // Change the active baby context and move to time line fragment
-                    ActiveContext.setActiveBaby(getActivity(), items.get(position).getText());
-                    adapter.notifyDataSetChanged();
-                    mCallbacks.onNavigationDrawerItemSelected(mActionPositionOffset, mActionPositionOffset);
-                }
+                // Change the active baby context and move to time line fragment
+                ActiveContext.setActiveBaby(getActivity(), items.get(position).getText());
+                adapter.notifyDataSetChanged();
+                mCallbacks.onNavigationDrawerItemSelected(mActionPositionOffset, mActionPositionOffset);
             }
-            else
+            else if (position >= mActionPositionOffset)
             {
                 // move to the selected fragment
                 mCallbacks.onNavigationDrawerItemSelected(position, mActionPositionOffset);
