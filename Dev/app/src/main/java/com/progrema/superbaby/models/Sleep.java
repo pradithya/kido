@@ -3,6 +3,7 @@ package com.progrema.superbaby.models;
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.Parcel;
+
 import com.progrema.superbaby.provider.BabyLogContract;
 
 public class Sleep extends BaseActivity implements IDBServices
@@ -30,7 +31,7 @@ public class Sleep extends BaseActivity implements IDBServices
     @Override
     public void writeToParcel(Parcel parcel, int i)
     {
-        super.writeToParcel(parcel,i);
+        super.writeToParcel(parcel, i);
         parcel.writeLong(duration);
     }
 

@@ -24,7 +24,6 @@ public class Baby extends BaseActor implements IDBServices
     /**
      * Standard basic constructor for non-parcel
      * object creation
-     *
      */
     public Baby()
     {
@@ -67,7 +66,7 @@ public class Baby extends BaseActor implements IDBServices
     public void writeToParcel(Parcel parcel, int i)
     {
         // write each field into the parcel
-        super.writeToParcel(parcel,i);
+        super.writeToParcel(parcel, i);
         parcel.writeString(String.valueOf(birthday.getTimeInMillis())); //in timeinmillis format
     }
 
@@ -103,7 +102,7 @@ public class Baby extends BaseActor implements IDBServices
      */
     public Calendar getBirthdayInCalendar()
     {
-       return birthday;
+        return birthday;
     }
 
     /**

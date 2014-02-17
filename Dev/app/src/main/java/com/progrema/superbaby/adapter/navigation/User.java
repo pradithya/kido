@@ -22,8 +22,8 @@ public class User extends Item
     /**
      * inflate view
      *
-     * @param context application context
-     * @param view view to inflate
+     * @param context   application context
+     * @param view      view to inflate
      * @param viewGroup parent view
      * @return inflated view
      */

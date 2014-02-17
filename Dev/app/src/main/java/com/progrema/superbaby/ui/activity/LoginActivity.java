@@ -38,7 +38,7 @@ public class LoginActivity extends FragmentActivity
             startActivity(new Intent(this, HomeActivity.class));
             finish();
         }
-        else if(isSkipLogin && newBabyRequest)
+        else if (isSkipLogin && newBabyRequest)
         {
             // move to baby input fragment
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

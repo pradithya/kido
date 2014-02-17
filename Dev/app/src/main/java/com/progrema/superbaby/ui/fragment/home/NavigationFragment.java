@@ -97,7 +97,7 @@ public class NavigationFragment extends Fragment
     }
 
     @Override
-    public void onActivityCreated (Bundle savedInstanceState)
+    public void onActivityCreated(Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
         // Indicate that this fragment would like to influence the set of actions in the action bar.
@@ -106,7 +106,7 @@ public class NavigationFragment extends Fragment
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState)
+                             Bundle savedInstanceState)
     {
         mDrawerListView = (ListView) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -279,7 +279,7 @@ public class NavigationFragment extends Fragment
         }
         if (mCallbacks != null)
         {
-            if((position < mActionPositionOffset) && (items != null) && (items.get(position) instanceof Baby))
+            if ((position < mActionPositionOffset) && (items != null) && (items.get(position) instanceof Baby))
             {
                 // Change the active baby context and move to time line fragment
                 ActiveContext.setActiveBaby(getActivity(), items.get(position).getText());

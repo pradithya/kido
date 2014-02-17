@@ -12,7 +12,7 @@ import com.progrema.superbaby.provider.BabyLogContract;
 /**
  * ActiveContext class holds the active user and the baby. This object can be called anytime from
  * application because it uses android preference class to store the value.
- *
+ * <p/>
  * Created by iqbalpakeh on 10/2/14.
  */
 public class ActiveContext
@@ -31,7 +31,7 @@ public class ActiveContext
     /**
      * Set the active baby
      *
-     * @param context application context
+     * @param context  application context
      * @param babyName active baby name
      */
     public static void setActiveBaby(Context context, String babyName)
@@ -76,7 +76,7 @@ public class ActiveContext
     /**
      * Set active user
      *
-     * @param context application context
+     * @param context  application context
      * @param userName active user's name
      */
     public static void setActiveUser(Context context, String userName)
@@ -110,7 +110,7 @@ public class ActiveContext
     /**
      * query user data from database
      *
-     * @param context application context
+     * @param context  application context
      * @param username user name
      * @return cursor holding the user data from database
      */
@@ -118,18 +118,18 @@ public class ActiveContext
     {
         //TODO: we should do query on another thread and show the waiting icon
 
-        String [] selectionArgument = {username};
+        String[] selectionArgument = {username};
         return context.getContentResolver().query(BabyLogContract.User.CONTENT_URI,
-               BabyLogContract.User.Query.PROJECTION,
-               BabyLogContract.User.USER_NAME + "=?",
-               selectionArgument,
-               BabyLogContract.User.USER_NAME);
+                BabyLogContract.User.Query.PROJECTION,
+                BabyLogContract.User.USER_NAME + "=?",
+                selectionArgument,
+                BabyLogContract.User.USER_NAME);
     }
 
     /**
      * query baby data from database
      *
-     * @param context application context
+     * @param context  application context
      * @param babyName baby name
      * @return cursor holding baby data from database
      */
@@ -137,7 +137,7 @@ public class ActiveContext
     {
         //TODO: we should do query on another thread and show the waiting icon
 
-        String [] selectionArgument = {babyName};
+        String[] selectionArgument = {babyName};
         return context.getContentResolver().query(BabyLogContract.Baby.CONTENT_URI,
                 BabyLogContract.Baby.Query.PROJECTION,
                 BabyLogContract.Baby.NAME + "=?",

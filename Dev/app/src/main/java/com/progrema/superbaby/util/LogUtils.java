@@ -1,6 +1,7 @@
 package com.progrema.superbaby.util;
 
 import android.util.Log;
+
 import com.progrema.superbaby.BuildConfig;
 
 public class LogUtils

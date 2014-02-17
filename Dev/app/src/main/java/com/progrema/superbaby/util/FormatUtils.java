@@ -1,6 +1,7 @@
 package com.progrema.superbaby.util;
 
 import android.content.Context;
+
 import com.progrema.superbaby.R;
 import com.squareup.phrase.Phrase;
 
@@ -16,13 +17,13 @@ public class FormatUtils
 {
 
 
-    private static final String[] DAY_OF_WEEK = {"MON","TUE","WED","THU","FRI","SAT","SUN"};
-    private static final String[] MONTH_OF_YEAR = {"Jan","Feb","Mar","Apr","May","Jun",
-            "Jul","Aug","Sep","Oct","Nov","Dec"};
+    private static final String[] DAY_OF_WEEK = {"MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"};
+    private static final String[] MONTH_OF_YEAR = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+
     /**
-     *
      * @param startTime in timemillis format
-     * @param duration in timemillis format
+     * @param duration  in timemillis format
      * @return "HH:MM - HH:MM" format
      */
     public static String formatTimeBoundary(Context context, String startTime, String duration)
@@ -45,11 +46,10 @@ public class FormatUtils
     }
 
     /**
-     *
      * @param duration
      * @return "XX h YY m" format
      */
-    public static String formatDuration (Context context, String duration)
+    public static String formatDuration(Context context, String duration)
     {
         String retVal = "";
         long dur = Long.parseLong(duration); // in miliseccond
@@ -58,20 +58,22 @@ public class FormatUtils
         long sec;
         if (hour != 0)
         {
-             min = TimeUnit.MILLISECONDS.toMinutes(dur % TimeUnit.HOURS.toMillis(hour));
+            min = TimeUnit.MILLISECONDS.toMinutes(dur % TimeUnit.HOURS.toMillis(hour));
         }
         else
         {
-             min = TimeUnit.MILLISECONDS.toMinutes(dur);
+            min = TimeUnit.MILLISECONDS.toMinutes(dur);
         }
 
         if ((min != 0) && (hour != 0))
         {
             sec = TimeUnit.MILLISECONDS.toSeconds(dur % TimeUnit.MINUTES.toMillis(min));
-        }else if ((min == 0) && (hour != 0))
+        }
+        else if ((min == 0) && (hour != 0))
         {
             sec = TimeUnit.MILLISECONDS.toSeconds(dur % TimeUnit.HOURS.toMillis(hour));
-        }else
+        }
+        else
         {
             sec = TimeUnit.MILLISECONDS.toSeconds(dur);
         }

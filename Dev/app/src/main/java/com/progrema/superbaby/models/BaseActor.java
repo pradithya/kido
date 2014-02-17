@@ -69,6 +69,7 @@ abstract public class BaseActor extends BaseModel
         FEMALE("FEMALE");
 
         private String title;
+
         Sex(String title)
         {
             this.title = title;
@@ -105,7 +106,7 @@ abstract public class BaseActor extends BaseModel
     {
 
         // write each field into the parcel
-        super.writeToParcel(parcel,i);
+        super.writeToParcel(parcel, i);
         parcel.writeString(name);
         parcel.writeString(sex.getTitle()); //time in milli second format
 

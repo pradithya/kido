@@ -64,7 +64,7 @@ public class HomeActivity extends FragmentActivity
         // fragment module
         Fragment module = null;
 
-        switch(position - calibration)
+        switch (position - calibration)
         {
             case POSITION_HOME_FRAGMENT:
                 module = TimeLineLogFragment.getInstance();
@@ -80,7 +80,7 @@ public class HomeActivity extends FragmentActivity
                 break;
         }
 
-        if(module != null)
+        if (module != null)
         {
             fragmentManager.beginTransaction().replace(R.id.home_activity_container, module).commit();
         }

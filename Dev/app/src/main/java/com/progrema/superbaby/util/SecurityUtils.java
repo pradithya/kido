@@ -8,6 +8,7 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by aria on 23/1/14.
+ *
  * @author aria
  */
 public class SecurityUtils
@@ -30,7 +31,7 @@ public class SecurityUtils
         {
             sha1.update(inputPlainText.getBytes("ASCII"));
         }
-        catch(UnsupportedEncodingException e)
+        catch (UnsupportedEncodingException e)
         {
             // do nothing
         }

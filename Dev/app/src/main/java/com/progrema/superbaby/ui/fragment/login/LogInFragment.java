@@ -76,15 +76,15 @@ public class LogInFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View view)
     {
-        switch(view.getId())
+        switch (view.getId())
         {
-            case  R.id.fragment_authentication_button_login:
+            case R.id.fragment_authentication_button_login:
                 handleLoginButton();
                 break;
-            case  R.id.fragment_authentication_button_register:
+            case R.id.fragment_authentication_button_register:
                 handleRegisterButton();
                 break;
-            case  R.id.fragment_authentication_button_finish_register:
+            case R.id.fragment_authentication_button_finish_register:
                 handleFinishRegisterButton();
                 break;
         }
@@ -228,7 +228,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener
 
         // user name is not registered
         cursor = usernameQuery(userName);
-        if(cursor.getCount() == 0)
+        if (cursor.getCount() == 0)
         {
             return getResources().getString(R.string.username_is_not_registered_message);
         }
@@ -246,7 +246,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener
     /**
      * User name and password verification
      *
-     * @param cursor username and password cursor
+     * @param cursor   username and password cursor
      * @param password user's input
      * @return TRUE if verification is okay, FALSE otherwise
      */
@@ -273,10 +273,10 @@ public class LogInFragment extends Fragment implements View.OnClickListener
     /**
      * Check user's input during registration
      *
-     * @param userName user's input
-     * @param password user's input
+     * @param userName    user's input
+     * @param password    user's input
      * @param secQuestion user's input
-     * @param secAnswer user's input
+     * @param secAnswer   user's input
      * @return message describing condition of checking
      */
     private String registerInputCheck(String userName, String password, String secQuestion, String secAnswer)
@@ -292,7 +292,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener
 
         // user name already exist checking
         cursor = usernameQuery(userName);
-        if(cursor.getCount() > 0)
+        if (cursor.getCount() > 0)
         {
             return getResources().getString(R.string.username_already_exist_message);
         }
@@ -311,7 +311,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener
     {
         //TODO: we should do query on another thread and show the waiting icon
 
-        String [] selectionArgument = {userName};
+        String[] selectionArgument = {userName};
         return getActivity().getContentResolver().query(BabyLogContract.User.CONTENT_URI,
                 BabyLogContract.User.Query.PROJECTION,
                 BabyLogContract.User.USER_NAME + "=?",

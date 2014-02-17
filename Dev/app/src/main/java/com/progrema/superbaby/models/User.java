@@ -3,10 +3,12 @@ package com.progrema.superbaby.models;
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.Parcel;
+
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.SecurityUtils;
 
-public class User extends BaseActor implements IDBServices {
+public class User extends BaseActor implements IDBServices
+{
 
     /**
      * User private data
@@ -43,7 +45,7 @@ public class User extends BaseActor implements IDBServices {
     public void writeToParcel(Parcel parcel, int i)
     {
         // Write each field into parcel
-        super.writeToParcel(parcel,i);
+        super.writeToParcel(parcel, i);
         parcel.writeString(password);
         parcel.writeString(securityQuestion);
         parcel.writeString(securityAnswer);
@@ -95,7 +97,8 @@ public class User extends BaseActor implements IDBServices {
      *
      * @return password
      */
-    public String getPassword() {
+    public String getPassword()
+    {
         return password;
     }
 
@@ -134,7 +137,7 @@ public class User extends BaseActor implements IDBServices {
      */
     public void setSecurityAnswer(String inputPlainText)
     {
-        this.securityAnswer =  SecurityUtils.computeSHA1(inputPlainText);
+        this.securityAnswer = SecurityUtils.computeSHA1(inputPlainText);
     }
 
     @Override

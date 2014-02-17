@@ -73,7 +73,7 @@ abstract public class BaseActivity extends BaseModel
 
     public void writeToParcel(Parcel parcel, int i)
     {
-        super.writeToParcel(parcel,i);
+        super.writeToParcel(parcel, i);
         parcel.writeLong(babyID);
         parcel.writeString(timeStamp);
     }

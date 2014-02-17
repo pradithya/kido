@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
+
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.util.FormatUtils;
 
@@ -34,7 +35,7 @@ public class SleepHistoryAdapter extends CursorAdapter
     @Override
     public void bindView(View view, Context context, Cursor cursor)
     {
-        long id  = cursor.getLong(0);
+        long id = cursor.getLong(0);
         long activityID = cursor.getLong(1);
         long babyID = cursor.getLong(2);
         String timeStamp = cursor.getString(3);

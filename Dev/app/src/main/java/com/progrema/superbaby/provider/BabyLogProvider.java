@@ -133,7 +133,7 @@ public class BabyLogProvider extends ContentProvider
                 // add new activity sleep to activity table
                 ContentValues values = new ContentValues();
                 values.put(BabyLogContract.ActivityColumns.BABY_ID,
-                           contentValues.getAsString(BabyLogContract.SleepColumns.BABY_ID));
+                        contentValues.getAsString(BabyLogContract.SleepColumns.BABY_ID));
                 values.put(BabyLogContract.ActivityColumns.ACTIVITY_TYPE, BabyLogContract.Activity.TYPE_SLEEP);
                 long actId = db.insertOrThrow(BabyLogDatabase.Tables.ACTIVITY, null, values);
 
@@ -178,10 +178,10 @@ public class BabyLogProvider extends ContentProvider
         context.getContentResolver().notifyChange(uri, null);
     }
 
-    private  SelectionBuilder buildExpandableSelection(Uri uri, int match)
+    private SelectionBuilder buildExpandableSelection(Uri uri, int match)
     {
         final SelectionBuilder builder = new SelectionBuilder();
-        switch(match)
+        switch (match)
         {
             case USER:
             {
@@ -203,7 +203,7 @@ public class BabyLogProvider extends ContentProvider
                 return builder.table(BabyLogDatabase.Tables.SLEEP);
             }
 
-            default :
+            default:
             {
                 return null;
             }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.models.Sleep;
 
@@ -55,7 +56,7 @@ public class SleepInputFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View view)
     {
-        switch(view.getId())
+        switch (view.getId())
         {
             case R.id.button_done:
                 handleDoneButton();

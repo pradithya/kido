@@ -38,7 +38,7 @@ public class Stopwatch extends Chronometer implements TimerService
     public long getDuration()
     {
         String value;
-        String [] parts;
+        String[] parts;
         long seconds;
         long minutes;
         long hours;
@@ -50,24 +50,24 @@ public class Stopwatch extends Chronometer implements TimerService
         hours = 0;
 
         // wrong format
-        if(parts.length < 2 || parts.length > 3)
+        if (parts.length < 2 || parts.length > 3)
         {
             return 0;
         }
 
-        if(parts.length == 2)
+        if (parts.length == 2)
         {
             seconds = Integer.parseInt(parts[1]);
             minutes = Integer.parseInt(parts[0]);
         }
-        else if(parts.length == 3)
+        else if (parts.length == 3)
         {
             seconds = Integer.parseInt(parts[2]);
             minutes = Integer.parseInt(parts[1]);
             hours = Integer.parseInt(parts[0]);
         }
 
-        return seconds + (minutes*60) + (hours*3600);
+        return seconds + (minutes * 60) + (hours * 3600);
     }
 
     @Override

@@ -30,7 +30,7 @@ public abstract class Item
      *
      * @param text view text
      */
-    public void setText(String text) 
+    public void setText(String text)
     {
         this.text = text;
     }
@@ -40,7 +40,7 @@ public abstract class Item
      *
      * @return item layout
      */
-    public int getLayout() 
+    public int getLayout()
     {
         return layout;
     }
@@ -50,7 +50,7 @@ public abstract class Item
      *
      * @param layout item layout
      */
-    public void setLayout(int layout) 
+    public void setLayout(int layout)
     {
         this.layout = layout;
     }
@@ -58,8 +58,8 @@ public abstract class Item
     /**
      * inflate view
      *
-     * @param context application context
-     * @param view view to inflate
+     * @param context   application context
+     * @param view      view to inflate
      * @param viewGroup parent view
      * @return inflated view
      */

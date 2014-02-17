@@ -5,6 +5,7 @@ import android.os.Parcel;
 
 /**
  * Created by iqbalpakeh on 22/1/14.
+ *
  * @author aria
  */
 public class Nursing extends BaseActivity implements IDBServices
@@ -21,6 +22,7 @@ public class Nursing extends BaseActivity implements IDBServices
         FORMULA("FORMULA");
 
         private String title;
+
         NursingType(String title)
         {
             this.title = title;
@@ -32,7 +34,7 @@ public class Nursing extends BaseActivity implements IDBServices
         }
     }
 
-    Nursing (Parcel parcel)
+    Nursing(Parcel parcel)
     {
         readFromParcel(parcel);
     }
@@ -76,7 +78,7 @@ public class Nursing extends BaseActivity implements IDBServices
     @Override
     public void writeToParcel(Parcel parcel, int i)
     {
-        super.writeToParcel(parcel,i);
+        super.writeToParcel(parcel, i);
         parcel.writeLong(duration);
         parcel.writeString(type.getTitle());
         parcel.writeFloat(volume);

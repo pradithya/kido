@@ -6,7 +6,19 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.provider.BaseColumns;
 
-import com.progrema.superbaby.provider.BabyLogContract.*;
+import com.progrema.superbaby.provider.BabyLogContract.ActivityColumns;
+import com.progrema.superbaby.provider.BabyLogContract.BabyColumns;
+import com.progrema.superbaby.provider.BabyLogContract.Diaper;
+import com.progrema.superbaby.provider.BabyLogContract.DiaperColumns;
+import com.progrema.superbaby.provider.BabyLogContract.Measurement;
+import com.progrema.superbaby.provider.BabyLogContract.Nursing;
+import com.progrema.superbaby.provider.BabyLogContract.NursingColumns;
+import com.progrema.superbaby.provider.BabyLogContract.Photo;
+import com.progrema.superbaby.provider.BabyLogContract.Sleep;
+import com.progrema.superbaby.provider.BabyLogContract.SleepColumns;
+import com.progrema.superbaby.provider.BabyLogContract.UserBabyMap;
+import com.progrema.superbaby.provider.BabyLogContract.UserBabyMapColumns;
+import com.progrema.superbaby.provider.BabyLogContract.UserColumns;
 
 /**
  * Created by iqbalpakeh on 18/1/14.
@@ -20,7 +32,6 @@ public class BabyLogDatabase extends SQLiteOpenHelper
      * NOTE:
      * carefully update onUpgrade() when bumping database versions to make
      * sure user data is saved.
-     *
      */
 
     private static final int VER_2014_01 = 100; // 1.0
@@ -85,7 +96,7 @@ public class BabyLogDatabase extends SQLiteOpenHelper
                 + UserBabyMapColumns.USER_ID + " INTEGER,"
                 + UserBabyMapColumns.BABY_ID + " INTEGER,"
                 + " FOREIGN KEY (" + UserBabyMapColumns.USER_ID + ") REFERENCES " + Tables.USER + " (" + BaseColumns._ID + "),"
-                + " FOREIGN KEY (" + UserBabyMapColumns.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BaseColumns._ID + ")" +")");
+                + " FOREIGN KEY (" + UserBabyMapColumns.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BaseColumns._ID + ")" + ")");
 
         db.execSQL("CREATE TABLE " + Tables.BABY + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -97,7 +108,7 @@ public class BabyLogDatabase extends SQLiteOpenHelper
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + ActivityColumns.BABY_ID + " TEXT NOT NULL,"
                 + ActivityColumns.ACTIVITY_TYPE + " TEXT NOT NULL,"
-                + " FOREIGN KEY (" + ActivityColumns.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BaseColumns._ID + ")" +")");
+                + " FOREIGN KEY (" + ActivityColumns.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BaseColumns._ID + ")" + ")");
 
         db.execSQL("CREATE TABLE " + Tables.NURSING + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -108,7 +119,7 @@ public class BabyLogDatabase extends SQLiteOpenHelper
                 + NursingColumns.SIDES + " TEXT NOT NULL,"
                 + NursingColumns.VOLUME + " TEXT NOT NULL,"
                 + " FOREIGN KEY (" + NursingColumns.ACTIVITY_ID + ") REFERENCES " + Tables.ACTIVITY + " (" + BaseColumns._ID + "),"
-                + " FOREIGN KEY (" + NursingColumns.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BaseColumns._ID+ ")" +")");
+                + " FOREIGN KEY (" + NursingColumns.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BaseColumns._ID + ")" + ")");
 
         db.execSQL("CREATE TABLE " + Tables.SLEEP + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -117,7 +128,7 @@ public class BabyLogDatabase extends SQLiteOpenHelper
                 + SleepColumns.TIMESTAMP + " TEXT NOT NULL,"
                 + SleepColumns.DURATION + " TEXT NOT NULL,"
                 + " FOREIGN KEY (" + SleepColumns.ACTIVITY_ID + ") REFERENCES " + Tables.ACTIVITY + " (" + BaseColumns._ID + "),"
-                + " FOREIGN KEY (" + SleepColumns.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BaseColumns._ID+ ")" +")");
+                + " FOREIGN KEY (" + SleepColumns.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BaseColumns._ID + ")" + ")");
 
         db.execSQL("CREATE TABLE " + Tables.DIAPER + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -126,16 +137,16 @@ public class BabyLogDatabase extends SQLiteOpenHelper
                 + DiaperColumns.TIMESTAMP + " TEXT NOT NULL,"
                 + DiaperColumns.TYPE + " TEXT NOT NULL,"
                 + " FOREIGN KEY (" + DiaperColumns.ACTIVITY_ID + ") REFERENCES " + Tables.ACTIVITY + " (" + BaseColumns._ID + "),"
-                + " FOREIGN KEY (" + DiaperColumns.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BaseColumns._ID+ ")" +")");
+                + " FOREIGN KEY (" + DiaperColumns.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BaseColumns._ID + ")" + ")");
 
         db.execSQL("CREATE TABLE " + Tables.MEASUREMENT + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + Measurement.MEASUREMENT_ID + " TEXT NOT NULL,"
                 + Measurement.BABY_ID + " TEXT NOT NULL,"
                 + Measurement.HEIGHT + " REAL,"
-                + Measurement.WEIGHT +  " REAL,"
+                + Measurement.WEIGHT + " REAL,"
                 + " FOREIGN KEY (" + Measurement.MEASUREMENT_ID + ") REFERENCES " + Tables.ACTIVITY + " (" + BaseColumns._ID + "),"
-                + " FOREIGN KEY (" + Measurement.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BaseColumns._ID+ ")" +")");
+                + " FOREIGN KEY (" + Measurement.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BaseColumns._ID + ")" + ")");
 
         db.execSQL("CREATE TABLE " + Tables.PHOTO + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -144,49 +155,49 @@ public class BabyLogDatabase extends SQLiteOpenHelper
                 + Photo.TIMESTAMP + " TEXT NOT NULL,"
                 + Photo.PHOTO_LOCATION + " TEXT NOT NULL,"
                 + " FOREIGN KEY (" + Photo.PHOTO_ID + ") REFERENCES " + Tables.ACTIVITY + " (" + BaseColumns._ID + "),"
-                + " FOREIGN KEY (" + Photo.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BaseColumns._ID+ ")" +")");
+                + " FOREIGN KEY (" + Photo.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BaseColumns._ID + ")" + ")");
 
         //trigger for delete on baby table
         db.execSQL("CREATE TRIGGER " + TriggersName.BABY_DIAPER_DELETE
-                + " AFTER DELETE ON " +  Tables.BABY
+                + " AFTER DELETE ON " + Tables.BABY
                 + " FOR EACH ROW BEGIN "
                 + " DELETE FROM " + Tables.DIAPER
                 + " WHERE " + Qualified.BABY_DIAPER + "=old." + Diaper.BABY_ID
                 + ";" + " END;");
 
         db.execSQL("CREATE TRIGGER " + TriggersName.BABY_NURSING_DELETE
-                + " AFTER DELETE ON " +  Tables.BABY
+                + " AFTER DELETE ON " + Tables.BABY
                 + " FOR EACH ROW BEGIN "
                 + " DELETE FROM " + Tables.NURSING
                 + " WHERE " + Qualified.BABY_NURSING + "=old." + Nursing.BABY_ID
                 + ";" + " END;");
 
         db.execSQL("CREATE TRIGGER " + TriggersName.BABY_SLEEP_DELETE
-                + " AFTER DELETE ON " +  Tables.BABY
+                + " AFTER DELETE ON " + Tables.BABY
                 + " FOR EACH ROW BEGIN "
                 + " DELETE FROM " + Tables.SLEEP
                 + " WHERE " + Qualified.BABY_SLEEP + "=old." + Sleep.BABY_ID
                 + ";" + " END;");
 
         db.execSQL("CREATE TRIGGER " + TriggersName.BABY_USER_DELETE
-                + " AFTER DELETE ON " +  Tables.BABY
+                + " AFTER DELETE ON " + Tables.BABY
                 + " FOR EACH ROW BEGIN "
                 + " DELETE FROM " + Tables.USER_BABY_MAP
-                + " WHERE " + Qualified.BABY_USER_MAP+ "=old." + UserBabyMap.BABY_ID
+                + " WHERE " + Qualified.BABY_USER_MAP + "=old." + UserBabyMap.BABY_ID
                 + ";" + " END;");
 
         db.execSQL("CREATE TRIGGER " + TriggersName.BABY_MEASUREMENT_DELETE
-                + " AFTER DELETE ON " +  Tables.BABY
+                + " AFTER DELETE ON " + Tables.BABY
                 + " FOR EACH ROW BEGIN "
                 + " DELETE FROM " + Tables.MEASUREMENT
-                + " WHERE " + Qualified.BABY_MEASUREMENT+ "=old." + Measurement.BABY_ID
+                + " WHERE " + Qualified.BABY_MEASUREMENT + "=old." + Measurement.BABY_ID
                 + ";" + " END;");
 
         db.execSQL("CREATE TRIGGER " + TriggersName.BABY_PHOTO_DELETE
-                + " AFTER DELETE ON " +  Tables.BABY
+                + " AFTER DELETE ON " + Tables.BABY
                 + " FOR EACH ROW BEGIN "
                 + " DELETE FROM " + Tables.PHOTO
-                + " WHERE " + Qualified.BABY_PHOTO+ "=old." + Photo.BABY_ID
+                + " WHERE " + Qualified.BABY_PHOTO + "=old." + Photo.BABY_ID
                 + ";" + " END;");
     }
 

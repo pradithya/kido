@@ -19,7 +19,6 @@ import com.progrema.superbaby.provider.BabyLogContract;
 
 /**
  * Fragment to log all sleep activity
- *
  */
 public class SleepLogFragment extends Fragment
         implements View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor>
@@ -49,7 +48,7 @@ public class SleepLogFragment extends Fragment
         View rootView = inflater.inflate(R.layout.fragment_sleep_log, container, false);
 
         // set onClickListener to button
-        startButton = (Button)rootView.findViewById(R.id.button_start);
+        startButton = (Button) rootView.findViewById(R.id.button_start);
         startButton.setOnClickListener(this);
 
         // set adapter to list view
@@ -69,9 +68,9 @@ public class SleepLogFragment extends Fragment
     @Override
     public void onClick(View view)
     {
-        switch(view.getId())
+        switch (view.getId())
         {
-            case  R.id.button_start:
+            case R.id.button_start:
                 handleStartButton();
                 break;
         }
@@ -90,18 +89,18 @@ public class SleepLogFragment extends Fragment
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle)
     {
         CursorLoader cl = new CursorLoader(getActivity(),
-                                           BabyLogContract.Sleep.CONTENT_URI,
-                                           BabyLogContract.Sleep.Query.PROJECTION,
-                                           null,
-                                           null,
-                                           BabyLogContract.Sleep._ID);
+                BabyLogContract.Sleep.CONTENT_URI,
+                BabyLogContract.Sleep.Query.PROJECTION,
+                null,
+                null,
+                BabyLogContract.Sleep._ID);
         return cl;
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor)
     {
-        if ( cursor.getCount() > 0)
+        if (cursor.getCount() > 0)
         {
             /** show last inserted row */
             cursor.moveToFirst();

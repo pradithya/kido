@@ -22,7 +22,7 @@ public class NavigationAdapter extends ArrayAdapter<Item>
      * adapter constructor
      *
      * @param context application context
-     * @param items items holding list of Item object
+     * @param items   items holding list of Item object
      */
     public NavigationAdapter(Context context, ArrayList<Item> items)
     {

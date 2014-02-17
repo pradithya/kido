@@ -5,6 +5,7 @@ import android.os.Parcel;
 
 /**
  * Created by iqbalpakeh on 22/1/14.
+ *
  * @author aria
  * @author iqbalpakeh
  */
@@ -26,6 +27,7 @@ public class Diaper extends BaseActivity implements IDBServices
         MIXED("MIXED");
 
         private String title;
+
         DiaperType(String title)
         {
             this.title = title;
@@ -56,7 +58,7 @@ public class Diaper extends BaseActivity implements IDBServices
     @Override
     public void writeToParcel(Parcel parcel, int i)
     {
-        super.writeToParcel(parcel,i);
+        super.writeToParcel(parcel, i);
         parcel.writeString(type.getTitle());
     }
 
@@ -68,8 +70,8 @@ public class Diaper extends BaseActivity implements IDBServices
     @Override
     public void readFromParcel(Parcel parcel)
     {
-       super.readFromParcel(parcel);
-       type = DiaperType.valueOf(parcel.readString());
+        super.readFromParcel(parcel);
+        type = DiaperType.valueOf(parcel.readString());
     }
 
     @Override

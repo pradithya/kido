@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.models.Sleep;
 import com.progrema.superbaby.widget.stopwatch.Stopwatch;
@@ -45,7 +46,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
     {
 
         Bundle args = getArguments();
-        if (args  != null && args.containsKey("source"))
+        if (args != null && args.containsKey("source"))
         {
             sourceTrigger = args.getString("source");
         }
@@ -75,8 +76,9 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
     }
 
     @Override
-    public void onClick(View view) {
-        switch(view.getId())
+    public void onClick(View view)
+    {
+        switch (view.getId())
         {
             case R.id.button_stopwatch_start:
                 handleStartButton();
@@ -86,11 +88,11 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
                 handlePauseButton();
                 return;
 
-            case  R.id.button_stopwatch_reset:
+            case R.id.button_stopwatch_reset:
                 handleResetButton();
                 return;
 
-            case  R.id.button_stopwatch_done:
+            case R.id.button_stopwatch_done:
                 handleDoneButton();
                 return;
         }

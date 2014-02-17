@@ -20,7 +20,6 @@ public class UserBabyMap extends BaseModel implements IDBServices
     /**
      * Standard basic constructor for non-parcel
      * object creation
-     *
      */
     public UserBabyMap()
     {
@@ -60,7 +59,7 @@ public class UserBabyMap extends BaseModel implements IDBServices
     public void writeToParcel(Parcel parcel, int i)
     {
         // write each field into the parcel
-        super.writeToParcel(parcel,i);
+        super.writeToParcel(parcel, i);
         parcel.writeLong(userId);
         parcel.writeLong(babyId);
     }

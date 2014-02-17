@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import com.progrema.superbaby.R;
 
 /**
@@ -44,9 +45,9 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View view)
     {
-        switch(view.getId())
+        switch (view.getId())
         {
-            case  R.id.quick_button_sleep:
+            case R.id.quick_button_sleep:
                 handleQuickSleep();
                 break;
         }
@@ -59,7 +60,7 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         StopwatchFragment frStopWatch = StopwatchFragment.getInstance();
 
         /** inform the stopwatch to start counting for sleep*/
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putString("source", "Sleep");
         frStopWatch.setArguments(bundle);
 

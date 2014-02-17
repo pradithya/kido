@@ -65,7 +65,7 @@ public class BabyLogContract
     interface MeasurementTable
     {
         String MEASUREMENT_ID = "activity_id"; //same column name as activity
-        String BABY_ID  = "baby_id";
+        String BABY_ID = "baby_id";
         String TIMESTAMP = "timestamp";
         String HEIGHT = "height";
         String WEIGHT = "weight";
@@ -88,13 +88,12 @@ public class BabyLogContract
     private static final String PATH_ACTIVITY = "activity";
     private static final String PATH_MILK = "milk";
     private static final String PATH_SLEEP = "sleep";
-    private static final String PATH_DIAPER ="diaper";
+    private static final String PATH_DIAPER = "diaper";
     private static final String PATH_MEASUREMENT = "measurement";
     private static final String PATH_PHOTO = "photo";
 
     /**
      * User table contract class
-     *
      */
     public static class User implements UserColumns, BaseColumns
     {
@@ -102,7 +101,7 @@ public class BabyLogContract
 
         public interface Query
         {
-            String[] PROJECTION  =
+            String[] PROJECTION =
                     {
                             BaseColumns._ID,
                             BabyLogContract.User.USER_NAME,
@@ -125,7 +124,6 @@ public class BabyLogContract
 
     /**
      * UserBabyMap table contract class
-     *
      */
     public static class UserBabyMap implements UserBabyMapColumns, BaseColumns
     {
@@ -139,7 +137,6 @@ public class BabyLogContract
 
     /**
      * Baby table contract class
-     *
      */
     public static class Baby implements BabyColumns, BaseColumns
     {
@@ -147,7 +144,7 @@ public class BabyLogContract
 
         public interface Query
         {
-            String[] PROJECTION  =
+            String[] PROJECTION =
                     {
                             BaseColumns._ID,
                             Baby.NAME,
@@ -168,7 +165,6 @@ public class BabyLogContract
 
     /**
      * Activity table contract class
-     *
      */
     public static class Activity implements ActivityColumns, BaseColumns
     {
@@ -178,7 +174,6 @@ public class BabyLogContract
 
     /**
      * Nursing table contract class
-     *
      */
     public static class Nursing implements NursingColumns, BaseColumns
     {
@@ -187,7 +182,6 @@ public class BabyLogContract
 
     /**
      * Sleep table contract class
-     *
      */
     public static class Sleep implements SleepColumns, BaseColumns
     {
@@ -195,7 +189,7 @@ public class BabyLogContract
 
         public interface Query
         {
-            String[] PROJECTION  =
+            String[] PROJECTION =
                     {
                             BaseColumns._ID,
                             Sleep.ACTIVITY_ID,
@@ -219,7 +213,6 @@ public class BabyLogContract
 
     /**
      * Diaper table contract class
-     *
      */
     public static class Diaper implements DiaperColumns, BaseColumns
     {
@@ -228,7 +221,6 @@ public class BabyLogContract
 
     /**
      * Measurement table contract class
-     *
      */
     public static class Measurement implements MeasurementTable, BaseColumns
     {
@@ -237,7 +229,6 @@ public class BabyLogContract
 
     /**
      * Photo table contract class
-     *
      */
     public static class Photo implements PhotoTable, BaseColumns
     {
