@@ -11,25 +11,25 @@ import com.progrema.superbaby.R;
 /**
  * Created by iqbalpakeh on 20/1/14.
  */
-public class MilkInputFragment extends Fragment
+public class NursingInputFragment extends Fragment
 {
 
-    private static MilkInputFragment singletonMilkInputFragment = null;
+    private static NursingInputFragment singletonNursingInputFragment = null;
 
-    public static synchronized MilkInputFragment getInstance()
+    public static synchronized NursingInputFragment getInstance()
     {
-        if (singletonMilkInputFragment == null)
+        if (singletonNursingInputFragment == null)
         {
-            singletonMilkInputFragment = new MilkInputFragment();
+            singletonNursingInputFragment = new NursingInputFragment();
         }
-        return singletonMilkInputFragment;
+        return singletonNursingInputFragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.fragment_milk_input, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_nursing_input, container, false);
         return rootView;
     }
 

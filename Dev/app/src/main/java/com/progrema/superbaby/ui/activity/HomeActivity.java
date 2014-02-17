@@ -12,7 +12,7 @@ import android.view.MenuItem;
 
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.ui.fragment.home.DiaperLogFragment;
-import com.progrema.superbaby.ui.fragment.home.MilkLogFragment;
+import com.progrema.superbaby.ui.fragment.home.NursingLogFragment;
 import com.progrema.superbaby.ui.fragment.home.NavigationFragment;
 import com.progrema.superbaby.ui.fragment.home.SleepLogFragment;
 import com.progrema.superbaby.ui.fragment.home.TimeLineLogFragment;
@@ -70,7 +70,7 @@ public class HomeActivity extends FragmentActivity
                 module = TimeLineLogFragment.getInstance();
                 break;
             case POSITION_MILK_FRAGMENT:
-                module = MilkLogFragment.getInstance();
+                module = NursingLogFragment.getInstance();
                 break;
             case POSITION_DIAPER_FRAGMENT:
                 module = DiaperLogFragment.getInstance();
