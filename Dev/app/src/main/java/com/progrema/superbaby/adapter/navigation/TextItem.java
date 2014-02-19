@@ -11,12 +11,16 @@ import com.progrema.superbaby.R;
 /**
  * Created by iqbalpakeh on 15/2/14.
  */
-public class Section extends Item
+public class TextItem extends Item
 {
-    public Section(String text)
+    public TextItem(){
+
+    }
+
+    public TextItem(String text)
     {
         this.setText(text);
-        this.setLayout(R.layout.navigation_drawer_section_item);
+        this.setLayout(R.layout.navigation_drawer_text_container);
     }
 
     /**
@@ -33,9 +37,9 @@ public class Section extends Item
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(getLayout(), viewGroup, false);
 
-        TextView sectionTextView;
-        sectionTextView = (TextView) view.findViewById(R.id.section_type_view);
-        sectionTextView.setText(getText());
+        TextView actionTextView;
+        actionTextView = (TextView) view.findViewById(R.id.text_title);
+        actionTextView.setText(getText());
 
         return view;
     }

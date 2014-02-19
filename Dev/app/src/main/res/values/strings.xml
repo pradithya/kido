@@ -10,6 +10,8 @@
     <string name="title_sleep_fragment">Sleep</string>
     <string name="title_pumping_fragment">Pumping</string>
     <string name="title_vaccine_fragment">Vaccine</string>
+    <string name="title_section_baby">BABY</string>
+    <string name="title_section_activity">ACTION</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

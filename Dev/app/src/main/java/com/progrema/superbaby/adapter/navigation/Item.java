@@ -13,7 +13,7 @@ public abstract class Item
      * private field
      */
     private String text;
-    private int layout;
+    protected int layout;
 
     /**
      * get text

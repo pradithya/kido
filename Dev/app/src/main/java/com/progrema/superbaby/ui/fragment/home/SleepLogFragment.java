@@ -3,14 +3,12 @@ package com.progrema.superbaby.ui.fragment.home;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.progrema.superbaby.R;
@@ -21,11 +19,10 @@ import com.progrema.superbaby.provider.BabyLogContract;
  * Fragment to log all sleep activity
  */
 public class SleepLogFragment extends Fragment
-        implements View.OnClickListener, LoaderManager.LoaderCallbacks<Cursor>
+        implements  LoaderManager.LoaderCallbacks<Cursor>
 {
 
     private static SleepLogFragment singletonSleepLogFragment = null;
-    private Button startButton;
     private ListView sleepHistoryList;
     private SleepHistoryAdapter mAdapter;
     private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
@@ -47,9 +44,6 @@ public class SleepLogFragment extends Fragment
         // inflate fragment layout
         View rootView = inflater.inflate(R.layout.fragment_sleep_log, container, false);
 
-        // set onClickListener to button
-        startButton = (Button) rootView.findViewById(R.id.button_start);
-        startButton.setOnClickListener(this);
 
         // set adapter to list view
         sleepHistoryList = (ListView) rootView.findViewById(R.id.sleep_activity_list);
@@ -65,25 +59,6 @@ public class SleepLogFragment extends Fragment
         return rootView;
     }
 
-    @Override
-    public void onClick(View view)
-    {
-        switch (view.getId())
-        {
-            case R.id.button_start:
-                handleStartButton();
-                break;
-        }
-    }
-
-    private void handleStartButton()
-    {
-        // jump to sleep input fragment
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.home_activity_container, SleepInputFragment.getInstance());
-        fragmentTransaction.commit();
-
-    }
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle)
