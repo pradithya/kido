@@ -14,6 +14,7 @@ import android.widget.ListView;
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.sleephistory.DiaperHistoryAdapter;
 import com.progrema.superbaby.provider.BabyLogContract;
+import com.progrema.superbaby.util.ActiveContext;
 
 /**
  * Created by iqbalpakeh on 18/1/14.
@@ -62,10 +63,11 @@ public class DiaperLogFragment extends Fragment
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle){
 
+        String[] args = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
         CursorLoader cl = new CursorLoader(getActivity(), BabyLogContract.Diaper.CONTENT_URI,
                 BabyLogContract.Diaper.Query.PROJECTION,
-                null,
-                null,
+                BabyLogContract.BABY_SELECTION_ARG,
+                args,
                 BabyLogContract.Diaper._ID);
         return cl;
     }

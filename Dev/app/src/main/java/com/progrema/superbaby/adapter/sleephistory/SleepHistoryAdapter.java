@@ -45,7 +45,7 @@ public class SleepHistoryAdapter extends CursorAdapter
         TextView textViewTimeBoundary = (TextView) view.findViewById(R.id.history_item_timeboundary);
         TextView textViewDuration = (TextView) view.findViewById(R.id.history_item_duration);
 
-        textViewTimeStamp.setText(FormatUtils.formatTimeStamp(context, timeStamp));
+        textViewTimeStamp.setText(FormatUtils.formatDate(context, timeStamp));
         textViewTimeBoundary.setText(FormatUtils.formatTimeBoundary(context, timeStamp, duration));
         textViewDuration.setText(FormatUtils.formatDuration(context, duration));
     }

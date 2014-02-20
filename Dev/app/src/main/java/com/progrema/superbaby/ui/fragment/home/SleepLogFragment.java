@@ -14,6 +14,7 @@ import android.widget.ListView;
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.sleephistory.SleepHistoryAdapter;
 import com.progrema.superbaby.provider.BabyLogContract;
+import com.progrema.superbaby.util.ActiveContext;
 
 /**
  * Fragment to log all sleep activity
@@ -63,11 +64,12 @@ public class SleepLogFragment extends Fragment
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle)
     {
+        String[] args = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
         CursorLoader cl = new CursorLoader(getActivity(),
                 BabyLogContract.Sleep.CONTENT_URI,
                 BabyLogContract.Sleep.Query.PROJECTION,
-                null,
-                null,
+                BabyLogContract.BABY_SELECTION_ARG,
+                args,
                 BabyLogContract.Sleep._ID);
         return cl;
     }

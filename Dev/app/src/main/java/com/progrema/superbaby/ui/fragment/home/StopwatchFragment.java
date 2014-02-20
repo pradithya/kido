@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.models.Sleep;
+import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.widget.stopwatch.Stopwatch;
 
 import java.util.Calendar;
@@ -130,7 +131,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
             Sleep sleep = new Sleep();
             /*test with baby ID  = 1*/
             sleep.setTimeStamp(String.valueOf(currentTime.getTimeInMillis()));
-            sleep.setBabyID(1);
+            sleep.setBabyID(ActiveContext.getActiveBaby(getActivity()).getID());
             sleep.setDuration(TimeUnit.SECONDS.toMillis(duration));
             sleep.insert(getActivity());
         }

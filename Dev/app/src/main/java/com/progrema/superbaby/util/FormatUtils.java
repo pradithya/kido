@@ -5,6 +5,7 @@ import android.content.Context;
 import com.progrema.superbaby.R;
 import com.squareup.phrase.Phrase;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
@@ -17,7 +18,7 @@ public class FormatUtils
 {
 
 
-    private static final String[] DAY_OF_WEEK = {"MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"};
+    private static final String[] DAY_OF_WEEK = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" };
     private static final String[] MONTH_OF_YEAR = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
@@ -31,10 +32,11 @@ public class FormatUtils
         String retVal = "";
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(Long.parseLong(startTime));
-        String start = new SimpleDateFormat("HH:mm").format(cal.getTime());
+        String start = DateFormat.getTimeInstance().format(cal.getTime());
+
 
         cal.setTimeInMillis(Long.parseLong(startTime) + Long.parseLong(duration));
-        String end = new SimpleDateFormat("HH:mm").format(cal.getTime());
+        String end = DateFormat.getTimeInstance(1).format(cal.getTime());
 
         CharSequence formatted = Phrase.from(context.getResources().getString(R.string.time_span_format))
                 .put("start", start)
@@ -88,12 +90,12 @@ public class FormatUtils
         return retVal;
     }
 
-    public static String formatTimeStamp(Context context, String timeStamp)
+    public static String formatDate(Context context, String timeStamp)
     {
         String retVal = "";
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(Long.parseLong(timeStamp));
-        String day = DAY_OF_WEEK[cal.get(Calendar.DAY_OF_WEEK)];
+        String day = DAY_OF_WEEK[cal.get(Calendar.DAY_OF_WEEK) - 1];
         String date = String.valueOf(cal.get(Calendar.DATE));
         String month = MONTH_OF_YEAR[cal.get(Calendar.MONTH)];
         String year = String.valueOf(cal.get(Calendar.YEAR));
@@ -106,6 +108,16 @@ public class FormatUtils
                 .format();
 
         retVal = String.valueOf(formatted);
+        return retVal;
+    }
+
+    public static String formatTime(Context context, String timeStamp)
+    {
+        String retVal = "";
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(Long.parseLong(timeStamp));
+        retVal = DateFormat.getTimeInstance().format(cal.getTime());
+
         return retVal;
     }
 }

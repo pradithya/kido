@@ -93,6 +93,8 @@ public class BabyLogContract
     private static final String PATH_MEASUREMENT = "measurement";
     private static final String PATH_PHOTO = "photo";
 
+    public static final String BABY_SELECTION_ARG = "baby_id = ?";
+
     /**
      * User table contract class
      */

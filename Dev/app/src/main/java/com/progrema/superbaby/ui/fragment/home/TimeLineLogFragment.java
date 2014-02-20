@@ -12,6 +12,7 @@ import android.widget.Button;
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.models.Diaper;
 import com.progrema.superbaby.ui.fragment.dialog.DiaperDialogFragment;
+import com.progrema.superbaby.util.ActiveContext;
 
 import java.util.Calendar;
 
@@ -153,6 +154,7 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
                     Bundle recData = data.getExtras();
                     String diaperType = (String) recData.get(Diaper.DIAPER_TYPE_KEY);
                     Diaper addedActivity = new Diaper();
+                    addedActivity.setBabyID(ActiveContext.getActiveBaby(getActivity()).getID());
                     addedActivity.setTimeStamp(String.valueOf(currentTime.getTimeInMillis()));
                     addedActivity.setType(Diaper.DiaperType.valueOf(diaperType));
                     addedActivity.insert(getActivity());
