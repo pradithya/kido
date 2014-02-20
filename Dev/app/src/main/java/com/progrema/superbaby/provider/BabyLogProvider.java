@@ -11,6 +11,9 @@ import android.provider.BaseColumns;
 
 import com.progrema.superbaby.util.SelectionBuilder;
 
+/**
+ * @
+ */
 public class BabyLogProvider extends ContentProvider
 {
     private BabyLogDatabase mOpenHelper;
@@ -56,33 +59,11 @@ public class BabyLogProvider extends ContentProvider
 
         switch (match)
         {
-            case USER:
-            {
-                final SelectionBuilder builder = buildExpandableSelection(uri, match);
-                return builder.where(selection, selectionArgs).query(db, projection, sortOrder);
-            }
-
-            case BABY:
-            {
-                final SelectionBuilder builder = buildExpandableSelection(uri, match);
-                return builder.where(selection, selectionArgs).query(db, projection, sortOrder);
-            }
-
-            case USER_BABY_MAP:
-            {
-                final SelectionBuilder builder = buildExpandableSelection(uri, match);
-                return builder.where(selection, selectionArgs).query(db, projection, sortOrder);
-            }
-
-            case SLEEP:
-            {
-                final SelectionBuilder builder = buildExpandableSelection(uri, match);
-                return builder.where(selection, selectionArgs).query(db, projection, sortOrder);
-            }
 
             default:
             {
-                throw new UnsupportedOperationException("Unknown uri: " + uri);
+                final SelectionBuilder builder = buildExpandableSelection(uri, match);
+                return builder.where(selection, selectionArgs).query(db, projection, sortOrder);
             }
 
         }
@@ -143,6 +124,22 @@ public class BabyLogProvider extends ContentProvider
                 notifyChange(uri);
                 return BabyLogContract.Sleep.buildUri(contentValues.getAsString(BaseColumns._ID));
             }
+            case DIAPER:
+            {
+                // add new activity sleep to activity table
+                ContentValues values = new ContentValues();
+                values.put(BabyLogContract.ActivityColumns.BABY_ID,
+                        contentValues.getAsString(BabyLogContract.DiaperColumns.BABY_ID));
+                values.put(BabyLogContract.ActivityColumns.ACTIVITY_TYPE, BabyLogContract.Activity.TYPE_DIAPER);
+                long actId = db.insertOrThrow(BabyLogDatabase.Tables.ACTIVITY, null, values);
+
+                // add sleep details to sleep table
+                contentValues.put(BabyLogContract.DiaperColumns.ACTIVITY_ID, actId);
+                db.insertOrThrow(BabyLogDatabase.Tables.DIAPER, null, contentValues);
+                notifyChange(uri);
+                return BabyLogContract.Diaper.buildUri(contentValues.getAsString(BaseColumns._ID));
+
+            }
 
             default:
             {
@@ -201,6 +198,10 @@ public class BabyLogProvider extends ContentProvider
             case SLEEP:
             {
                 return builder.table(BabyLogDatabase.Tables.SLEEP);
+            }
+            case DIAPER:
+            {
+                return builder.table(BabyLogDatabase.Tables.DIAPER);
             }
 
             default:

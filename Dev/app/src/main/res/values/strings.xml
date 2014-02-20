@@ -20,6 +20,9 @@
     <string name="action_settings">Settings</string>
     <string name="action_new_baby">New Baby</string>
 
+    <string name="quick_button_title_sleep">Sleep</string>
+    <string name="quick_button_title_nursing">Nursing</string>
+    <string name="quick_button_title_diaper">Diaper</string>
 
     <!--fragment sleep string-->
     <string name="date_format">{day}, {date} {month} {year}</string>

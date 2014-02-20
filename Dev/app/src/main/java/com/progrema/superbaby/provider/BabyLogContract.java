@@ -5,6 +5,7 @@ import android.provider.BaseColumns;
 
 /**
  * Created by iqbalpakeh on 18/1/14.
+ * @author aria
  */
 public class BabyLogContract
 {
@@ -170,6 +171,7 @@ public class BabyLogContract
     {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_ACTIVITY).build();
         public static final String TYPE_SLEEP = "SLEEP";
+        public static final String TYPE_DIAPER = "DIAPER";
     }
 
     /**
@@ -217,6 +219,28 @@ public class BabyLogContract
     public static class Diaper implements DiaperColumns, BaseColumns
     {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_DIAPER).build();
+
+        public interface Query
+        {
+            String[] PROJECTION =
+                    {
+                            BaseColumns._ID,
+                            Diaper.ACTIVITY_ID,
+                            Diaper.BABY_ID,
+                            Diaper.TIMESTAMP,
+                            Diaper.TYPE
+                    };
+            final int OFFSET_ID = 0;
+            final int OFFSET_ACTIVITY_ID = 1;
+            final int OFFSET_BABY_ID = 2;
+            final int OFFSET_TIMESTAMP = 3;
+            final int OFFSET_TYPE = 4;
+        }
+
+        public static Uri buildUri(String activityId)
+        {
+            return CONTENT_URI.buildUpon().appendPath(activityId).build();
+        }
     }
 
     /**

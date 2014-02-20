@@ -1,7 +1,10 @@
 package com.progrema.superbaby.models;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.os.Parcel;
+
+import com.progrema.superbaby.provider.BabyLogContract;
 
 /**
  * Created by iqbalpakeh on 22/1/14.
@@ -11,7 +14,7 @@ import android.os.Parcel;
  */
 public class Diaper extends BaseActivity implements IDBServices
 {
-
+    public final static String DIAPER_TYPE_KEY = "diaper_type";
     private DiaperType type;
 
     /**
@@ -22,8 +25,8 @@ public class Diaper extends BaseActivity implements IDBServices
      */
     public enum DiaperType
     {
-        POO("POO"),
-        PEE("PEE"),
+        DRY("DRY"),
+        WET("WET"),
         MIXED("MIXED");
 
         private String title;
@@ -77,6 +80,11 @@ public class Diaper extends BaseActivity implements IDBServices
     @Override
     public void insert(Context context)
     {
+        ContentValues values = new ContentValues();
+        values.put(BabyLogContract.Diaper.BABY_ID, getBabyID());
+        values.put(BabyLogContract.Diaper.TIMESTAMP, getTimeStampInString());
+        values.put(BabyLogContract.Diaper.TYPE, getType().getTitle());
+        context.getContentResolver().insert(BabyLogContract.Diaper.CONTENT_URI, values);
     }
 
     @Override

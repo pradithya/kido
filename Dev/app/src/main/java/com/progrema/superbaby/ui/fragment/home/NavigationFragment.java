@@ -23,10 +23,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.adapter.navigation.TextItem;
 import com.progrema.superbaby.adapter.navigation.Baby;
 import com.progrema.superbaby.adapter.navigation.Item;
 import com.progrema.superbaby.adapter.navigation.NavigationAdapter;
+import com.progrema.superbaby.adapter.navigation.TextItem;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 

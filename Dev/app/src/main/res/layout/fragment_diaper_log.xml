@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/fragment_diaper_title_sample"
+    <ListView
+        android:id="@+id/history_list_diaper"
         android:text="Diaper Fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

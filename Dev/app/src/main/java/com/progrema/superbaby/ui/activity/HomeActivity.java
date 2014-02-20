@@ -12,8 +12,8 @@ import android.view.MenuItem;
 
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.ui.fragment.home.DiaperLogFragment;
-import com.progrema.superbaby.ui.fragment.home.NursingLogFragment;
 import com.progrema.superbaby.ui.fragment.home.NavigationFragment;
+import com.progrema.superbaby.ui.fragment.home.NursingLogFragment;
 import com.progrema.superbaby.ui.fragment.home.SleepLogFragment;
 import com.progrema.superbaby.ui.fragment.home.TimeLineLogFragment;
 

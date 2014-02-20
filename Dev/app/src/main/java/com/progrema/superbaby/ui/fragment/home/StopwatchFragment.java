@@ -46,9 +46,9 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
     {
 
         Bundle args = getArguments();
-        if (args != null && args.containsKey("source"))
+        if (args != null && args.containsKey(TimeLineLogFragment.ACTIVITY_TRIGGER_KEY))
         {
-            sourceTrigger = args.getString("source");
+            sourceTrigger = args.getString(TimeLineLogFragment.ACTIVITY_TRIGGER_KEY);
         }
 
         // inflate fragment layout
@@ -125,7 +125,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
 
         Calendar currentTime = Calendar.getInstance();
 
-        if (sourceTrigger.compareTo("Sleep") == 0)
+        if (sourceTrigger.compareTo(TimeLineLogFragment.Trigger.SLEEP.getTitle()) == 0)
         {
             Sleep sleep = new Sleep();
             /*test with baby ID  = 1*/
