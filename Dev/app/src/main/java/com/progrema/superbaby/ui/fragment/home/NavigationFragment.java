@@ -23,7 +23,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.adapter.navigation.TextDividerItem;
 import com.progrema.superbaby.adapter.navigation.TextItem;
 import com.progrema.superbaby.adapter.navigation.Baby;
 import com.progrema.superbaby.adapter.navigation.Item;
@@ -126,10 +125,10 @@ public class NavigationFragment extends Fragment
         Cursor cursor = userQuery(getActivity());
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext())
         {
-            items.add(new TextItem(cursor.getString(BabyLogContract.User.Query.OFFSET_NAME)));
+            items.add(new TextItem(cursor.getString(BabyLogContract.User.Query.OFFSET_NAME),R.layout.navigation_drawer_text_container));
         }
 
-        items.add(new TextDividerItem(getString(R.string.title_section_baby)));
+        items.add(new TextItem(getString(R.string.title_section_baby),R.layout.navigation_drawer_section_item));
 
         // prepare baby name
         cursor = babyQuery(getActivity());
@@ -139,16 +138,16 @@ public class NavigationFragment extends Fragment
         }
 
 
-        items.add(new TextDividerItem(getString(R.string.title_section_activity)));
+        items.add(new TextItem(getString(R.string.title_section_activity),R.layout.navigation_drawer_section_item));
 
         // get calibration variable for selected action
         mActionPositionOffset = items.size();
 
         // prepare action supported
-        items.add(new TextItem(getString(R.string.title_timeline_fragment)));
-        items.add(new TextItem(getString(R.string.title_nursing_fragment)));
-        items.add(new TextItem(getString(R.string.title_diaper_fragment)));
-        items.add(new TextItem(getString(R.string.title_sleep_fragment)));
+        items.add(new TextItem(getString(R.string.title_timeline_fragment),R.layout.navigation_drawer_text_container));
+        items.add(new TextItem(getString(R.string.title_nursing_fragment),R.layout.navigation_drawer_text_container));
+        items.add(new TextItem(getString(R.string.title_diaper_fragment),R.layout.navigation_drawer_text_container));
+        items.add(new TextItem(getString(R.string.title_sleep_fragment),R.layout.navigation_drawer_text_container));
 
         // set adapter
         adapter = new NavigationAdapter(getActivity(), items);

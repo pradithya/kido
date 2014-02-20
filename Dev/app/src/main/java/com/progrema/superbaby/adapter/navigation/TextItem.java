@@ -17,10 +17,11 @@ public class TextItem extends Item
 
     }
 
-    public TextItem(String text)
+    public TextItem(String text, int layout)
     {
         this.setText(text);
-        this.setLayout(R.layout.navigation_drawer_text_container);
+        this.setLayout(layout);
+
     }
 
     /**
