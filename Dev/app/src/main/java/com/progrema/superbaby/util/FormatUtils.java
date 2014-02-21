@@ -32,11 +32,11 @@ public class FormatUtils
         String retVal = "";
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(Long.parseLong(startTime));
-        String start = DateFormat.getTimeInstance().format(cal.getTime());
+        String start = new SimpleDateFormat("HH:mm a").format(cal.getTime());
 
 
         cal.setTimeInMillis(Long.parseLong(startTime) + Long.parseLong(duration));
-        String end = DateFormat.getTimeInstance(1).format(cal.getTime());
+        String end =  new SimpleDateFormat("HH:mm a").format(cal.getTime());
 
         CharSequence formatted = Phrase.from(context.getResources().getString(R.string.time_span_format))
                 .put("start", start)
@@ -116,7 +116,7 @@ public class FormatUtils
         String retVal = "";
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(Long.parseLong(timeStamp));
-        retVal = DateFormat.getTimeInstance().format(cal.getTime());
+        retVal = new SimpleDateFormat("HH:mm a").format(cal.getTime());
 
         return retVal;
     }

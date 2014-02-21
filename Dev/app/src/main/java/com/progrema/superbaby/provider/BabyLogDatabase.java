@@ -109,6 +109,7 @@ public class BabyLogDatabase extends SQLiteOpenHelper
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + ActivityColumns.BABY_ID + " TEXT NOT NULL,"
                 + ActivityColumns.ACTIVITY_TYPE + " TEXT NOT NULL,"
+                + ActivityColumns.TIMESTAMP + " TEXT NOT NULL,"
                 + " FOREIGN KEY (" + ActivityColumns.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BaseColumns._ID + ")" + ")");
 
         db.execSQL("CREATE TABLE " + Tables.NURSING + " ("
@@ -201,6 +202,17 @@ public class BabyLogDatabase extends SQLiteOpenHelper
                 + " WHERE " + Qualified.BABY_PHOTO + "=old." + Photo.BABY_ID
                 + ";" + " END;");
     }
+
+    public final static String JOIN_ALL = ("SELECT "
+            + Tables.ACTIVITY + "." + BaseColumns._ID
+            + " , " + Tables.ACTIVITY + "." + ActivityColumns.BABY_ID
+            + " , " + ActivityColumns.ACTIVITY_TYPE
+            + " , " + Tables.ACTIVITY + "." + ActivityColumns.TIMESTAMP
+            + " , " + Diaper.TYPE + " , " + Sleep.DURATION + " "
+            + " FROM " + Tables.ACTIVITY
+            + " LEFT JOIN " +  Tables.DIAPER + " ON " + Tables.ACTIVITY + "." + BaseColumns._ID + " = " + Tables.DIAPER + "."+ DiaperColumns.ACTIVITY_ID
+            + " LEFT JOIN " +  Tables.SLEEP + " ON " + Tables.ACTIVITY + "." +BaseColumns._ID + " = " + Tables.SLEEP + "."+ SleepColumns.ACTIVITY_ID
+            + " WHERE " + Tables.ACTIVITY + "." + ActivityColumns.BABY_ID + " = ? " + ";");
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i2)
