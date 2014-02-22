@@ -1,16 +1,23 @@
 package com.progrema.superbaby.ui.fragment.home;
 
+import android.support.v4.app.LoaderManager;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.progrema.superbaby.R;
+import com.progrema.superbaby.adapter.sleephistory.TimelineHistoryAdapter;
 import com.progrema.superbaby.models.Diaper;
+import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.ui.fragment.dialog.DiaperDialogFragment;
 import com.progrema.superbaby.util.ActiveContext;
 
@@ -19,7 +26,8 @@ import java.util.Calendar;
 /**
  * Created by iqbalpakeh on 18/1/14.
  */
-public class TimeLineLogFragment extends Fragment implements View.OnClickListener
+public class TimeLineLogFragment extends Fragment implements View.OnClickListener,
+        LoaderManager.LoaderCallbacks<Cursor>
 {
 
     public final static int REQUEST_DIAPER = 0;
@@ -32,6 +40,10 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     private Button buttonQuickSleep;
     private Button buttonQuickDiaper;
     private Button buttonQuickNursing;
+    private TimelineHistoryAdapter mAdapter;
+    private ListView  historyList;
+    private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
+    private static final int LOADER_ID = 0;
 
     public final static String ACTIVITY_TRIGGER_KEY = "trigger";
     public enum Trigger
@@ -81,7 +93,19 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         buttonQuickDiaper = (Button) rootView.findViewById(R.id.quick_button_diaper);
         buttonQuickDiaper.setOnClickListener(this);
 
+        // set adapter to list view
+        historyList = (ListView) rootView.findViewById(R.id.activity_list);
+        mAdapter = new TimelineHistoryAdapter(getActivity(), null, 0);
+        mAdapter.setLayout(R.layout.history_item_activity);
+        historyList.setAdapter(mAdapter);
+
+        // prepare loader
+        mCallbacks = this;
+        LoaderManager lm = getLoaderManager();
+        lm.initLoader(LOADER_ID, null, mCallbacks);
+
         return rootView;
+
     }
 
     @Override
@@ -163,5 +187,31 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
                     break;
             }
         }
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader (int i, Bundle bundle){
+        String[] args = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
+        CursorLoader cl = new CursorLoader(getActivity(), BabyLogContract.Activity.CONTENT_URI,
+                BabyLogContract.Activity.Query.PROJECTION,
+                BabyLogContract.BABY_SELECTION_ARG,
+                args,
+                BabyLogContract.Activity._ID);
+        return cl;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> cl, Cursor cursor){
+        if (cursor.getCount() > 0)
+        {
+            /** show last inserted row */
+            cursor.moveToFirst();
+            mAdapter.swapCursor(cursor);
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> cl){
+        mAdapter.swapCursor(null);
     }
 }

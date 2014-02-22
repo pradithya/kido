@@ -49,7 +49,7 @@ public class SleepLogFragment extends Fragment
         // set adapter to list view
         sleepHistoryList = (ListView) rootView.findViewById(R.id.sleep_activity_list);
         mAdapter = new SleepHistoryAdapter(getActivity(), null, 0);
-        mAdapter.setLayout(R.layout.sleep_history_item);
+        mAdapter.setLayout(R.layout.history_item_sleep);
         sleepHistoryList.setAdapter(mAdapter);
 
         // prepare loader

@@ -35,6 +35,7 @@ public class BabyLogContract
     {
         String BABY_ID = "baby_id";
         String ACTIVITY_TYPE = "activity_type";
+        String TIMESTAMP = "timestamp";
     }
 
     interface NursingColumns
@@ -174,6 +175,26 @@ public class BabyLogContract
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_ACTIVITY).build();
         public static final String TYPE_SLEEP = "SLEEP";
         public static final String TYPE_DIAPER = "DIAPER";
+
+        public interface Query
+        {
+            String[] PROJECTION =
+                    {
+                            BaseColumns._ID,
+                            Activity.BABY_ID,
+                            Activity.ACTIVITY_TYPE,
+                            Activity.TIMESTAMP,
+                            Diaper.TYPE,
+                            Sleep.DURATION
+
+                    };
+            final int OFFSET_ID = 0;
+            final int OFFSET_BABY_ID = 1;
+            final int OFFSET_ACTIVITY_TYPE = 2;
+            final int OFFSET_TIMESTAMP = 3;
+            final int OFFSET_DIAPER_TYPE = 4;
+            final int OFFSET_SLEEP_DURATION = 5;
+        }
     }
 
     /**

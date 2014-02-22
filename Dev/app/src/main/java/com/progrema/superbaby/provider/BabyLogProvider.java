@@ -26,11 +26,13 @@ public class BabyLogProvider extends ContentProvider
     private static final int DIAPER = 600;
     private static final int MEASUREMENT = 700;
     private static final int PHOTO = 800;
+    private static final int ACTIVITY = 1000;
 
     private static UriMatcher buildUriMatcher()
     {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = BabyLogContract.CONTENT_AUTHORITY;
+
 
         matcher.addURI(authority, "user", USER);
         matcher.addURI(authority, "user_baby_map", USER_BABY_MAP);
@@ -40,6 +42,7 @@ public class BabyLogProvider extends ContentProvider
         matcher.addURI(authority, "diaper", DIAPER);
         matcher.addURI(authority, "measurement", MEASUREMENT);
         matcher.addURI(authority, "photo", PHOTO);
+        matcher.addURI(authority, "activity", ACTIVITY);
 
         return matcher;
     }
@@ -59,13 +62,13 @@ public class BabyLogProvider extends ContentProvider
 
         switch (match)
         {
-
+            case ACTIVITY:
+                return db.rawQuery(BabyLogDatabase.JOIN_ALL,selectionArgs);
             default:
             {
                 final SelectionBuilder builder = buildExpandableSelection(uri, match);
                 return builder.where(selection, selectionArgs).query(db, projection, sortOrder);
             }
-
         }
     }
 
@@ -116,6 +119,8 @@ public class BabyLogProvider extends ContentProvider
                 values.put(BabyLogContract.ActivityColumns.BABY_ID,
                         contentValues.getAsString(BabyLogContract.SleepColumns.BABY_ID));
                 values.put(BabyLogContract.ActivityColumns.ACTIVITY_TYPE, BabyLogContract.Activity.TYPE_SLEEP);
+                values.put(BabyLogContract.ActivityColumns.TIMESTAMP,
+                        contentValues.getAsString(BabyLogContract.SleepColumns.TIMESTAMP));
                 long actId = db.insertOrThrow(BabyLogDatabase.Tables.ACTIVITY, null, values);
 
                 // add sleep details to sleep table
@@ -131,6 +136,8 @@ public class BabyLogProvider extends ContentProvider
                 values.put(BabyLogContract.ActivityColumns.BABY_ID,
                         contentValues.getAsString(BabyLogContract.DiaperColumns.BABY_ID));
                 values.put(BabyLogContract.ActivityColumns.ACTIVITY_TYPE, BabyLogContract.Activity.TYPE_DIAPER);
+                values.put(BabyLogContract.ActivityColumns.TIMESTAMP,
+                        contentValues.getAsString(BabyLogContract.DiaperColumns.TIMESTAMP));
                 long actId = db.insertOrThrow(BabyLogDatabase.Tables.ACTIVITY, null, values);
 
                 // add sleep details to sleep table
