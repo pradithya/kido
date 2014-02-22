@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:padding="16dp">
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:padding="16dp">
 
     <EditText
         android:id="@+id/fragment_baby_input_name"
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:hint="Baby Name"
         android:gravity="center"
-        android:inputType="text" />
+        android:inputType="text"/>
 
     <EditText
         android:id="@+id/fragment_baby_input_birthday"
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:hint="Baby Birthday"
         android:gravity="center"
-        android:inputType="text" />
+        android:inputType="text"/>
 
     <EditText
         android:id="@+id/fragment_baby_input_sex_type"
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:hint="MALE of FEMALE"
         android:gravity="center"
-        android:inputType="text" />
+        android:inputType="text"/>
 
     <Button
         android:id="@+id/fragment_baby_input_button_done"
@@ -37,6 +37,6 @@
         android:layout_height="wrap_content"
         android:text="Done"
         android:layout_gravity="center"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"/>
 
 </LinearLayout>

@@ -18,6 +18,7 @@ public class StandardItem extends Item
         this.setText(text);
         this.setLayout(R.layout.navigation_drawer_text_container);
     }
+
     /**
      * inflate view
      *

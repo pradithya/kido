@@ -78,9 +78,9 @@ public class ObserveableListView extends ListView
                     mLastTouchX = x;
                     mLastTouchY = y;
 
-                    if(dy > 0)
+                    if (dy > 0)
                     {
-                        if(!isScrollUp)
+                        if (!isScrollUp)
                         {
                             mCallbacks.onScrollUp();
                             isScrollUp = true;
@@ -88,7 +88,7 @@ public class ObserveableListView extends ListView
                     }
                     else
                     {
-                        if(isScrollUp)
+                        if (isScrollUp)
                         {
                             mCallbacks.onScrollDown();
                             isScrollUp = false;

@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by iqbalpakeh on 29/1/14.
+ *
  * @author aria
  */
 public class StopwatchFragment extends Fragment implements View.OnClickListener
@@ -64,21 +65,20 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
     {
 
 
-
         Bundle args = getArguments();
         if (args != null && args.containsKey(TimeLineLogFragment.ACTIVITY_TRIGGER_KEY))
         {
             sourceTrigger = args.getString(TimeLineLogFragment.ACTIVITY_TRIGGER_KEY);
         }
 
-        if(args.containsKey(Nursing.NURSING_TYPE_KEY))
+        if (args.containsKey(Nursing.NURSING_TYPE_KEY))
         {
             nursingType = args.getString(Nursing.NURSING_TYPE_KEY);
             isNursing = true;
             isTwoStopWatch = true;
         }
 
-        if(args.containsKey(Nursing.FORMULA_VOLUME_KEY))
+        if (args.containsKey(Nursing.FORMULA_VOLUME_KEY))
         {
             formulaVolume = args.getString(Nursing.FORMULA_VOLUME_KEY);
             isTwoStopWatch = false;
@@ -101,7 +101,6 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
         switchButton = (Button) rootView.findViewById(R.id.button_stopwatch_switch);
 
 
-
         // set onClickListener to button
         startButton.setOnClickListener(this);
         pauseButton.setOnClickListener(this);
@@ -113,19 +112,24 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
         stopwatch = (Stopwatch) rootView.findViewById(R.id.chronometer_widget_a);
         stopwatch2 = (Stopwatch) rootView.findViewById(R.id.chronometer_widget_b);
 
-        if(isTwoStopWatch){
+        if (isTwoStopWatch)
+        {
 
             containerStopWatch2.setVisibility(View.VISIBLE);
             switchButton.setVisibility(View.VISIBLE);
 
-            if (nursingType.equals(Nursing.NursingType.LEFT.getTitle())){
+            if (nursingType.equals(Nursing.NursingType.LEFT.getTitle()))
+            {
                 activeStopWatch = stopwatch;
                 inActiveStopWatch = stopwatch2;
-            }else{
+            }
+            else
+            {
                 activeStopWatch = stopwatch2;
                 inActiveStopWatch = stopwatch;
             }
-        }else
+        }
+        else
         {
             containerStopWatch2.setVisibility(View.GONE);
             switchButton.setVisibility(View.GONE);
@@ -203,7 +207,6 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
         long duration2 = stopwatch2.getDuration();
 
 
-
         if (sourceTrigger.compareTo(TimeLineLogFragment.Trigger.SLEEP.getTitle()) == 0)
         {
             Sleep sleep = new Sleep();
@@ -213,13 +216,16 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
             sleep.setDuration(TimeUnit.SECONDS.toMillis(duration));
             sleep.insert(getActivity());
 
-        }else if (sourceTrigger.compareTo(TimeLineLogFragment.Trigger.NURSING.getTitle()) == 0){
+        }
+        else if (sourceTrigger.compareTo(TimeLineLogFragment.Trigger.NURSING.getTitle()) == 0)
+        {
             Nursing nursing = new Nursing();
             nursing.setTimeStamp(String.valueOf(startTime.getTimeInMillis()));
             nursing.setBabyID(ActiveContext.getActiveBaby(getActivity()).getID());
 
-            if(isTwoStopWatch){
-                if(duration != 0)
+            if (isTwoStopWatch)
+            {
+                if (duration != 0)
                 {
                     nursing.setDuration(TimeUnit.SECONDS.toMillis(duration));
                     nursing.setType(Nursing.NursingType.LEFT);
@@ -233,11 +239,13 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
                     nursing.insert(getActivity());
                 }
 
-            }else{
+            }
+            else
+            {
                 /** formula*/
                 nursing.setDuration(TimeUnit.SECONDS.toMillis(duration));
                 nursing.setType(Nursing.NursingType.valueOf(nursingType));
-                nursing.setVolume(Long.parseLong(formulaVolume,10));
+                nursing.setVolume(Long.parseLong(formulaVolume, 10));
                 nursing.insert(getActivity());
             }
         }

@@ -5,6 +5,7 @@ import android.provider.BaseColumns;
 
 /**
  * Created by iqbalpakeh on 18/1/14.
+ *
  * @author aria
  */
 public class BabyLogContract
@@ -281,7 +282,6 @@ public class BabyLogContract
         {
             return CONTENT_URI.buildUpon().appendPath(activityId).build();
         }
-
 
 
     }

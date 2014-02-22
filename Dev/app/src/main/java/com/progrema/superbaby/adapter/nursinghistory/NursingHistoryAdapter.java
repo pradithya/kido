@@ -41,7 +41,7 @@ public class NursingHistoryAdapter extends CursorAdapter
         String timeStamp = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_TIMESTAMP);
         String sides = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_SIDES);
         String duration = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_DURATION);
-        String volume =  cursor.getString(BabyLogContract.Nursing.Query.OFFSET_VOLUME);
+        String volume = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_VOLUME);
 
         TextView textViewDate = (TextView) view.findViewById(R.id.history_item_date);
         TextView textViewTime = (TextView) view.findViewById(R.id.history_item_time);
@@ -55,7 +55,8 @@ public class NursingHistoryAdapter extends CursorAdapter
         textViewSides.setText(sides);
         textViewDuration.setText(FormatUtils.formatDuration(context, duration));
 
-        if (sides.compareTo(Nursing.NursingType.FORMULA.getTitle()) == 0){
+        if (sides.compareTo(Nursing.NursingType.FORMULA.getTitle()) == 0)
+        {
             textViewVolume.setVisibility(View.VISIBLE);
             textViewVolume.setText(volume);
         }

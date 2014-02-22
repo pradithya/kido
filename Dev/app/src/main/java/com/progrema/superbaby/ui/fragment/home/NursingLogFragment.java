@@ -1,9 +1,9 @@
 package com.progrema.superbaby.ui.fragment.home;
 
-import android.support.v4.app.LoaderManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
@@ -32,9 +32,12 @@ public class NursingLogFragment extends Fragment implements LoaderManager.Loader
         if (singletonNursingLogFragment == null)
         {
             singletonNursingLogFragment = new NursingLogFragment();
-        }else{
-            if (singletonNursingLogFragment.isAdded()){
-                singletonNursingLogFragment.getLoaderManager().restartLoader(LOADER_ID,null, mCallbacks );
+        }
+        else
+        {
+            if (singletonNursingLogFragment.isAdded())
+            {
+                singletonNursingLogFragment.getLoaderManager().restartLoader(LOADER_ID, null, mCallbacks);
             }
         }
         return singletonNursingLogFragment;
@@ -59,7 +62,8 @@ public class NursingLogFragment extends Fragment implements LoaderManager.Loader
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundel){
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundel)
+    {
 
         String[] args = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
         CursorLoader cl = new CursorLoader(getActivity(), BabyLogContract.Nursing.CONTENT_URI,
@@ -71,18 +75,23 @@ public class NursingLogFragment extends Fragment implements LoaderManager.Loader
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> cl, Cursor cursor) {
-        if (cursor.getCount() > 0) {
+    public void onLoadFinished(Loader<Cursor> cl, Cursor cursor)
+    {
+        if (cursor.getCount() > 0)
+        {
             /** show last inserted row */
             cursor.moveToFirst();
             mAdapter.swapCursor(cursor);
-        }else{
+        }
+        else
+        {
             mAdapter.swapCursor(null);
         }
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> cl) {
+    public void onLoaderReset(Loader<Cursor> cl)
+    {
         mAdapter.swapCursor(null);
     }
 }

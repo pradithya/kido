@@ -22,6 +22,7 @@ import com.progrema.superbaby.provider.BabyLogContract.UserColumns;
 
 /**
  * Created by iqbalpakeh on 18/1/14.
+ *
  * @author aria
  */
 public class BabyLogDatabase extends SQLiteOpenHelper
@@ -214,9 +215,9 @@ public class BabyLogDatabase extends SQLiteOpenHelper
             + " , " + Tables.NURSING + "." + Nursing.DURATION
             + " , " + Tables.NURSING + "." + Nursing.VOLUME
             + " FROM " + Tables.ACTIVITY
-            + " LEFT JOIN " +  Tables.DIAPER + " ON " + Tables.ACTIVITY + "." + BaseColumns._ID + " = " + Tables.DIAPER + "."+ DiaperColumns.ACTIVITY_ID
-            + " LEFT JOIN " +  Tables.SLEEP + " ON " + Tables.ACTIVITY + "." +BaseColumns._ID + " = " + Tables.SLEEP + "."+ SleepColumns.ACTIVITY_ID
-            + " LEFT JOIN " +  Tables.NURSING + " ON " + Tables.ACTIVITY + "." +BaseColumns._ID + " = " + Tables.NURSING + "."+ SleepColumns.ACTIVITY_ID
+            + " LEFT JOIN " + Tables.DIAPER + " ON " + Tables.ACTIVITY + "." + BaseColumns._ID + " = " + Tables.DIAPER + "." + DiaperColumns.ACTIVITY_ID
+            + " LEFT JOIN " + Tables.SLEEP + " ON " + Tables.ACTIVITY + "." + BaseColumns._ID + " = " + Tables.SLEEP + "." + SleepColumns.ACTIVITY_ID
+            + " LEFT JOIN " + Tables.NURSING + " ON " + Tables.ACTIVITY + "." + BaseColumns._ID + " = " + Tables.NURSING + "." + SleepColumns.ACTIVITY_ID
             + " WHERE " + Tables.ACTIVITY + "." + ActivityColumns.BABY_ID + " = ? "
             + " ORDER BY " + Tables.ACTIVITY + "." + BabyLogContract.Activity.Query.SORT_BY_TIMESTAMP_DESC + " ;");
 

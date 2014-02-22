@@ -5,7 +5,6 @@ import android.content.Context;
 import com.progrema.superbaby.R;
 import com.squareup.phrase.Phrase;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
@@ -18,7 +17,7 @@ public class FormatUtils
 {
 
 
-    private static final String[] DAY_OF_WEEK = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" };
+    private static final String[] DAY_OF_WEEK = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
     private static final String[] MONTH_OF_YEAR = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
@@ -36,7 +35,7 @@ public class FormatUtils
 
 
         cal.setTimeInMillis(Long.parseLong(startTime) + Long.parseLong(duration));
-        String end =  new SimpleDateFormat("HH:mm a").format(cal.getTime());
+        String end = new SimpleDateFormat("HH:mm a").format(cal.getTime());
 
         CharSequence formatted = Phrase.from(context.getResources().getString(R.string.time_span_format))
                 .put("start", start)
@@ -127,7 +126,7 @@ public class FormatUtils
         {
             double d = Double.parseDouble(str);
         }
-        catch(NumberFormatException nfe)
+        catch (NumberFormatException nfe)
         {
             return false;
         }

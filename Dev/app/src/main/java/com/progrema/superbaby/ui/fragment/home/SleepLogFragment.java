@@ -20,7 +20,7 @@ import com.progrema.superbaby.util.ActiveContext;
  * Fragment to log all sleep activity
  */
 public class SleepLogFragment extends Fragment
-        implements  LoaderManager.LoaderCallbacks<Cursor>
+        implements LoaderManager.LoaderCallbacks<Cursor>
 {
 
     private static SleepLogFragment singletonSleepLogFragment = null;
@@ -34,9 +34,12 @@ public class SleepLogFragment extends Fragment
         if (singletonSleepLogFragment == null)
         {
             singletonSleepLogFragment = new SleepLogFragment();
-        }else{
-            if (singletonSleepLogFragment.isAdded()){
-                singletonSleepLogFragment.getLoaderManager().restartLoader(LOADER_ID,null, mCallbacks );
+        }
+        else
+        {
+            if (singletonSleepLogFragment.isAdded())
+            {
+                singletonSleepLogFragment.getLoaderManager().restartLoader(LOADER_ID, null, mCallbacks);
             }
         }
         return singletonSleepLogFragment;
@@ -84,7 +87,9 @@ public class SleepLogFragment extends Fragment
             /** show last inserted row */
             cursor.moveToFirst();
             mAdapter.swapCursor(cursor);
-        }else{
+        }
+        else
+        {
             mAdapter.swapCursor(null);
         }
 

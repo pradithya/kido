@@ -18,6 +18,7 @@ import com.progrema.superbaby.util.ActiveContext;
 
 /**
  * Created by iqbalpakeh on 18/1/14.
+ *
  * @author aria
  */
 public class DiaperLogFragment extends Fragment
@@ -35,14 +36,16 @@ public class DiaperLogFragment extends Fragment
         if (singletonDiaperLogFragment == null)
         {
             singletonDiaperLogFragment = new DiaperLogFragment();
-        }else{
-            if (singletonDiaperLogFragment.isAdded()){
-                singletonDiaperLogFragment.getLoaderManager().restartLoader(LOADER_ID,null, mCallbacks );
+        }
+        else
+        {
+            if (singletonDiaperLogFragment.isAdded())
+            {
+                singletonDiaperLogFragment.getLoaderManager().restartLoader(LOADER_ID, null, mCallbacks);
             }
         }
         return singletonDiaperLogFragment;
     }
-
 
 
     @Override
@@ -64,7 +67,8 @@ public class DiaperLogFragment extends Fragment
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle){
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle)
+    {
 
         String[] args = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
         CursorLoader cl = new CursorLoader(getActivity(), BabyLogContract.Diaper.CONTENT_URI,
@@ -76,19 +80,23 @@ public class DiaperLogFragment extends Fragment
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor){
+    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor)
+    {
         if (cursor.getCount() > 0)
         {
             /** show last inserted row */
             cursor.moveToFirst();
             mAdapter.swapCursor(cursor);
-        }else{
+        }
+        else
+        {
             mAdapter.swapCursor(null);
         }
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader){
+    public void onLoaderReset(Loader<Cursor> cursorLoader)
+    {
         mAdapter.swapCursor(null);
     }
 }

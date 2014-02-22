@@ -143,7 +143,8 @@ public class NavigationFragment extends Fragment
 
         // get calibration variable for selected action
         mActionPositionOffset = items.size();
-        if(lastActivityClicked == 0){
+        if (lastActivityClicked == 0)
+        {
             lastActivityClicked = mActionPositionOffset;
         }
 

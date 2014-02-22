@@ -53,6 +53,7 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     private int initY;
 
     public final static String ACTIVITY_TRIGGER_KEY = "trigger";
+
     public enum Trigger
     {
         SLEEP("sleep"),
@@ -77,9 +78,12 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         if (singletonTimeLineLogFragment == null)
         {
             singletonTimeLineLogFragment = new TimeLineLogFragment();
-        }else{
-            if (singletonTimeLineLogFragment.isAdded()){
-                singletonTimeLineLogFragment.getLoaderManager().restartLoader(LOADER_ID,null, mCallbacks );
+        }
+        else
+        {
+            if (singletonTimeLineLogFragment.isAdded())
+            {
+                singletonTimeLineLogFragment.getLoaderManager().restartLoader(LOADER_ID, null, mCallbacks);
             }
         }
         return singletonTimeLineLogFragment;
@@ -192,10 +196,13 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK){
-            switch (requestCode){
+        if (resultCode == RESULT_OK)
+        {
+            switch (requestCode)
+            {
                 case REQUEST_DIAPER:
                     Calendar currentTime = Calendar.getInstance();
                     Bundle recData = data.getExtras();
@@ -230,7 +237,8 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle)
+    {
         String[] args = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
         CursorLoader cl = new CursorLoader(getActivity(), BabyLogContract.Activity.CONTENT_URI,
                 BabyLogContract.Activity.Query.PROJECTION,
@@ -241,18 +249,23 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> cl, Cursor cursor) {
-        if (cursor.getCount() > 0) {
+    public void onLoadFinished(Loader<Cursor> cl, Cursor cursor)
+    {
+        if (cursor.getCount() > 0)
+        {
             /** show last inserted row */
             cursor.moveToFirst();
             mAdapter.swapCursor(cursor);
-        }else{
+        }
+        else
+        {
             mAdapter.swapCursor(null);
         }
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> cl) {
+    public void onLoaderReset(Loader<Cursor> cl)
+    {
         mAdapter.swapCursor(null);
     }
 }

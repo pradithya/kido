@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
 
     <Button
         android:id="@+id/dialog_choice_left"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Left" />
+        android:text="Left"/>
 
     <Button
         android:id="@+id/dialog_choice_right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Right" />
+        android:text="Right"/>
 
     <Button
         android:id="@+id/dialog_choice_formula"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Formula" />
+        android:text="Formula"/>
 
     <LinearLayout
         android:id="@+id/container_formula_entry"
@@ -35,19 +35,19 @@
             android:id="@+id/entry_text_volume"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:hint="volume" />
+            android:hint="volume"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="ml" />
+            android:text="ml"/>
 
         <Button
             android:id="@+id/button_formula_ok"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="OK" />
+            android:text="OK"/>
 
     </LinearLayout>
 

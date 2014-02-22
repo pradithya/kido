@@ -18,11 +18,13 @@ import com.progrema.superbaby.util.FormatUtils;
 /**
  * Created by aria on 20/2/14.
  */
-public class NursingDialogFragment extends DialogFragment {
+public class NursingDialogFragment extends DialogFragment
+{
 
     private static NursingDialogFragment singletonNursingDialogFragment = null;
 
-    public NursingDialogFragment(){
+    public NursingDialogFragment()
+    {
 
     }
 
@@ -36,26 +38,31 @@ public class NursingDialogFragment extends DialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.dialog_fragment_nursing , parent, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
+    {
+        View view = inflater.inflate(R.layout.dialog_fragment_nursing, parent, false);
         Button buttonDry = (Button) view.findViewById(R.id.dialog_choice_left);
-        buttonDry.setOnClickListener(new View.OnClickListener() {
+        buttonDry.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 Intent result = new Intent();
                 result.putExtra(Nursing.NURSING_TYPE_KEY, Nursing.NursingType.LEFT.getTitle());
-                getTargetFragment().onActivityResult(getTargetRequestCode(), 0, result );
+                getTargetFragment().onActivityResult(getTargetRequestCode(), 0, result);
                 getDialog().dismiss();
             }
         });
 
         Button buttonWet = (Button) view.findViewById(R.id.dialog_choice_right);
-        buttonWet.setOnClickListener(new View.OnClickListener() {
+        buttonWet.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 Intent result = new Intent();
                 result.putExtra(Nursing.NURSING_TYPE_KEY, Nursing.NursingType.RIGHT.getTitle());
-                getTargetFragment().onActivityResult(getTargetRequestCode(), 0, result );
+                getTargetFragment().onActivityResult(getTargetRequestCode(), 0, result);
                 getDialog().dismiss();
             }
         });
@@ -64,23 +71,28 @@ public class NursingDialogFragment extends DialogFragment {
         Button formulaOK = (Button) view.findViewById(R.id.button_formula_ok);
 
 
-        buttonMixed.setOnClickListener(new View.OnClickListener() {
+        buttonMixed.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 LinearLayout extraInfoFormula = (LinearLayout) getDialog().findViewById(R.id.container_formula_entry);
                 extraInfoFormula.setVisibility(View.VISIBLE);
             }
         });
 
-        formulaOK.setOnClickListener(new View.OnClickListener() {
+        formulaOK.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
 
                 EditText inputVolume = (EditText) getDialog().findViewById(R.id.entry_text_volume);
                 String volume = inputVolume.getText().toString();
 
-                if (!FormatUtils.isValidNumber(volume)){
-                    Toast invalidNumber = Toast.makeText(getActivity(),"invalid number", Toast.LENGTH_LONG);
+                if (!FormatUtils.isValidNumber(volume))
+                {
+                    Toast invalidNumber = Toast.makeText(getActivity(), "invalid number", Toast.LENGTH_LONG);
                     invalidNumber.show();
                     return; //invalid volume
                 }
@@ -88,7 +100,7 @@ public class NursingDialogFragment extends DialogFragment {
                 Intent result = new Intent();
                 result.putExtra(Nursing.NURSING_TYPE_KEY, Nursing.NursingType.FORMULA.getTitle());
                 result.putExtra(Nursing.FORMULA_VOLUME_KEY, volume);
-                getTargetFragment().onActivityResult(getTargetRequestCode(), 0, result );
+                getTargetFragment().onActivityResult(getTargetRequestCode(), 0, result);
                 getDialog().dismiss();
             }
         });

@@ -63,7 +63,7 @@ public class BabyLogProvider extends ContentProvider
         switch (match)
         {
             case ACTIVITY:
-                return db.rawQuery(BabyLogDatabase.JOIN_ALL,selectionArgs);
+                return db.rawQuery(BabyLogDatabase.JOIN_ALL, selectionArgs);
             default:
             {
                 final SelectionBuilder builder = buildExpandableSelection(uri, match);
