@@ -22,7 +22,7 @@ import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.ui.fragment.dialog.DiaperDialogFragment;
 import com.progrema.superbaby.ui.fragment.dialog.NursingDialogFragment;
 import com.progrema.superbaby.util.ActiveContext;
-import com.progrema.superbaby.widget.customview.ObserveableListView;
+import com.progrema.superbaby.widget.customview.ObserveAbleListView;
 
 import java.util.Calendar;
 
@@ -30,7 +30,7 @@ import java.util.Calendar;
  * Created by iqbalpakeh on 18/1/14.
  */
 public class TimeLineLogFragment extends Fragment implements View.OnClickListener,
-        LoaderManager.LoaderCallbacks<Cursor>, ObserveableListView.Callbacks
+        LoaderManager.LoaderCallbacks<Cursor>, ObserveAbleListView.Callbacks
 {
 
     public final static int REQUEST_DIAPER = 0;
@@ -44,7 +44,7 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     private Button buttonQuickDiaper;
     private Button buttonQuickNursing;
     private TimelineHistoryAdapter mAdapter;
-    private ObserveableListView historyList;
+    private ObserveAbleListView historyList;
 
     public static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     public static final int LOADER_ID = 3;
@@ -109,7 +109,7 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         buttonQuickDiaper.setOnClickListener(this);
 
         // set adapter to list view
-        historyList = (ObserveableListView) rootView.findViewById(R.id.activity_list);
+        historyList = (ObserveAbleListView) rootView.findViewById(R.id.activity_list);
         historyList.setCallbacks(this);
         mAdapter = new TimelineHistoryAdapter(getActivity(), null, 0);
         historyList.setAdapter(mAdapter);

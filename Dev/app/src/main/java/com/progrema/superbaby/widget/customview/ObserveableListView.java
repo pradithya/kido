@@ -9,7 +9,7 @@ import android.widget.ListView;
 /**
  * Created by iqbalpakeh on 22/2/14.
  */
-public class ObserveableListView extends ListView
+public class ObserveAbleListView extends ListView
 {
     private Callbacks mCallbacks;
     private final int INVALID_POINTER_ID = MotionEvent.INVALID_POINTER_ID;
@@ -17,17 +17,17 @@ public class ObserveableListView extends ListView
     private float mLastTouchX, mLastTouchY, mPosX, mPosY;
     private boolean isScrollUp;
 
-    public ObserveableListView(Context context)
+    public ObserveAbleListView(Context context)
     {
         super(context);
     }
 
-    public ObserveableListView(Context context, AttributeSet attrs)
+    public ObserveAbleListView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
-    public ObserveableListView(Context context, AttributeSet attrs, int defStyle)
+    public ObserveAbleListView(Context context, AttributeSet attrs, int defStyle)
     {
         super(context, attrs, defStyle);
     }
