@@ -44,9 +44,11 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
     private String formulaVolume;
     private boolean isTwoStopWatch;
 
-    public static StopwatchFragment getInstance()
+    public static StopwatchFragment newInstance(Bundle arg)
     {
-        return new StopwatchFragment();
+        StopwatchFragment sw = new StopwatchFragment();
+        sw.setArguments(arg);
+        return sw;
     }
 
     @Override
