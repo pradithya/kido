@@ -16,7 +16,8 @@ import com.progrema.superbaby.util.FormatUtils;
 /**
  * Created by aria on 21/2/14.
  */
-public class TimelineHistoryAdapter extends CursorAdapter {
+public class TimelineHistoryAdapter extends CursorAdapter
+{
 
     private LayoutInflater inflater;
     private int layout;
@@ -65,7 +66,8 @@ public class TimelineHistoryAdapter extends CursorAdapter {
         extra_1.setVisibility(View.GONE);
         extra_2.setVisibility(View.GONE);
 
-        if (activityType.equals(BabyLogContract.Activity.TYPE_SLEEP)){
+        if (activityType.equals(BabyLogContract.Activity.TYPE_SLEEP))
+        {
 
             extra_0.setVisibility(View.VISIBLE);
             extra_1.setVisibility(View.VISIBLE);
@@ -73,19 +75,24 @@ public class TimelineHistoryAdapter extends CursorAdapter {
             extra_0.setText(FormatUtils.formatTimeBoundary(context, timeStamp, sleepDuration));
             extra_1.setText(FormatUtils.formatDuration(context, sleepDuration));
 
-        }else if (activityType.equals(BabyLogContract.Activity.TYPE_DIAPER)){
+        }
+        else if (activityType.equals(BabyLogContract.Activity.TYPE_DIAPER))
+        {
 
             extra_0.setVisibility(View.VISIBLE);
             extra_0.setText(diaperType);
 
-        }else if (activityType.equals(BabyLogContract.Activity.TYPE_NURSING)){
+        }
+        else if (activityType.equals(BabyLogContract.Activity.TYPE_NURSING))
+        {
 
             extra_0.setVisibility(View.VISIBLE);
             extra_1.setVisibility(View.VISIBLE);
             extra_0.setText(nursingSides);
             extra_1.setText(FormatUtils.formatDuration(context, nursingDuration));
 
-            if (nursingSides.equals(Nursing.NursingType.FORMULA.getTitle())){
+            if (nursingSides.equals(Nursing.NursingType.FORMULA.getTitle()))
+            {
                 extra_2.setVisibility(View.VISIBLE);
                 extra_2.setText(nursingVolume);
             }
