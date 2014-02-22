@@ -177,6 +177,7 @@ public class BabyLogContract
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_ACTIVITY).build();
         public static final String TYPE_SLEEP = "SLEEP";
         public static final String TYPE_DIAPER = "DIAPER";
+        public static final String TYPE_NURSING = "NURSING";
 
         public interface Query
         {
@@ -187,7 +188,10 @@ public class BabyLogContract
                             Activity.ACTIVITY_TYPE,
                             Activity.TIMESTAMP,
                             Diaper.TYPE,
-                            Sleep.DURATION
+                            Sleep.DURATION,
+                            Nursing.SIDES,
+                            Nursing.DURATION,
+                            Nursing.VOLUME
 
                     };
             final int OFFSET_ID = 0;
@@ -196,6 +200,9 @@ public class BabyLogContract
             final int OFFSET_TIMESTAMP = 3;
             final int OFFSET_DIAPER_TYPE = 4;
             final int OFFSET_SLEEP_DURATION = 5;
+            final int OFFSET_NURSING_SIDES = 6;
+            final int OFFSET_NURSING_DURATION = 7;
+            final int OFFSET_NURSING_VOLUME = 8;
 
             final String SORT_BY_TIMESTAMP_ASC = ActivityColumns.TIMESTAMP + " ASC ";
             final String SORT_BY_TIMESTAMP_DESC = ActivityColumns.TIMESTAMP + " DESC ";
@@ -208,6 +215,38 @@ public class BabyLogContract
     public static class Nursing implements NursingColumns, BaseColumns
     {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_MILK).build();
+
+        public interface Query
+        {
+            String[] PROJECTION =
+                    {
+                            BaseColumns._ID,
+                            Nursing.ACTIVITY_ID,
+                            Nursing.BABY_ID,
+                            Nursing.TIMESTAMP,
+                            Nursing.SIDES,
+                            Nursing.DURATION,
+                            Nursing.VOLUME
+
+                    };
+            final int OFFSET_ID = 0;
+            final int OFFSET_ACTIVITY_ID = 1;
+            final int OFFSET_BABY_ID = 2;
+            final int OFFSET_TIMESTAMP = 3;
+            final int OFFSET_SIDES = 4;
+            final int OFFSET_DURATION = 5;
+            final int OFFSET_VOLUME = 6;
+
+            final String SORT_BY_TIMESTAMP_ASC = NursingColumns.TIMESTAMP + " ASC ";
+            final String SORT_BY_TIMESTAMP_DESC = NursingColumns.TIMESTAMP + " DESC ";
+        }
+
+
+        public static Uri buildUri(String activityId)
+        {
+            return CONTENT_URI.buildUpon().appendPath(activityId).build();
+        }
+
     }
 
     /**

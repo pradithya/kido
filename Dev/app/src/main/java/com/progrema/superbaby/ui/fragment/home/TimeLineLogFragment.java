@@ -76,6 +76,10 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         if (singletonTimeLineLogFragment == null)
         {
             singletonTimeLineLogFragment = new TimeLineLogFragment();
+        }else{
+            if (singletonTimeLineLogFragment.isAdded()){
+                singletonTimeLineLogFragment.getLoaderManager().restartLoader(LOADER_ID,null, mCallbacks );
+            }
         }
         return singletonTimeLineLogFragment;
     }
