@@ -22,7 +22,11 @@ import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.ui.fragment.dialog.DiaperDialogFragment;
 import com.progrema.superbaby.ui.fragment.dialog.NursingDialogFragment;
 import com.progrema.superbaby.util.ActiveContext;
+<<<<<<< HEAD
+import com.progrema.superbaby.widget.customview.ObserveableListView;
+=======
 import com.progrema.superbaby.widget.stopwatch.Stopwatch;
+>>>>>>> e60083723922441d936a9dd967c955cce1e0b97f
 
 import java.util.Calendar;
 
@@ -199,7 +203,17 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         NursingDialogFragment nursingChoiceBox = NursingDialogFragment.getInstance();
         nursingChoiceBox.setTargetFragment(this, REQUEST_NURSING);
 
+<<<<<<< HEAD
+        /** inform the stopwatch to start counting for sleep*/
+        Bundle bundle = new Bundle();
+        bundle.putString(ACTIVITY_TRIGGER_KEY, Trigger.SLEEP.getTitle());
+        frStopWatch.setArguments(bundle);
+
+        fragmentTransaction.replace(R.id.home_activity_container, StopwatchFragment.getInstance());
+        fragmentTransaction.commit();
+=======
         nursingChoiceBox.show(fragmentTransaction, "nursing_dialog");
+>>>>>>> e60083723922441d936a9dd967c955cce1e0b97f
     }
 
     @Override

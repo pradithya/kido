@@ -11,13 +11,60 @@
         android:layout_height="wrap_content"
         android:gravity="center" />
 
-    <com.progrema.superbaby.widget.stopwatch.Stopwatch
-        android:id="@+id/chronometer_widget"
+    <LinearLayout
+        android:id="@+id/container_stopwatch1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:textSize="22sp"
-        android:gravity="center" />
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/title_stopwatch_a"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center" />
+
+            <com.progrema.superbaby.widget.stopwatch.Stopwatch
+                android:id="@+id/chronometer_widget_a"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:layout_gravity="center"  />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/container_stopwatch2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/title_stopwatch_b"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center" />
+
+            <com.progrema.superbaby.widget.stopwatch.Stopwatch
+                android:id="@+id/chronometer_widget_b"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:layout_gravity="center"  />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/stopwatch_duration_view"
@@ -25,6 +72,14 @@
         android:layout_height="wrap_content"
         android:hint="Total duration"
         android:gravity="center" />
+
+    <Button
+        android:id="@+id/button_stopwatch_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Switch Side"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/button_stopwatch_start"

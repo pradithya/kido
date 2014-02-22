@@ -11,7 +11,7 @@ import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Utility class for output formatting
+ * Utility class for input/output formatting
  * Created by aria on 26/1/14.
  */
 public class FormatUtils
@@ -119,5 +119,18 @@ public class FormatUtils
         retVal = new SimpleDateFormat("HH:mm a").format(cal.getTime());
 
         return retVal;
+    }
+
+    public static boolean isValidNumber(String str)
+    {
+        try
+        {
+            double d = Double.parseDouble(str);
+        }
+        catch(NumberFormatException nfe)
+        {
+            return false;
+        }
+        return true;
     }
 }
