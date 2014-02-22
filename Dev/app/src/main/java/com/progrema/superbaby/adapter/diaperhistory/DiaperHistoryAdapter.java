@@ -1,4 +1,4 @@
-package com.progrema.superbaby.adapter.sleephistory;
+package com.progrema.superbaby.adapter.diaperhistory;
 
 import android.content.Context;
 import android.database.Cursor;
