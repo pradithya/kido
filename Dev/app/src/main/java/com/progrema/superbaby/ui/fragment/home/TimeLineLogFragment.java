@@ -1,18 +1,19 @@
 package com.progrema.superbaby.ui.fragment.home;
 
-import android.support.v4.app.LoaderManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewPropertyAnimator;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.timelinehistory.TimelineHistoryAdapter;
@@ -20,6 +21,7 @@ import com.progrema.superbaby.models.Diaper;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.ui.fragment.dialog.DiaperDialogFragment;
 import com.progrema.superbaby.util.ActiveContext;
+import com.progrema.superbaby.widget.customview.ObserveableListView;
 
 import java.util.Calendar;
 
@@ -27,7 +29,7 @@ import java.util.Calendar;
  * Created by iqbalpakeh on 18/1/14.
  */
 public class TimeLineLogFragment extends Fragment implements View.OnClickListener,
-        LoaderManager.LoaderCallbacks<Cursor>
+        LoaderManager.LoaderCallbacks<Cursor>, ObserveableListView.Callbacks
 {
 
     public final static int REQUEST_DIAPER = 0;
@@ -41,10 +43,12 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     private Button buttonQuickDiaper;
     private Button buttonQuickNursing;
     private TimelineHistoryAdapter mAdapter;
-    private ListView  historyList;
+    private ObserveableListView historyList;
 
     private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     public static final int LOADER_ID = 3;
+
+    private boolean isScrollUp;
 
     public final static String ACTIVITY_TRIGGER_KEY = "trigger";
     public enum Trigger
@@ -95,9 +99,10 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         buttonQuickDiaper.setOnClickListener(this);
 
         // set adapter to list view
-//        historyList = (ListView) rootView.findViewById(R.id.activity_list);
-//        mAdapter = new TimelineHistoryAdapter(getActivity(), null, 0);
-//        historyList.setAdapter(mAdapter);
+        historyList = (ObserveableListView) rootView.findViewById(R.id.activity_list);
+        historyList.setCallbacks(this);
+        mAdapter = new TimelineHistoryAdapter(getActivity(), null, 0);
+        historyList.setAdapter(mAdapter);
 
         // prepare loader
         mCallbacks = this;
@@ -106,6 +111,39 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
 
         return rootView;
 
+    }
+
+    @Override
+    public void onScrollChanged(int scrollY, int oldScrollY)
+    {
+        if(scrollY > oldScrollY)
+        {
+            isScrollUp = true;
+        }
+        else
+        {
+            isScrollUp = false;
+        }
+    }
+
+    @Override
+    public void onDownMotionEvent()
+    {
+        LinearLayout overlayLayout = (LinearLayout) getActivity().findViewById(R.id.timeline_quick_button);
+        ViewPropertyAnimator animator = overlayLayout.animate();
+
+        if(isScrollUp)
+        {
+            // hide button
+            animator.cancel();
+            animator.translationY(0).setDuration(200).start();
+        }
+        else
+        {
+            // show button
+            animator.cancel();
+            animator.translationY(overlayLayout.getHeight()).setDuration(200).start();
+        }
     }
 
     @Override
@@ -205,12 +243,12 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         {
             /** show last inserted row */
             cursor.moveToFirst();
-            //mAdapter.swapCursor(cursor);
+            mAdapter.swapCursor(cursor);
         }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> cl){
-       // mAdapter.swapCursor(null);
+       mAdapter.swapCursor(null);
     }
 }
