@@ -1,7 +1,10 @@
 package com.progrema.superbaby.models;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.os.Parcel;
+
+import com.progrema.superbaby.provider.BabyLogContract;
 
 /**
  * Created by iqbalpakeh on 22/1/14.
@@ -103,6 +106,13 @@ public class Nursing extends BaseActivity implements IDBServices
     @Override
     public void insert(Context context)
     {
+        ContentValues values = new ContentValues();
+        values.put(BabyLogContract.Nursing.BABY_ID, getBabyID());
+        values.put(BabyLogContract.Nursing.TIMESTAMP, getTimeStampInString());
+        values.put(BabyLogContract.Nursing.SIDES, getType().getTitle());
+        values.put(BabyLogContract.Nursing.DURATION, getDuration());
+        values.put(BabyLogContract.Nursing.VOLUME, getVolume());
+        context.getContentResolver().insert(BabyLogContract.Nursing.CONTENT_URI, values);
     }
 
     @Override

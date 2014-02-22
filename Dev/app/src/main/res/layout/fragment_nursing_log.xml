@@ -4,28 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/overlay_button_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="TEST OVERLAY BUTTON" />
-
-    <LinearLayout
-        android:id="@+id/overlay_layout"
+    <ListView
+        android:id="@+id/history_list_nursing"
+        android:text="Diaper Fragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/transparent_actionbar_color"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="OVERLAY BUTTON"
-            android:textColor="@color/white"
-            android:textSize="32sp" />
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:gravity="center" />
 
 </RelativeLayout>

@@ -21,7 +21,7 @@ public class BabyLogProvider extends ContentProvider
     private static final int USER = 100;
     private static final int USER_BABY_MAP = 200;
     private static final int BABY = 300;
-    private static final int MILK = 400;
+    private static final int NURSING = 400;
     private static final int SLEEP = 500;
     private static final int DIAPER = 600;
     private static final int MEASUREMENT = 700;
@@ -37,7 +37,7 @@ public class BabyLogProvider extends ContentProvider
         matcher.addURI(authority, "user", USER);
         matcher.addURI(authority, "user_baby_map", USER_BABY_MAP);
         matcher.addURI(authority, "baby", BABY);
-        matcher.addURI(authority, "milk", MILK);
+        matcher.addURI(authority, "milk", NURSING);
         matcher.addURI(authority, "sleep", SLEEP);
         matcher.addURI(authority, "diaper", DIAPER);
         matcher.addURI(authority, "measurement", MEASUREMENT);
@@ -154,6 +154,28 @@ public class BabyLogProvider extends ContentProvider
 
             }
 
+            case NURSING:
+            {
+                // add new activity sleep to activity table
+                ContentValues values = new ContentValues();
+                values.put(BabyLogContract.ActivityColumns.BABY_ID,
+                        contentValues.getAsString(BabyLogContract.NursingColumns.BABY_ID));
+                values.put(BabyLogContract.ActivityColumns.ACTIVITY_TYPE, BabyLogContract.Activity.TYPE_NURSING);
+                values.put(BabyLogContract.ActivityColumns.TIMESTAMP,
+                        contentValues.getAsString(BabyLogContract.NursingColumns.TIMESTAMP));
+                long actId = db.insertOrThrow(BabyLogDatabase.Tables.ACTIVITY, null, values);
+
+                // add nursing details to nursing table
+                contentValues.put(BabyLogContract.NursingColumns.ACTIVITY_ID, actId);
+                db.insertOrThrow(BabyLogDatabase.Tables.NURSING, null, contentValues);
+
+                /** notify all observer that subscribe to diaper table and activity table */
+                notifyChange(uri);
+                notifyChange(BabyLogContract.Activity.CONTENT_URI);
+                return BabyLogContract.Nursing.buildUri(contentValues.getAsString(BaseColumns._ID));
+            }
+
+
             default:
             {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -215,6 +237,10 @@ public class BabyLogProvider extends ContentProvider
             case DIAPER:
             {
                 return builder.table(BabyLogDatabase.Tables.DIAPER);
+            }
+            case NURSING:
+            {
+                return builder.table(BabyLogDatabase.Tables.NURSING);
             }
 
             default:

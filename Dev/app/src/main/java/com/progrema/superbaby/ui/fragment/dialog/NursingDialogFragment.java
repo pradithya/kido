@@ -20,7 +20,7 @@ import com.progrema.superbaby.util.FormatUtils;
  */
 public class NursingDialogFragment extends DialogFragment {
 
-    private static NursingDialogFragment singletonStopwatchFragment = null;
+    private static NursingDialogFragment singletonNursingDialogFragment = null;
 
     public NursingDialogFragment(){
 
@@ -28,11 +28,11 @@ public class NursingDialogFragment extends DialogFragment {
 
     public static synchronized NursingDialogFragment getInstance()
     {
-        if (singletonStopwatchFragment == null)
+        if (singletonNursingDialogFragment == null)
         {
-            singletonStopwatchFragment = new NursingDialogFragment();
+            singletonNursingDialogFragment = new NursingDialogFragment();
         }
-        return singletonStopwatchFragment;
+        return singletonNursingDialogFragment;
     }
 
     @Override
