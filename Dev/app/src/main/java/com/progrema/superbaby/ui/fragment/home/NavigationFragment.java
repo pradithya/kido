@@ -70,6 +70,7 @@ public class NavigationFragment extends Fragment
     private int mActionPositionOffset = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
+    private static int lastActivityClicked = 0;
 
     public NavigationFragment()
     {
@@ -281,13 +282,16 @@ public class NavigationFragment extends Fragment
                 // Change the active baby context and move to time line fragment
                 ActiveContext.setActiveBaby(getActivity(), items.get(position).getText());
                 adapter.notifyDataSetChanged();
-                mCallbacks.onNavigationDrawerItemSelected(mActionPositionOffset, mActionPositionOffset);
+                mCallbacks.onNavigationDrawerItemSelected(lastActivityClicked, mActionPositionOffset);
             }
             else if (position >= mActionPositionOffset)
             {
                 // move to the selected fragment
+                lastActivityClicked = position;
                 mCallbacks.onNavigationDrawerItemSelected(position, mActionPositionOffset);
             }
+
+
         }
     }
 
