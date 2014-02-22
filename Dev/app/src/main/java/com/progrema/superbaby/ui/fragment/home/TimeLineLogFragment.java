@@ -144,11 +144,11 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         // Jump to stopwatch fragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
-
         // Inform the stopwatch to start counting for sleep
         Bundle bundle = new Bundle();
         bundle.putString(ACTIVITY_TRIGGER_KEY, Trigger.SLEEP.getTitle());
-        StopwatchFragment frStopWatch = StopwatchFragment.newInstance(bundle);
+        StopwatchFragment frStopWatch = StopwatchFragment.getInstance();
+        frStopWatch.setArguments(bundle);
 
         fragmentTransaction.replace(R.id.home_activity_container, frStopWatch);
         fragmentTransaction.commit();
@@ -200,8 +200,8 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
                     Bundle bundle = data.getExtras();
                     // add extra key to notify stopwatch which activity triggers it
                     bundle.putString(ACTIVITY_TRIGGER_KEY, Trigger.NURSING.getTitle());
-
-                    StopwatchFragment frStopWatch = StopwatchFragment.newInstance(bundle);
+                    StopwatchFragment frStopWatch = StopwatchFragment.getInstance();
+                    frStopWatch.setArguments(bundle);
 
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.home_activity_container, frStopWatch);

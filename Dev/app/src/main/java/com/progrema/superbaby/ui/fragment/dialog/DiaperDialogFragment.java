@@ -17,7 +17,6 @@ import com.progrema.superbaby.models.Diaper;
 public class DiaperDialogFragment extends DialogFragment
 {
     public static DiaperDialogFragment getInstance()
-
     {
         return new DiaperDialogFragment();
     }
