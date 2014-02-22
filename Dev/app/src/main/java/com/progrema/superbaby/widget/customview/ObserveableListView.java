@@ -82,7 +82,7 @@ public class ObserveableListView extends ListView
                     {
                         if(!isScrollUp)
                         {
-                            mCallbacks.onScrollDown();
+                            mCallbacks.onScrollUp();
                             isScrollUp = true;
                         }
                     }
@@ -90,7 +90,7 @@ public class ObserveableListView extends ListView
                     {
                         if(isScrollUp)
                         {
-                            mCallbacks.onScrollUp();
+                            mCallbacks.onScrollDown();
                             isScrollUp = false;
                         }
                     }
@@ -134,8 +134,8 @@ public class ObserveableListView extends ListView
 
     public static interface Callbacks
     {
-        public void onScrollUp();
-
         public void onScrollDown();
+
+        public void onScrollUp();
     }
 }

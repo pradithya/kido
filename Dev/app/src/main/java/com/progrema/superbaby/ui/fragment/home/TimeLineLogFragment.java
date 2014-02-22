@@ -120,7 +120,7 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
-    public void onScrollUp()
+    public void onScrollDown()
     {
         LinearLayout overlayLayout = (LinearLayout) getActivity().findViewById(R.id.timeline_quick_button);
         ViewPropertyAnimator animator = overlayLayout.animate();
@@ -129,7 +129,7 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
-    public void onScrollDown()
+    public void onScrollUp()
     {
         LinearLayout overlayLayout = (LinearLayout) getActivity().findViewById(R.id.timeline_quick_button);
         ViewPropertyAnimator animator = overlayLayout.animate();
