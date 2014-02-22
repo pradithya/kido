@@ -13,7 +13,9 @@ public class Nursing extends BaseActivity implements IDBServices
 
     private long duration;
     private NursingType type;
-    private float volume;
+    private long volume;
+    public final static String NURSING_TYPE_KEY = "type";
+    public final static String FORMULA_VOLUME_KEY = "volume";
 
     public enum NursingType
     {
@@ -34,7 +36,12 @@ public class Nursing extends BaseActivity implements IDBServices
         }
     }
 
-    Nursing(Parcel parcel)
+    public Nursing()
+    {
+
+    }
+
+    public Nursing(Parcel parcel)
     {
         readFromParcel(parcel);
     }
@@ -59,12 +66,12 @@ public class Nursing extends BaseActivity implements IDBServices
         this.type = type;
     }
 
-    public float getVolume()
+    public long getVolume()
     {
         return volume;
     }
 
-    public void setVolume(float volume)
+    public void setVolume(long volume)
     {
         this.volume = volume;
     }
@@ -81,7 +88,7 @@ public class Nursing extends BaseActivity implements IDBServices
         super.writeToParcel(parcel, i);
         parcel.writeLong(duration);
         parcel.writeString(type.getTitle());
-        parcel.writeFloat(volume);
+        parcel.writeLong(volume);
     }
 
     @Override
@@ -90,7 +97,7 @@ public class Nursing extends BaseActivity implements IDBServices
         super.readFromParcel(parcel);
         duration = parcel.readLong();
         type = NursingType.valueOf(parcel.readString());
-        volume = parcel.readFloat();
+        volume = parcel.readLong();
     }
 
     @Override

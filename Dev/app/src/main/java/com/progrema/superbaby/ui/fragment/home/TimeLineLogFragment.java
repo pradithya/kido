@@ -20,7 +20,9 @@ import com.progrema.superbaby.adapter.timelinehistory.TimelineHistoryAdapter;
 import com.progrema.superbaby.models.Diaper;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.ui.fragment.dialog.DiaperDialogFragment;
+import com.progrema.superbaby.ui.fragment.dialog.NursingDialogFragment;
 import com.progrema.superbaby.util.ActiveContext;
+import com.progrema.superbaby.widget.stopwatch.Stopwatch;
 
 import java.util.Calendar;
 
@@ -145,20 +147,16 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         DiaperDialogFragment diaperChoiceBox = DiaperDialogFragment.getInstance();
         diaperChoiceBox.setTargetFragment(this, REQUEST_DIAPER);
 
-        diaperChoiceBox.show(fragmentTransaction, "dialog");
+        diaperChoiceBox.show(fragmentTransaction, "diaper_dialog");
     }
 
     private void handleQuickNursing() {
         // Jump to stopwatch fragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        StopwatchFragment frStopWatch = StopwatchFragment.getInstance();
+        NursingDialogFragment nursingChoiceBox = NursingDialogFragment.getInstance();
+        nursingChoiceBox.setTargetFragment(this, REQUEST_NURSING);
 
-        Bundle bundle = new Bundle();
-        bundle.putString(ACTIVITY_TRIGGER_KEY, Trigger.SLEEP.getTitle());
-        frStopWatch.setArguments(bundle);
-
-        fragmentTransaction.replace(R.id.home_activity_container, StopwatchFragment.getInstance());
-        fragmentTransaction.commit();
+        nursingChoiceBox.show(fragmentTransaction, "nursing_dialog");
     }
 
     @Override
@@ -170,6 +168,7 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
                     Calendar currentTime = Calendar.getInstance();
                     Bundle recData = data.getExtras();
                     String diaperType = (String) recData.get(Diaper.DIAPER_TYPE_KEY);
+
                     Diaper addedActivity = new Diaper();
                     addedActivity.setBabyID(ActiveContext.getActiveBaby(getActivity()).getID());
                     addedActivity.setTimeStamp(String.valueOf(currentTime.getTimeInMillis()));
@@ -177,6 +176,22 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
                     addedActivity.insert(getActivity());
 
                     break;
+
+                case REQUEST_NURSING:
+
+                    /**get input data passed from dialog*/
+                    Bundle bundle = data.getExtras();
+                    /**add extra key to notify stopwatch which activity triggers it*/
+                    bundle.putString(ACTIVITY_TRIGGER_KEY, Trigger.NURSING.getTitle());
+
+                    StopwatchFragment frStopWatch = StopwatchFragment.getInstance();
+                    frStopWatch.setArguments(bundle);
+
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.home_activity_container, StopwatchFragment.getInstance());
+                    fragmentTransaction.commit();
+                    break;
+
             }
             getLoaderManager().restartLoader(LOADER_ID, null, mCallbacks);
         }
