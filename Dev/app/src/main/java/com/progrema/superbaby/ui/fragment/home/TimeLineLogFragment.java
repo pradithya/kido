@@ -125,7 +125,7 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         LinearLayout overlayLayout = (LinearLayout) getActivity().findViewById(R.id.timeline_quick_button);
         ViewPropertyAnimator animator = overlayLayout.animate();
         animator.cancel();
-        animator.translationY(overlayLayout.getHeight()).setDuration(200).start();
+        animator.translationY(overlayLayout.getHeight()).setDuration(175).start();
     }
 
     @Override
@@ -134,7 +134,7 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         LinearLayout overlayLayout = (LinearLayout) getActivity().findViewById(R.id.timeline_quick_button);
         ViewPropertyAnimator animator = overlayLayout.animate();
         animator.cancel();
-        animator.translationY(0).setDuration(200).start();
+        animator.translationY(0).setDuration(175).start();
     }
 
     @Override

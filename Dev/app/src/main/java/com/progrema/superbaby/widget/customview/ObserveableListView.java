@@ -12,9 +12,10 @@ import android.widget.ListView;
 public class ObserveableListView extends ListView
 {
     private Callbacks mCallbacks;
-    private final int INVALID_POINTER_ID = 0;
+    private final int INVALID_POINTER_ID = MotionEvent.INVALID_POINTER_ID;
     private int mActivePointerId = INVALID_POINTER_ID;
     private float mLastTouchX, mLastTouchY, mPosX, mPosY;
+    private boolean isScrollUp;
 
     public ObserveableListView(Context context)
     {
@@ -79,13 +80,20 @@ public class ObserveableListView extends ListView
 
                     if(dy > 0)
                     {
-                        mCallbacks.onScrollUp();
+                        if(!isScrollUp)
+                        {
+                            mCallbacks.onScrollDown();
+                            isScrollUp = true;
+                        }
                     }
                     else
                     {
-                        mCallbacks.onScrollDown();
+                        if(isScrollUp)
+                        {
+                            mCallbacks.onScrollUp();
+                            isScrollUp = false;
+                        }
                     }
-
                     break;
                 }
 
@@ -118,6 +126,8 @@ public class ObserveableListView extends ListView
                     break;
                 }
             }
+
+
         }
         return super.onTouchEvent(ev);
     }
