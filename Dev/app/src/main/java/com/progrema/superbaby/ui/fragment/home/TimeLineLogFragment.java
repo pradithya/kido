@@ -1,11 +1,11 @@
 package com.progrema.superbaby.ui.fragment.home;
 
-import android.support.v4.app.LoaderManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
@@ -95,9 +95,9 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         buttonQuickDiaper.setOnClickListener(this);
 
         // set adapter to list view
-//        historyList = (ListView) rootView.findViewById(R.id.activity_list);
-//        mAdapter = new TimelineHistoryAdapter(getActivity(), null, 0);
-//        historyList.setAdapter(mAdapter);
+        historyList = (ListView) rootView.findViewById(R.id.activity_list);
+        mAdapter = new TimelineHistoryAdapter(getActivity(), null, 0);
+        historyList.setAdapter(mAdapter);
 
         // prepare loader
         mCallbacks = this;
@@ -182,9 +182,10 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
                     addedActivity.setTimeStamp(String.valueOf(currentTime.getTimeInMillis()));
                     addedActivity.setType(Diaper.DiaperType.valueOf(diaperType));
                     addedActivity.insert(getActivity());
-                    getLoaderManager().restartLoader(LOADER_ID, null, this);
+
                     break;
             }
+            getLoaderManager().restartLoader(LOADER_ID, null, this);
         }
     }
 
@@ -205,12 +206,12 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         {
             /** show last inserted row */
             cursor.moveToFirst();
-            //mAdapter.swapCursor(cursor);
+            mAdapter.swapCursor(cursor);
         }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> cl){
-       // mAdapter.swapCursor(null);
+       mAdapter.swapCursor(null);
     }
 }
