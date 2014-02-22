@@ -143,6 +143,9 @@ public class NavigationFragment extends Fragment
 
         // get calibration variable for selected action
         mActionPositionOffset = items.size();
+        if(lastActivityClicked == 0){
+            lastActivityClicked = mActionPositionOffset;
+        }
 
         // prepare action supported
         items.add(new StandardItem(getString(R.string.title_timeline_fragment)));
@@ -279,7 +282,7 @@ public class NavigationFragment extends Fragment
         {
             if ((position < mActionPositionOffset) && (items != null) && (items.get(position) instanceof Baby))
             {
-                // Change the active baby context and move to time line fragment
+                // Change the active baby context
                 ActiveContext.setActiveBaby(getActivity(), items.get(position).getText());
                 adapter.notifyDataSetChanged();
                 mCallbacks.onNavigationDrawerItemSelected(lastActivityClicked, mActionPositionOffset);

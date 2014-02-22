@@ -26,7 +26,7 @@ public class SleepLogFragment extends Fragment
     private static SleepLogFragment singletonSleepLogFragment = null;
     private ListView sleepHistoryList;
     private SleepHistoryAdapter mAdapter;
-    private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
+    private static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     private static final int LOADER_ID = 1;
 
     public static synchronized SleepLogFragment getInstance()
@@ -34,6 +34,10 @@ public class SleepLogFragment extends Fragment
         if (singletonSleepLogFragment == null)
         {
             singletonSleepLogFragment = new SleepLogFragment();
+        }else{
+            if (singletonSleepLogFragment.isAdded()){
+                singletonSleepLogFragment.getLoaderManager().restartLoader(LOADER_ID,null, mCallbacks );
+            }
         }
         return singletonSleepLogFragment;
     }
@@ -68,7 +72,7 @@ public class SleepLogFragment extends Fragment
                 BabyLogContract.Sleep.Query.PROJECTION,
                 BabyLogContract.BABY_SELECTION_ARG,
                 args,
-                BabyLogContract.Sleep._ID);
+                BabyLogContract.Sleep.Query.SORT_BY_TIMESTAMP_DESC);
         return cl;
     }
 
@@ -80,7 +84,10 @@ public class SleepLogFragment extends Fragment
             /** show last inserted row */
             cursor.moveToFirst();
             mAdapter.swapCursor(cursor);
+        }else{
+            mAdapter.swapCursor(null);
         }
+
     }
 
     @Override

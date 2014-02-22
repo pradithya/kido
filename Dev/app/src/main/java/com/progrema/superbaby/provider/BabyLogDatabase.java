@@ -212,7 +212,8 @@ public class BabyLogDatabase extends SQLiteOpenHelper
             + " FROM " + Tables.ACTIVITY
             + " LEFT JOIN " +  Tables.DIAPER + " ON " + Tables.ACTIVITY + "." + BaseColumns._ID + " = " + Tables.DIAPER + "."+ DiaperColumns.ACTIVITY_ID
             + " LEFT JOIN " +  Tables.SLEEP + " ON " + Tables.ACTIVITY + "." +BaseColumns._ID + " = " + Tables.SLEEP + "."+ SleepColumns.ACTIVITY_ID
-            + " WHERE " + Tables.ACTIVITY + "." + ActivityColumns.BABY_ID + " = ? " + ";");
+            + " WHERE " + Tables.ACTIVITY + "." + ActivityColumns.BABY_ID + " = ? "
+            + " ORDER BY " + Tables.ACTIVITY + "." + BabyLogContract.Activity.Query.SORT_BY_TIMESTAMP_DESC + " ;");
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i2)

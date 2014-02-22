@@ -45,7 +45,7 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     private TimelineHistoryAdapter mAdapter;
     private ObserveableListView historyList;
 
-    private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
+    public static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     public static final int LOADER_ID = 3;
 
     private boolean isScrollUp;
@@ -186,7 +186,7 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         // Jump to stopwatch fragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         DiaperDialogFragment diaperChoiceBox = DiaperDialogFragment.getInstance();
-        diaperChoiceBox.setTargetFragment(this,REQUEST_DIAPER);
+        diaperChoiceBox.setTargetFragment(this, REQUEST_DIAPER);
 
         diaperChoiceBox.show(fragmentTransaction, "dialog");
     }
@@ -220,35 +220,37 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
                     addedActivity.setTimeStamp(String.valueOf(currentTime.getTimeInMillis()));
                     addedActivity.setType(Diaper.DiaperType.valueOf(diaperType));
                     addedActivity.insert(getActivity());
-                    getLoaderManager().restartLoader(LOADER_ID, null, this);
+
                     break;
             }
+            getLoaderManager().restartLoader(LOADER_ID, null, mCallbacks);
         }
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader (int i, Bundle bundle){
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         String[] args = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
         CursorLoader cl = new CursorLoader(getActivity(), BabyLogContract.Activity.CONTENT_URI,
                 BabyLogContract.Activity.Query.PROJECTION,
                 BabyLogContract.BABY_SELECTION_ARG,
                 args,
-                BabyLogContract.Activity._ID);
+                BabyLogContract.Activity.Query.SORT_BY_TIMESTAMP_DESC);
         return cl;
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> cl, Cursor cursor){
-        if (cursor.getCount() > 0)
-        {
+    public void onLoadFinished(Loader<Cursor> cl, Cursor cursor) {
+        if (cursor.getCount() > 0) {
             /** show last inserted row */
             cursor.moveToFirst();
             mAdapter.swapCursor(cursor);
+        }else{
+            mAdapter.swapCursor(null);
         }
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> cl){
-       mAdapter.swapCursor(null);
+    public void onLoaderReset(Loader<Cursor> cl) {
+        mAdapter.swapCursor(null);
     }
 }

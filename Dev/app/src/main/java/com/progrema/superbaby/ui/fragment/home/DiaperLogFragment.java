@@ -25,7 +25,7 @@ public class DiaperLogFragment extends Fragment
 {
 
     private static DiaperLogFragment singletonDiaperLogFragment = null;
-    private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
+    private static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     private static final int LOADER_ID = 2;
     private ListView diaperHistoryList;
     private DiaperHistoryAdapter mAdapter;
@@ -35,6 +35,10 @@ public class DiaperLogFragment extends Fragment
         if (singletonDiaperLogFragment == null)
         {
             singletonDiaperLogFragment = new DiaperLogFragment();
+        }else{
+            if (singletonDiaperLogFragment.isAdded()){
+                singletonDiaperLogFragment.getLoaderManager().restartLoader(LOADER_ID,null, mCallbacks );
+            }
         }
         return singletonDiaperLogFragment;
     }
@@ -67,7 +71,7 @@ public class DiaperLogFragment extends Fragment
                 BabyLogContract.Diaper.Query.PROJECTION,
                 BabyLogContract.BABY_SELECTION_ARG,
                 args,
-                BabyLogContract.Diaper._ID);
+                BabyLogContract.Diaper.Query.SORT_BY_TIMESTAMP_DESC);
         return cl;
     }
 
@@ -78,6 +82,8 @@ public class DiaperLogFragment extends Fragment
             /** show last inserted row */
             cursor.moveToFirst();
             mAdapter.swapCursor(cursor);
+        }else{
+            mAdapter.swapCursor(null);
         }
     }
 
