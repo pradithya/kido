@@ -23,10 +23,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.progrema.superbaby.R;
+import com.progrema.superbaby.adapter.navigation.Action;
 import com.progrema.superbaby.adapter.navigation.Baby;
+import com.progrema.superbaby.adapter.navigation.Divider;
 import com.progrema.superbaby.adapter.navigation.Item;
 import com.progrema.superbaby.adapter.navigation.NavigationAdapter;
-import com.progrema.superbaby.adapter.navigation.TextItem;
+import com.progrema.superbaby.adapter.navigation.User;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 
@@ -116,8 +118,6 @@ public class NavigationFragment extends Fragment
             }
         });
 
-        // TODO: to be improved!!
-
         // set array list
         items = new ArrayList<Item>();
 
@@ -125,10 +125,11 @@ public class NavigationFragment extends Fragment
         Cursor cursor = userQuery(getActivity());
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext())
         {
-            items.add(new TextItem(cursor.getString(BabyLogContract.User.Query.OFFSET_NAME),R.layout.navigation_drawer_text_container));
+            items.add(new User(cursor.getString(BabyLogContract.User.Query.OFFSET_NAME)));
         }
 
-        items.add(new TextItem(getString(R.string.title_section_baby),R.layout.navigation_drawer_section_item));
+        // Set section divider
+        items.add(new Divider(getString(R.string.title_section_baby)));
 
         // prepare baby name
         cursor = babyQuery(getActivity());
@@ -137,17 +138,17 @@ public class NavigationFragment extends Fragment
             items.add(new Baby(cursor.getString(BabyLogContract.Baby.Query.OFFSET_NAME)));
         }
 
-
-        items.add(new TextItem(getString(R.string.title_section_activity),R.layout.navigation_drawer_section_item));
+        // Set section divider
+        items.add(new Divider(getString(R.string.title_section_activity)));
 
         // get calibration variable for selected action
         mActionPositionOffset = items.size();
 
         // prepare action supported
-        items.add(new TextItem(getString(R.string.title_timeline_fragment),R.layout.navigation_drawer_text_container));
-        items.add(new TextItem(getString(R.string.title_nursing_fragment),R.layout.navigation_drawer_text_container));
-        items.add(new TextItem(getString(R.string.title_diaper_fragment),R.layout.navigation_drawer_text_container));
-        items.add(new TextItem(getString(R.string.title_sleep_fragment),R.layout.navigation_drawer_text_container));
+        items.add(new Action(getString(R.string.title_timeline_fragment)));
+        items.add(new Action(getString(R.string.title_nursing_fragment)));
+        items.add(new Action(getString(R.string.title_diaper_fragment)));
+        items.add(new Action(getString(R.string.title_sleep_fragment)));
 
         // set adapter
         adapter = new NavigationAdapter(getActivity(), items);

@@ -9,19 +9,14 @@ import android.widget.TextView;
 import com.progrema.superbaby.R;
 
 /**
- * Created by iqbalpakeh on 15/2/14.
+ * Created by iqbalpakeh on 22/2/14.
  */
-public class TextItem extends Item
+public class User extends Item
 {
-    public TextItem(){
-
-    }
-
-    public TextItem(String text, int layout)
+    public User(String text)
     {
         this.setText(text);
-        this.setLayout(layout);
-
+        this.setLayout(R.layout.navigation_drawer_text_container);
     }
 
     /**
