@@ -13,7 +13,6 @@ import com.progrema.superbaby.provider.BabyLogContract;
  */
 public class Nursing extends BaseActivity implements IDBServices
 {
-
     private long duration;
     private NursingType type;
     private long volume;

@@ -20,7 +20,6 @@ import com.progrema.superbaby.ui.fragment.home.TimeLineLogFragment;
 public class HomeActivity extends FragmentActivity
         implements NavigationFragment.NavigationDrawerCallbacks
 {
-
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -84,7 +83,6 @@ public class HomeActivity extends FragmentActivity
         {
             fragmentManager.beginTransaction().replace(R.id.home_activity_container, module).commit();
         }
-
     }
 
     public void restoreActionBar()
@@ -94,7 +92,6 @@ public class HomeActivity extends FragmentActivity
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -114,11 +111,9 @@ public class HomeActivity extends FragmentActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-
         switch (item.getItemId())
         {
             case R.id.action_example:
@@ -131,7 +126,6 @@ public class HomeActivity extends FragmentActivity
                 handleNewBaby();
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

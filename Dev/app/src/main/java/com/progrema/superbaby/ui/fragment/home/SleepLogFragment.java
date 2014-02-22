@@ -22,7 +22,6 @@ import com.progrema.superbaby.util.ActiveContext;
 public class SleepLogFragment extends Fragment
         implements LoaderManager.LoaderCallbacks<Cursor>
 {
-
     private static SleepLogFragment singletonSleepLogFragment = null;
     private ListView sleepHistoryList;
     private SleepHistoryAdapter mAdapter;
@@ -84,7 +83,7 @@ public class SleepLogFragment extends Fragment
     {
         if (cursor.getCount() > 0)
         {
-            /** show last inserted row */
+            // show last inserted row
             cursor.moveToFirst();
             mAdapter.swapCursor(cursor);
         }

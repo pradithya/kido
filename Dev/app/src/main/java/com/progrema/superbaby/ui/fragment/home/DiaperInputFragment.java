@@ -14,7 +14,6 @@ import com.progrema.superbaby.R;
  */
 public class DiaperInputFragment extends Fragment
 {
-
     private static DiaperInputFragment singletonDiaperInputFragment = null;
 
     public static synchronized DiaperInputFragment getInstance(Context context)

@@ -21,7 +21,6 @@ import static com.progrema.superbaby.util.LogUtils.makeLogTag;
 public class SelectionBuilder
 {
     private static final String TAG = makeLogTag(SelectionBuilder.class);
-
     private String mTable = null;
     private Map<String, String> mProjectionMap = Maps.newHashMap();
     private StringBuilder mSelection = new StringBuilder();

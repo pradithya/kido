@@ -79,7 +79,7 @@ public class NursingLogFragment extends Fragment implements LoaderManager.Loader
     {
         if (cursor.getCount() > 0)
         {
-            /** show last inserted row */
+            // show last inserted row
             cursor.moveToFirst();
             mAdapter.swapCursor(cursor);
         }

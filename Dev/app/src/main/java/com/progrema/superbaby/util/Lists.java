@@ -9,7 +9,6 @@ import java.util.Collections;
  */
 public class Lists
 {
-
     /**
      * Creates an empty {@code ArrayList} instance.
      * <p/>

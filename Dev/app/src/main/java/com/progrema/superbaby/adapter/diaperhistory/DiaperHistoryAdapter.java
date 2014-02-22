@@ -20,7 +20,6 @@ public class DiaperHistoryAdapter extends CursorAdapter
     private LayoutInflater inflater;
     private int layout;
 
-
     public DiaperHistoryAdapter(Context context, Cursor c, int flags)
     {
         super(context, c, flags);
@@ -42,10 +41,10 @@ public class DiaperHistoryAdapter extends CursorAdapter
 
         TextView textViewDate = (TextView) view.findViewById(R.id.history_item_date);
         TextView textViewTime = (TextView) view.findViewById(R.id.history_item_time);
-        TextView textViewTtype = (TextView) view.findViewById(R.id.history_item_type);
+        TextView textViewType = (TextView) view.findViewById(R.id.history_item_type);
 
         textViewDate.setText(FormatUtils.formatDate(context, timeStamp));
         textViewTime.setText(FormatUtils.formatTime(context, timeStamp));
-        textViewTtype.setText(type);
+        textViewType.setText(type);
     }
 }

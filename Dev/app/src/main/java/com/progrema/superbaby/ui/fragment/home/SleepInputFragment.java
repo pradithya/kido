@@ -87,6 +87,5 @@ public class SleepInputFragment extends Fragment implements View.OnClickListener
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.home_activity_container, SleepLogFragment.getInstance());
         fragmentTransaction.commit();
-
     }
 }

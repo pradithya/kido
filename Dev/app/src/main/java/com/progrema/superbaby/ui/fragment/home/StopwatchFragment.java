@@ -31,7 +31,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
 
     private Stopwatch stopwatch;
     private Stopwatch stopwatch2;
-    /*holder*/
+    // holder
     private Stopwatch activeStopWatch;
     private Stopwatch inActiveStopWatch;
 
@@ -63,8 +63,6 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-
-
         Bundle args = getArguments();
         if (args != null && args.containsKey(TimeLineLogFragment.ACTIVITY_TRIGGER_KEY))
         {
@@ -91,7 +89,6 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
         titleView = (TextView) rootView.findViewById(R.id.stopwatch_title_view);
         titleView.setText(sourceTrigger);
 
-
         startButton = (Button) rootView.findViewById(R.id.button_stopwatch_start);
         pauseButton = (Button) rootView.findViewById(R.id.button_stopwatch_pause);
         resetButton = (Button) rootView.findViewById(R.id.button_stopwatch_reset);
@@ -99,7 +96,6 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
         durationView = (TextView) rootView.findViewById(R.id.stopwatch_duration_view);
         containerStopWatch2 = (LinearLayout) rootView.findViewById(R.id.container_stopwatch2);
         switchButton = (Button) rootView.findViewById(R.id.button_stopwatch_switch);
-
 
         // set onClickListener to button
         startButton.setOnClickListener(this);
@@ -114,7 +110,6 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
 
         if (isTwoStopWatch)
         {
-
             containerStopWatch2.setVisibility(View.VISIBLE);
             switchButton.setVisibility(View.VISIBLE);
 
@@ -169,7 +164,6 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
         }
     }
 
-
     private void handleSwitchButton()
     {
         activeStopWatch.stop();
@@ -201,11 +195,9 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
 
     private void handleDoneButton()
     {
-
         activeStopWatch.stop();
         long duration = stopwatch.getDuration();
         long duration2 = stopwatch2.getDuration();
-
 
         if (sourceTrigger.compareTo(TimeLineLogFragment.Trigger.SLEEP.getTitle()) == 0)
         {
@@ -242,7 +234,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
             }
             else
             {
-                /** formula*/
+                // formula
                 nursing.setDuration(TimeUnit.SECONDS.toMillis(duration));
                 nursing.setType(Nursing.NursingType.valueOf(nursingType));
                 nursing.setVolume(Long.parseLong(formulaVolume, 10));
@@ -250,7 +242,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
             }
         }
 
-        // Go back to timeline fragment
+        // Go back to timeLine fragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.home_activity_container, TimeLineLogFragment.getInstance());
         fragmentTransaction.commit();

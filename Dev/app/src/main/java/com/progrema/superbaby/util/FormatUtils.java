@@ -15,8 +15,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class FormatUtils
 {
-
-
     private static final String[] DAY_OF_WEEK = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
     private static final String[] MONTH_OF_YEAR = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
@@ -32,7 +30,6 @@ public class FormatUtils
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(Long.parseLong(startTime));
         String start = new SimpleDateFormat("HH:mm a").format(cal.getTime());
-
 
         cal.setTimeInMillis(Long.parseLong(startTime) + Long.parseLong(duration));
         String end = new SimpleDateFormat("HH:mm a").format(cal.getTime());

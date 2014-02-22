@@ -33,7 +33,6 @@ public class BabyLogProvider extends ContentProvider
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = BabyLogContract.CONTENT_AUTHORITY;
 
-
         matcher.addURI(authority, "user", USER);
         matcher.addURI(authority, "user_baby_map", USER_BABY_MAP);
         matcher.addURI(authority, "baby", BABY);
@@ -81,7 +80,6 @@ public class BabyLogProvider extends ContentProvider
     @Override
     public Uri insert(Uri uri, ContentValues contentValues)
     {
-
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
 
@@ -127,7 +125,7 @@ public class BabyLogProvider extends ContentProvider
                 contentValues.put(BabyLogContract.SleepColumns.ACTIVITY_ID, actId);
                 db.insertOrThrow(BabyLogDatabase.Tables.SLEEP, null, contentValues);
 
-                /** notify all observer that subscribe to sleep table and activity table */
+                // notify all observer that subscribe to sleep table and activity table
                 notifyChange(uri);
                 notifyChange(BabyLogContract.Activity.CONTENT_URI);
                 return BabyLogContract.Sleep.buildUri(contentValues.getAsString(BaseColumns._ID));
@@ -147,7 +145,7 @@ public class BabyLogProvider extends ContentProvider
                 contentValues.put(BabyLogContract.DiaperColumns.ACTIVITY_ID, actId);
                 db.insertOrThrow(BabyLogDatabase.Tables.DIAPER, null, contentValues);
 
-                /** notify all observer that subscribe to diaper table and activity table */
+                // notify all observer that subscribe to diaper table and activity table
                 notifyChange(uri);
                 notifyChange(BabyLogContract.Activity.CONTENT_URI);
                 return BabyLogContract.Diaper.buildUri(contentValues.getAsString(BaseColumns._ID));
@@ -169,18 +167,16 @@ public class BabyLogProvider extends ContentProvider
                 contentValues.put(BabyLogContract.NursingColumns.ACTIVITY_ID, actId);
                 db.insertOrThrow(BabyLogDatabase.Tables.NURSING, null, contentValues);
 
-                /** notify all observer that subscribe to diaper table and activity table */
+                // notify all observer that subscribe to diaper table and activity table
                 notifyChange(uri);
                 notifyChange(BabyLogContract.Activity.CONTENT_URI);
                 return BabyLogContract.Nursing.buildUri(contentValues.getAsString(BaseColumns._ID));
             }
 
-
             default:
             {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
             }
-
         }
     }
 

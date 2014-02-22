@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.adapter.timelinehistory.TimelineHistoryAdapter;
+import com.progrema.superbaby.adapter.timelinehistory.TimeLineHistoryAdapter;
 import com.progrema.superbaby.models.Diaper;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.ui.fragment.dialog.DiaperDialogFragment;
@@ -32,26 +32,20 @@ import java.util.Calendar;
 public class TimeLineLogFragment extends Fragment implements View.OnClickListener,
         LoaderManager.LoaderCallbacks<Cursor>, ObserveAbleListView.Callbacks
 {
-
     public final static int REQUEST_DIAPER = 0;
     public final static int REQUEST_SLEEP = 1;
     public final static int REQUEST_NURSING = 2;
-
     public final static int RESULT_OK = 0;
-
     private static TimeLineLogFragment singletonTimeLineLogFragment = null;
     private Button buttonQuickSleep;
     private Button buttonQuickDiaper;
     private Button buttonQuickNursing;
-    private TimelineHistoryAdapter mAdapter;
+    private TimeLineHistoryAdapter mAdapter;
     private ObserveAbleListView historyList;
-
     public static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     public static final int LOADER_ID = 3;
-
     private boolean isScrollUp;
     private int initY;
-
     public final static String ACTIVITY_TRIGGER_KEY = "trigger";
 
     public enum Trigger
@@ -111,7 +105,7 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         // set adapter to list view
         historyList = (ObserveAbleListView) rootView.findViewById(R.id.activity_list);
         historyList.setCallbacks(this);
-        mAdapter = new TimelineHistoryAdapter(getActivity(), null, 0);
+        mAdapter = new TimeLineHistoryAdapter(getActivity(), null, 0);
         historyList.setAdapter(mAdapter);
 
         // prepare loader
@@ -120,7 +114,6 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         lm.initLoader(LOADER_ID, null, mCallbacks);
 
         return rootView;
-
     }
 
     @Override
@@ -166,7 +159,7 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         StopwatchFragment frStopWatch = StopwatchFragment.getInstance();
 
-        /** inform the stopwatch to start counting for sleep*/
+        // Inform the stopwatch to start counting for sleep
         Bundle bundle = new Bundle();
         bundle.putString(ACTIVITY_TRIGGER_KEY, Trigger.SLEEP.getTitle());
         frStopWatch.setArguments(bundle);
@@ -218,9 +211,9 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
 
                 case REQUEST_NURSING:
 
-                    /**get input data passed from dialog*/
+                    // get input data passed from dialog
                     Bundle bundle = data.getExtras();
-                    /**add extra key to notify stopwatch which activity triggers it*/
+                    // add extra key to notify stopwatch which activity triggers it
                     bundle.putString(ACTIVITY_TRIGGER_KEY, Trigger.NURSING.getTitle());
 
                     StopwatchFragment frStopWatch = StopwatchFragment.getInstance();
@@ -253,7 +246,7 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     {
         if (cursor.getCount() > 0)
         {
-            /** show last inserted row */
+            // show last inserted row
             cursor.moveToFirst();
             mAdapter.swapCursor(cursor);
         }

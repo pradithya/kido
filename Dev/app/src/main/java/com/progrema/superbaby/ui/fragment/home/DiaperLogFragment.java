@@ -24,7 +24,6 @@ import com.progrema.superbaby.util.ActiveContext;
 public class DiaperLogFragment extends Fragment
         implements LoaderManager.LoaderCallbacks<Cursor>
 {
-
     private static DiaperLogFragment singletonDiaperLogFragment = null;
     private static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     private static final int LOADER_ID = 2;
@@ -47,7 +46,6 @@ public class DiaperLogFragment extends Fragment
         return singletonDiaperLogFragment;
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
@@ -69,7 +67,6 @@ public class DiaperLogFragment extends Fragment
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle)
     {
-
         String[] args = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
         CursorLoader cl = new CursorLoader(getActivity(), BabyLogContract.Diaper.CONTENT_URI,
                 BabyLogContract.Diaper.Query.PROJECTION,

@@ -40,7 +40,6 @@ import java.util.ArrayList;
  */
 public class NavigationFragment extends Fragment
 {
-
     /**
      * Remember the position of the selected item.
      */

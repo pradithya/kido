@@ -27,7 +27,6 @@ import com.progrema.superbaby.provider.BabyLogContract.UserColumns;
  */
 public class BabyLogDatabase extends SQLiteOpenHelper
 {
-
     private static final String DATABASE_NAME = "babylog.db";
 
     /**

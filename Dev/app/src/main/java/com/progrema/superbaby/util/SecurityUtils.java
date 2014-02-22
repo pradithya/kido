@@ -13,7 +13,6 @@ import java.security.NoSuchAlgorithmException;
  */
 public class SecurityUtils
 {
-
     public static String computeSHA1(String inputPlainText)
     {
         MessageDigest sha1 = null;
@@ -39,6 +38,5 @@ public class SecurityUtils
         byte[] result = sha1.digest();
 
         return EncodingUtils.getAsciiString(result);
-
     }
 }

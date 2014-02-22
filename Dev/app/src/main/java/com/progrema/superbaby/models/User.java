@@ -9,7 +9,6 @@ import com.progrema.superbaby.util.SecurityUtils;
 
 public class User extends BaseActor implements IDBServices
 {
-
     /**
      * User private data
      */
@@ -65,7 +64,6 @@ public class User extends BaseActor implements IDBServices
         securityQuestion = parcel.readString();
         securityAnswer = parcel.readString();
     }
-
 
     public static final Creator CREATOR = new Creator<User>()
     {
