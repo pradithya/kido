@@ -118,6 +118,8 @@ public class BabyLogContract
             final int OFFSET_PASSWORD = 2;
             final int OFFSET_SEC_QUESTION = 3;
             final int OFFSET_SEC_ANSWER = 4;
+
+
         }
 
         public static Uri buildUri(String activityId)
@@ -194,6 +196,9 @@ public class BabyLogContract
             final int OFFSET_TIMESTAMP = 3;
             final int OFFSET_DIAPER_TYPE = 4;
             final int OFFSET_SLEEP_DURATION = 5;
+
+            final String SORT_BY_TIMESTAMP_ASC = ActivityColumns.TIMESTAMP + " ASC ";
+            final String SORT_BY_TIMESTAMP_DESC = ActivityColumns.TIMESTAMP + " DESC ";
         }
     }
 
@@ -227,12 +232,18 @@ public class BabyLogContract
             final int OFFSET_BABY_ID = 2;
             final int OFFSET_TIMESTAMP = 3;
             final int OFFSET_DURATION = 4;
+
+
+            final String SORT_BY_TIMESTAMP_ASC = SleepColumns.TIMESTAMP + " ASC ";
+            final String SORT_BY_TIMESTAMP_DESC = SleepColumns.TIMESTAMP + " DESC ";
         }
 
         public static Uri buildUri(String activityId)
         {
             return CONTENT_URI.buildUpon().appendPath(activityId).build();
         }
+
+
 
     }
 
@@ -258,12 +269,17 @@ public class BabyLogContract
             final int OFFSET_BABY_ID = 2;
             final int OFFSET_TIMESTAMP = 3;
             final int OFFSET_TYPE = 4;
+
+            final String SORT_BY_TIMESTAMP_ASC = DiaperColumns.TIMESTAMP + " ASC ";
+            final String SORT_BY_TIMESTAMP_DESC = DiaperColumns.TIMESTAMP + " DESC ";
         }
 
         public static Uri buildUri(String activityId)
         {
             return CONTENT_URI.buildUpon().appendPath(activityId).build();
         }
+
+
     }
 
     /**

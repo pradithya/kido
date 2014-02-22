@@ -1,5 +1,6 @@
 package com.progrema.superbaby.ui.fragment.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -27,8 +28,7 @@ import java.util.Calendar;
  * Created by iqbalpakeh on 18/1/14.
  */
 public class TimeLineLogFragment extends Fragment implements View.OnClickListener,
-        LoaderManager.LoaderCallbacks<Cursor>
-{
+        LoaderManager.LoaderCallbacks<Cursor> {
 
     public final static int REQUEST_DIAPER = 0;
     public final static int REQUEST_SLEEP = 1;
@@ -41,44 +41,43 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     private Button buttonQuickDiaper;
     private Button buttonQuickNursing;
     private TimelineHistoryAdapter mAdapter;
-    private ListView  historyList;
+    private ListView historyList;
 
-    private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
+    public static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     public static final int LOADER_ID = 3;
 
     public final static String ACTIVITY_TRIGGER_KEY = "trigger";
-    public enum Trigger
-    {
+
+    public enum Trigger {
         SLEEP("sleep"),
         NURSING("nursing"),
         DIAPER("diaper");
 
         private String title;
 
-        Trigger(String title)
-        {
+        Trigger(String title) {
             this.title = title;
         }
 
-        public String getTitle()
-        {
+        public String getTitle() {
             return this.title;
         }
     }
 
-    public static synchronized TimeLineLogFragment getInstance()
-    {
-        if (singletonTimeLineLogFragment == null)
-        {
+    public static synchronized TimeLineLogFragment getInstance() {
+        if (singletonTimeLineLogFragment == null) {
             singletonTimeLineLogFragment = new TimeLineLogFragment();
+        }else{
+            if (singletonTimeLineLogFragment.isAdded()){
+                singletonTimeLineLogFragment.getLoaderManager().restartLoader(LOADER_ID,null, mCallbacks );
+            }
         }
         return singletonTimeLineLogFragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
-    {
+                             Bundle savedInstanceState) {
         // inflate fragment layout
         View rootView = inflater.inflate(R.layout.fragment_timeline, container, false);
 
@@ -109,10 +108,8 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
-    public void onClick(View view)
-    {
-        switch (view.getId())
-        {
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.quick_button_sleep:
                 handleQuickSleep();
                 break;
@@ -128,8 +125,7 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    private void handleQuickSleep()
-    {
+    private void handleQuickSleep() {
         // Jump to stopwatch fragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         StopwatchFragment frStopWatch = StopwatchFragment.getInstance();
@@ -143,23 +139,20 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         fragmentTransaction.commit();
     }
 
-    private void handleQuickDiaper()
-    {
+    private void handleQuickDiaper() {
         // Jump to stopwatch fragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         DiaperDialogFragment diaperChoiceBox = DiaperDialogFragment.getInstance();
-        diaperChoiceBox.setTargetFragment(this,REQUEST_DIAPER);
+        diaperChoiceBox.setTargetFragment(this, REQUEST_DIAPER);
 
         diaperChoiceBox.show(fragmentTransaction, "dialog");
     }
 
-    private void handleQuickNursing()
-    {
+    private void handleQuickNursing() {
         // Jump to stopwatch fragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         StopwatchFragment frStopWatch = StopwatchFragment.getInstance();
 
-        /** inform the stopwatch to start counting for sleep*/
         Bundle bundle = new Bundle();
         bundle.putString(ACTIVITY_TRIGGER_KEY, Trigger.SLEEP.getTitle());
         frStopWatch.setArguments(bundle);
@@ -171,8 +164,8 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK){
-            switch (requestCode){
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
                 case REQUEST_DIAPER:
                     Calendar currentTime = Calendar.getInstance();
                     Bundle recData = data.getExtras();
@@ -185,25 +178,24 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
 
                     break;
             }
-            getLoaderManager().restartLoader(LOADER_ID, null, this);
+            getLoaderManager().restartLoader(LOADER_ID, null, mCallbacks);
         }
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader (int i, Bundle bundle){
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         String[] args = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
         CursorLoader cl = new CursorLoader(getActivity(), BabyLogContract.Activity.CONTENT_URI,
                 BabyLogContract.Activity.Query.PROJECTION,
                 BabyLogContract.BABY_SELECTION_ARG,
                 args,
-                BabyLogContract.Activity._ID);
+                BabyLogContract.Activity.Query.SORT_BY_TIMESTAMP_DESC);
         return cl;
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> cl, Cursor cursor){
-        if (cursor.getCount() > 0)
-        {
+    public void onLoadFinished(Loader<Cursor> cl, Cursor cursor) {
+        if (cursor.getCount() > 0) {
             /** show last inserted row */
             cursor.moveToFirst();
             mAdapter.swapCursor(cursor);
@@ -211,7 +203,7 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> cl){
-       mAdapter.swapCursor(null);
+    public void onLoaderReset(Loader<Cursor> cl) {
+        mAdapter.swapCursor(null);
     }
 }
