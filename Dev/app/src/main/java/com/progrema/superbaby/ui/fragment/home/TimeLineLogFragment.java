@@ -42,8 +42,9 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     private Button buttonQuickNursing;
     private TimelineHistoryAdapter mAdapter;
     private ListView  historyList;
+
     private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
-    private static final int LOADER_ID = 0;
+    public static final int LOADER_ID = 3;
 
     public final static String ACTIVITY_TRIGGER_KEY = "trigger";
     public enum Trigger
@@ -182,8 +183,7 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
                     addedActivity.setTimeStamp(String.valueOf(currentTime.getTimeInMillis()));
                     addedActivity.setType(Diaper.DiaperType.valueOf(diaperType));
                     addedActivity.insert(getActivity());
-
-                    /** go to sleep log*/
+                    getLoaderManager().restartLoader(LOADER_ID, null, this);
                     break;
             }
         }

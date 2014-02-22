@@ -126,7 +126,10 @@ public class BabyLogProvider extends ContentProvider
                 // add sleep details to sleep table
                 contentValues.put(BabyLogContract.SleepColumns.ACTIVITY_ID, actId);
                 db.insertOrThrow(BabyLogDatabase.Tables.SLEEP, null, contentValues);
+
+                /** notify all observer that subscribe to sleep table and activity table */
                 notifyChange(uri);
+                notifyChange(BabyLogContract.Activity.CONTENT_URI);
                 return BabyLogContract.Sleep.buildUri(contentValues.getAsString(BaseColumns._ID));
             }
             case DIAPER:
@@ -143,7 +146,10 @@ public class BabyLogProvider extends ContentProvider
                 // add sleep details to sleep table
                 contentValues.put(BabyLogContract.DiaperColumns.ACTIVITY_ID, actId);
                 db.insertOrThrow(BabyLogDatabase.Tables.DIAPER, null, contentValues);
+
+                /** notify all observer that subscribe to diaper table and activity table */
                 notifyChange(uri);
+                notifyChange(BabyLogContract.Activity.CONTENT_URI);
                 return BabyLogContract.Diaper.buildUri(contentValues.getAsString(BaseColumns._ID));
 
             }
