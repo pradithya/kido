@@ -3,15 +3,10 @@
       tools:context="com.progrema.superbaby.ui.activity.HomeActivity">
 
     <item
-        android:id="@+id/action_example"
-        android:title="@string/action_example"
-        android:showAsAction="withText|ifRoom"/>
-
-    <item
         android:id="@+id/action_new_baby"
         android:title="@string/action_new_baby"
         android:orderInCategory="99"
-        android:showAsAction="never"/>
+        android:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/action_settings"

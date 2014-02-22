@@ -15,18 +15,13 @@ import com.progrema.superbaby.R;
  */
 public class SplashScreenFragment extends Fragment
 {
-    private static SplashScreenFragment singletonSplashScreenFragment = null;
     private final int SPLASH_TIME = 2000;
     private final String TAG = "SplashActivity";
     private boolean isActive = true;
 
-    public static synchronized SplashScreenFragment getInstance()
+    public static SplashScreenFragment getInstance()
     {
-        if (singletonSplashScreenFragment == null)
-        {
-            singletonSplashScreenFragment = new SplashScreenFragment();
-        }
-        return singletonSplashScreenFragment;
+        return new SplashScreenFragment();
     }
 
     @Override

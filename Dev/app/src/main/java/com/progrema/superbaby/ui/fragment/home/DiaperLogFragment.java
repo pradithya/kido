@@ -21,29 +21,16 @@ import com.progrema.superbaby.util.ActiveContext;
  *
  * @author aria
  */
-public class DiaperLogFragment extends Fragment
-        implements LoaderManager.LoaderCallbacks<Cursor>
+public class DiaperLogFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
-    private static DiaperLogFragment singletonDiaperLogFragment = null;
     private static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     private static final int LOADER_ID = 2;
     private ListView diaperHistoryList;
     private DiaperHistoryAdapter mAdapter;
 
-    public static synchronized DiaperLogFragment getInstance()
+    public static DiaperLogFragment getInstance()
     {
-        if (singletonDiaperLogFragment == null)
-        {
-            singletonDiaperLogFragment = new DiaperLogFragment();
-        }
-        else
-        {
-            if (singletonDiaperLogFragment.isAdded())
-            {
-                singletonDiaperLogFragment.getLoaderManager().restartLoader(LOADER_ID, null, mCallbacks);
-            }
-        }
-        return singletonDiaperLogFragment;
+        return new DiaperLogFragment();
     }
 
     @Override

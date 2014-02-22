@@ -27,20 +27,9 @@ public class NursingLogFragment extends Fragment implements LoaderManager.Loader
     private NursingHistoryAdapter mAdapter;
     private ListView nursingHistoryList;
 
-    public static synchronized NursingLogFragment getInstance()
+    public static NursingLogFragment getInstance()
     {
-        if (singletonNursingLogFragment == null)
-        {
-            singletonNursingLogFragment = new NursingLogFragment();
-        }
-        else
-        {
-            if (singletonNursingLogFragment.isAdded())
-            {
-                singletonNursingLogFragment.getLoaderManager().restartLoader(LOADER_ID, null, mCallbacks);
-            }
-        }
-        return singletonNursingLogFragment;
+        return new NursingLogFragment();
     }
 
     @Override

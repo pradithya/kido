@@ -28,13 +28,9 @@ public class BabyInputFragment extends Fragment implements View.OnClickListener
     private EditText babySexTypeInput;
     private Button doneButton;
 
-    public static synchronized BabyInputFragment getInstance()
+    public static BabyInputFragment getInstance()
     {
-        if (singletonBabyInputFragment == null)
-        {
-            singletonBabyInputFragment = new BabyInputFragment();
-        }
-        return singletonBabyInputFragment;
+        return new BabyInputFragment();
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)

@@ -36,7 +36,6 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     public final static int REQUEST_SLEEP = 1;
     public final static int REQUEST_NURSING = 2;
     public final static int RESULT_OK = 0;
-    private static TimeLineLogFragment singletonTimeLineLogFragment = null;
     private Button buttonQuickSleep;
     private Button buttonQuickDiaper;
     private Button buttonQuickNursing;
@@ -44,8 +43,6 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     private ObserveAbleListView historyList;
     public static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     public static final int LOADER_ID = 3;
-    private boolean isScrollUp;
-    private int initY;
     public final static String ACTIVITY_TRIGGER_KEY = "trigger";
 
     public enum Trigger
@@ -67,20 +64,9 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    public static synchronized TimeLineLogFragment getInstance()
+    public static TimeLineLogFragment getInstance()
     {
-        if (singletonTimeLineLogFragment == null)
-        {
-            singletonTimeLineLogFragment = new TimeLineLogFragment();
-        }
-        else
-        {
-            if (singletonTimeLineLogFragment.isAdded())
-            {
-                singletonTimeLineLogFragment.getLoaderManager().restartLoader(LOADER_ID, null, mCallbacks);
-            }
-        }
-        return singletonTimeLineLogFragment;
+        return new TimeLineLogFragment();
     }
 
     @Override

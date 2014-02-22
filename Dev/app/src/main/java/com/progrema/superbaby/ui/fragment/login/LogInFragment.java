@@ -26,7 +26,6 @@ public class LogInFragment extends Fragment implements View.OnClickListener
     /**
      * LogInFragment private data
      */
-    private static LogInFragment singletonLogInFragment = null;
     private Button loginButton;
     private Button registerButton;
     private Button finishRegisterButton;
@@ -40,13 +39,9 @@ public class LogInFragment extends Fragment implements View.OnClickListener
      *
      * @return LogInFragment instance
      */
-    public static synchronized LogInFragment getInstance()
+    public static LogInFragment getInstance()
     {
-        if (singletonLogInFragment == null)
-        {
-            singletonLogInFragment = new LogInFragment();
-        }
-        return singletonLogInFragment;
+        return new LogInFragment();
     }
 
     @Override

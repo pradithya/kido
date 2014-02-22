@@ -26,15 +26,10 @@ import java.util.concurrent.TimeUnit;
  */
 public class StopwatchFragment extends Fragment implements View.OnClickListener
 {
-
-    private static StopwatchFragment singletonStopwatchFragment = null;
-
     private Stopwatch stopwatch;
     private Stopwatch stopwatch2;
-    // holder
     private Stopwatch activeStopWatch;
     private Stopwatch inActiveStopWatch;
-
     private TextView titleView;
     private Button startButton;
     private Button pauseButton;
@@ -44,20 +39,14 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
     private TextView durationView;
     private LinearLayout containerStopWatch2;
     private Calendar startTime;
-
     private String sourceTrigger;
     private String nursingType;
     private String formulaVolume;
-    private boolean isNursing;
     private boolean isTwoStopWatch;
 
-    public static synchronized StopwatchFragment getInstance()
+    public static StopwatchFragment getInstance()
     {
-        if (singletonStopwatchFragment == null)
-        {
-            singletonStopwatchFragment = new StopwatchFragment();
-        }
-        return singletonStopwatchFragment;
+        return new StopwatchFragment();
     }
 
     @Override
@@ -72,7 +61,6 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
         if (args.containsKey(Nursing.NURSING_TYPE_KEY))
         {
             nursingType = args.getString(Nursing.NURSING_TYPE_KEY);
-            isNursing = true;
             isTwoStopWatch = true;
         }
 

@@ -116,9 +116,6 @@ public class HomeActivity extends FragmentActivity
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId())
         {
-            case R.id.action_example:
-                return true;
-
             case R.id.action_settings:
                 return true;
 

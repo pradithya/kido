@@ -19,29 +19,16 @@ import com.progrema.superbaby.util.ActiveContext;
 /**
  * Fragment to log all sleep activity
  */
-public class SleepLogFragment extends Fragment
-        implements LoaderManager.LoaderCallbacks<Cursor>
+public class SleepLogFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
-    private static SleepLogFragment singletonSleepLogFragment = null;
     private ListView sleepHistoryList;
     private SleepHistoryAdapter mAdapter;
     private static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     private static final int LOADER_ID = 1;
 
-    public static synchronized SleepLogFragment getInstance()
+    public static SleepLogFragment getInstance()
     {
-        if (singletonSleepLogFragment == null)
-        {
-            singletonSleepLogFragment = new SleepLogFragment();
-        }
-        else
-        {
-            if (singletonSleepLogFragment.isAdded())
-            {
-                singletonSleepLogFragment.getLoaderManager().restartLoader(LOADER_ID, null, mCallbacks);
-            }
-        }
-        return singletonSleepLogFragment;
+        return new SleepLogFragment();
     }
 
     @Override
