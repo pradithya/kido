@@ -82,6 +82,8 @@ public class DiaperLogFragment extends Fragment
             /** show last inserted row */
             cursor.moveToFirst();
             mAdapter.swapCursor(cursor);
+        }else{
+            mAdapter.swapCursor(null);
         }
     }
 

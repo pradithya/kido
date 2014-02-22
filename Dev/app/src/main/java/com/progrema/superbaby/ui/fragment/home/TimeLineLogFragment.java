@@ -199,6 +199,8 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
             /** show last inserted row */
             cursor.moveToFirst();
             mAdapter.swapCursor(cursor);
+        }else{
+            mAdapter.swapCursor(null);
         }
     }
 
