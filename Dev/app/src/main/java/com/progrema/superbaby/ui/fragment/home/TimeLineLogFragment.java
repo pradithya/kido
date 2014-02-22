@@ -50,6 +50,7 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     public static final int LOADER_ID = 3;
 
     private boolean isScrollUp;
+    private int initY;
 
     public final static String ACTIVITY_TRIGGER_KEY = "trigger";
     public enum Trigger
@@ -115,36 +116,21 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
-    public void onScrollChanged(int scrollY, int oldScrollY)
-    {
-        if(scrollY > oldScrollY)
-        {
-            isScrollUp = true;
-        }
-        else
-        {
-            isScrollUp = false;
-        }
-    }
-
-    @Override
-    public void onDownMotionEvent()
+    public void onScrollUp()
     {
         LinearLayout overlayLayout = (LinearLayout) getActivity().findViewById(R.id.timeline_quick_button);
         ViewPropertyAnimator animator = overlayLayout.animate();
+        animator.cancel();
+        animator.translationY(overlayLayout.getHeight()).setDuration(200).start();
+    }
 
-        if(isScrollUp)
-        {
-            // hide button
-            animator.cancel();
-            animator.translationY(0).setDuration(200).start();
-        }
-        else
-        {
-            // show button
-            animator.cancel();
-            animator.translationY(overlayLayout.getHeight()).setDuration(200).start();
-        }
+    @Override
+    public void onScrollDown()
+    {
+        LinearLayout overlayLayout = (LinearLayout) getActivity().findViewById(R.id.timeline_quick_button);
+        ViewPropertyAnimator animator = overlayLayout.animate();
+        animator.cancel();
+        animator.translationY(0).setDuration(200).start();
     }
 
     @Override
@@ -163,7 +149,6 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
             case R.id.quick_button_diaper:
                 handleQuickDiaper();
                 break;
-
         }
     }
 
