@@ -16,21 +16,10 @@ import com.progrema.superbaby.models.Diaper;
  */
 public class DiaperDialogFragment extends DialogFragment
 {
+    public static DiaperDialogFragment getInstance()
 
-    private static DiaperDialogFragment singletonStopwatchFragment = null;
-
-    public DiaperDialogFragment()
     {
-
-    }
-
-    public static synchronized DiaperDialogFragment getInstance()
-    {
-        if (singletonStopwatchFragment == null)
-        {
-            singletonStopwatchFragment = new DiaperDialogFragment();
-        }
-        return singletonStopwatchFragment;
+        return new DiaperDialogFragment();
     }
 
     @Override

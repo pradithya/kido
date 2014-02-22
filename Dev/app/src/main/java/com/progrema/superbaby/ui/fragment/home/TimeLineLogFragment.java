@@ -196,7 +196,6 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
                     break;
 
                 case REQUEST_NURSING:
-
                     // get input data passed from dialog
                     Bundle bundle = data.getExtras();
                     // add extra key to notify stopwatch which activity triggers it

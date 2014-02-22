@@ -20,29 +20,17 @@ import com.progrema.superbaby.util.FormatUtils;
  */
 public class NursingDialogFragment extends DialogFragment
 {
-
-    private static NursingDialogFragment singletonNursingDialogFragment = null;
-
-    public NursingDialogFragment()
+    public static NursingDialogFragment getInstance()
     {
-
-    }
-
-    public static synchronized NursingDialogFragment getInstance()
-    {
-        if (singletonNursingDialogFragment == null)
-        {
-            singletonNursingDialogFragment = new NursingDialogFragment();
-        }
-        return singletonNursingDialogFragment;
+        return new NursingDialogFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.dialog_fragment_nursing, parent, false);
-        Button buttonDry = (Button) view.findViewById(R.id.dialog_choice_left);
-        buttonDry.setOnClickListener(new View.OnClickListener()
+        Button buttonLeft = (Button) view.findViewById(R.id.dialog_choice_left);
+        buttonLeft.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -54,8 +42,8 @@ public class NursingDialogFragment extends DialogFragment
             }
         });
 
-        Button buttonWet = (Button) view.findViewById(R.id.dialog_choice_right);
-        buttonWet.setOnClickListener(new View.OnClickListener()
+        Button buttonRight = (Button) view.findViewById(R.id.dialog_choice_right);
+        buttonRight.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -67,11 +55,8 @@ public class NursingDialogFragment extends DialogFragment
             }
         });
 
-        Button buttonMixed = (Button) view.findViewById(R.id.dialog_choice_formula);
-        Button formulaOK = (Button) view.findViewById(R.id.button_formula_ok);
-
-
-        buttonMixed.setOnClickListener(new View.OnClickListener()
+        Button buttonFormula = (Button) view.findViewById(R.id.dialog_choice_formula);
+        buttonFormula.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -81,12 +66,12 @@ public class NursingDialogFragment extends DialogFragment
             }
         });
 
+        Button formulaOK = (Button) view.findViewById(R.id.button_formula_ok);
         formulaOK.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-
                 EditText inputVolume = (EditText) getDialog().findViewById(R.id.entry_text_volume);
                 String volume = inputVolume.getText().toString();
 
