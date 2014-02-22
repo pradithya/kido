@@ -23,12 +23,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.adapter.navigation.Action;
 import com.progrema.superbaby.adapter.navigation.Baby;
 import com.progrema.superbaby.adapter.navigation.Divider;
 import com.progrema.superbaby.adapter.navigation.Item;
 import com.progrema.superbaby.adapter.navigation.NavigationAdapter;
-import com.progrema.superbaby.adapter.navigation.User;
+import com.progrema.superbaby.adapter.navigation.StandardItem;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 
@@ -125,7 +124,7 @@ public class NavigationFragment extends Fragment
         Cursor cursor = userQuery(getActivity());
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext())
         {
-            items.add(new User(cursor.getString(BabyLogContract.User.Query.OFFSET_NAME)));
+            items.add(new StandardItem(cursor.getString(BabyLogContract.User.Query.OFFSET_NAME)));
         }
 
         // Set section divider
@@ -145,10 +144,10 @@ public class NavigationFragment extends Fragment
         mActionPositionOffset = items.size();
 
         // prepare action supported
-        items.add(new Action(getString(R.string.title_timeline_fragment)));
-        items.add(new Action(getString(R.string.title_nursing_fragment)));
-        items.add(new Action(getString(R.string.title_diaper_fragment)));
-        items.add(new Action(getString(R.string.title_sleep_fragment)));
+        items.add(new StandardItem(getString(R.string.title_timeline_fragment)));
+        items.add(new StandardItem(getString(R.string.title_nursing_fragment)));
+        items.add(new StandardItem(getString(R.string.title_diaper_fragment)));
+        items.add(new StandardItem(getString(R.string.title_sleep_fragment)));
 
         // set adapter
         adapter = new NavigationAdapter(getActivity(), items);

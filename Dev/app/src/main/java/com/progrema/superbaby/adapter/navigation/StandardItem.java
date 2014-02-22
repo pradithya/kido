@@ -11,14 +11,13 @@ import com.progrema.superbaby.R;
 /**
  * Created by iqbalpakeh on 22/2/14.
  */
-public class User extends Item
+public class StandardItem extends Item
 {
-    public User(String text)
+    public StandardItem(String text)
     {
         this.setText(text);
         this.setLayout(R.layout.navigation_drawer_text_container);
     }
-
     /**
      * inflate view
      *

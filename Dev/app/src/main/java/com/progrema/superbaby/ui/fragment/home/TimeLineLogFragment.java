@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.adapter.sleephistory.TimelineHistoryAdapter;
+import com.progrema.superbaby.adapter.timelinehistory.TimelineHistoryAdapter;
 import com.progrema.superbaby.models.Diaper;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.ui.fragment.dialog.DiaperDialogFragment;
@@ -94,10 +94,9 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         buttonQuickDiaper.setOnClickListener(this);
 
         // set adapter to list view
-        historyList = (ListView) rootView.findViewById(R.id.activity_list);
-        mAdapter = new TimelineHistoryAdapter(getActivity(), null, 0);
-        mAdapter.setLayout(R.layout.history_item_activity);
-        historyList.setAdapter(mAdapter);
+//        historyList = (ListView) rootView.findViewById(R.id.activity_list);
+//        mAdapter = new TimelineHistoryAdapter(getActivity(), null, 0);
+//        historyList.setAdapter(mAdapter);
 
         // prepare loader
         mCallbacks = this;
@@ -150,7 +149,7 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         DiaperDialogFragment diaperChoiceBox = DiaperDialogFragment.getInstance();
         diaperChoiceBox.setTargetFragment(this,REQUEST_DIAPER);
 
-        diaperChoiceBox.show(fragmentTransaction,"dialog");
+        diaperChoiceBox.show(fragmentTransaction, "dialog");
     }
 
     private void handleQuickNursing()
@@ -206,12 +205,12 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         {
             /** show last inserted row */
             cursor.moveToFirst();
-            mAdapter.swapCursor(cursor);
+            //mAdapter.swapCursor(cursor);
         }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> cl){
-        mAdapter.swapCursor(null);
+       // mAdapter.swapCursor(null);
     }
 }

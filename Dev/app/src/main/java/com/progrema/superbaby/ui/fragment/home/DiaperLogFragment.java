@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.adapter.sleephistory.DiaperHistoryAdapter;
+import com.progrema.superbaby.adapter.diaperhistory.DiaperHistoryAdapter;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 
@@ -50,7 +50,6 @@ public class DiaperLogFragment extends Fragment
         // set adapter to list view
         diaperHistoryList = (ListView) rootView.findViewById(R.id.history_list_diaper);
         mAdapter = new DiaperHistoryAdapter(getActivity(), null, 0);
-        mAdapter.setLayout(R.layout.history_item_diaper);
         diaperHistoryList.setAdapter(mAdapter);
 
         // prepare loader

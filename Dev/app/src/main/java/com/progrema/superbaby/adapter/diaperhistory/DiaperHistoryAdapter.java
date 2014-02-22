@@ -24,6 +24,7 @@ public class DiaperHistoryAdapter extends CursorAdapter{
     {
         super(context, c, flags);
         inflater = LayoutInflater.from(context);
+        layout = R.layout.history_item_diaper;
     }
 
     @Override
@@ -45,10 +46,5 @@ public class DiaperHistoryAdapter extends CursorAdapter{
         textViewDate.setText(FormatUtils.formatDate(context, timeStamp));
         textViewTime.setText(FormatUtils.formatTime(context, timeStamp));
         textViewTtype.setText(type);
-    }
-
-    public void setLayout(int newLayout)
-    {
-        layout = newLayout;
     }
 }

@@ -24,6 +24,7 @@ public class SleepHistoryAdapter extends CursorAdapter
     {
         super(context, c, flags);
         inflater = LayoutInflater.from(context);
+        layout = R.layout.history_item_sleep;
     }
 
     @Override
@@ -48,10 +49,5 @@ public class SleepHistoryAdapter extends CursorAdapter
         textViewTimeStamp.setText(FormatUtils.formatDate(context, timeStamp));
         textViewTimeBoundary.setText(FormatUtils.formatTimeBoundary(context, timeStamp, duration));
         textViewDuration.setText(FormatUtils.formatDuration(context, duration));
-    }
-
-    public void setLayout(int newLayout)
-    {
-        layout = newLayout;
     }
 }

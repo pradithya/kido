@@ -45,11 +45,9 @@ public class SleepLogFragment extends Fragment
         // inflate fragment layout
         View rootView = inflater.inflate(R.layout.fragment_sleep_log, container, false);
 
-
         // set adapter to list view
         sleepHistoryList = (ListView) rootView.findViewById(R.id.sleep_activity_list);
         mAdapter = new SleepHistoryAdapter(getActivity(), null, 0);
-        mAdapter.setLayout(R.layout.history_item_sleep);
         sleepHistoryList.setAdapter(mAdapter);
 
         // prepare loader
