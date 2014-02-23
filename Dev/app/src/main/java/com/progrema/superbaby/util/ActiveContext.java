@@ -6,11 +6,14 @@ import android.database.Cursor;
 
 import com.progrema.superbaby.models.Baby;
 import com.progrema.superbaby.models.BaseActor;
+import com.progrema.superbaby.models.Diaper;
+import com.progrema.superbaby.models.Nursing;
+import com.progrema.superbaby.models.Sleep;
 import com.progrema.superbaby.models.User;
 import com.progrema.superbaby.provider.BabyLogContract;
 
 /**
- * ActiveContext class holds the active user and the baby. This object can be called anytime from
+ * ActiveContext class holds the active user, the baby and last activity. This object can be called anytime from
  * application because it uses android preference class to store the value.
  * <p/>
  * Created by iqbalpakeh on 10/2/14.
@@ -27,6 +30,14 @@ public class ActiveContext
     private static final String PREF_BABY_SEX = "prefBabySex";
     private static final String PREF_USER_ID = "prefUserId";
     private static final String PREF_USER_NAME = "prefUserName";
+    private static final String PREF_LAST_NURSING_TIMESTAMP = "prefLastNursingTimestamp";
+    private static final String PREF_LAST_NURSING_DURATION = "prefLastNursingDuration";
+    private static final String PREF_LAST_NURSING_TYPE = "prefLastNursingSides";
+    private static final String PREF_LAST_NURSING_VOLUME = "prefLastNursingVolume";
+    private static final String PREF_LAST_SLEEP_TIMESTAMP = "prefLastSleepTimestamp";
+    private static final String PREF_LAST_SLEEP_DURATION = "prefLastSleepDuration";
+    private static final String PREF_LAST_DIAPER_TIMESTAMP = "prefLastDiaperTimestamp";
+    private static final String PREF_LAST_DIAPER_TYPE = "prefLastDiaperType";
 
     /**
      * Set the active baby
@@ -143,5 +154,92 @@ public class ActiveContext
                 BabyLogContract.Baby.NAME + "=?",
                 selectionArgument,
                 BabyLogContract.Baby.NAME);
+    }
+
+    // TODO: we have to now whose last activity...
+    public static void setLastNursing(Context context, Nursing nursing)
+    {
+        SharedPreferences setting = context.getSharedPreferences(PREF_CONTEXT, 0);
+        SharedPreferences.Editor editor = setting.edit();
+
+        editor.putString(PREF_LAST_NURSING_TIMESTAMP, nursing.getTimeStampInString());
+        editor.putLong(PREF_LAST_NURSING_DURATION, nursing.getDuration());
+        editor.putString(PREF_LAST_NURSING_TYPE, nursing.getType().getTitle());
+        editor.putLong(PREF_LAST_NURSING_VOLUME, nursing.getVolume());
+        editor.commit();
+    }
+
+    public static Nursing getLastNursing(Context context)
+    {
+        SharedPreferences setting = context.getSharedPreferences(PREF_CONTEXT, 0);
+        Nursing nursing = new Nursing();
+
+        nursing.setTimeStamp(setting.getString(PREF_LAST_NURSING_TIMESTAMP, ""));
+        nursing.setDuration(setting.getLong(PREF_LAST_NURSING_DURATION, 0));
+        nursing.setVolume(setting.getLong(PREF_LAST_NURSING_VOLUME, 0));
+        if (setting.getString(PREF_LAST_NURSING_TYPE, "").equals(Nursing.NursingType.FORMULA.getTitle()))
+        {
+            nursing.setType(Nursing.NursingType.FORMULA);
+        }
+        else if (setting.getString(PREF_LAST_NURSING_TYPE, "").equals(Nursing.NursingType.LEFT.getTitle()))
+        {
+            nursing.setType(Nursing.NursingType.LEFT);
+        }
+        else if (setting.getString(PREF_LAST_NURSING_TYPE, "").equals(Nursing.NursingType.RIGHT.getTitle()))
+        {
+            nursing.setType(Nursing.NursingType.RIGHT);
+        }
+        return nursing;
+    }
+
+    public static void setLastSleep(Context context, Sleep sleep)
+    {
+        SharedPreferences setting = context.getSharedPreferences(PREF_CONTEXT, 0);
+        SharedPreferences.Editor editor = setting.edit();
+
+        editor.putString(PREF_LAST_SLEEP_TIMESTAMP, sleep.getTimeStampInString());
+        editor.putLong(PREF_LAST_SLEEP_DURATION, sleep.getDuration());
+        editor.commit();
+    }
+
+    public static Sleep getLastSleep(Context context)
+    {
+        SharedPreferences setting = context.getSharedPreferences(PREF_CONTEXT, 0);
+        Sleep sleep = new Sleep();
+
+        sleep.setTimeStamp(setting.getString(PREF_LAST_SLEEP_TIMESTAMP, ""));
+        sleep.setDuration(setting.getLong(PREF_LAST_SLEEP_DURATION, 0));
+        return sleep;
+    }
+
+    public static void setLastDiaper(Context context, Diaper diaper)
+    {
+        SharedPreferences setting = context.getSharedPreferences(PREF_CONTEXT, 0);
+        SharedPreferences.Editor editor = setting.edit();
+
+        editor.putString(PREF_LAST_DIAPER_TIMESTAMP, diaper.getTimeStampInString());
+        editor.putString(PREF_LAST_DIAPER_TYPE, diaper.getType().getTitle());
+        editor.commit();
+    }
+
+    public static Diaper getLastDiaper(Context context)
+    {
+        SharedPreferences setting = context.getSharedPreferences(PREF_CONTEXT, 0);
+        Diaper diaper = new Diaper();
+
+        diaper.setTimeStamp(setting.getString(PREF_LAST_DIAPER_TIMESTAMP, ""));
+        if (setting.getString(PREF_LAST_DIAPER_TYPE, "").equals(Diaper.DiaperType.DRY.getTitle()))
+        {
+            diaper.setType(Diaper.DiaperType.DRY);
+        }
+        else if (setting.getString(PREF_LAST_NURSING_TYPE, "").equals(Diaper.DiaperType.WET.getTitle()))
+        {
+            diaper.setType(Diaper.DiaperType.WET);
+        }
+        else if (setting.getString(PREF_LAST_NURSING_TYPE, "").equals(Diaper.DiaperType.MIXED.getTitle()))
+        {
+            diaper.setType(Diaper.DiaperType.MIXED);
+        }
+        return diaper;
     }
 }

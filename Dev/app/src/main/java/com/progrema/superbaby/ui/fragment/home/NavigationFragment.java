@@ -292,8 +292,6 @@ public class NavigationFragment extends Fragment
                 lastActivityClicked = position;
                 mCallbacks.onNavigationDrawerItemSelected(position, mActionPositionOffset);
             }
-
-
         }
     }
 

@@ -14,9 +14,11 @@ import android.view.ViewGroup;
 import android.view.ViewPropertyAnimator;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.timelinehistory.TimeLineHistoryAdapter;
+import com.progrema.superbaby.models.Baby;
 import com.progrema.superbaby.models.Diaper;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.ui.fragment.dialog.DiaperDialogFragment;
@@ -36,14 +38,20 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     public final static int REQUEST_SLEEP = 1;
     public final static int REQUEST_NURSING = 2;
     public final static int RESULT_OK = 0;
+    public static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
+    public static final int LOADER_ID = 3;
+    public final static String ACTIVITY_TRIGGER_KEY = "trigger";
     private Button buttonQuickSleep;
     private Button buttonQuickDiaper;
     private Button buttonQuickNursing;
     private TimeLineHistoryAdapter mAdapter;
     private ObserveAbleListView historyList;
-    public static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
-    public static final int LOADER_ID = 3;
-    public final static String ACTIVITY_TRIGGER_KEY = "trigger";
+    private TextView headerBabyName;
+    private TextView headerBabyAge;
+    private TextView headerBabySex;
+    private TextView headerLastNursing;
+    private TextView headerLastSleep;
+    private TextView headerLastDiaper;
 
     public enum Trigger
     {
@@ -76,16 +84,20 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         // inflate fragment layout
         View rootView = inflater.inflate(R.layout.fragment_timeline, container, false);
 
-        // set onClickListener to button
+        // get ui object
         buttonQuickSleep = (Button) rootView.findViewById(R.id.quick_button_sleep);
-        buttonQuickSleep.setOnClickListener(this);
-
-        // set onClickListener to button
         buttonQuickNursing = (Button) rootView.findViewById(R.id.quick_button_nursing);
-        buttonQuickNursing.setOnClickListener(this);
+        buttonQuickDiaper = (Button) rootView.findViewById(R.id.quick_button_diaper);
+        headerBabyName = (TextView) rootView.findViewById(R.id.timeline_header_baby_name);
+        headerBabyAge = (TextView) rootView.findViewById(R.id.timeline_header_baby_age);
+        headerBabySex = (TextView) rootView.findViewById(R.id.timeline_header_baby_sex);
+        headerLastNursing = (TextView) rootView.findViewById(R.id.timeline_header_last_nursing);
+        headerLastSleep = (TextView) rootView.findViewById(R.id.timeline_header_last_sleep);
+        headerLastDiaper = (TextView) rootView.findViewById(R.id.timeline_header_last_diaper);
 
         // set onClickListener to button
-        buttonQuickDiaper = (Button) rootView.findViewById(R.id.quick_button_diaper);
+        buttonQuickSleep.setOnClickListener(this);
+        buttonQuickNursing.setOnClickListener(this);
         buttonQuickDiaper.setOnClickListener(this);
 
         // set adapter to list view
@@ -187,12 +199,12 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
                     Bundle recData = data.getExtras();
                     String diaperType = (String) recData.get(Diaper.DIAPER_TYPE_KEY);
 
-                    Diaper addedActivity = new Diaper();
-                    addedActivity.setBabyID(ActiveContext.getActiveBaby(getActivity()).getID());
-                    addedActivity.setTimeStamp(String.valueOf(currentTime.getTimeInMillis()));
-                    addedActivity.setType(Diaper.DiaperType.valueOf(diaperType));
-                    addedActivity.insert(getActivity());
-
+                    Diaper diaper = new Diaper();
+                    diaper.setBabyID(ActiveContext.getActiveBaby(getActivity()).getID());
+                    diaper.setTimeStamp(String.valueOf(currentTime.getTimeInMillis()));
+                    diaper.setType(Diaper.DiaperType.valueOf(diaperType));
+                    diaper.insert(getActivity());
+                    ActiveContext.setLastDiaper(getActivity(), diaper);
                     break;
 
                 case REQUEST_NURSING:
@@ -211,6 +223,19 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
             }
             getLoaderManager().restartLoader(LOADER_ID, null, mCallbacks);
         }
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        Baby baby = ActiveContext.getActiveBaby(getActivity());
+        headerBabyName.setText(baby.getName());
+        headerBabyAge.setText(baby.getBirthdayInString()); //TODO: create getAge() function!!
+        headerBabySex.setText(baby.getSex().getTitle());
+        headerLastNursing.setText(ActiveContext.getLastNursing(getActivity()).getTimeStampInString()); // TODO: calculate absolute time!
+        headerLastSleep.setText(ActiveContext.getLastSleep(getActivity()).getTimeStampInString()); // TODO: calculate absolute time!
+        headerLastDiaper.setText(ActiveContext.getLastDiaper(getActivity()).getTimeStampInString()); // TODO: calculate absolute time!
     }
 
     @Override
@@ -244,5 +269,6 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     public void onLoaderReset(Loader<Cursor> cl)
     {
         mAdapter.swapCursor(null);
+
     }
 }

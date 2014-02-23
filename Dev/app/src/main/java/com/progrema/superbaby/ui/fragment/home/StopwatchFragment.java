@@ -190,12 +190,12 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
         if (sourceTrigger.compareTo(TimeLineLogFragment.Trigger.SLEEP.getTitle()) == 0)
         {
             Sleep sleep = new Sleep();
-            /*test with baby ID  = 1*/
+            //TODO: test with baby ID  = 1. We should implement for more generic user later on!!
             sleep.setTimeStamp(String.valueOf(startTime.getTimeInMillis()));
             sleep.setBabyID(ActiveContext.getActiveBaby(getActivity()).getID());
             sleep.setDuration(TimeUnit.SECONDS.toMillis(duration));
             sleep.insert(getActivity());
-
+            ActiveContext.setLastSleep(getActivity(), sleep);
         }
         else if (sourceTrigger.compareTo(TimeLineLogFragment.Trigger.NURSING.getTitle()) == 0)
         {
@@ -228,6 +228,8 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
                 nursing.setVolume(Long.parseLong(formulaVolume, 10));
                 nursing.insert(getActivity());
             }
+
+            ActiveContext.setLastNursing(getActivity(), nursing);
         }
 
         // Go back to timeLine fragment

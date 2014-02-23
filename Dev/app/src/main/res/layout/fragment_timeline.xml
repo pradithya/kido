@@ -5,17 +5,83 @@
              android:layout_height="match_parent"
              android:orientation="vertical">
 
-    <com.progrema.superbaby.widget.customview.ObserveAbleListView
-        android:id="@+id/activity_list"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/timeline_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="@color/transparent_actionbar_color"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/timeline_header_baby_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Safiya Salsabila"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/timeline_header_baby_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 year, 3 month, 12 day"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/timeline_header_baby_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Female"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/timeline_header_last_nursing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 hours ago"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/timeline_header_last_sleep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 hours ago"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/timeline_header_last_diaper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 hours ago"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <com.progrema.superbaby.widget.customview.ObserveAbleListView
+            android:id="@+id/activity_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/timeline_quick_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/black"
+        android:background="@color/transparent_actionbar_color"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -27,7 +93,8 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:text="@string/quick_button_title_sleep"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
 
         <Button
             android:id="@+id/quick_button_nursing"
@@ -37,7 +104,8 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:text="@string/quick_button_title_nursing"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
 
         <Button
             android:id="@+id/quick_button_diaper"
@@ -47,7 +115,8 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:text="@string/quick_button_title_diaper"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
