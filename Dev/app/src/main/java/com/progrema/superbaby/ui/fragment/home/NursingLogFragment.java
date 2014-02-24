@@ -15,17 +15,17 @@ import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.nursinghistory.NursingHistoryAdapter;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
+import com.progrema.superbaby.widget.customview.ObserveAbleListView;
 
 /**
  * Created by iqbalpakeh on 18/1/14.
  */
 public class NursingLogFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
-    private static NursingLogFragment singletonNursingLogFragment = null;
     private static final int LOADER_ID = 4;
     private static LoaderManager.LoaderCallbacks mCallbacks;
     private NursingHistoryAdapter mAdapter;
-    private ListView nursingHistoryList;
+    private ObserveAbleListView nursingHistoryList;
 
     public static NursingLogFragment getInstance()
     {
@@ -39,7 +39,7 @@ public class NursingLogFragment extends Fragment implements LoaderManager.Loader
         View rootView = inflater.inflate(R.layout.fragment_nursing_log, container, false);
 
         // set adapter to list view
-        nursingHistoryList = (ListView) rootView.findViewById(R.id.history_list_nursing);
+        nursingHistoryList = (ObserveAbleListView) rootView.findViewById(R.id.activity_list);
         mAdapter = new NursingHistoryAdapter(getActivity(), null, 0);
         nursingHistoryList.setAdapter(mAdapter);
 

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.models.Nursing;
 import com.progrema.superbaby.models.Sleep;
+import com.progrema.superbaby.ui.activity.HomeActivity;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.widget.stopwatch.Stopwatch;
 
@@ -53,9 +54,9 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         Bundle args = getArguments();
-        if (args != null && args.containsKey(TimeLineLogFragment.ACTIVITY_TRIGGER_KEY))
+        if (args != null && args.containsKey(HomeActivity.ACTIVITY_TRIGGER_KEY))
         {
-            sourceTrigger = args.getString(TimeLineLogFragment.ACTIVITY_TRIGGER_KEY);
+            sourceTrigger = args.getString(HomeActivity.ACTIVITY_TRIGGER_KEY);
         }
 
         if (args.containsKey(Nursing.NURSING_TYPE_KEY))
@@ -187,7 +188,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
         long duration = stopwatch.getDuration();
         long duration2 = stopwatch2.getDuration();
 
-        if (sourceTrigger.compareTo(TimeLineLogFragment.Trigger.SLEEP.getTitle()) == 0)
+        if (sourceTrigger.compareTo(HomeActivity.Trigger.SLEEP.getTitle()) == 0)
         {
             Sleep sleep = new Sleep();
             //TODO: test with baby ID  = 1. We should implement for more generic user later on!!
@@ -197,7 +198,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
             sleep.insert(getActivity());
             ActiveContext.setLastSleep(getActivity(), sleep);
         }
-        else if (sourceTrigger.compareTo(TimeLineLogFragment.Trigger.NURSING.getTitle()) == 0)
+        else if (sourceTrigger.compareTo(HomeActivity.Trigger.NURSING.getTitle()) == 0)
         {
             Nursing nursing = new Nursing();
             nursing.setTimeStamp(String.valueOf(startTime.getTimeInMillis()));
@@ -229,7 +230,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
                 nursing.insert(getActivity());
             }
 
-            ActiveContext.setLastNursing(getActivity(), nursing);
+
         }
 
         // Go back to timeLine fragment

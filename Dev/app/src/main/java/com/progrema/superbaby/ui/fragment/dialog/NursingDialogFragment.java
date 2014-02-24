@@ -20,9 +20,20 @@ import com.progrema.superbaby.util.FormatUtils;
  */
 public class NursingDialogFragment extends DialogFragment
 {
+    private Callbacks mCallbacks;
+
+    public void setCallbacks(Callbacks listener)
+    {
+        mCallbacks = listener;
+    }
+
     public static NursingDialogFragment getInstance()
     {
         return new NursingDialogFragment();
+    }
+
+    public static interface Callbacks{
+        public void onNursingChoiceSelected(int resultCode , Intent data);
     }
 
     @Override
@@ -37,7 +48,7 @@ public class NursingDialogFragment extends DialogFragment
             {
                 Intent result = new Intent();
                 result.putExtra(Nursing.NURSING_TYPE_KEY, Nursing.NursingType.LEFT.getTitle());
-                getTargetFragment().onActivityResult(getTargetRequestCode(), 0, result);
+                NursingDialogFragment.this.mCallbacks.onNursingChoiceSelected(0,result);
                 getDialog().dismiss();
             }
         });
@@ -50,7 +61,7 @@ public class NursingDialogFragment extends DialogFragment
             {
                 Intent result = new Intent();
                 result.putExtra(Nursing.NURSING_TYPE_KEY, Nursing.NursingType.RIGHT.getTitle());
-                getTargetFragment().onActivityResult(getTargetRequestCode(), 0, result);
+                NursingDialogFragment.this.mCallbacks.onNursingChoiceSelected(0,result);
                 getDialog().dismiss();
             }
         });
@@ -85,7 +96,7 @@ public class NursingDialogFragment extends DialogFragment
                 Intent result = new Intent();
                 result.putExtra(Nursing.NURSING_TYPE_KEY, Nursing.NursingType.FORMULA.getTitle());
                 result.putExtra(Nursing.FORMULA_VOLUME_KEY, volume);
-                getTargetFragment().onActivityResult(getTargetRequestCode(), 0, result);
+                NursingDialogFragment.this.mCallbacks.onNursingChoiceSelected(0,result);
                 getDialog().dismiss();
             }
         });

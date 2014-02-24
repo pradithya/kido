@@ -15,7 +15,7 @@ public class ObserveAbleListView extends ListView
     private final int INVALID_POINTER_ID = MotionEvent.INVALID_POINTER_ID;
     private int mActivePointerId = INVALID_POINTER_ID;
     private float mLastTouchX, mLastTouchY, mPosX, mPosY;
-    private boolean isScrollUp;
+    private boolean isScrollUp = true;
 
     public ObserveAbleListView(Context context)
     {
