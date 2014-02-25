@@ -22,11 +22,14 @@ public class BabyLogProvider extends ContentProvider
     private static final int USER_BABY_MAP = 200;
     private static final int BABY = 300;
     private static final int NURSING = 400;
+    private static final int NURSING_MAX_TIMESTAMP = 401;
     private static final int SLEEP = 500;
+    private static final int SLEEP_MAX_TIMESTAMP = 501;
     private static final int DIAPER = 600;
+    private static final int DIAPER_MAX_TIMESTAMP = 601;
     private static final int MEASUREMENT = 700;
     private static final int PHOTO = 800;
-    private static final int ACTIVITY = 1000;
+    private static final int ACTIVITY = 900;
 
     private static UriMatcher buildUriMatcher()
     {
@@ -36,9 +39,12 @@ public class BabyLogProvider extends ContentProvider
         matcher.addURI(authority, "user", USER);
         matcher.addURI(authority, "user_baby_map", USER_BABY_MAP);
         matcher.addURI(authority, "baby", BABY);
-        matcher.addURI(authority, "milk", NURSING);
+        matcher.addURI(authority, "nursing", NURSING);
+        matcher.addURI(authority, "nursing_max_timestamp", NURSING_MAX_TIMESTAMP);
         matcher.addURI(authority, "sleep", SLEEP);
+        matcher.addURI(authority, "sleep_max_timestamp", SLEEP_MAX_TIMESTAMP);
         matcher.addURI(authority, "diaper", DIAPER);
+        matcher.addURI(authority, "diaper_max_timestamp", DIAPER_MAX_TIMESTAMP);
         matcher.addURI(authority, "measurement", MEASUREMENT);
         matcher.addURI(authority, "photo", PHOTO);
         matcher.addURI(authority, "activity", ACTIVITY);
@@ -61,8 +67,15 @@ public class BabyLogProvider extends ContentProvider
 
         switch (match)
         {
+            //TODO: improve the ugly code by not using rawQuery!!
             case ACTIVITY:
                 return db.rawQuery(BabyLogDatabase.JOIN_ALL, selectionArgs);
+            case NURSING_MAX_TIMESTAMP:
+                return db.rawQuery("SELECT MAX(timestamp) FROM nursing WHERE baby_id = ?", selectionArgs);
+            case SLEEP_MAX_TIMESTAMP:
+                return db.rawQuery("SELECT MAX(timestamp) FROM sleep WHERE baby_id = ?", selectionArgs);
+            case DIAPER_MAX_TIMESTAMP:
+                return db.rawQuery("SELECT MAX(timestamp) FROM diaper WHERE baby_id = ?", selectionArgs);
             default:
             {
                 final SelectionBuilder builder = buildExpandableSelection(uri, match);

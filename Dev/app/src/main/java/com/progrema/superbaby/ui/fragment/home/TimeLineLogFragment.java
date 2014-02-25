@@ -38,9 +38,9 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     public final static int REQUEST_SLEEP = 1;
     public final static int REQUEST_NURSING = 2;
     public final static int RESULT_OK = 0;
-    public static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     public static final int LOADER_ID = 3;
     public final static String ACTIVITY_TRIGGER_KEY = "trigger";
+    public static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     private Button buttonQuickSleep;
     private Button buttonQuickDiaper;
     private Button buttonQuickNursing;
@@ -52,25 +52,6 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     private TextView headerLastNursing;
     private TextView headerLastSleep;
     private TextView headerLastDiaper;
-
-    public enum Trigger
-    {
-        SLEEP("sleep"),
-        NURSING("nursing"),
-        DIAPER("diaper");
-
-        private String title;
-
-        Trigger(String title)
-        {
-            this.title = title;
-        }
-
-        public String getTitle()
-        {
-            return this.title;
-        }
-    }
 
     public static TimeLineLogFragment getInstance()
     {
@@ -204,7 +185,6 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
                     diaper.setTimeStamp(String.valueOf(currentTime.getTimeInMillis()));
                     diaper.setType(Diaper.DiaperType.valueOf(diaperType));
                     diaper.insert(getActivity());
-                    ActiveContext.setLastDiaper(getActivity(), diaper);
                     break;
 
                 case REQUEST_NURSING:
@@ -233,9 +213,75 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         headerBabyName.setText(baby.getName());
         headerBabyAge.setText(baby.getBirthdayInString()); //TODO: create getAge() function!!
         headerBabySex.setText(baby.getSex().getTitle());
-        headerLastNursing.setText(ActiveContext.getLastNursing(getActivity()).getTimeStampInString()); // TODO: calculate absolute time!
-        headerLastSleep.setText(ActiveContext.getLastSleep(getActivity()).getTimeStampInString()); // TODO: calculate absolute time!
-        headerLastDiaper.setText(ActiveContext.getLastDiaper(getActivity()).getTimeStampInString()); // TODO: calculate absolute time!
+        headerLastNursing.setText(queryLastNursing(String.valueOf(baby.getID())));
+        headerLastSleep.setText(queryLastSleep(String.valueOf(baby.getID())));
+        headerLastDiaper.setText(queryLastDiaper(String.valueOf(baby.getID())));
+    }
+
+    private String queryLastNursing(String babyId)
+    {
+        String[] selectionArgument = {babyId};
+        String[] projection = {BabyLogContract.Nursing.TIMESTAMP};
+        try
+        {
+            Cursor cursor = getActivity().getContentResolver().query(
+                    BabyLogContract.Nursing.MAX_TIMESTAMP,
+                    projection,
+                    null,
+                    selectionArgument,
+                    null);
+            cursor.moveToFirst();
+            return cursor.getString(0);
+        }
+        catch (Exception e)
+        {
+            // do nothing
+        }
+        return "No activity yet";
+    }
+
+    private String queryLastSleep(String babyId)
+    {
+        String[] selectionArgument = {babyId};
+        String[] projection = {BabyLogContract.Sleep.TIMESTAMP};
+        try
+        {
+            Cursor cursor = getActivity().getContentResolver().query(
+                    BabyLogContract.Sleep.MAX_TIMESTAMP,
+                    projection,
+                    null,
+                    selectionArgument,
+                    null);
+            cursor.moveToFirst();
+            return cursor.getString(0);
+        }
+        catch (Exception e)
+        {
+            // do nothing
+        }
+        return "No activity yet";
+    }
+
+    private String queryLastDiaper(String babyId)
+    {
+        String[] selectionArgument = {babyId};
+        String[] projection = {BabyLogContract.Diaper.TIMESTAMP};
+        try
+        {
+            Cursor cursor = getActivity().getContentResolver().query(
+                    BabyLogContract.Diaper.MAX_TIMESTAMP,
+                    projection,
+                    null,
+                    selectionArgument,
+                    null);
+            cursor.moveToFirst();
+            return cursor.getString(0);
+        }
+        catch (Exception e)
+        {
+            // do nothing
+        }
+        return "No activity yet";
     }
 
     @Override
@@ -270,5 +316,24 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     {
         mAdapter.swapCursor(null);
 
+    }
+
+    public enum Trigger
+    {
+        SLEEP("sleep"),
+        NURSING("nursing"),
+        DIAPER("diaper");
+
+        private String title;
+
+        Trigger(String title)
+        {
+            this.title = title;
+        }
+
+        public String getTitle()
+        {
+            return this.title;
+        }
     }
 }

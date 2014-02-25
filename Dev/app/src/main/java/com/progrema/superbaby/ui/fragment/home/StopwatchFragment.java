@@ -195,7 +195,6 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
             sleep.setBabyID(ActiveContext.getActiveBaby(getActivity()).getID());
             sleep.setDuration(TimeUnit.SECONDS.toMillis(duration));
             sleep.insert(getActivity());
-            ActiveContext.setLastSleep(getActivity(), sleep);
         }
         else if (sourceTrigger.compareTo(TimeLineLogFragment.Trigger.NURSING.getTitle()) == 0)
         {
@@ -228,8 +227,6 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
                 nursing.setVolume(Long.parseLong(formulaVolume, 10));
                 nursing.insert(getActivity());
             }
-
-            ActiveContext.setLastNursing(getActivity(), nursing);
         }
 
         // Go back to timeLine fragment
