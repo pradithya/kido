@@ -49,7 +49,6 @@ public class DiaperDialogFragment extends DialogFragment
                 getDialog().dismiss();
             }
         });
-
         Button buttonWet = (Button) view.findViewById(R.id.dialog_choice_wet);
         buttonWet.setOnClickListener(new View.OnClickListener()
         {
@@ -62,7 +61,6 @@ public class DiaperDialogFragment extends DialogFragment
                 getDialog().dismiss();
             }
         });
-
         Button buttonMixed = (Button) view.findViewById(R.id.dialog_choice_mixed);
         buttonMixed.setOnClickListener(new View.OnClickListener()
         {
@@ -75,9 +73,6 @@ public class DiaperDialogFragment extends DialogFragment
                 getDialog().dismiss();
             }
         });
-
         return view;
     }
-
-
 }

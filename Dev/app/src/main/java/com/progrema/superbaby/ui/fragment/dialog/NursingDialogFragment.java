@@ -53,7 +53,6 @@ public class NursingDialogFragment extends DialogFragment
                 getDialog().dismiss();
             }
         });
-
         Button buttonRight = (Button) view.findViewById(R.id.dialog_choice_right);
         buttonRight.setOnClickListener(new View.OnClickListener()
         {
@@ -66,7 +65,6 @@ public class NursingDialogFragment extends DialogFragment
                 getDialog().dismiss();
             }
         });
-
         Button buttonFormula = (Button) view.findViewById(R.id.dialog_choice_formula);
         buttonFormula.setOnClickListener(new View.OnClickListener()
         {
@@ -77,7 +75,6 @@ public class NursingDialogFragment extends DialogFragment
                 extraInfoFormula.setVisibility(View.VISIBLE);
             }
         });
-
         Button formulaOK = (Button) view.findViewById(R.id.button_formula_ok);
         formulaOK.setOnClickListener(new View.OnClickListener()
         {
@@ -93,7 +90,6 @@ public class NursingDialogFragment extends DialogFragment
                     invalidNumber.show();
                     return; //invalid volume
                 }
-
                 Intent result = new Intent();
                 result.putExtra(Nursing.NURSING_TYPE_KEY, Nursing.NursingType.FORMULA.getTitle());
                 result.putExtra(Nursing.FORMULA_VOLUME_KEY, volume);
@@ -101,9 +97,6 @@ public class NursingDialogFragment extends DialogFragment
                 getDialog().dismiss();
             }
         });
-
         return view;
     }
-
-
 }
