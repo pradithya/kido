@@ -9,12 +9,12 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.diaperhistory.DiaperHistoryAdapter;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
+import com.progrema.superbaby.widget.customview.ObserveAbleListView;
 
 /**
  * Created by iqbalpakeh on 18/1/14.
@@ -25,7 +25,7 @@ public class DiaperLogFragment extends Fragment implements LoaderManager.LoaderC
 {
     private static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     private static final int LOADER_ID = 2;
-    private ListView diaperHistoryList;
+    private ObserveAbleListView diaperHistoryList;
     private DiaperHistoryAdapter mAdapter;
 
     public static DiaperLogFragment getInstance()
@@ -40,7 +40,7 @@ public class DiaperLogFragment extends Fragment implements LoaderManager.LoaderC
         View rootView = inflater.inflate(R.layout.fragment_diaper_log, container, false);
 
         // set adapter to list view
-        diaperHistoryList = (ListView) rootView.findViewById(R.id.history_list_diaper);
+        diaperHistoryList = (ObserveAbleListView) rootView.findViewById(R.id.activity_list);
         mAdapter = new DiaperHistoryAdapter(getActivity(), null, 0);
         diaperHistoryList.setAdapter(mAdapter);
 

@@ -11,9 +11,6 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewPropertyAnimator;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
@@ -21,8 +18,7 @@ import com.progrema.superbaby.adapter.timelinehistory.TimeLineHistoryAdapter;
 import com.progrema.superbaby.models.Baby;
 import com.progrema.superbaby.models.Diaper;
 import com.progrema.superbaby.provider.BabyLogContract;
-import com.progrema.superbaby.ui.fragment.dialog.DiaperDialogFragment;
-import com.progrema.superbaby.ui.fragment.dialog.NursingDialogFragment;
+import com.progrema.superbaby.ui.activity.HomeActivity;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.widget.customview.ObserveAbleListView;
 
@@ -31,27 +27,22 @@ import java.util.Calendar;
 /**
  * Created by iqbalpakeh on 18/1/14.
  */
-public class TimeLineLogFragment extends Fragment implements View.OnClickListener,
-        LoaderManager.LoaderCallbacks<Cursor>, ObserveAbleListView.Callbacks
+public class TimeLineLogFragment extends Fragment implements
+        LoaderManager.LoaderCallbacks<Cursor>
 {
-    public final static int REQUEST_DIAPER = 0;
-    public final static int REQUEST_SLEEP = 1;
-    public final static int REQUEST_NURSING = 2;
-    public final static int RESULT_OK = 0;
-    public static final int LOADER_ID = 3;
-    public final static String ACTIVITY_TRIGGER_KEY = "trigger";
+
     public static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
-    private Button buttonQuickSleep;
-    private Button buttonQuickDiaper;
-    private Button buttonQuickNursing;
+    public static final int LOADER_ID = 3;
     private TimeLineHistoryAdapter mAdapter;
     private ObserveAbleListView historyList;
+
     private TextView headerBabyName;
     private TextView headerBabyAge;
     private TextView headerBabySex;
     private TextView headerLastNursing;
     private TextView headerLastSleep;
     private TextView headerLastDiaper;
+
 
     public static TimeLineLogFragment getInstance()
     {
@@ -66,9 +57,7 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         View rootView = inflater.inflate(R.layout.fragment_timeline, container, false);
 
         // get ui object
-        buttonQuickSleep = (Button) rootView.findViewById(R.id.quick_button_sleep);
-        buttonQuickNursing = (Button) rootView.findViewById(R.id.quick_button_nursing);
-        buttonQuickDiaper = (Button) rootView.findViewById(R.id.quick_button_diaper);
+
         headerBabyName = (TextView) rootView.findViewById(R.id.timeline_header_baby_name);
         headerBabyAge = (TextView) rootView.findViewById(R.id.timeline_header_baby_age);
         headerBabySex = (TextView) rootView.findViewById(R.id.timeline_header_baby_sex);
@@ -76,14 +65,7 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         headerLastSleep = (TextView) rootView.findViewById(R.id.timeline_header_last_sleep);
         headerLastDiaper = (TextView) rootView.findViewById(R.id.timeline_header_last_diaper);
 
-        // set onClickListener to button
-        buttonQuickSleep.setOnClickListener(this);
-        buttonQuickNursing.setOnClickListener(this);
-        buttonQuickDiaper.setOnClickListener(this);
-
-        // set adapter to list view
         historyList = (ObserveAbleListView) rootView.findViewById(R.id.activity_list);
-        historyList.setCallbacks(this);
         mAdapter = new TimeLineHistoryAdapter(getActivity(), null, 0);
         historyList.setAdapter(mAdapter);
 
@@ -93,116 +75,6 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
         lm.initLoader(LOADER_ID, null, mCallbacks);
 
         return rootView;
-    }
-
-    @Override
-    public void onScrollDown()
-    {
-        LinearLayout overlayLayout = (LinearLayout) getActivity().findViewById(R.id.timeline_quick_button);
-        ViewPropertyAnimator animator = overlayLayout.animate();
-        animator.cancel();
-        animator.translationY(overlayLayout.getHeight()).setDuration(175).start();
-    }
-
-    @Override
-    public void onScrollUp()
-    {
-        LinearLayout overlayLayout = (LinearLayout) getActivity().findViewById(R.id.timeline_quick_button);
-        ViewPropertyAnimator animator = overlayLayout.animate();
-        animator.cancel();
-        animator.translationY(0).setDuration(175).start();
-    }
-
-    @Override
-    public void onClick(View view)
-    {
-        switch (view.getId())
-        {
-            case R.id.quick_button_sleep:
-                handleQuickSleep();
-                break;
-
-            case R.id.quick_button_nursing:
-                handleQuickNursing();
-                break;
-
-            case R.id.quick_button_diaper:
-                handleQuickDiaper();
-                break;
-        }
-    }
-
-    private void handleQuickSleep()
-    {
-        // Jump to stopwatch fragment
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-
-        // Inform the stopwatch to start counting for sleep
-        Bundle bundle = new Bundle();
-        bundle.putString(ACTIVITY_TRIGGER_KEY, Trigger.SLEEP.getTitle());
-        StopwatchFragment frStopWatch = StopwatchFragment.getInstance();
-        frStopWatch.setArguments(bundle);
-
-        fragmentTransaction.replace(R.id.home_activity_container, frStopWatch);
-        fragmentTransaction.commit();
-    }
-
-    private void handleQuickDiaper()
-    {
-        // Jump to stopwatch fragment
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        DiaperDialogFragment diaperChoiceBox = DiaperDialogFragment.getInstance();
-        diaperChoiceBox.setTargetFragment(this, REQUEST_DIAPER);
-
-        diaperChoiceBox.show(fragmentTransaction, "diaper_dialog");
-    }
-
-    private void handleQuickNursing()
-    {
-        // Jump to stopwatch fragment
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        NursingDialogFragment nursingChoiceBox = NursingDialogFragment.getInstance();
-        nursingChoiceBox.setTargetFragment(this, REQUEST_NURSING);
-
-        nursingChoiceBox.show(fragmentTransaction, "nursing_dialog");
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK)
-        {
-            switch (requestCode)
-            {
-                case REQUEST_DIAPER:
-                    Calendar currentTime = Calendar.getInstance();
-                    Bundle recData = data.getExtras();
-                    String diaperType = (String) recData.get(Diaper.DIAPER_TYPE_KEY);
-
-                    Diaper diaper = new Diaper();
-                    diaper.setBabyID(ActiveContext.getActiveBaby(getActivity()).getID());
-                    diaper.setTimeStamp(String.valueOf(currentTime.getTimeInMillis()));
-                    diaper.setType(Diaper.DiaperType.valueOf(diaperType));
-                    diaper.insert(getActivity());
-                    break;
-
-                case REQUEST_NURSING:
-                    // get input data passed from dialog
-                    Bundle bundle = data.getExtras();
-                    // add extra key to notify stopwatch which activity triggers it
-                    bundle.putString(ACTIVITY_TRIGGER_KEY, Trigger.NURSING.getTitle());
-                    StopwatchFragment frStopWatch = StopwatchFragment.getInstance();
-                    frStopWatch.setArguments(bundle);
-
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.home_activity_container, frStopWatch);
-                    fragmentTransaction.commit();
-                    break;
-
-            }
-            getLoaderManager().restartLoader(LOADER_ID, null, mCallbacks);
-        }
     }
 
     @Override
@@ -316,24 +188,5 @@ public class TimeLineLogFragment extends Fragment implements View.OnClickListene
     {
         mAdapter.swapCursor(null);
 
-    }
-
-    public enum Trigger
-    {
-        SLEEP("sleep"),
-        NURSING("nursing"),
-        DIAPER("diaper");
-
-        private String title;
-
-        Trigger(String title)
-        {
-            this.title = title;
-        }
-
-        public String getTitle()
-        {
-            return this.title;
-        }
     }
 }
