@@ -65,7 +65,6 @@ public class HomeActivity extends FragmentActivity
 
     private ObserveAbleListView historyList;
 
-
     public final static String ACTIVITY_TRIGGER_KEY = "trigger";
 
     public enum Trigger
@@ -121,7 +120,7 @@ public class HomeActivity extends FragmentActivity
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs)
     {
-        /** find quick action button in new inflated view*/
+        // find quick action button in new inflated view
         buttonQuickSleep = (Button) findViewById(R.id.quick_button_sleep);
         buttonQuickNursing = (Button) findViewById(R.id.quick_button_nursing);
         buttonQuickDiaper = (Button) findViewById(R.id.quick_button_diaper);
@@ -130,7 +129,7 @@ public class HomeActivity extends FragmentActivity
         if (buttonQuickDiaper != null && buttonQuickNursing != null
                 && buttonQuickSleep != null && historyList != null)
         {
-            /**if it's not there don't attach any callback*/
+            // if it's not there don't attach any callback
             buttonQuickSleep.setOnClickListener(this);
             buttonQuickNursing.setOnClickListener(this);
             buttonQuickDiaper.setOnClickListener(this);

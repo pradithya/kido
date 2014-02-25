@@ -1,10 +1,8 @@
 package com.progrema.superbaby.ui.fragment.home;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -16,13 +14,9 @@ import android.widget.TextView;
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.timelinehistory.TimeLineHistoryAdapter;
 import com.progrema.superbaby.models.Baby;
-import com.progrema.superbaby.models.Diaper;
 import com.progrema.superbaby.provider.BabyLogContract;
-import com.progrema.superbaby.ui.activity.HomeActivity;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.widget.customview.ObserveAbleListView;
-
-import java.util.Calendar;
 
 /**
  * Created by iqbalpakeh on 18/1/14.

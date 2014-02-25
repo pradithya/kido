@@ -16,7 +16,6 @@ import com.progrema.superbaby.models.Diaper;
  */
 public class DiaperDialogFragment extends DialogFragment
 {
-
     private Callbacks mCallbacks;
 
     public void setCallbacks(Callbacks listener)
@@ -29,7 +28,8 @@ public class DiaperDialogFragment extends DialogFragment
         return new DiaperDialogFragment();
     }
 
-    public static interface Callbacks{
+    public static interface Callbacks
+    {
         public void onDiaperChoiceSelected(int result, Intent data);
     }
 
@@ -45,7 +45,7 @@ public class DiaperDialogFragment extends DialogFragment
             {
                 Intent result = new Intent();
                 result.putExtra(Diaper.DIAPER_TYPE_KEY, Diaper.DiaperType.DRY.getTitle());
-                DiaperDialogFragment.this.mCallbacks.onDiaperChoiceSelected(0,result);
+                DiaperDialogFragment.this.mCallbacks.onDiaperChoiceSelected(0, result);
                 getDialog().dismiss();
             }
         });
@@ -58,7 +58,7 @@ public class DiaperDialogFragment extends DialogFragment
             {
                 Intent result = new Intent();
                 result.putExtra(Diaper.DIAPER_TYPE_KEY, Diaper.DiaperType.WET.getTitle());
-                DiaperDialogFragment.this.mCallbacks.onDiaperChoiceSelected(0,result);
+                DiaperDialogFragment.this.mCallbacks.onDiaperChoiceSelected(0, result);
                 getDialog().dismiss();
             }
         });
@@ -71,7 +71,7 @@ public class DiaperDialogFragment extends DialogFragment
             {
                 Intent result = new Intent();
                 result.putExtra(Diaper.DIAPER_TYPE_KEY, Diaper.DiaperType.MIXED.getTitle());
-                DiaperDialogFragment.this.mCallbacks.onDiaperChoiceSelected(0,result);
+                DiaperDialogFragment.this.mCallbacks.onDiaperChoiceSelected(0, result);
                 getDialog().dismiss();
             }
         });

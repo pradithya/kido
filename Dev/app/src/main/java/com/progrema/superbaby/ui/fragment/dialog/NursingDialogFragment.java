@@ -32,8 +32,9 @@ public class NursingDialogFragment extends DialogFragment
         return new NursingDialogFragment();
     }
 
-    public static interface Callbacks{
-        public void onNursingChoiceSelected(int resultCode , Intent data);
+    public static interface Callbacks
+    {
+        public void onNursingChoiceSelected(int resultCode, Intent data);
     }
 
     @Override
@@ -48,7 +49,7 @@ public class NursingDialogFragment extends DialogFragment
             {
                 Intent result = new Intent();
                 result.putExtra(Nursing.NURSING_TYPE_KEY, Nursing.NursingType.LEFT.getTitle());
-                NursingDialogFragment.this.mCallbacks.onNursingChoiceSelected(0,result);
+                NursingDialogFragment.this.mCallbacks.onNursingChoiceSelected(0, result);
                 getDialog().dismiss();
             }
         });
@@ -61,7 +62,7 @@ public class NursingDialogFragment extends DialogFragment
             {
                 Intent result = new Intent();
                 result.putExtra(Nursing.NURSING_TYPE_KEY, Nursing.NursingType.RIGHT.getTitle());
-                NursingDialogFragment.this.mCallbacks.onNursingChoiceSelected(0,result);
+                NursingDialogFragment.this.mCallbacks.onNursingChoiceSelected(0, result);
                 getDialog().dismiss();
             }
         });
@@ -96,7 +97,7 @@ public class NursingDialogFragment extends DialogFragment
                 Intent result = new Intent();
                 result.putExtra(Nursing.NURSING_TYPE_KEY, Nursing.NursingType.FORMULA.getTitle());
                 result.putExtra(Nursing.FORMULA_VOLUME_KEY, volume);
-                NursingDialogFragment.this.mCallbacks.onNursingChoiceSelected(0,result);
+                NursingDialogFragment.this.mCallbacks.onNursingChoiceSelected(0, result);
                 getDialog().dismiss();
             }
         });
