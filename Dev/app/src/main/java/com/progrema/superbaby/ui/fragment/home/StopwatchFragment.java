@@ -170,7 +170,6 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
     private void handlePauseButton()
     {
         activeStopWatch.stop();
-
         String sDuration;
         sDuration = String.valueOf(activeStopWatch.getDuration());
         durationView.setText(sDuration);
@@ -191,19 +190,16 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
         if (sourceTrigger.compareTo(HomeActivity.Trigger.SLEEP.getTitle()) == 0)
         {
             Sleep sleep = new Sleep();
-            //TODO: test with baby ID  = 1. We should implement for more generic user later on!!
             sleep.setTimeStamp(String.valueOf(startTime.getTimeInMillis()));
             sleep.setBabyID(ActiveContext.getActiveBaby(getActivity()).getID());
             sleep.setDuration(TimeUnit.SECONDS.toMillis(duration));
             sleep.insert(getActivity());
-            ActiveContext.setLastSleep(getActivity(), sleep);
         }
         else if (sourceTrigger.compareTo(HomeActivity.Trigger.NURSING.getTitle()) == 0)
         {
             Nursing nursing = new Nursing();
             nursing.setTimeStamp(String.valueOf(startTime.getTimeInMillis()));
             nursing.setBabyID(ActiveContext.getActiveBaby(getActivity()).getID());
-
             if (isTwoStopWatch)
             {
                 if (duration != 0)
@@ -212,14 +208,12 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
                     nursing.setType(Nursing.NursingType.LEFT);
                     nursing.insert(getActivity());
                 }
-
                 if (duration2 != 0)
                 {
                     nursing.setDuration(TimeUnit.SECONDS.toMillis(duration2));
                     nursing.setType(Nursing.NursingType.RIGHT);
                     nursing.insert(getActivity());
                 }
-
             }
             else
             {
@@ -229,10 +223,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
                 nursing.setVolume(Long.parseLong(formulaVolume, 10));
                 nursing.insert(getActivity());
             }
-
-
         }
-
         // Go back to timeLine fragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.home_activity_container, TimeLineLogFragment.getInstance());
