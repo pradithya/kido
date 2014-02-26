@@ -65,8 +65,8 @@ abstract public class BaseActor extends BaseModel
      */
     public enum Sex
     {
-        MALE("MALE"),
-        FEMALE("FEMALE");
+        MALE("Boy"),
+        FEMALE("Girl");
 
         private String title;
 
