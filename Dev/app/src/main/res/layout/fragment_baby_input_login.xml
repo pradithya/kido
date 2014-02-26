@@ -15,21 +15,19 @@
         android:gravity="center"
         android:inputType="text"/>
 
-    <EditText
+    <Button
         android:id="@+id/fragment_baby_input_birthday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Baby Birthday"
         android:gravity="center"
-        android:inputType="text"/>
+        />
 
-    <EditText
+    <Spinner
         android:id="@+id/fragment_baby_input_sex_type"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="MALE of FEMALE"
         android:gravity="center"
-        android:inputType="text"/>
+        />
 
     <Button
         android:id="@+id/fragment_baby_input_button_done"
