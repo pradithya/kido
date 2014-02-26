@@ -18,25 +18,18 @@ import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.widget.customview.ObserveAbleListView;
 
-/**
- * Created by iqbalpakeh on 18/1/14.
- */
-public class TimeLineLogFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor>
+public class TimeLineLogFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
-
     public static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     public static final int LOADER_ID = 3;
     private TimeLineHistoryAdapter mAdapter;
     private ObserveAbleListView historyList;
-
     private TextView headerBabyName;
     private TextView headerBabyAge;
     private TextView headerBabySex;
     private TextView headerLastNursing;
     private TextView headerLastSleep;
     private TextView headerLastDiaper;
-
 
     public static TimeLineLogFragment getInstance()
     {
@@ -51,7 +44,6 @@ public class TimeLineLogFragment extends Fragment implements
         View rootView = inflater.inflate(R.layout.fragment_timeline, container, false);
 
         // get ui object
-
         headerBabyName = (TextView) rootView.findViewById(R.id.timeline_header_baby_name);
         headerBabyAge = (TextView) rootView.findViewById(R.id.timeline_header_baby_age);
         headerBabySex = (TextView) rootView.findViewById(R.id.timeline_header_baby_sex);
@@ -59,6 +51,7 @@ public class TimeLineLogFragment extends Fragment implements
         headerLastSleep = (TextView) rootView.findViewById(R.id.timeline_header_last_sleep);
         headerLastDiaper = (TextView) rootView.findViewById(R.id.timeline_header_last_diaper);
 
+        // prepare adapter
         historyList = (ObserveAbleListView) rootView.findViewById(R.id.activity_list);
         mAdapter = new TimeLineHistoryAdapter(getActivity(), null, 0);
         historyList.setAdapter(mAdapter);

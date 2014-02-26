@@ -95,6 +95,16 @@ public class Baby extends BaseActor implements IDBServices
         return String.valueOf(birthday.getTimeInMillis());
     }
 
+    public String getAgeInReadableFormat()
+    {
+        return "";
+    }
+
+    public String getBirthdayInReadableFormat()
+    {
+        return "";
+    }
+
     /**
      * Get calendar object describing baby birthday
      *

@@ -78,6 +78,6 @@
     </LinearLayout>
 
 
-    <include layout = "@layout/quick_button_layout" />
+    <include layout="@layout/quick_button_layout"/>
 
 </FrameLayout>
