@@ -226,7 +226,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener
         }
         // Go back to timeLine fragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.home_activity_container, TimeLineLogFragment.getInstance());
+        fragmentTransaction.replace(R.id.home_activity_container, TimeLineFragment.getInstance());
         fragmentTransaction.commit();
     }
 

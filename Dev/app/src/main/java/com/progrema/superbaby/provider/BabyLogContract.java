@@ -65,16 +65,16 @@ public class BabyLogContract
         String TYPE = "type"; // Wet or Dry or Mix
     }
 
-    interface MeasurementTable
+    interface MeasurementColumns
     {
-        String MEASUREMENT_ID = "activity_id"; //same column name as activity
+        String ACTIVITY_ID = "activity_id"; //same column name as activity
         String BABY_ID = "baby_id";
         String TIMESTAMP = "timestamp";
         String HEIGHT = "height";
         String WEIGHT = "weight";
     }
 
-    interface PhotoTable
+    interface PhotoColumns
     {
         String PHOTO_ID = "activity_id"; //same column name as activity
         String BABY_ID = "baby_id";
@@ -177,6 +177,7 @@ public class BabyLogContract
         public static final String TYPE_SLEEP = "SLEEP";
         public static final String TYPE_DIAPER = "DIAPER";
         public static final String TYPE_NURSING = "NURSING";
+        public static final String TYPE_MEASUREMENT = "MEASUREMENT";
 
         public interface Query
         {
@@ -325,15 +326,41 @@ public class BabyLogContract
     /**
      * Measurement table contract class
      */
-    public static class Measurement implements MeasurementTable, BaseColumns
+    public static class Measurement implements MeasurementColumns, BaseColumns
     {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_MEASUREMENT).build();
+
+        public static Uri buildUri(String activityId)
+        {
+            return CONTENT_URI.buildUpon().appendPath(activityId).build();
+        }
+
+        public interface Query
+        {
+            String[] PROJECTION =
+                    {
+                            BaseColumns._ID,
+                            Measurement.ACTIVITY_ID,
+                            Measurement.BABY_ID,
+                            Measurement.TIMESTAMP,
+                            Measurement.HEIGHT,
+                            Measurement.WEIGHT
+                    };
+            final int OFFSET_ID = 0;
+            final int OFFSET_ACTIVITY_ID = 1;
+            final int OFFSET_BABY_ID = 2;
+            final int OFFSET_TIMESTAMP = 3;
+            final int OFFSET_HEIGHT = 4;
+            final int OFFSET_WEIGHT = 5;
+            final String SORT_BY_TIMESTAMP_ASC = DiaperColumns.TIMESTAMP + " ASC ";
+            final String SORT_BY_TIMESTAMP_DESC = DiaperColumns.TIMESTAMP + " DESC ";
+        }
     }
 
     /**
      * Photo table contract class
      */
-    public static class Photo implements PhotoTable, BaseColumns
+    public static class Photo implements PhotoColumns, BaseColumns
     {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_PHOTO).build();
     }

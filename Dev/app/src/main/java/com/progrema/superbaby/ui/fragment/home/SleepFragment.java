@@ -11,55 +11,57 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.adapter.diaperhistory.DiaperHistoryAdapter;
+import com.progrema.superbaby.adapter.sleephistory.SleepHistoryAdapter;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.widget.customview.ObserveAbleListView;
 
 /**
- * Created by iqbalpakeh on 18/1/14.
- *
- * @author aria
+ * Fragment to log all sleep activity
  */
-public class DiaperLogFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
+public class SleepFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
+    private ObserveAbleListView sleepHistoryList;
+    private SleepHistoryAdapter mAdapter;
     private static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
-    private static final int LOADER_ID = 2;
-    private ObserveAbleListView diaperHistoryList;
-    private DiaperHistoryAdapter mAdapter;
+    private static final int LOADER_ID = 1;
 
-    public static DiaperLogFragment getInstance()
+    public static SleepFragment getInstance()
     {
-        return new DiaperLogFragment();
+        return new SleepFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.fragment_diaper_log, container, false);
+        // inflate fragment layout
+        View rootView = inflater.inflate(R.layout.fragment_sleep, container, false);
 
         // set adapter to list view
-        diaperHistoryList = (ObserveAbleListView) rootView.findViewById(R.id.activity_list);
-        mAdapter = new DiaperHistoryAdapter(getActivity(), null, 0);
-        diaperHistoryList.setAdapter(mAdapter);
+        sleepHistoryList = (ObserveAbleListView) rootView.findViewById(R.id.activity_list);
+        mAdapter = new SleepHistoryAdapter(getActivity(), null, 0);
+        sleepHistoryList.setAdapter(mAdapter);
 
         // prepare loader
         mCallbacks = this;
-        android.support.v4.app.LoaderManager lm = getLoaderManager();
+        LoaderManager lm = getLoaderManager();
         lm.initLoader(LOADER_ID, null, mCallbacks);
+
         return rootView;
     }
+
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle)
     {
         String[] args = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
-        CursorLoader cl = new CursorLoader(getActivity(), BabyLogContract.Diaper.CONTENT_URI,
-                BabyLogContract.Diaper.Query.PROJECTION,
+        CursorLoader cl = new CursorLoader(getActivity(),
+                BabyLogContract.Sleep.CONTENT_URI,
+                BabyLogContract.Sleep.Query.PROJECTION,
                 BabyLogContract.BABY_SELECTION_ARG,
                 args,
-                BabyLogContract.Diaper.Query.SORT_BY_TIMESTAMP_DESC);
+                BabyLogContract.Sleep.Query.SORT_BY_TIMESTAMP_DESC);
         return cl;
     }
 
@@ -68,7 +70,7 @@ public class DiaperLogFragment extends Fragment implements LoaderManager.LoaderC
     {
         if (cursor.getCount() > 0)
         {
-            /** show last inserted row */
+            // show last inserted row
             cursor.moveToFirst();
             mAdapter.swapCursor(cursor);
         }
@@ -76,6 +78,7 @@ public class DiaperLogFragment extends Fragment implements LoaderManager.LoaderC
         {
             mAdapter.swapCursor(null);
         }
+
     }
 
     @Override

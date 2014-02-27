@@ -13,6 +13,7 @@ import com.progrema.superbaby.provider.BabyLogContract.DiaperColumns;
 import com.progrema.superbaby.provider.BabyLogContract.Measurement;
 import com.progrema.superbaby.provider.BabyLogContract.Nursing;
 import com.progrema.superbaby.provider.BabyLogContract.NursingColumns;
+import com.progrema.superbaby.provider.BabyLogContract.MeasurementColumns;
 import com.progrema.superbaby.provider.BabyLogContract.Photo;
 import com.progrema.superbaby.provider.BabyLogContract.Sleep;
 import com.progrema.superbaby.provider.BabyLogContract.SleepColumns;
@@ -143,11 +144,12 @@ public class BabyLogDatabase extends SQLiteOpenHelper
 
         db.execSQL("CREATE TABLE " + Tables.MEASUREMENT + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + Measurement.MEASUREMENT_ID + " TEXT NOT NULL,"
+                + Measurement.ACTIVITY_ID + " TEXT NOT NULL,"
                 + Measurement.BABY_ID + " TEXT NOT NULL,"
-                + Measurement.HEIGHT + " REAL,"
-                + Measurement.WEIGHT + " REAL,"
-                + " FOREIGN KEY (" + Measurement.MEASUREMENT_ID + ") REFERENCES " + Tables.ACTIVITY + " (" + BaseColumns._ID + "),"
+                + Measurement.TIMESTAMP + " TEXT NOT NULL,"
+                + Measurement.HEIGHT + " TEXT NOT NULL,"
+                + Measurement.WEIGHT + " TEXT NOT NULL,"
+                + " FOREIGN KEY (" + Measurement.ACTIVITY_ID + ") REFERENCES " + Tables.ACTIVITY + " (" + BaseColumns._ID + "),"
                 + " FOREIGN KEY (" + Measurement.BABY_ID + ") REFERENCES " + Tables.BABY + " (" + BaseColumns._ID + ")" + ")");
 
         db.execSQL("CREATE TABLE " + Tables.PHOTO + " ("
@@ -213,10 +215,13 @@ public class BabyLogDatabase extends SQLiteOpenHelper
             + " , " + Tables.NURSING + "." + Nursing.SIDES
             + " , " + Tables.NURSING + "." + Nursing.DURATION
             + " , " + Tables.NURSING + "." + Nursing.VOLUME
+            + " , " + Tables.MEASUREMENT + "." + Measurement.HEIGHT
+            + " , " + Tables.MEASUREMENT + "." + Measurement.WEIGHT
             + " FROM " + Tables.ACTIVITY
             + " LEFT JOIN " + Tables.DIAPER + " ON " + Tables.ACTIVITY + "." + BaseColumns._ID + " = " + Tables.DIAPER + "." + DiaperColumns.ACTIVITY_ID
             + " LEFT JOIN " + Tables.SLEEP + " ON " + Tables.ACTIVITY + "." + BaseColumns._ID + " = " + Tables.SLEEP + "." + SleepColumns.ACTIVITY_ID
             + " LEFT JOIN " + Tables.NURSING + " ON " + Tables.ACTIVITY + "." + BaseColumns._ID + " = " + Tables.NURSING + "." + SleepColumns.ACTIVITY_ID
+            + " LEFT JOIN " + Tables.MEASUREMENT + " ON " + Tables.ACTIVITY + "." + BaseColumns._ID + " = " + Tables.MEASUREMENT + "." + MeasurementColumns.ACTIVITY_ID
             + " WHERE " + Tables.ACTIVITY + "." + ActivityColumns.BABY_ID + " = ? "
             + " ORDER BY " + Tables.ACTIVITY + "." + BabyLogContract.Activity.Query.SORT_BY_TIMESTAMP_DESC + " ;");
 
@@ -236,6 +241,7 @@ public class BabyLogDatabase extends SQLiteOpenHelper
         SQLiteDatabase db = super.getReadableDatabase();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
+            //TODO: reactivate foreign key after debugging
             db.setForeignKeyConstraintsEnabled(false);
         }
         return db;
@@ -247,6 +253,7 @@ public class BabyLogDatabase extends SQLiteOpenHelper
         SQLiteDatabase db = super.getWritableDatabase();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
+            //TODO: reactivate foreign key after debugging
             db.setForeignKeyConstraintsEnabled(false);
         }
         return db;

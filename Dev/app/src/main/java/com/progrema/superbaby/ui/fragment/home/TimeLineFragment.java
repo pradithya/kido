@@ -20,7 +20,7 @@ import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.FormatUtils;
 import com.progrema.superbaby.widget.customview.ObserveAbleListView;
 
-public class TimeLineLogFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
+public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
     public static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     public static final int LOADER_ID = 3;
@@ -34,9 +34,9 @@ public class TimeLineLogFragment extends Fragment implements LoaderManager.Loade
     private TextView headerLastSleep;
     private TextView headerLastDiaper;
 
-    public static TimeLineLogFragment getInstance()
+    public static TimeLineFragment getInstance()
     {
-        return new TimeLineLogFragment();
+        return new TimeLineFragment();
     }
 
     @Override
@@ -96,13 +96,13 @@ public class TimeLineLogFragment extends Fragment implements LoaderManager.Loade
                     null);
             cursor.moveToFirst();
             String time = DateUtils.getRelativeTimeSpanString(Long.parseLong(cursor.getString(0))).toString();
-            return FormatUtils.formatLastActivity(getActivity(), "Nursing", time);
+            return FormatUtils.formatLastActivity(getActivity(), BabyLogContract.Nursing.table, time);
         }
         catch (Exception e)
         {
             // do nothing
         }
-        return "No activity yet";
+        return getResources().getString(R.string.no_activity);
     }
 
     private String lastSleep(String babyId)
@@ -119,13 +119,13 @@ public class TimeLineLogFragment extends Fragment implements LoaderManager.Loade
                     null);
             cursor.moveToFirst();
             String time = DateUtils.getRelativeTimeSpanString(Long.parseLong(cursor.getString(0))).toString();
-            return FormatUtils.formatLastActivity(getActivity(), "Sleep", time);
+            return FormatUtils.formatLastActivity(getActivity(), BabyLogContract.Sleep.table, time);
         }
         catch (Exception e)
         {
             // do nothing
         }
-        return "No activity yet";
+        return getResources().getString(R.string.no_activity);
     }
 
     private String lastDiaper(String babyId)
@@ -142,13 +142,13 @@ public class TimeLineLogFragment extends Fragment implements LoaderManager.Loade
                     null);
             cursor.moveToFirst();
             String time = DateUtils.getRelativeTimeSpanString(Long.parseLong(cursor.getString(0))).toString();
-            return FormatUtils.formatLastActivity(getActivity(), "Diaper", time);
+            return FormatUtils.formatLastActivity(getActivity(), BabyLogContract.Diaper.table, time);
         }
         catch (Exception e)
         {
             // do nothing
         }
-        return "No activity yet";
+        return getResources().getString(R.string.no_activity);
     }
 
     @Override

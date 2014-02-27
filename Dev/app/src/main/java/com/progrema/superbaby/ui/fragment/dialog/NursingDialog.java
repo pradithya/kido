@@ -18,7 +18,7 @@ import com.progrema.superbaby.util.FormatUtils;
 /**
  * Created by aria on 20/2/14.
  */
-public class NursingDialogFragment extends DialogFragment
+public class NursingDialog extends DialogFragment
 {
     private Callbacks mCallbacks;
 
@@ -27,14 +27,14 @@ public class NursingDialogFragment extends DialogFragment
         mCallbacks = listener;
     }
 
-    public static NursingDialogFragment getInstance()
-    {
-        return new NursingDialogFragment();
-    }
-
     public static interface Callbacks
     {
         public void onNursingChoiceSelected(int resultCode, Intent data);
+    }
+
+    public static NursingDialog getInstance()
+    {
+        return new NursingDialog();
     }
 
     @Override
@@ -49,7 +49,7 @@ public class NursingDialogFragment extends DialogFragment
             {
                 Intent result = new Intent();
                 result.putExtra(Nursing.NURSING_TYPE_KEY, Nursing.NursingType.LEFT.getTitle());
-                NursingDialogFragment.this.mCallbacks.onNursingChoiceSelected(0, result);
+                NursingDialog.this.mCallbacks.onNursingChoiceSelected(0, result);
                 getDialog().dismiss();
             }
         });
@@ -61,7 +61,7 @@ public class NursingDialogFragment extends DialogFragment
             {
                 Intent result = new Intent();
                 result.putExtra(Nursing.NURSING_TYPE_KEY, Nursing.NursingType.RIGHT.getTitle());
-                NursingDialogFragment.this.mCallbacks.onNursingChoiceSelected(0, result);
+                NursingDialog.this.mCallbacks.onNursingChoiceSelected(0, result);
                 getDialog().dismiss();
             }
         });
@@ -93,7 +93,7 @@ public class NursingDialogFragment extends DialogFragment
                 Intent result = new Intent();
                 result.putExtra(Nursing.NURSING_TYPE_KEY, Nursing.NursingType.FORMULA.getTitle());
                 result.putExtra(Nursing.FORMULA_VOLUME_KEY, volume);
-                NursingDialogFragment.this.mCallbacks.onNursingChoiceSelected(0, result);
+                NursingDialog.this.mCallbacks.onNursingChoiceSelected(0, result);
                 getDialog().dismiss();
             }
         });

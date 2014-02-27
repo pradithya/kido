@@ -108,11 +108,11 @@ public class BabyLogProvider extends ContentProvider
             case BABY:
             {
                 // add new baby to baby table
-                ContentValues babyValue = new ContentValues();
-                babyValue.put(BabyLogContract.Baby.NAME, contentValues.getAsString(BabyLogContract.Baby.NAME));
-                babyValue.put(BabyLogContract.Baby.BIRTHDAY, contentValues.getAsString(BabyLogContract.Baby.BIRTHDAY));
-                babyValue.put(BabyLogContract.Baby.SEX, contentValues.getAsString(BabyLogContract.Baby.SEX));
-                long babyID = db.insertOrThrow(BabyLogDatabase.Tables.BABY, null, babyValue);
+                ContentValues values = new ContentValues();
+                values.put(BabyLogContract.Baby.NAME, contentValues.getAsString(BabyLogContract.Baby.NAME));
+                values.put(BabyLogContract.Baby.BIRTHDAY, contentValues.getAsString(BabyLogContract.Baby.BIRTHDAY));
+                values.put(BabyLogContract.Baby.SEX, contentValues.getAsString(BabyLogContract.Baby.SEX));
+                long babyID = db.insertOrThrow(BabyLogDatabase.Tables.BABY, null, values);
 
                 // add new user-baby map to user-baby map table
                 ContentValues userBabyMap = new ContentValues();
@@ -125,7 +125,7 @@ public class BabyLogProvider extends ContentProvider
 
             case SLEEP:
             {
-                // add new activity sleep to activity table
+                // add new sleep activity to activity table
                 ContentValues values = new ContentValues();
                 values.put(BabyLogContract.ActivityColumns.BABY_ID,
                         contentValues.getAsString(BabyLogContract.SleepColumns.BABY_ID));
@@ -145,7 +145,7 @@ public class BabyLogProvider extends ContentProvider
             }
             case DIAPER:
             {
-                // add new activity sleep to activity table
+                // add new diaper activity to activity table
                 ContentValues values = new ContentValues();
                 values.put(BabyLogContract.ActivityColumns.BABY_ID,
                         contentValues.getAsString(BabyLogContract.DiaperColumns.BABY_ID));
@@ -167,7 +167,7 @@ public class BabyLogProvider extends ContentProvider
 
             case NURSING:
             {
-                // add new activity sleep to activity table
+                // add new nursing activity to activity table
                 ContentValues values = new ContentValues();
                 values.put(BabyLogContract.ActivityColumns.BABY_ID,
                         contentValues.getAsString(BabyLogContract.NursingColumns.BABY_ID));
@@ -184,6 +184,27 @@ public class BabyLogProvider extends ContentProvider
                 notifyChange(uri);
                 notifyChange(BabyLogContract.Activity.CONTENT_URI);
                 return BabyLogContract.Nursing.buildUri(contentValues.getAsString(BaseColumns._ID));
+            }
+
+            case MEASUREMENT:
+            {
+                // add new measurement activity  to activity table
+                ContentValues values = new ContentValues();
+                values.put(BabyLogContract.Measurement.BABY_ID,
+                        contentValues.getAsString(BabyLogContract.MeasurementColumns.BABY_ID));
+                values.put(BabyLogContract.ActivityColumns.ACTIVITY_TYPE, BabyLogContract.Activity.TYPE_NURSING);
+                values.put(BabyLogContract.ActivityColumns.TIMESTAMP,
+                        contentValues.getAsString(BabyLogContract.MeasurementColumns.TIMESTAMP));
+                long actId = db.insertOrThrow(BabyLogDatabase.Tables.ACTIVITY, null, values);
+
+                // add measurement details to measurement table
+                contentValues.put(BabyLogContract.MeasurementColumns.ACTIVITY_ID, actId);
+                db.insertOrThrow(BabyLogDatabase.Tables.MEASUREMENT, null, contentValues);
+
+                // notify all observer that subscribe to measurement table and activity table
+                notifyChange(uri);
+                notifyChange(BabyLogContract.Activity.CONTENT_URI);
+                return BabyLogContract.Measurement.buildUri(contentValues.getAsString(BaseColumns._ID));
             }
 
             default:

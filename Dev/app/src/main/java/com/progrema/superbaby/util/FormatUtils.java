@@ -20,7 +20,7 @@ public class FormatUtils
     public final static long HOUR_MILLIS = MINUTE_MILLIS * 60;
     public final static long DAY_MILLIS = HOUR_MILLIS * 24;
 
-    private static final String[] DAY_OF_WEEK = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
+    private static final String[] DAY_OF_WEEK = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
     private static final String[] MONTH_OF_YEAR = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 

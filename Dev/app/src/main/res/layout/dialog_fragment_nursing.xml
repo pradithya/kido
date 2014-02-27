@@ -35,19 +35,19 @@
             android:id="@+id/entry_text_volume"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:hint="volume"/>
+            android:hint="@string/volume_hint"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="ml"/>
+            android:text="@string/volume_unit"/>
 
         <Button
             android:id="@+id/button_formula_ok"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="OK"/>
+            android:text="@string/ok_button"/>
 
     </LinearLayout>
 

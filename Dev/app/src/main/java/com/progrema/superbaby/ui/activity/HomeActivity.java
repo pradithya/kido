@@ -19,14 +19,17 @@ import android.widget.LinearLayout;
 
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.models.Diaper;
-import com.progrema.superbaby.ui.fragment.dialog.DiaperDialogFragment;
-import com.progrema.superbaby.ui.fragment.dialog.NursingDialogFragment;
-import com.progrema.superbaby.ui.fragment.home.DiaperLogFragment;
+import com.progrema.superbaby.models.Measurement;
+import com.progrema.superbaby.ui.fragment.dialog.DiaperDialog;
+import com.progrema.superbaby.ui.fragment.dialog.MeasurementDialog;
+import com.progrema.superbaby.ui.fragment.dialog.NursingDialog;
+import com.progrema.superbaby.ui.fragment.home.DiaperFragment;
+import com.progrema.superbaby.ui.fragment.home.MeasurementFragment;
 import com.progrema.superbaby.ui.fragment.home.NavigationFragment;
-import com.progrema.superbaby.ui.fragment.home.NursingLogFragment;
-import com.progrema.superbaby.ui.fragment.home.SleepLogFragment;
+import com.progrema.superbaby.ui.fragment.home.NursingFragment;
+import com.progrema.superbaby.ui.fragment.home.SleepFragment;
 import com.progrema.superbaby.ui.fragment.home.StopwatchFragment;
-import com.progrema.superbaby.ui.fragment.home.TimeLineLogFragment;
+import com.progrema.superbaby.ui.fragment.home.TimeLineFragment;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.widget.customview.ObserveAbleListView;
 
@@ -34,7 +37,7 @@ import java.util.Calendar;
 
 public class HomeActivity extends FragmentActivity
         implements NavigationFragment.NavigationDrawerCallbacks, View.OnClickListener,
-        ObserveAbleListView.Callbacks, NursingDialogFragment.Callbacks, DiaperDialogFragment.Callbacks
+        ObserveAbleListView.Callbacks, NursingDialog.Callbacks, DiaperDialog.Callbacks, MeasurementDialog.Callbacks
 {
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -53,15 +56,13 @@ public class HomeActivity extends FragmentActivity
     private static final int POSITION_MILK_FRAGMENT = 1;
     private static final int POSITION_DIAPER_FRAGMENT = 2;
     private static final int POSITION_SLEEP_FRAGMENT = 3;
-
-    public final static int REQUEST_DIAPER = 0;
-    public final static int REQUEST_SLEEP = 1;
-    public final static int REQUEST_NURSING = 2;
+    private static final int POSITION_MEASUREMENT_FRAGMENT = 4;
     public final static int RESULT_OK = 0;
 
     private Button buttonQuickSleep;
     private Button buttonQuickDiaper;
     private Button buttonQuickNursing;
+    private Button buttonQuickMeasurement;
 
     private ObserveAbleListView historyList;
 
@@ -124,6 +125,7 @@ public class HomeActivity extends FragmentActivity
         buttonQuickSleep = (Button) findViewById(R.id.quick_button_sleep);
         buttonQuickNursing = (Button) findViewById(R.id.quick_button_nursing);
         buttonQuickDiaper = (Button) findViewById(R.id.quick_button_diaper);
+        buttonQuickMeasurement = (Button) findViewById(R.id.quick_button_measurement);
         historyList = (ObserveAbleListView) findViewById(R.id.activity_list);
 
         if (buttonQuickDiaper != null && buttonQuickNursing != null
@@ -133,6 +135,7 @@ public class HomeActivity extends FragmentActivity
             buttonQuickSleep.setOnClickListener(this);
             buttonQuickNursing.setOnClickListener(this);
             buttonQuickDiaper.setOnClickListener(this);
+            buttonQuickMeasurement.setOnClickListener(this);
             historyList.setCallbacks(this);
         }
         return super.onCreateView(name, context, attrs);
@@ -150,17 +153,19 @@ public class HomeActivity extends FragmentActivity
         switch (position - calibration)
         {
             case POSITION_HOME_FRAGMENT:
-                module = TimeLineLogFragment.getInstance();
+                module = TimeLineFragment.getInstance();
                 break;
             case POSITION_MILK_FRAGMENT:
-                module = NursingLogFragment.getInstance();
+                module = NursingFragment.getInstance();
                 break;
             case POSITION_DIAPER_FRAGMENT:
-                module = DiaperLogFragment.getInstance();
+                module = DiaperFragment.getInstance();
                 break;
             case POSITION_SLEEP_FRAGMENT:
-                module = SleepLogFragment.getInstance();
+                module = SleepFragment.getInstance();
                 break;
+            case POSITION_MEASUREMENT_FRAGMENT:
+                module = MeasurementFragment.getInstance();
         }
 
         if (module != null)
@@ -211,6 +216,10 @@ public class HomeActivity extends FragmentActivity
             case R.id.quick_button_diaper:
                 handleQuickDiaper();
                 break;
+
+            case R.id.quick_button_measurement:
+                handleQuickMeasurement();
+                break;
         }
     }
 
@@ -234,7 +243,6 @@ public class HomeActivity extends FragmentActivity
 
     private void handleQuickSleep()
     {
-        // Jump to stopwatch fragment
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
         // Inform the stopwatch to start counting for sleep
@@ -249,22 +257,26 @@ public class HomeActivity extends FragmentActivity
 
     private void handleQuickDiaper()
     {
-        // Jump to stopwatch fragment
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        DiaperDialogFragment diaperChoiceBox = DiaperDialogFragment.getInstance();
-        TimeLineLogFragment timeLine = TimeLineLogFragment.getInstance();
+        DiaperDialog diaperChoiceBox = DiaperDialog.getInstance();
         diaperChoiceBox.setCallbacks(this);
         diaperChoiceBox.show(fragmentTransaction, "diaper_dialog");
     }
 
     private void handleQuickNursing()
     {
-        // Jump to stopwatch fragment
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        NursingDialogFragment nursingChoiceBox = NursingDialogFragment.getInstance();
-        TimeLineLogFragment timeLine = TimeLineLogFragment.getInstance();
+        NursingDialog nursingChoiceBox = NursingDialog.getInstance();
         nursingChoiceBox.setCallbacks(this);
         nursingChoiceBox.show(fragmentTransaction, "nursing_dialog");
+    }
+
+    private void handleQuickMeasurement()
+    {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        MeasurementDialog measurementChoiceBox = MeasurementDialog.getInstance();
+        measurementChoiceBox.setCallbacks(this);
+        measurementChoiceBox.show(fragmentTransaction, "measurement_dialog");
     }
 
     @Override
@@ -319,7 +331,28 @@ public class HomeActivity extends FragmentActivity
             diaper.insert(this);
 
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.home_activity_container, TimeLineLogFragment.getInstance());
+            fragmentTransaction.replace(R.id.home_activity_container, TimeLineFragment.getInstance());
+            fragmentTransaction.commit();
+        }
+    }
+
+    @Override
+    public void onMeasurementChoiceSelected(int resultCode, Intent data)
+    {
+        if (resultCode == RESULT_OK)
+        {
+            Calendar currentTime = Calendar.getInstance();
+            Bundle recData = data.getExtras();
+
+            Measurement measurement = new Measurement();
+            measurement.setBabyID(ActiveContext.getActiveBaby(this).getID());
+            measurement.setTimeStamp(String.valueOf(currentTime.getTimeInMillis()));
+            measurement.setHeight(Float.valueOf(recData.getString(Measurement.HEIGHT_KEY)));
+            measurement.setWeight(Float.valueOf(recData.getString(Measurement.WEIGHT_KEY)));
+            measurement.insert(this);
+
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.home_activity_container, TimeLineFragment.getInstance());
             fragmentTransaction.commit();
         }
     }

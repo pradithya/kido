@@ -14,7 +14,7 @@ import com.progrema.superbaby.models.Diaper;
 /**
  * Created by aria on 20/2/14.
  */
-public class DiaperDialogFragment extends DialogFragment
+public class DiaperDialog extends DialogFragment
 {
     private Callbacks mCallbacks;
 
@@ -23,14 +23,14 @@ public class DiaperDialogFragment extends DialogFragment
         mCallbacks = listener;
     }
 
-    public static DiaperDialogFragment getInstance()
-    {
-        return new DiaperDialogFragment();
-    }
-
     public static interface Callbacks
     {
         public void onDiaperChoiceSelected(int result, Intent data);
+    }
+
+    public static DiaperDialog getInstance()
+    {
+        return new DiaperDialog();
     }
 
     @Override
@@ -45,7 +45,7 @@ public class DiaperDialogFragment extends DialogFragment
             {
                 Intent result = new Intent();
                 result.putExtra(Diaper.DIAPER_TYPE_KEY, Diaper.DiaperType.DRY.getTitle());
-                DiaperDialogFragment.this.mCallbacks.onDiaperChoiceSelected(0, result);
+                DiaperDialog.this.mCallbacks.onDiaperChoiceSelected(0, result);
                 getDialog().dismiss();
             }
         });
@@ -57,7 +57,7 @@ public class DiaperDialogFragment extends DialogFragment
             {
                 Intent result = new Intent();
                 result.putExtra(Diaper.DIAPER_TYPE_KEY, Diaper.DiaperType.WET.getTitle());
-                DiaperDialogFragment.this.mCallbacks.onDiaperChoiceSelected(0, result);
+                DiaperDialog.this.mCallbacks.onDiaperChoiceSelected(0, result);
                 getDialog().dismiss();
             }
         });
@@ -69,7 +69,7 @@ public class DiaperDialogFragment extends DialogFragment
             {
                 Intent result = new Intent();
                 result.putExtra(Diaper.DIAPER_TYPE_KEY, Diaper.DiaperType.MIXED.getTitle());
-                DiaperDialogFragment.this.mCallbacks.onDiaperChoiceSelected(0, result);
+                DiaperDialog.this.mCallbacks.onDiaperChoiceSelected(0, result);
                 getDialog().dismiss();
             }
         });

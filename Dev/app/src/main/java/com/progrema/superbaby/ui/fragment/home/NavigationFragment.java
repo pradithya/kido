@@ -151,6 +151,7 @@ public class NavigationFragment extends Fragment
         items.add(new StandardItem(getString(R.string.title_nursing_fragment)));
         items.add(new StandardItem(getString(R.string.title_diaper_fragment)));
         items.add(new StandardItem(getString(R.string.title_sleep_fragment)));
+        items.add(new StandardItem(getString(R.string.title_measure_fragment)));
 
         // set adapter
         adapter = new NavigationAdapter(getActivity(), items);
