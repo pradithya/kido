@@ -6,6 +6,7 @@ import android.os.Parcel;
 
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
+import com.progrema.superbaby.util.FormatUtils;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -95,14 +96,14 @@ public class Baby extends BaseActor implements IDBServices
         return String.valueOf(birthday.getTimeInMillis());
     }
 
-    public String getAgeInReadableFormat()
+    public String getAgeInReadableFormat(Context context)
     {
-        return "";
+        return FormatUtils.formatAge(context, birthday.getTimeInMillis(), Calendar.getInstance().getTimeInMillis());
     }
 
-    public String getBirthdayInReadableFormat()
+    public String getBirthdayInReadableFormat(Context context)
     {
-        return "";
+        return FormatUtils.formatDate(context, getBirthdayInString());
     }
 
     /**

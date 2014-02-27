@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.progrema.superbaby.adapter.timelinehistory.TimeLineHistoryAdapter;
 import com.progrema.superbaby.models.Baby;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
+import com.progrema.superbaby.util.FormatUtils;
 import com.progrema.superbaby.widget.customview.ObserveAbleListView;
 
 public class TimeLineLogFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
@@ -25,6 +27,7 @@ public class TimeLineLogFragment extends Fragment implements LoaderManager.Loade
     private TimeLineHistoryAdapter mAdapter;
     private ObserveAbleListView historyList;
     private TextView headerBabyName;
+    private TextView headerBabyBirthday;
     private TextView headerBabyAge;
     private TextView headerBabySex;
     private TextView headerLastNursing;
@@ -44,12 +47,13 @@ public class TimeLineLogFragment extends Fragment implements LoaderManager.Loade
         View rootView = inflater.inflate(R.layout.fragment_timeline, container, false);
 
         // get ui object
-        headerBabyName = (TextView) rootView.findViewById(R.id.timeline_header_baby_name);
-        headerBabyAge = (TextView) rootView.findViewById(R.id.timeline_header_baby_age);
-        headerBabySex = (TextView) rootView.findViewById(R.id.timeline_header_baby_sex);
-        headerLastNursing = (TextView) rootView.findViewById(R.id.timeline_header_last_nursing);
-        headerLastSleep = (TextView) rootView.findViewById(R.id.timeline_header_last_sleep);
-        headerLastDiaper = (TextView) rootView.findViewById(R.id.timeline_header_last_diaper);
+        headerBabyName = (TextView) rootView.findViewById(R.id.baby_name);
+        headerBabyBirthday = (TextView) rootView.findViewById(R.id.baby_birthday);
+        headerBabyAge = (TextView) rootView.findViewById(R.id.baby_age);
+        headerBabySex = (TextView) rootView.findViewById(R.id.baby_sex);
+        headerLastNursing = (TextView) rootView.findViewById(R.id.last_nursing);
+        headerLastSleep = (TextView) rootView.findViewById(R.id.last_sleep);
+        headerLastDiaper = (TextView) rootView.findViewById(R.id.last_diaper);
 
         // prepare adapter
         historyList = (ObserveAbleListView) rootView.findViewById(R.id.activity_list);
@@ -70,14 +74,15 @@ public class TimeLineLogFragment extends Fragment implements LoaderManager.Loade
         super.onResume();
         Baby baby = ActiveContext.getActiveBaby(getActivity());
         headerBabyName.setText(baby.getName());
-        headerBabyAge.setText(baby.getBirthdayInString()); //TODO: create getAge() function!!
+        headerBabyBirthday.setText(baby.getBirthdayInReadableFormat(getActivity()));
+        headerBabyAge.setText(baby.getAgeInReadableFormat(getActivity()));
         headerBabySex.setText(baby.getSex().getTitle());
-        headerLastNursing.setText(queryLastNursing(String.valueOf(baby.getID())));
-        headerLastSleep.setText(queryLastSleep(String.valueOf(baby.getID())));
-        headerLastDiaper.setText(queryLastDiaper(String.valueOf(baby.getID())));
+        headerLastNursing.setText(lastNursing(String.valueOf(baby.getID())));
+        headerLastSleep.setText(lastSleep(String.valueOf(baby.getID())));
+        headerLastDiaper.setText(lastDiaper(String.valueOf(baby.getID())));
     }
 
-    private String queryLastNursing(String babyId)
+    private String lastNursing(String babyId)
     {
         String[] selectionArgument = {babyId};
         String[] projection = {BabyLogContract.Nursing.TIMESTAMP};
@@ -90,7 +95,8 @@ public class TimeLineLogFragment extends Fragment implements LoaderManager.Loade
                     selectionArgument,
                     null);
             cursor.moveToFirst();
-            return cursor.getString(0);
+            String time = DateUtils.getRelativeTimeSpanString(Long.parseLong(cursor.getString(0))).toString();
+            return FormatUtils.formatLastActivity(getActivity(), "Nursing", time);
         }
         catch (Exception e)
         {
@@ -99,7 +105,7 @@ public class TimeLineLogFragment extends Fragment implements LoaderManager.Loade
         return "No activity yet";
     }
 
-    private String queryLastSleep(String babyId)
+    private String lastSleep(String babyId)
     {
         String[] selectionArgument = {babyId};
         String[] projection = {BabyLogContract.Sleep.TIMESTAMP};
@@ -112,7 +118,8 @@ public class TimeLineLogFragment extends Fragment implements LoaderManager.Loade
                     selectionArgument,
                     null);
             cursor.moveToFirst();
-            return cursor.getString(0);
+            String time = DateUtils.getRelativeTimeSpanString(Long.parseLong(cursor.getString(0))).toString();
+            return FormatUtils.formatLastActivity(getActivity(), "Sleep", time);
         }
         catch (Exception e)
         {
@@ -121,7 +128,7 @@ public class TimeLineLogFragment extends Fragment implements LoaderManager.Loade
         return "No activity yet";
     }
 
-    private String queryLastDiaper(String babyId)
+    private String lastDiaper(String babyId)
     {
         String[] selectionArgument = {babyId};
         String[] projection = {BabyLogContract.Diaper.TIMESTAMP};
@@ -134,7 +141,8 @@ public class TimeLineLogFragment extends Fragment implements LoaderManager.Loade
                     selectionArgument,
                     null);
             cursor.moveToFirst();
-            return cursor.getString(0);
+            String time = DateUtils.getRelativeTimeSpanString(Long.parseLong(cursor.getString(0))).toString();
+            return FormatUtils.formatLastActivity(getActivity(), "Diaper", time);
         }
         catch (Exception e)
         {

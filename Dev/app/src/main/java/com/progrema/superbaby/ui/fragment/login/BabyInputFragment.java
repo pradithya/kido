@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.models.Baby;
@@ -36,7 +35,7 @@ public class BabyInputFragment extends Fragment implements View.OnClickListener,
     private Button babyBirthdayInput;
     private Spinner babySexTypeInput;
     private Button doneButton;
-    int year, month, date;
+    private int year, month, date;
 
     public static BabyInputFragment getInstance()
     {
@@ -56,8 +55,7 @@ public class BabyInputFragment extends Fragment implements View.OnClickListener,
         date = now.get(Calendar.DATE);
 
         babyBirthdayInput = (Button) rootView.findViewById(R.id.fragment_baby_input_birthday);
-        babyBirthdayInput.setText(FormatUtils.formatDate(getActivity(),
-                                                         String.valueOf(Calendar.getInstance().getTimeInMillis())));
+        babyBirthdayInput.setText(FormatUtils.formatDate(getActivity(), String.valueOf(Calendar.getInstance().getTimeInMillis())));
         babyBirthdayInput.setOnClickListener(this);
 
 
@@ -135,8 +133,7 @@ public class BabyInputFragment extends Fragment implements View.OnClickListener,
 
         Calendar dob = Calendar.getInstance();
         dob.set(year, month, date);
-        babyBirthdayInput.setText(FormatUtils.formatDate(getActivity(),
-                                                         String.valueOf(dob.getTimeInMillis())));
+        babyBirthdayInput.setText(FormatUtils.formatDate(getActivity(), String.valueOf(dob.getTimeInMillis())));
     }
 
 }

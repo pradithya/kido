@@ -19,7 +19,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/timeline_header_baby_name"
+                android:id="@+id/baby_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Safiya Salsabila"
@@ -27,7 +27,15 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/timeline_header_baby_age"
+                android:id="@+id/baby_birthday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Safiya Salsabila"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/baby_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1 year, 3 month, 12 day"
@@ -35,7 +43,7 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/timeline_header_baby_sex"
+                android:id="@+id/baby_sex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Female"
@@ -43,7 +51,7 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/timeline_header_last_nursing"
+                android:id="@+id/last_nursing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1 hours ago"
@@ -51,7 +59,7 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/timeline_header_last_sleep"
+                android:id="@+id/last_sleep"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1 hours ago"
@@ -59,7 +67,7 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/timeline_header_last_diaper"
+                android:id="@+id/last_diaper"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1 hours ago"

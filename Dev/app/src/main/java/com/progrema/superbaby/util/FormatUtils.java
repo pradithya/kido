@@ -15,6 +15,11 @@ import java.util.concurrent.TimeUnit;
  */
 public class FormatUtils
 {
+    public final static long SECOND_MILLIS = 1000;
+    public final static long MINUTE_MILLIS = SECOND_MILLIS * 60;
+    public final static long HOUR_MILLIS = MINUTE_MILLIS * 60;
+    public final static long DAY_MILLIS = HOUR_MILLIS * 24;
+
     private static final String[] DAY_OF_WEEK = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
     private static final String[] MONTH_OF_YEAR = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
@@ -26,7 +31,6 @@ public class FormatUtils
      */
     public static String formatTimeBoundary(Context context, String startTime, String duration)
     {
-        String retVal = "";
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(Long.parseLong(startTime));
         String start = new SimpleDateFormat("HH:mm a").format(cal.getTime());
@@ -39,8 +43,7 @@ public class FormatUtils
                 .put("end", end)
                 .format();
 
-        retVal = String.valueOf(formatted);
-        return retVal;
+        return String.valueOf(formatted);
     }
 
     /**
@@ -49,7 +52,6 @@ public class FormatUtils
      */
     public static String formatDuration(Context context, String duration)
     {
-        String retVal = "";
         long dur = Long.parseLong(duration); // in miliseccond
         long hour = TimeUnit.MILLISECONDS.toHours(dur);
         long min;
@@ -82,13 +84,35 @@ public class FormatUtils
                 .put("second", String.valueOf(sec))
                 .format();
 
-        retVal = String.valueOf(formatted);
-        return retVal;
+        return String.valueOf(formatted);
+    }
+
+    public static String formatAge(Context context, long dob, long now)
+    {
+        long duration = Math.abs(now - dob);
+        long days = duration / DAY_MILLIS;
+
+        // TODO: to show correct month and year different
+
+        CharSequence formatted = Phrase.from(context.getResources().getString(R.string.age_format))
+                .put("day", String.valueOf(days))
+                .format();
+
+        return String.valueOf(formatted);
+    }
+
+    public static String formatLastActivity(Context context, String activity, String time)
+    {
+        CharSequence formatted = Phrase.from(context.getResources().getString(R.string.last_activity_format))
+                .put("activity", activity)
+                .put("time", time)
+                .format();
+
+        return String.valueOf(formatted);
     }
 
     public static String formatDate(Context context, String timeStamp)
     {
-        String retVal = "";
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(Long.parseLong(timeStamp));
         String day = DAY_OF_WEEK[cal.get(Calendar.DAY_OF_WEEK) - 1];
@@ -103,18 +127,15 @@ public class FormatUtils
                 .put("year", year)
                 .format();
 
-        retVal = String.valueOf(formatted);
-        return retVal;
+        return String.valueOf(formatted);
     }
 
     public static String formatTime(Context context, String timeStamp)
     {
-        String retVal = "";
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(Long.parseLong(timeStamp));
-        retVal = new SimpleDateFormat("HH:mm a").format(cal.getTime());
 
-        return retVal;
+        return new SimpleDateFormat("HH:mm a").format(cal.getTime());
     }
 
     public static boolean isValidNumber(String str)
