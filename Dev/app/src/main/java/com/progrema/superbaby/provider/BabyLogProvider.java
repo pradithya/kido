@@ -28,6 +28,7 @@ public class BabyLogProvider extends ContentProvider
     private static final int DIAPER = 600;
     private static final int DIAPER_MAX_TIMESTAMP = 601;
     private static final int MEASUREMENT = 700;
+    private static final int MEASUREMENT_MAX_TIMESTAMP = 701;
     private static final int PHOTO = 800;
     private static final int ACTIVITY = 900;
 
@@ -46,6 +47,7 @@ public class BabyLogProvider extends ContentProvider
         matcher.addURI(authority, "diaper", DIAPER);
         matcher.addURI(authority, "diaper_max_timestamp", DIAPER_MAX_TIMESTAMP);
         matcher.addURI(authority, "measurement", MEASUREMENT);
+        matcher.addURI(authority, "measurement_max_timestamp", MEASUREMENT_MAX_TIMESTAMP);
         matcher.addURI(authority, "photo", PHOTO);
         matcher.addURI(authority, "activity", ACTIVITY);
 
@@ -76,6 +78,8 @@ public class BabyLogProvider extends ContentProvider
                 return db.rawQuery("SELECT MAX(timestamp) FROM sleep WHERE baby_id = ?", selectionArgs);
             case DIAPER_MAX_TIMESTAMP:
                 return db.rawQuery("SELECT MAX(timestamp) FROM diaper WHERE baby_id = ?", selectionArgs);
+            case MEASUREMENT_MAX_TIMESTAMP:
+                return db.rawQuery("SELECT MAX(timestamp) FROM measurement WHERE baby_id = ?", selectionArgs);
             default:
             {
                 final SelectionBuilder builder = buildExpandableSelection(uri, match);
@@ -192,7 +196,7 @@ public class BabyLogProvider extends ContentProvider
                 ContentValues values = new ContentValues();
                 values.put(BabyLogContract.Measurement.BABY_ID,
                         contentValues.getAsString(BabyLogContract.MeasurementColumns.BABY_ID));
-                values.put(BabyLogContract.ActivityColumns.ACTIVITY_TYPE, BabyLogContract.Activity.TYPE_NURSING);
+                values.put(BabyLogContract.ActivityColumns.ACTIVITY_TYPE, BabyLogContract.Activity.TYPE_MEASUREMENT);
                 values.put(BabyLogContract.ActivityColumns.TIMESTAMP,
                         contentValues.getAsString(BabyLogContract.MeasurementColumns.TIMESTAMP));
                 long actId = db.insertOrThrow(BabyLogDatabase.Tables.ACTIVITY, null, values);
@@ -249,17 +253,14 @@ public class BabyLogProvider extends ContentProvider
             {
                 return builder.table(BabyLogDatabase.Tables.USER);
             }
-
             case BABY:
             {
                 return builder.table(BabyLogDatabase.Tables.BABY);
             }
-
             case USER_BABY_MAP:
             {
                 return builder.table(BabyLogDatabase.Tables.USER_BABY_MAP);
             }
-
             case SLEEP:
             {
                 return builder.table(BabyLogDatabase.Tables.SLEEP);
@@ -272,7 +273,10 @@ public class BabyLogProvider extends ContentProvider
             {
                 return builder.table(BabyLogDatabase.Tables.NURSING);
             }
-
+            case MEASUREMENT:
+            {
+                return builder.table(BabyLogDatabase.Tables.MEASUREMENT);
+            }
             default:
             {
                 return null;

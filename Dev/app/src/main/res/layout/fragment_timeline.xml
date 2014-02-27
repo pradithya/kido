@@ -30,7 +30,7 @@
                 android:id="@+id/baby_birthday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Safiya Salsabila"
+                android:text="13 April 2013"
                 android:textColor="@color/white"
                 android:textStyle="bold"/>
 
@@ -68,6 +68,14 @@
 
             <TextView
                 android:id="@+id/last_diaper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 hours ago"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/last_measurement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1 hours ago"

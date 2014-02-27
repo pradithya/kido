@@ -328,7 +328,11 @@ public class BabyLogContract
      */
     public static class Measurement implements MeasurementColumns, BaseColumns
     {
+        public static final String table = PATH_MEASUREMENT;
+
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_MEASUREMENT).build();
+
+        public static final Uri MAX_TIMESTAMP = BASE_CONTENT_URI.buildUpon().appendPath("measurement_max_timestamp").build();
 
         public static Uri buildUri(String activityId)
         {

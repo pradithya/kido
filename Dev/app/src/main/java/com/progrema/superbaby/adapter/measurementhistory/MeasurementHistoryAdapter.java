@@ -47,7 +47,7 @@ public class MeasurementHistoryAdapter extends CursorAdapter
 
         textViewDate.setText(FormatUtils.formatDate(context, timeStamp));
         textViewTime.setText(FormatUtils.formatTime(context, timeStamp));
-        textViewHeight.setText(height);
-        textViewWeight.setText(weight);
+        textViewHeight.setText(height + " cm");
+        textViewWeight.setText(weight + " kg");
     }
 }

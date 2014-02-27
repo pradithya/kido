@@ -33,6 +33,7 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
     private TextView headerLastNursing;
     private TextView headerLastSleep;
     private TextView headerLastDiaper;
+    private TextView headerLastMeasurement;
 
     public static TimeLineFragment getInstance()
     {
@@ -54,6 +55,7 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
         headerLastNursing = (TextView) rootView.findViewById(R.id.last_nursing);
         headerLastSleep = (TextView) rootView.findViewById(R.id.last_sleep);
         headerLastDiaper = (TextView) rootView.findViewById(R.id.last_diaper);
+        headerLastMeasurement = (TextView) rootView.findViewById(R.id.last_measurement);
 
         // prepare adapter
         historyList = (ObserveAbleListView) rootView.findViewById(R.id.activity_list);
@@ -80,6 +82,7 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
         headerLastNursing.setText(lastNursing(String.valueOf(baby.getID())));
         headerLastSleep.setText(lastSleep(String.valueOf(baby.getID())));
         headerLastDiaper.setText(lastDiaper(String.valueOf(baby.getID())));
+        headerLastMeasurement.setText(lastMeasurement(String.valueOf(baby.getID())));
     }
 
     private String lastNursing(String babyId)
@@ -102,7 +105,8 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
         {
             // do nothing
         }
-        return getResources().getString(R.string.no_activity);
+        return FormatUtils.formatLastActivity(getActivity(),
+                BabyLogContract.Nursing.table, getResources().getString(R.string.no_activity));
     }
 
     private String lastSleep(String babyId)
@@ -125,7 +129,8 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
         {
             // do nothing
         }
-        return getResources().getString(R.string.no_activity);
+        return FormatUtils.formatLastActivity(getActivity(),
+                BabyLogContract.Sleep.table, getResources().getString(R.string.no_activity));
     }
 
     private String lastDiaper(String babyId)
@@ -148,7 +153,32 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
         {
             // do nothing
         }
-        return getResources().getString(R.string.no_activity);
+        return FormatUtils.formatLastActivity(getActivity(),
+                BabyLogContract.Diaper.table, getResources().getString(R.string.no_activity));
+    }
+
+    private String lastMeasurement(String babyId)
+    {
+        String[] selectionArgument = {babyId};
+        String[] projection = {BabyLogContract.Measurement.TIMESTAMP};
+        try
+        {
+            Cursor cursor = getActivity().getContentResolver().query(
+                    BabyLogContract.Measurement.MAX_TIMESTAMP,
+                    projection,
+                    null,
+                    selectionArgument,
+                    null);
+            cursor.moveToFirst();
+            String time = DateUtils.getRelativeTimeSpanString(Long.parseLong(cursor.getString(0))).toString();
+            return FormatUtils.formatLastActivity(getActivity(), BabyLogContract.Measurement.table, time);
+        }
+        catch (Exception e)
+        {
+            // do nothing
+        }
+        return FormatUtils.formatLastActivity(getActivity(),
+                BabyLogContract.Measurement.table, getResources().getString(R.string.no_activity));
     }
 
     @Override
