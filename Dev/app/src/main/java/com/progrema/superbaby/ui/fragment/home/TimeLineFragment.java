@@ -22,8 +22,12 @@ import com.progrema.superbaby.widget.customview.ObserveAbleListView;
 
 public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
-    public static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
-    public static final int LOADER_ID = 3;
+    private static final int LOADER_LIST_VIEW = 0;
+    private static final int LOADER_LAST_NURSING = 1;
+    private static final int LOADER_LAST_SLEEP = 2;
+    private static final int LOADER_LAST_DIAPER = 3;
+    private static final int LOADER_LAST_MEASUREMENT = 4;
+    private static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     private TimeLineHistoryAdapter mAdapter;
     private ObserveAbleListView historyList;
     private TextView headerBabyName;
@@ -65,7 +69,11 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
         // prepare loader
         mCallbacks = this;
         LoaderManager lm = getLoaderManager();
-        lm.initLoader(LOADER_ID, null, mCallbacks);
+        lm.initLoader(LOADER_LIST_VIEW, null, mCallbacks);
+//        lm.initLoader(LOADER_LAST_NURSING, null, mCallbacks);
+//        lm.initLoader(LOADER_LAST_SLEEP, null, mCallbacks);
+//        lm.initLoader(LOADER_LAST_DIAPER, null, mCallbacks);
+//        lm.initLoader(LOADER_LAST_MEASUREMENT, null, mCallbacks);
 
         return rootView;
     }
@@ -79,118 +87,68 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
         headerBabyBirthday.setText(baby.getBirthdayInReadableFormat(getActivity()));
         headerBabyAge.setText(baby.getAgeInReadableFormat(getActivity()));
         headerBabySex.setText(baby.getSex().getTitle());
-        headerLastNursing.setText(lastNursing(String.valueOf(baby.getID())));
-        headerLastSleep.setText(lastSleep(String.valueOf(baby.getID())));
-        headerLastDiaper.setText(lastDiaper(String.valueOf(baby.getID())));
-        headerLastMeasurement.setText(lastMeasurement(String.valueOf(baby.getID())));
-    }
-
-    private String lastNursing(String babyId)
-    {
-        String[] selectionArgument = {babyId};
-        String[] projection = {BabyLogContract.Nursing.TIMESTAMP};
-        try
-        {
-            Cursor cursor = getActivity().getContentResolver().query(
-                    BabyLogContract.Nursing.MAX_TIMESTAMP,
-                    projection,
-                    null,
-                    selectionArgument,
-                    null);
-            cursor.moveToFirst();
-            String time = DateUtils.getRelativeTimeSpanString(Long.parseLong(cursor.getString(0))).toString();
-            return FormatUtils.formatLastActivity(getActivity(), BabyLogContract.Nursing.table, time);
-        }
-        catch (Exception e)
-        {
-            // do nothing
-        }
-        return FormatUtils.formatLastActivity(getActivity(),
-                BabyLogContract.Nursing.table, getResources().getString(R.string.no_activity));
-    }
-
-    private String lastSleep(String babyId)
-    {
-        String[] selectionArgument = {babyId};
-        String[] projection = {BabyLogContract.Sleep.TIMESTAMP};
-        try
-        {
-            Cursor cursor = getActivity().getContentResolver().query(
-                    BabyLogContract.Sleep.MAX_TIMESTAMP,
-                    projection,
-                    null,
-                    selectionArgument,
-                    null);
-            cursor.moveToFirst();
-            String time = DateUtils.getRelativeTimeSpanString(Long.parseLong(cursor.getString(0))).toString();
-            return FormatUtils.formatLastActivity(getActivity(), BabyLogContract.Sleep.table, time);
-        }
-        catch (Exception e)
-        {
-            // do nothing
-        }
-        return FormatUtils.formatLastActivity(getActivity(),
-                BabyLogContract.Sleep.table, getResources().getString(R.string.no_activity));
-    }
-
-    private String lastDiaper(String babyId)
-    {
-        String[] selectionArgument = {babyId};
-        String[] projection = {BabyLogContract.Diaper.TIMESTAMP};
-        try
-        {
-            Cursor cursor = getActivity().getContentResolver().query(
-                    BabyLogContract.Diaper.MAX_TIMESTAMP,
-                    projection,
-                    null,
-                    selectionArgument,
-                    null);
-            cursor.moveToFirst();
-            String time = DateUtils.getRelativeTimeSpanString(Long.parseLong(cursor.getString(0))).toString();
-            return FormatUtils.formatLastActivity(getActivity(), BabyLogContract.Diaper.table, time);
-        }
-        catch (Exception e)
-        {
-            // do nothing
-        }
-        return FormatUtils.formatLastActivity(getActivity(),
-                BabyLogContract.Diaper.table, getResources().getString(R.string.no_activity));
-    }
-
-    private String lastMeasurement(String babyId)
-    {
-        String[] selectionArgument = {babyId};
-        String[] projection = {BabyLogContract.Measurement.TIMESTAMP};
-        try
-        {
-            Cursor cursor = getActivity().getContentResolver().query(
-                    BabyLogContract.Measurement.MAX_TIMESTAMP,
-                    projection,
-                    null,
-                    selectionArgument,
-                    null);
-            cursor.moveToFirst();
-            String time = DateUtils.getRelativeTimeSpanString(Long.parseLong(cursor.getString(0))).toString();
-            return FormatUtils.formatLastActivity(getActivity(), BabyLogContract.Measurement.table, time);
-        }
-        catch (Exception e)
-        {
-            // do nothing
-        }
-        return FormatUtils.formatLastActivity(getActivity(),
-                BabyLogContract.Measurement.table, getResources().getString(R.string.no_activity));
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle)
+    public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle)
     {
         String[] args = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
-        CursorLoader cl = new CursorLoader(getActivity(), BabyLogContract.Activity.CONTENT_URI,
-                BabyLogContract.Activity.Query.PROJECTION,
-                BabyLogContract.BABY_SELECTION_ARG,
-                args,
-                BabyLogContract.Activity.Query.SORT_BY_TIMESTAMP_DESC);
-        return cl;
+        switch (loaderId)
+        {
+            case LOADER_LIST_VIEW:
+            {
+                return new CursorLoader(getActivity(),
+                        BabyLogContract.Activity.CONTENT_URI,
+                        BabyLogContract.Activity.Query.PROJECTION,
+                        BabyLogContract.BABY_SELECTION_ARG,
+                        args,
+                        BabyLogContract.Activity.Query.SORT_BY_TIMESTAMP_DESC);
+            }
+            case LOADER_LAST_NURSING:
+            {
+                String[] projection = {BabyLogContract.Nursing.TIMESTAMP};
+                return new CursorLoader(getActivity(),
+                        BabyLogContract.Nursing.MAX_TIMESTAMP,
+                        projection,
+                        BabyLogContract.BABY_SELECTION_ARG,
+                        args,
+                        null);
+            }
+            case LOADER_LAST_SLEEP:
+            {
+                String[] projection = {BabyLogContract.Sleep.TIMESTAMP};
+                return new CursorLoader(getActivity(),
+                        BabyLogContract.Sleep.MAX_TIMESTAMP,
+                        projection,
+                        BabyLogContract.BABY_SELECTION_ARG,
+                        args,
+                        null);
+            }
+            case LOADER_LAST_DIAPER:
+            {
+                String[] projection = {BabyLogContract.Diaper.TIMESTAMP};
+                return new CursorLoader(getActivity(),
+                        BabyLogContract.Diaper.MAX_TIMESTAMP,
+                        projection,
+                        BabyLogContract.BABY_SELECTION_ARG,
+                        args,
+                        null);
+            }
+            case LOADER_LAST_MEASUREMENT:
+            {
+                String[] projection = {BabyLogContract.Measurement.TIMESTAMP};
+                return new CursorLoader(getActivity(),
+                        BabyLogContract.Measurement.MAX_TIMESTAMP,
+                        projection,
+                        BabyLogContract.BABY_SELECTION_ARG,
+                        args,
+                        null);
+            }
+            default:
+            {
+                return null;
+            }
+        }
     }
 
     @Override
@@ -198,20 +156,71 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
     {
         if (cursor.getCount() > 0)
         {
-            // show last inserted row
             cursor.moveToFirst();
-            mAdapter.swapCursor(cursor);
-        }
-        else
-        {
-            mAdapter.swapCursor(null);
+            switch (cl.getId())
+            {
+                case LOADER_LIST_VIEW:
+                {
+                    mAdapter.swapCursor(cursor);
+                }
+                case LOADER_LAST_NURSING:
+                {
+                    String timestamp = cursor.getString(0);
+                    if (timestamp != null)
+                    {
+                        String time = DateUtils.
+                                getRelativeTimeSpanString(Long.parseLong(timestamp)).toString();
+                        headerLastNursing.setText(
+                                FormatUtils.formatLastActivity(getActivity(), BabyLogContract.Measurement.table, time));
+                    }
+                }
+                case LOADER_LAST_SLEEP:
+                {
+                    String timestamp = cursor.getString(0);
+                    if (timestamp != null)
+                    {
+                        String time = DateUtils.
+                                getRelativeTimeSpanString(Long.parseLong(timestamp)).toString();
+                        headerLastSleep.setText(
+                                FormatUtils.formatLastActivity(getActivity(), BabyLogContract.Sleep.table, time));
+                    }
+                }
+                case LOADER_LAST_DIAPER:
+                {
+                    String timestamp = cursor.getString(0);
+                    if (timestamp != null)
+                    {
+                        String time = DateUtils.
+                                getRelativeTimeSpanString(Long.parseLong(timestamp)).toString();
+                        headerLastDiaper.setText(
+                                FormatUtils.formatLastActivity(getActivity(), BabyLogContract.Diaper.table, time));
+                    }
+                }
+                case LOADER_LAST_MEASUREMENT:
+                {
+                    String timestamp = cursor.getString(0);
+                    if (timestamp != null)
+                    {
+                        String time = DateUtils.
+                                getRelativeTimeSpanString(Long.parseLong(timestamp)).toString();
+                        headerLastMeasurement.setText(
+                                FormatUtils.formatLastActivity(getActivity(), BabyLogContract.Measurement.table, time));
+                    }
+                }
+            }
         }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> cl)
     {
-        mAdapter.swapCursor(null);
+        if (cl.getId() == LOADER_LIST_VIEW)
+        {
+            mAdapter.swapCursor(null);
+        }
+        else
+        {
 
+        }
     }
 }
