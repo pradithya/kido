@@ -12,7 +12,7 @@ import com.progrema.superbaby.provider.BabyLogContract;
  * @author aria
  * @author iqbalpakeh
  */
-public class Diaper extends BaseActivity implements IDBServices
+public class Diaper extends BaseActivity
 {
     public final static String DIAPER_TYPE_KEY = "diaper_type";
     private DiaperType type;

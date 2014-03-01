@@ -9,7 +9,7 @@ import com.progrema.superbaby.provider.BabyLogContract;
 /**
  * Created by iqbalpakeh on 22/1/14.
  */
-public class UserBabyMap extends BaseModel implements IDBServices
+public class UserBabyMap extends BaseModel
 {
     /**
      * User-Baby map private data

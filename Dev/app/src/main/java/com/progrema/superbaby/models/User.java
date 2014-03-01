@@ -7,7 +7,7 @@ import android.os.Parcel;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.SecurityUtils;
 
-public class User extends BaseActor implements IDBServices
+public class User extends BaseActor
 {
     /**
      * User private data

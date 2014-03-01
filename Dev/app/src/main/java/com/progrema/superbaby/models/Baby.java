@@ -14,7 +14,7 @@ import java.util.Date;
 /**
  * Created by iqbalpakeh on 20/1/14.
  */
-public class Baby extends BaseActor implements IDBServices
+public class Baby extends BaseActor
 {
 
     /**

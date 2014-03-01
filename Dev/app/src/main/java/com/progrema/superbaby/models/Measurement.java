@@ -8,7 +8,7 @@ import com.progrema.superbaby.provider.BabyLogContract;
 /**
  * Created by iqbalpakeh on 27/2/14.
  */
-public class Measurement extends BaseActivity implements IDBServices
+public class Measurement extends BaseActivity
 {
     private float height;
     private float weight;
