@@ -17,28 +17,21 @@ import com.progrema.superbaby.util.FormatUtils;
  */
 public class SleepHistoryAdapter extends CursorAdapter
 {
-    private LayoutInflater inflater;
-    private int layout;
-
     public SleepHistoryAdapter(Context context, Cursor c, int flags)
     {
         super(context, c, flags);
-        inflater = LayoutInflater.from(context);
-        layout = R.layout.history_item_sleep;
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent)
     {
-        return inflater.inflate(layout, parent, false);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        return inflater.inflate(R.layout.history_item_sleep, parent, false);
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor)
     {
-        long id = cursor.getLong(0);
-        long activityID = cursor.getLong(1);
-        long babyID = cursor.getLong(2);
         String timeStamp = cursor.getString(3);
         String duration = cursor.getString(4);
 

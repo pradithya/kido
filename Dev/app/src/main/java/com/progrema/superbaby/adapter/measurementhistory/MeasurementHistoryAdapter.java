@@ -17,20 +17,16 @@ import com.progrema.superbaby.util.FormatUtils;
  */
 public class MeasurementHistoryAdapter extends CursorAdapter
 {
-    private LayoutInflater inflater;
-    private int layout;
-
     public MeasurementHistoryAdapter(Context context, Cursor c, int flags)
     {
         super(context, c, flags);
-        inflater = LayoutInflater.from(context);
-        layout = R.layout.history_item_measurement;
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent)
     {
-        return inflater.inflate(layout, parent, false);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        return inflater.inflate(R.layout.history_item_measurement, parent, false);
     }
 
     @Override

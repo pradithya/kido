@@ -19,20 +19,16 @@ import com.progrema.superbaby.util.FormatUtils;
  */
 public class NursingHistoryAdapter extends CursorAdapter
 {
-    private LayoutInflater inflater;
-    private int layout;
-
     public NursingHistoryAdapter(Context context, Cursor c, int flags)
     {
         super(context, c, flags);
-        inflater = LayoutInflater.from(context);
-        layout = R.layout.history_item_nursing;
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent)
     {
-        return inflater.inflate(layout, parent, false);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        return inflater.inflate(R.layout.history_item_nursing, parent, false);
     }
 
     @Override
