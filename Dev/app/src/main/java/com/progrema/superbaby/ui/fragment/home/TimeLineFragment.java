@@ -70,10 +70,10 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
         mCallbacks = this;
         LoaderManager lm = getLoaderManager();
         lm.initLoader(LOADER_LIST_VIEW, null, mCallbacks);
-//        lm.initLoader(LOADER_LAST_NURSING, null, mCallbacks);
-//        lm.initLoader(LOADER_LAST_SLEEP, null, mCallbacks);
-//        lm.initLoader(LOADER_LAST_DIAPER, null, mCallbacks);
-//        lm.initLoader(LOADER_LAST_MEASUREMENT, null, mCallbacks);
+        lm.initLoader(LOADER_LAST_NURSING, null, mCallbacks);
+        lm.initLoader(LOADER_LAST_SLEEP, null, mCallbacks);
+        lm.initLoader(LOADER_LAST_DIAPER, null, mCallbacks);
+        lm.initLoader(LOADER_LAST_MEASUREMENT, null, mCallbacks);
 
         return rootView;
     }
