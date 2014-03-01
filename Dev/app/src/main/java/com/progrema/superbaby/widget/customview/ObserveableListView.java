@@ -13,6 +13,7 @@ public class ObserveAbleListView extends ListView
 {
     private Callbacks mCallbacks;
     private final int INVALID_POINTER_ID = MotionEvent.INVALID_POINTER_ID;
+    private final int SCROLLING_BUFFER = 3;
     private int mActivePointerId = INVALID_POINTER_ID;
     private float mLastTouchX, mLastTouchY, mPosX, mPosY;
     private boolean isScrollUp = true;
@@ -78,7 +79,7 @@ public class ObserveAbleListView extends ListView
                     mLastTouchX = x;
                     mLastTouchY = y;
 
-                    if (dy > 0)
+                    if (dy > SCROLLING_BUFFER)
                     {
                         if (!isScrollUp)
                         {
@@ -86,7 +87,7 @@ public class ObserveAbleListView extends ListView
                             isScrollUp = true;
                         }
                     }
-                    else
+                    else if (dy < -SCROLLING_BUFFER)
                     {
                         if (isScrollUp)
                         {

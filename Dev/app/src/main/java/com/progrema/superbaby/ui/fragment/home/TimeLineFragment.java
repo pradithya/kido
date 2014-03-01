@@ -223,9 +223,5 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
         {
             mAdapter.swapCursor(null);
         }
-        else
-        {
-
-        }
     }
 }
