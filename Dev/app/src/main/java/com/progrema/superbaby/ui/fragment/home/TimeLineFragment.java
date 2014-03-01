@@ -162,6 +162,7 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                 case LOADER_LIST_VIEW:
                 {
                     mAdapter.swapCursor(cursor);
+                    break;
                 }
                 case LOADER_LAST_NURSING:
                 {
@@ -173,6 +174,7 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                         headerLastNursing.setText(
                                 FormatUtils.formatLastActivity(getActivity(), BabyLogContract.Measurement.table, time));
                     }
+                    break;
                 }
                 case LOADER_LAST_SLEEP:
                 {
@@ -183,7 +185,8 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                                 getRelativeTimeSpanString(Long.parseLong(timestamp)).toString();
                         headerLastSleep.setText(
                                 FormatUtils.formatLastActivity(getActivity(), BabyLogContract.Sleep.table, time));
-                    }
+                    };
+                    break;
                 }
                 case LOADER_LAST_DIAPER:
                 {
@@ -194,7 +197,8 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                                 getRelativeTimeSpanString(Long.parseLong(timestamp)).toString();
                         headerLastDiaper.setText(
                                 FormatUtils.formatLastActivity(getActivity(), BabyLogContract.Diaper.table, time));
-                    }
+                    };
+                    break;
                 }
                 case LOADER_LAST_MEASUREMENT:
                 {
@@ -205,7 +209,8 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                                 getRelativeTimeSpanString(Long.parseLong(timestamp)).toString();
                         headerLastMeasurement.setText(
                                 FormatUtils.formatLastActivity(getActivity(), BabyLogContract.Measurement.table, time));
-                    }
+                    };
+                    break;
                 }
             }
         }

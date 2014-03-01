@@ -54,7 +54,6 @@
                 android:id="@+id/last_nursing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1 hours ago"
                 android:textColor="@color/white"
                 android:textStyle="bold"/>
 
@@ -62,7 +61,6 @@
                 android:id="@+id/last_sleep"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1 hours ago"
                 android:textColor="@color/white"
                 android:textStyle="bold"/>
 
@@ -70,7 +68,6 @@
                 android:id="@+id/last_diaper"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1 hours ago"
                 android:textColor="@color/white"
                 android:textStyle="bold"/>
 
@@ -78,7 +75,6 @@
                 android:id="@+id/last_measurement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1 hours ago"
                 android:textColor="@color/white"
                 android:textStyle="bold"/>
 
