@@ -23,8 +23,7 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
 {
     private ObserveAbleListView sleepHistoryList;
     private SleepHistoryAdapter mAdapter;
-    private static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
-    private static final int LOADER_ID = 1;
+    private static final int LOADER_ID = 0;
 
     public static SleepFragment getInstance()
     {
@@ -44,9 +43,8 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
         sleepHistoryList.setAdapter(mAdapter);
 
         // prepare loader
-        mCallbacks = this;
         LoaderManager lm = getLoaderManager();
-        lm.initLoader(LOADER_ID, null, mCallbacks);
+        lm.initLoader(LOADER_ID, null, this);
 
         return rootView;
     }

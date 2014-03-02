@@ -219,6 +219,8 @@ public class BabyLogContract
 
         public static final Uri MAX_TIMESTAMP = BASE_CONTENT_URI.buildUpon().appendPath("nursing_max_timestamp").build();
 
+        public static final Uri LAST_SIDES = BASE_CONTENT_URI.buildUpon().appendPath("nursing_last_side").build();
+
         public interface Query
         {
             String[] PROJECTION =

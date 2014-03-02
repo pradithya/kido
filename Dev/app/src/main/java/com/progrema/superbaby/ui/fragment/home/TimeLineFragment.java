@@ -27,7 +27,6 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
     private static final int LOADER_LAST_SLEEP = 2;
     private static final int LOADER_LAST_DIAPER = 3;
     private static final int LOADER_LAST_MEASUREMENT = 4;
-    private static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
     private TimeLineHistoryAdapter mAdapter;
     private ObserveAbleListView historyList;
     private TextView headerBabyName;
@@ -67,13 +66,12 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
         historyList.setAdapter(mAdapter);
 
         // prepare loader
-        mCallbacks = this;
         LoaderManager lm = getLoaderManager();
-        lm.initLoader(LOADER_LIST_VIEW, null, mCallbacks);
-        lm.initLoader(LOADER_LAST_NURSING, null, mCallbacks);
-        lm.initLoader(LOADER_LAST_SLEEP, null, mCallbacks);
-        lm.initLoader(LOADER_LAST_DIAPER, null, mCallbacks);
-        lm.initLoader(LOADER_LAST_MEASUREMENT, null, mCallbacks);
+        lm.initLoader(LOADER_LIST_VIEW, null, this);
+        lm.initLoader(LOADER_LAST_NURSING, null, this);
+        lm.initLoader(LOADER_LAST_SLEEP, null, this);
+        lm.initLoader(LOADER_LAST_DIAPER, null, this);
+        lm.initLoader(LOADER_LAST_MEASUREMENT, null, this);
 
         return rootView;
     }
@@ -92,7 +90,7 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle)
     {
-        String[] args = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
+        String[] argumentSelection = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
         switch (loaderId)
         {
             case LOADER_LIST_VIEW:
@@ -101,7 +99,7 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                         BabyLogContract.Activity.CONTENT_URI,
                         BabyLogContract.Activity.Query.PROJECTION,
                         BabyLogContract.BABY_SELECTION_ARG,
-                        args,
+                        argumentSelection,
                         BabyLogContract.Activity.Query.SORT_BY_TIMESTAMP_DESC);
             }
             case LOADER_LAST_NURSING:
@@ -111,7 +109,7 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                         BabyLogContract.Nursing.MAX_TIMESTAMP,
                         projection,
                         BabyLogContract.BABY_SELECTION_ARG,
-                        args,
+                        argumentSelection,
                         null);
             }
             case LOADER_LAST_SLEEP:
@@ -121,7 +119,7 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                         BabyLogContract.Sleep.MAX_TIMESTAMP,
                         projection,
                         BabyLogContract.BABY_SELECTION_ARG,
-                        args,
+                        argumentSelection,
                         null);
             }
             case LOADER_LAST_DIAPER:
@@ -131,7 +129,7 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                         BabyLogContract.Diaper.MAX_TIMESTAMP,
                         projection,
                         BabyLogContract.BABY_SELECTION_ARG,
-                        args,
+                        argumentSelection,
                         null);
             }
             case LOADER_LAST_MEASUREMENT:
@@ -141,7 +139,7 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                         BabyLogContract.Measurement.MAX_TIMESTAMP,
                         projection,
                         BabyLogContract.BABY_SELECTION_ARG,
-                        args,
+                        argumentSelection,
                         null);
             }
             default:

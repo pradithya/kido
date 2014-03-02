@@ -23,7 +23,6 @@ public class MeasurementFragment extends Fragment implements LoaderManager.Loade
 {
     private ObserveAbleListView measurementHistoryList;
     private MeasurementHistoryAdapter mAdapter;
-    private static LoaderManager.LoaderCallbacks mCallbacks;
     private static final int LOADER_ID = 0;
 
     public static MeasurementFragment getInstance()
@@ -43,9 +42,8 @@ public class MeasurementFragment extends Fragment implements LoaderManager.Loade
         measurementHistoryList.setAdapter(mAdapter);
 
         // prepare loader
-        mCallbacks = this;
         LoaderManager lm = getLoaderManager();
-        lm.initLoader(LOADER_ID, null, mCallbacks);
+        lm.initLoader(LOADER_ID, null, this);
         return rootView;
     }
 

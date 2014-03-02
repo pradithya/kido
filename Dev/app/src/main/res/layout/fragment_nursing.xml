@@ -11,6 +11,57 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:id="@+id/nursing_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/percentage_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Left 23%"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/percentage_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Right 77%"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/last_side"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Last Side Left"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/left_total_per_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Left Breast 26 m/d"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/right_total_per_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Right Breast 35 m/d"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/formula_total_per_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Formula 450 ml/d"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
         <com.progrema.superbaby.widget.customview.ObserveAbleListView
             android:id="@+id/activity_list"
             android:layout_width="match_parent"
@@ -20,4 +71,5 @@
     </LinearLayout>
 
     <include layout="@layout/quick_button"/>
+
 </FrameLayout>

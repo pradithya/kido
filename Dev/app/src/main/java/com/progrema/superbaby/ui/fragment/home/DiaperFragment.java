@@ -23,8 +23,7 @@ import com.progrema.superbaby.widget.customview.ObserveAbleListView;
  */
 public class DiaperFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
-    private static LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
-    private static final int LOADER_ID = 2;
+    private static final int LOADER_ID = 0;
     private ObserveAbleListView diaperHistoryList;
     private DiaperHistoryAdapter mAdapter;
 
@@ -45,9 +44,8 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
         diaperHistoryList.setAdapter(mAdapter);
 
         // prepare loader
-        mCallbacks = this;
         android.support.v4.app.LoaderManager lm = getLoaderManager();
-        lm.initLoader(LOADER_ID, null, mCallbacks);
+        lm.initLoader(LOADER_ID, null, this);
         return rootView;
     }
 

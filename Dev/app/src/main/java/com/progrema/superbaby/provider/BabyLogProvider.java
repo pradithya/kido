@@ -23,6 +23,7 @@ public class BabyLogProvider extends ContentProvider
     private static final int BABY = 300;
     private static final int NURSING = 400;
     private static final int NURSING_MAX_TIMESTAMP = 401;
+    private static final int NURSING_LAST_SIDE = 402;
     private static final int SLEEP = 500;
     private static final int SLEEP_MAX_TIMESTAMP = 501;
     private static final int DIAPER = 600;
@@ -42,6 +43,7 @@ public class BabyLogProvider extends ContentProvider
         matcher.addURI(authority, "baby", BABY);
         matcher.addURI(authority, "nursing", NURSING);
         matcher.addURI(authority, "nursing_max_timestamp", NURSING_MAX_TIMESTAMP);
+        matcher.addURI(authority, "nursing_last_side", NURSING_LAST_SIDE);
         matcher.addURI(authority, "sleep", SLEEP);
         matcher.addURI(authority, "sleep_max_timestamp", SLEEP_MAX_TIMESTAMP);
         matcher.addURI(authority, "diaper", DIAPER);
@@ -74,6 +76,8 @@ public class BabyLogProvider extends ContentProvider
                 return db.rawQuery(BabyLogDatabase.JOIN_ALL, selectionArgs);
             case NURSING_MAX_TIMESTAMP:
                 return db.rawQuery("SELECT MAX(timestamp) FROM nursing WHERE baby_id = ?", selectionArgs);
+            case NURSING_LAST_SIDE:
+                return db.rawQuery("SELECT sides FROM nursing WHERE baby_id = ? AND timestamp = (SELECT MAX(timestamp) FROM nursing)", selectionArgs);
             case SLEEP_MAX_TIMESTAMP:
                 return db.rawQuery("SELECT MAX(timestamp) FROM sleep WHERE baby_id = ?", selectionArgs);
             case DIAPER_MAX_TIMESTAMP:

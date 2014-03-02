@@ -87,6 +87,33 @@ public class FormatUtils
         return String.valueOf(formatted);
     }
 
+    public static String formatNursingPerDay(Context context, String side, String values, String unit)
+    {
+        CharSequence formatted = Phrase.from(context.getResources().getString(R.string.nursing_per_day))
+                .put("side", side)
+                .put("values", values)
+                .put("unit", unit)
+                .format();
+        return String.valueOf(formatted);
+    }
+
+    public static String formatNursingLastSide(Context context, String side)
+    {
+        CharSequence formatted = Phrase.from(context.getResources().getString(R.string.nursing_last_side))
+                .put("side", side)
+                .format();
+        return String.valueOf(formatted);
+    }
+
+    public static String formatNursingPercentage(Context context, String side, String percentage)
+    {
+        CharSequence formatted = Phrase.from(context.getResources().getString(R.string.nursing_percentage_format))
+                .put("side", side)
+                .put("percentage", percentage)
+                .format();
+        return String.valueOf(formatted);
+    }
+
     public static String formatAge(Context context, long dob, long now)
     {
         long duration = Math.abs(now - dob);
@@ -97,7 +124,6 @@ public class FormatUtils
         CharSequence formatted = Phrase.from(context.getResources().getString(R.string.age_format))
                 .put("day", String.valueOf(days))
                 .format();
-
         return String.valueOf(formatted);
     }
 
@@ -107,7 +133,6 @@ public class FormatUtils
                 .put("activity", activity)
                 .put("time", time)
                 .format();
-
         return String.valueOf(formatted);
     }
 
@@ -126,7 +151,6 @@ public class FormatUtils
                 .put("month", month)
                 .put("year", year)
                 .format();
-
         return String.valueOf(formatted);
     }
 
@@ -134,7 +158,6 @@ public class FormatUtils
     {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(Long.parseLong(timeStamp));
-
         return new SimpleDateFormat("HH:mm a").format(cal.getTime());
     }
 
