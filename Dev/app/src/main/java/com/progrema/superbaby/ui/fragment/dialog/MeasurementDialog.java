@@ -17,39 +17,27 @@ import com.progrema.superbaby.util.FormatUtils;
 /**
  * Created by iqbalpakeh on 27/2/14.
  */
-public class MeasurementDialog extends DialogFragment
-{
+public class MeasurementDialog extends DialogFragment {
     private Callbacks mCallbacks;
 
-    public static interface Callbacks
-    {
-        public void onMeasurementChoiceSelected(int resultCode, Intent data);
-    }
-
-    public static MeasurementDialog getInstance()
-    {
+    public static MeasurementDialog getInstance() {
         return new MeasurementDialog();
     }
 
-    public void setCallbacks(Callbacks listener)
-    {
+    public void setCallbacks(Callbacks listener) {
         mCallbacks = listener;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_fragment_measurement, parent, false);
         Button ok = (Button) view.findViewById(R.id.button_ok);
-        ok.setOnClickListener(new View.OnClickListener()
-        {
+        ok.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 EditText inputHeight = (EditText) getDialog().findViewById(R.id.entry_text_height);
                 String height = inputHeight.getText().toString();
-                if (!FormatUtils.isValidNumber(height))
-                {
+                if (!FormatUtils.isValidNumber(height)) {
                     Toast invalidNumber =
                             Toast.makeText(getActivity(), "invalid number", Toast.LENGTH_LONG);
                     invalidNumber.show();
@@ -58,8 +46,7 @@ public class MeasurementDialog extends DialogFragment
 
                 EditText inputWeight = (EditText) getDialog().findViewById(R.id.entry_text_weight);
                 String weight = inputWeight.getText().toString();
-                if (!FormatUtils.isValidNumber(height))
-                {
+                if (!FormatUtils.isValidNumber(height)) {
                     Toast invalidNumber =
                             Toast.makeText(getActivity(), "invalid number", Toast.LENGTH_LONG);
                     invalidNumber.show();
@@ -75,6 +62,10 @@ public class MeasurementDialog extends DialogFragment
         });
 
         return view;
+    }
+
+    public static interface Callbacks {
+        public void onMeasurementChoiceSelected(int resultCode, Intent data);
     }
 
 

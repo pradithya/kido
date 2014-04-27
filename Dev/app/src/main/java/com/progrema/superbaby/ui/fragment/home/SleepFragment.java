@@ -24,13 +24,12 @@ import java.util.Calendar;
 /**
  * Fragment to log all sleep activity
  */
-public class SleepFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
-{
+public class SleepFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+    private static final int LOADER_LIST_VIEW = 0;
+    private static final int LOADER_SLEEP_FROM_TIME_REFERENCE = 1;
     private ObserveAbleListView sleepHistoryList;
     private Calendar now = Calendar.getInstance();
     private SleepHistoryAdapter mAdapter;
-    private static final int LOADER_LIST_VIEW = 0;
-    private static final int LOADER_SLEEP_FROM_TIME_REFERENCE = 1;
     private TextView nightPercentage;
     private TextView napPercentage;
     private TextView avgNightSleepDuration;
@@ -40,15 +39,13 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
     private TextView avgSleepDuration;
     private TextView avgActiveDuration;
 
-    public static SleepFragment getInstance()
-    {
+    public static SleepFragment getInstance() {
         return new SleepFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
-    {
+                             Bundle savedInstanceState) {
         // inflate fragment layout
         View rootView = inflater.inflate(R.layout.fragment_sleep, container, false);
 
@@ -77,12 +74,9 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
 
 
     @Override
-    public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle)
-    {
-        switch (loaderId)
-        {
-            case LOADER_LIST_VIEW:
-            {
+    public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle) {
+        switch (loaderId) {
+            case LOADER_LIST_VIEW: {
                 String[] args = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
                 return new CursorLoader(getActivity(),
                         BabyLogContract.Sleep.CONTENT_URI,
@@ -91,8 +85,7 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
                         args,
                         BabyLogContract.Sleep.Query.SORT_BY_TIMESTAMP_DESC);
             }
-            case LOADER_SLEEP_FROM_TIME_REFERENCE:
-            {
+            case LOADER_SLEEP_FROM_TIME_REFERENCE: {
                 // TODO: timeReference must be configurable based on user input
                 String timeReference =
                         String.valueOf(now.getTimeInMillis() - 7 * FormatUtils.DAY_MILLIS);
@@ -108,30 +101,24 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
                         argumentSelection,
                         BabyLogContract.Sleep.Query.SORT_BY_TIMESTAMP_DESC);
             }
-            default:
-            {
+            default: {
                 return null;
             }
         }
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor)
-    {
-        if (cursor.getCount() > 0)
-        {
+    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        if (cursor.getCount() > 0) {
             // show last inserted row
             cursor.moveToFirst();
 
-            switch (cursorLoader.getId())
-            {
-                case LOADER_LIST_VIEW:
-                {
+            switch (cursorLoader.getId()) {
+                case LOADER_LIST_VIEW: {
                     mAdapter.swapCursor(cursor);
                     break;
                 }
-                case LOADER_SLEEP_FROM_TIME_REFERENCE:
-                {
+                case LOADER_SLEEP_FROM_TIME_REFERENCE: {
                     /**
                      * Calculate average value of nursing from both side since the last 7 days.
                      * That is, get the value from DB than calculate the average value.
@@ -147,21 +134,17 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
                     ArrayList<Float> napSleepList = new ArrayList<Float>();
                     ArrayList<Float> sleepList = new ArrayList<Float>();
 
-                    for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext())
-                    {
+                    for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
                         duration = Float.valueOf(
                                 cursor.getString(BabyLogContract.Sleep.Query.OFFSET_DURATION));
                         timestamp = Float.valueOf(
                                 cursor.getString(BabyLogContract.Sleep.Query.OFFSET_TIMESTAMP));
                         sleepList.add(duration);
                         totalDuration += duration;
-                        if (isNight(timestamp))
-                        {
+                        if (isNight(timestamp)) {
                             nightDuration += duration;
                             nightSleepList.add(duration);
-                        }
-                        else
-                        {
+                        } else {
                             napDuration += duration;
                             napSleepList.add(duration);
                         }
@@ -182,7 +165,7 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
                     );
 
                     nightPercentage.setText(
-                        FormatUtils.formatSleepNightPercentage(getActivity(),
+                            FormatUtils.formatSleepNightPercentage(getActivity(),
                                     String.valueOf(percentageNight))
                     );
 
@@ -220,24 +203,20 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader)
-    {
+    public void onLoaderReset(Loader<Cursor> cursorLoader) {
         mAdapter.swapCursor(null);
     }
 
-    private float calculateAverage(ArrayList<Float> collection)
-    {
+    private float calculateAverage(ArrayList<Float> collection) {
         float average = 0;
-        for (float data : collection)
-        {
+        for (float data : collection) {
             average += data;
         }
         average = average / collection.size();
         return average;
     }
 
-    private boolean isNight(Float timeStamp)
-    {
+    private boolean isNight(Float timeStamp) {
         // assuming day is start at 00.00
         float oneDayInMilisecond = 24 * 60 * 60 * 1000;
         float sixAmInMilisecond = 6 * 60 * 60 * 1000;

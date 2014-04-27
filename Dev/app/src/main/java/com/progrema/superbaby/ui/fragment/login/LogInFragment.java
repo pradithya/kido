@@ -21,8 +21,7 @@ import com.progrema.superbaby.util.SecurityUtils;
 /**
  * Created by iqbalpakeh on 5/2/14.
  */
-public class LogInFragment extends Fragment implements View.OnClickListener
-{
+public class LogInFragment extends Fragment implements View.OnClickListener {
     /**
      * LogInFragment private data
      */
@@ -39,14 +38,12 @@ public class LogInFragment extends Fragment implements View.OnClickListener
      *
      * @return LogInFragment instance
      */
-    public static LogInFragment getInstance()
-    {
+    public static LogInFragment getInstance() {
         return new LogInFragment();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_login, container, false);
 
         loginButton =
@@ -76,10 +73,8 @@ public class LogInFragment extends Fragment implements View.OnClickListener
     }
 
     @Override
-    public void onClick(View view)
-    {
-        switch (view.getId())
-        {
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.fragment_authentication_button_login:
                 handleLoginButton();
                 break;
@@ -95,16 +90,14 @@ public class LogInFragment extends Fragment implements View.OnClickListener
     /**
      * Handle login button
      */
-    private void handleLoginButton()
-    {
+    private void handleLoginButton() {
         String userName, password, userMessage;
         userName = this.userName.getText().toString();
         password = userPassword.getText().toString();
 
         // user input checking
         userMessage = loginInputCheck(userName, password);
-        if (userMessage.equals(getResources().getString(R.string.ok_message)))
-        {
+        if (userMessage.equals(getResources().getString(R.string.ok_message))) {
             // save active user in preference
             ActiveContext.setActiveUser(getActivity(), userName);
 
@@ -123,16 +116,14 @@ public class LogInFragment extends Fragment implements View.OnClickListener
     /**
      * Handle registration button
      */
-    private void handleRegisterButton()
-    {
+    private void handleRegisterButton() {
         inflateRegisterPage();
     }
 
     /**
      * Inflate the login page interface
      */
-    private void inflateLoginPage()
-    {
+    private void inflateLoginPage() {
         // clear input
         clearInput();
 
@@ -149,8 +140,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener
     /**
      * Inflate the register page interface
      */
-    private void inflateRegisterPage()
-    {
+    private void inflateRegisterPage() {
         // clear input
         clearInput();
 
@@ -167,8 +157,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener
     /**
      * Clear user input
      */
-    private void clearInput()
-    {
+    private void clearInput() {
         userName.setText("");
         userPassword.setText("");
         userSecurityQuestion.setText("");
@@ -178,8 +167,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener
     /**
      * Handle finish registration button
      */
-    private void handleFinishRegisterButton()
-    {
+    private void handleFinishRegisterButton() {
         String name, password, secQuestion, secAnswer, userMessage;
         name = userName.getText().toString();
         password = userPassword.getText().toString();
@@ -188,8 +176,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener
 
         // user input checking
         userMessage = registerInputCheck(name, password, secQuestion, secAnswer);
-        if (userMessage.equals(getResources().getString(R.string.ok_message)))
-        {
+        if (userMessage.equals(getResources().getString(R.string.ok_message))) {
             // get input value and store to DB
             User user = new User();
             user.setName(name);
@@ -200,9 +187,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener
 
             inflateLoginPage();
             return;
-        }
-        else if (userMessage.equals(getResources().getString(R.string.username_already_exist_message)))
-        {
+        } else if (userMessage.equals(getResources().getString(R.string.username_already_exist_message))) {
             inflateLoginPage();
         }
 
@@ -218,26 +203,22 @@ public class LogInFragment extends Fragment implements View.OnClickListener
      * @param password user's input
      * @return message describing condition of checking
      */
-    private String loginInputCheck(String userName, String password)
-    {
+    private String loginInputCheck(String userName, String password) {
         Cursor cursor;
 
         // empty value checking
-        if (userName.isEmpty() || password.isEmpty())
-        {
+        if (userName.isEmpty() || password.isEmpty()) {
             return getResources().getString(R.string.input_not_complete_message);
         }
 
         // user name is not registered
         cursor = usernameQuery(userName);
-        if (cursor.getCount() == 0)
-        {
+        if (cursor.getCount() == 0) {
             return getResources().getString(R.string.username_is_not_registered_message);
         }
 
         // username and password verification
-        if (!passwordVerification(cursor, password))
-        {
+        if (!passwordVerification(cursor, password)) {
             return getResources().getString(R.string.wrong_username_and_password_message);
         }
 
@@ -252,21 +233,17 @@ public class LogInFragment extends Fragment implements View.OnClickListener
      * @param password user's input
      * @return TRUE if verification is okay, FALSE otherwise
      */
-    private boolean passwordVerification(Cursor cursor, String password)
-    {
+    private boolean passwordVerification(Cursor cursor, String password) {
         String passwordHash;
 
         // get username from user input and password's hash value from database
-        if (cursor.getCount() > 0)
-        {
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             passwordHash = cursor.getString(BabyLogContract.User.Query.OFFSET_PASSWORD);
 
             // compare the hash value of stored password and input password
             return (SecurityUtils.computeSHA1(password).compareTo(passwordHash) == 0);
-        }
-        else
-        {
+        } else {
             return false;
         }
 
@@ -281,21 +258,18 @@ public class LogInFragment extends Fragment implements View.OnClickListener
      * @param secAnswer   user's input
      * @return message describing condition of checking
      */
-    private String registerInputCheck(String userName, String password, String secQuestion, String secAnswer)
-    {
+    private String registerInputCheck(String userName, String password, String secQuestion, String secAnswer) {
         Cursor cursor;
 
         // empty value checking
         if (userName.isEmpty() || password.isEmpty() ||
-                secQuestion.isEmpty() || secAnswer.isEmpty())
-        {
+                secQuestion.isEmpty() || secAnswer.isEmpty()) {
             return getResources().getString(R.string.input_not_complete_message);
         }
 
         // user name already exist checking
         cursor = usernameQuery(userName);
-        if (cursor.getCount() > 0)
-        {
+        if (cursor.getCount() > 0) {
             return getResources().getString(R.string.username_already_exist_message);
         }
 
@@ -309,8 +283,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener
      * @param userName user input
      * @return cursor containing user query result
      */
-    private Cursor usernameQuery(String userName)
-    {
+    private Cursor usernameQuery(String userName) {
         //TODO: we should do query on another thread and show the waiting icon
 
         String[] selectionArgument = {userName};

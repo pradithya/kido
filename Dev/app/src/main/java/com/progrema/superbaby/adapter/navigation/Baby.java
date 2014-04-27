@@ -13,10 +13,8 @@ import com.progrema.superbaby.util.ActiveContext;
 /**
  * Created by iqbalpakeh on 15/2/14.
  */
-public class Baby extends Item
-{
-    public Baby(String text)
-    {
+public class Baby extends Item {
+    public Baby(String text) {
         this.setText(text);
         this.setLayout(R.layout.navigation_drawer_baby_item);
     }
@@ -30,8 +28,7 @@ public class Baby extends Item
      * @return inflated view
      */
     @Override
-    public View inflate(Context context, View view, ViewGroup viewGroup)
-    {
+    public View inflate(Context context, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(getLayout(), viewGroup, false);
@@ -42,12 +39,9 @@ public class Baby extends Item
 
         RadioButton activeFlag;
         activeFlag = (RadioButton) view.findViewById(R.id.active_baby_flag);
-        if (ActiveContext.getActiveBaby(context).getName().equals(getText()))
-        {
+        if (ActiveContext.getActiveBaby(context).getName().equals(getText())) {
             activeFlag.setChecked(true);
-        }
-        else
-        {
+        } else {
             activeFlag.setChecked(false);
         }
 

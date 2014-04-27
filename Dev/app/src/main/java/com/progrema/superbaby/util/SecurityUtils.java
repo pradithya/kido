@@ -11,27 +11,19 @@ import java.security.NoSuchAlgorithmException;
  *
  * @author aria
  */
-public class SecurityUtils
-{
-    public static String computeSHA1(String inputPlainText)
-    {
+public class SecurityUtils {
+    public static String computeSHA1(String inputPlainText) {
         MessageDigest sha1 = null;
 
-        try
-        {
+        try {
             sha1 = MessageDigest.getInstance("SHA-1");
-        }
-        catch (NoSuchAlgorithmException e)
-        {
+        } catch (NoSuchAlgorithmException e) {
             //do nothing
         }
 
-        try
-        {
+        try {
             sha1.update(inputPlainText.getBytes("ASCII"));
-        }
-        catch (UnsupportedEncodingException e)
-        {
+        } catch (UnsupportedEncodingException e) {
             // do nothing
         }
 

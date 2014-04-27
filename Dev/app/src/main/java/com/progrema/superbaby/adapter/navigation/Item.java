@@ -7,21 +7,19 @@ import android.view.ViewGroup;
 /**
  * Created by iqbalpakeh on 15/2/14.
  */
-public abstract class Item
-{
+public abstract class Item {
+    protected int layout;
     /**
      * private field
      */
     private String text;
-    protected int layout;
 
     /**
      * get text
      *
      * @return text
      */
-    public String getText()
-    {
+    public String getText() {
         return text;
     }
 
@@ -30,8 +28,7 @@ public abstract class Item
      *
      * @param text view text
      */
-    public void setText(String text)
-    {
+    public void setText(String text) {
         this.text = text;
     }
 
@@ -40,8 +37,7 @@ public abstract class Item
      *
      * @return item layout
      */
-    public int getLayout()
-    {
+    public int getLayout() {
         return layout;
     }
 
@@ -50,8 +46,7 @@ public abstract class Item
      *
      * @param layout item layout
      */
-    public void setLayout(int layout)
-    {
+    public void setLayout(int layout) {
         this.layout = layout;
     }
 

@@ -19,20 +19,17 @@ import com.progrema.superbaby.widget.customview.ObserveAbleListView;
 /**
  * Created by iqbalpakeh on 26/2/14.
  */
-public class MeasurementFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
-{
+public class MeasurementFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+    private static final int LOADER_ID = 0;
     private ObserveAbleListView measurementHistoryList;
     private MeasurementHistoryAdapter mAdapter;
-    private static final int LOADER_ID = 0;
 
-    public static MeasurementFragment getInstance()
-    {
+    public static MeasurementFragment getInstance() {
         return new MeasurementFragment();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // inflate fragment layout
         View rootView = inflater.inflate(R.layout.fragment_measurement, container, false);
 
@@ -48,8 +45,7 @@ public class MeasurementFragment extends Fragment implements LoaderManager.Loade
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args)
-    {
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String[] selArgs = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
         CursorLoader cl = new CursorLoader(getActivity(), BabyLogContract.Measurement.CONTENT_URI,
                 BabyLogContract.Measurement.Query.PROJECTION,
@@ -60,23 +56,18 @@ public class MeasurementFragment extends Fragment implements LoaderManager.Loade
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor)
-    {
-        if (cursor.getCount() > 0)
-        {
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        if (cursor.getCount() > 0) {
             // show last inserted row
             cursor.moveToFirst();
             mAdapter.swapCursor(cursor);
-        }
-        else
-        {
+        } else {
             mAdapter.swapCursor(null);
         }
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader)
-    {
+    public void onLoaderReset(Loader<Cursor> loader) {
         mAdapter.swapCursor(null);
     }
 }

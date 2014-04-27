@@ -6,31 +6,25 @@ import android.os.Parcelable;
 /**
  * Created by iqbalpakeh on 20/1/14.
  */
-abstract public class BaseModel implements Parcelable, IDBServices
-{
+abstract public class BaseModel implements Parcelable, IDBServices {
     protected long ID;
 
-    public BaseModel()
-    {
+    public BaseModel() {
     }
 
-    public long getID()
-    {
+    public long getID() {
         return ID;
     }
 
-    public void setID(long ID)
-    {
+    public void setID(long ID) {
         this.ID = ID;
     }
 
-    public void writeToParcel(Parcel parcel, int i)
-    {
+    public void writeToParcel(Parcel parcel, int i) {
         parcel.writeLong(ID);
     }
 
-    public void readFromParcel(Parcel parcel)
-    {
+    public void readFromParcel(Parcel parcel) {
         ID = parcel.readLong();
     }
 }

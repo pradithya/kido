@@ -11,82 +11,52 @@ import com.progrema.superbaby.provider.BabyLogContract;
  *
  * @author aria
  */
-public class Nursing extends BaseActivity
-{
+public class Nursing extends BaseActivity {
+    public final static String NURSING_TYPE_KEY = "type";
+    public final static String FORMULA_VOLUME_KEY = "volume";
     private long duration;
     private NursingType type;
     private long volume;
-    public final static String NURSING_TYPE_KEY = "type";
-    public final static String FORMULA_VOLUME_KEY = "volume";
 
-    public enum NursingType
-    {
-        LEFT("LEFT"),
-        RIGHT("RIGHT"),
-        FORMULA("FORMULA");
-
-        private String title;
-
-        NursingType(String title)
-        {
-            this.title = title;
-        }
-
-        public String getTitle()
-        {
-            return this.title;
-        }
-    }
-
-    public Nursing()
-    {
+    public Nursing() {
 
     }
 
-    public Nursing(Parcel parcel)
-    {
+    public Nursing(Parcel parcel) {
         readFromParcel(parcel);
     }
 
-    public long getDuration()
-    {
+    public long getDuration() {
         return duration;
     }
 
-    public void setDuration(long duration)
-    {
+    public void setDuration(long duration) {
         this.duration = duration;
     }
 
-    public NursingType getType()
-    {
+    public NursingType getType() {
         return type;
     }
 
-    public void setType(NursingType type)
-    {
+    public void setType(NursingType type) {
         this.type = type;
     }
 
-    public long getVolume()
-    {
+    public long getVolume() {
         return volume;
     }
 
-    public void setVolume(long volume)
-    {
+    public void setVolume(long volume) {
         this.volume = volume;
     }
 
     @Override
-    public int describeContents()
-    {
+    public int describeContents() {
         return 0;
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i)
-    {
+    public void writeToParcel(Parcel parcel, int i) {
         super.writeToParcel(parcel, i);
         parcel.writeLong(duration);
         parcel.writeString(type.getTitle());
@@ -94,8 +64,7 @@ public class Nursing extends BaseActivity
     }
 
     @Override
-    public void readFromParcel(Parcel parcel)
-    {
+    public void readFromParcel(Parcel parcel) {
         super.readFromParcel(parcel);
         duration = parcel.readLong();
         type = NursingType.valueOf(parcel.readString());
@@ -103,8 +72,7 @@ public class Nursing extends BaseActivity
     }
 
     @Override
-    public void insert(Context context)
-    {
+    public void insert(Context context) {
         ContentValues values = new ContentValues();
         values.put(BabyLogContract.Nursing.BABY_ID, getBabyID());
         values.put(BabyLogContract.Nursing.TIMESTAMP, getTimeStampInString());
@@ -115,7 +83,22 @@ public class Nursing extends BaseActivity
     }
 
     @Override
-    public void delete(Context context)
-    {
+    public void delete(Context context) {
+    }
+
+    public enum NursingType {
+        LEFT("LEFT"),
+        RIGHT("RIGHT"),
+        FORMULA("FORMULA");
+
+        private String title;
+
+        NursingType(String title) {
+            this.title = title;
+        }
+
+        public String getTitle() {
+            return this.title;
+        }
     }
 }

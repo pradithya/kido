@@ -24,8 +24,7 @@ import java.util.Calendar;
 /**
  * Created by iqbalpakeh on 18/1/14.
  */
-public class NursingFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
-{
+public class NursingFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_NURSING_FROM_TIME_REFERENCE = 1;
     private static final int LOADER_NURSING_LAST_SIDE = 2;
@@ -39,15 +38,13 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
     private TextView leftPerDay;
     private TextView formulaPerDay;
 
-    public static NursingFragment getInstance()
-    {
+    public static NursingFragment getInstance() {
         return new NursingFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
-    {
+                             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_nursing, container, false);
 
         // get ui object
@@ -72,12 +69,9 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundel)
-    {
-        switch (loaderId)
-        {
-            case LOADER_LIST_VIEW:
-            {
+    public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundel) {
+        switch (loaderId) {
+            case LOADER_LIST_VIEW: {
                 String[] argumentSelection =
                         {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
                 return new CursorLoader(getActivity(),
@@ -87,8 +81,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                         argumentSelection,
                         BabyLogContract.Nursing.Query.SORT_BY_TIMESTAMP_DESC);
             }
-            case LOADER_NURSING_FROM_TIME_REFERENCE:
-            {
+            case LOADER_NURSING_FROM_TIME_REFERENCE: {
                 // TODO: timeReference must be configurable based on user input
                 String timeReference =
                         String.valueOf(now.getTimeInMillis() - 7 * FormatUtils.DAY_MILLIS);
@@ -104,8 +97,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                         argumentSelection,
                         BabyLogContract.Nursing.Query.SORT_BY_TIMESTAMP_DESC);
             }
-            case LOADER_NURSING_LAST_SIDE:
-            {
+            case LOADER_NURSING_LAST_SIDE: {
                 String[] projection = {BabyLogContract.Nursing.SIDES};
                 String[] argumentSelection =
                         {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
@@ -116,8 +108,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                         argumentSelection,
                         null);
             }
-            default:
-            {
+            default: {
                 return null;
             }
         }
@@ -125,42 +116,31 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> cl, Cursor cursor)
-    {
-        if (cursor.getCount() > 0)
-        {
+    public void onLoadFinished(Loader<Cursor> cl, Cursor cursor) {
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
-            switch (cl.getId())
-            {
-                case LOADER_LIST_VIEW:
-                {
+            switch (cl.getId()) {
+                case LOADER_LIST_VIEW: {
                     mAdapter.swapCursor(cursor);
                     break;
                 }
-                case LOADER_NURSING_FROM_TIME_REFERENCE:
-                {
+                case LOADER_NURSING_FROM_TIME_REFERENCE: {
                     /**
                      * Calculate average value of nursing from both side since the last 7 days.
                      * That is, get the value from DB than calculate the average value.
                      */
                     float duration = 0, totalDuration = 0,
                             leftDuration = 0, rightDuration = 0, formulaVol = 0, result = 0;
-                    for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext())
-                    {
+                    for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
                         duration = Float.valueOf(
                                 cursor.getString(BabyLogContract.Nursing.Query.OFFSET_DURATION));
                         String side = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_SIDES);
                         totalDuration += duration;
-                        if (side.equals(Nursing.NursingType.LEFT.getTitle()))
-                        {
+                        if (side.equals(Nursing.NursingType.LEFT.getTitle())) {
                             leftDuration += duration;
-                        }
-                        else if (side.equals(Nursing.NursingType.RIGHT.getTitle()))
-                        {
+                        } else if (side.equals(Nursing.NursingType.RIGHT.getTitle())) {
                             rightDuration += duration;
-                        }
-                        else if (side.equals(Nursing.NursingType.FORMULA.getTitle()))
-                        {
+                        } else if (side.equals(Nursing.NursingType.FORMULA.getTitle())) {
                             formulaVol += Float.valueOf(
                                     cursor.getString(BabyLogContract.Nursing.Query.OFFSET_VOLUME));
                         }
@@ -170,13 +150,15 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                     percentageLeft.setText(
                             FormatUtils.formatNursingPercentage(getActivity(),
                                     getActivity().getResources().getString(R.string.left_side),
-                                    String.valueOf(result)));
+                                    String.valueOf(result))
+                    );
 
                     result = rightDuration / totalDuration * 100;
                     percentageRight.setText(
                             FormatUtils.formatNursingPercentage(getActivity(),
                                     getActivity().getResources().getString(R.string.right_side),
-                                    String.valueOf(result)));
+                                    String.valueOf(result))
+                    );
 
                     // calculate total left side
                     result = leftDuration / FormatUtils.MINUTE_MILLIS; // convert to minutes
@@ -185,7 +167,8 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                     leftPerDay.setText(
                             FormatUtils.formatNursingPerDay(getActivity(),
                                     getActivity().getResources().getString(R.string.left_side),
-                                    String.valueOf(result), "m/d"));
+                                    String.valueOf(result), "m/d")
+                    );
 
                     // calculate total right side
                     result = rightDuration / FormatUtils.MINUTE_MILLIS; // convert to minutes
@@ -194,7 +177,8 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                     rightPerDay.setText(
                             FormatUtils.formatNursingPerDay(getActivity(),
                                     getActivity().getResources().getString(R.string.right_side),
-                                    String.valueOf(result), "m/d"));
+                                    String.valueOf(result), "m/d")
+                    );
 
                     // calculate total formula
                     result = formulaVol / 7; // meantime from one week (7 days)
@@ -202,15 +186,14 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                     formulaPerDay.setText(
                             FormatUtils.formatNursingPerDay(getActivity(),
                                     getActivity().getResources().getString(R.string.formula),
-                                    String.valueOf(result), "mL/d"));
+                                    String.valueOf(result), "mL/d")
+                    );
 
                     break;
                 }
-                case LOADER_NURSING_LAST_SIDE:
-                {
+                case LOADER_NURSING_LAST_SIDE: {
                     String sides = cursor.getString(0);
-                    if (sides != null)
-                    {
+                    if (sides != null) {
                         lastSlide.setText(FormatUtils.formatNursingLastSide(getActivity(), sides));
                     }
                     break;
@@ -220,8 +203,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> cl)
-    {
+    public void onLoaderReset(Loader<Cursor> cl) {
         mAdapter.swapCursor(null);
     }
 }

@@ -15,15 +15,13 @@ import com.progrema.superbaby.ui.fragment.login.SplashScreenFragment;
 /**
  * Created by iqbalpakeh on 5/2/14.
  */
-public class LoginActivity extends FragmentActivity
-{
+public class LoginActivity extends FragmentActivity {
     public static final String PREF_LOGIN = "PrefLogin";
     public static final String PREF_SKIP_LOGIN = "SkipLogin";
     public static final String INTENT_NEW_BABY_REQUEST = "IntentNewBabyRequest";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -32,21 +30,16 @@ public class LoginActivity extends FragmentActivity
         boolean isSkipLogin = setting.getBoolean(PREF_SKIP_LOGIN, false);
         boolean newBabyRequest = getIntent().getBooleanExtra(INTENT_NEW_BABY_REQUEST, false);
 
-        if (isSkipLogin && !newBabyRequest)
-        {
+        if (isSkipLogin && !newBabyRequest) {
             // Go to HomeActivity
             startActivity(new Intent(this, HomeActivity.class));
             finish();
-        }
-        else if (isSkipLogin && newBabyRequest)
-        {
+        } else if (isSkipLogin && newBabyRequest) {
             // move to baby input fragment
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.login_activity_container, BabyInputFragment.getInstance());
             fragmentTransaction.commit();
-        }
-        else
-        {
+        } else {
             // Go to LoginPage
             FragmentManager fragmentManager = getSupportFragmentManager();
             Fragment module = SplashScreenFragment.getInstance();

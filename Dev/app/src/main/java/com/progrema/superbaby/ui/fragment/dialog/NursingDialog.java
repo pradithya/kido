@@ -18,35 +18,24 @@ import com.progrema.superbaby.util.FormatUtils;
 /**
  * Created by aria on 20/2/14.
  */
-public class NursingDialog extends DialogFragment
-{
+public class NursingDialog extends DialogFragment {
     private Callbacks mCallbacks;
 
-    public void setCallbacks(Callbacks listener)
-    {
-        mCallbacks = listener;
-    }
-
-    public static interface Callbacks
-    {
-        public void onNursingChoiceSelected(int resultCode, Intent data);
-    }
-
-    public static NursingDialog getInstance()
-    {
+    public static NursingDialog getInstance() {
         return new NursingDialog();
     }
 
+    public void setCallbacks(Callbacks listener) {
+        mCallbacks = listener;
+    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_fragment_nursing, parent, false);
         Button buttonLeft = (Button) view.findViewById(R.id.dialog_choice_left);
-        buttonLeft.setOnClickListener(new View.OnClickListener()
-        {
+        buttonLeft.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 Intent result = new Intent();
                 result.putExtra(Nursing.NURSING_TYPE_KEY, Nursing.NursingType.LEFT.getTitle());
                 NursingDialog.this.mCallbacks.onNursingChoiceSelected(0, result);
@@ -54,11 +43,9 @@ public class NursingDialog extends DialogFragment
             }
         });
         Button buttonRight = (Button) view.findViewById(R.id.dialog_choice_right);
-        buttonRight.setOnClickListener(new View.OnClickListener()
-        {
+        buttonRight.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 Intent result = new Intent();
                 result.putExtra(Nursing.NURSING_TYPE_KEY, Nursing.NursingType.RIGHT.getTitle());
                 NursingDialog.this.mCallbacks.onNursingChoiceSelected(0, result);
@@ -66,27 +53,22 @@ public class NursingDialog extends DialogFragment
             }
         });
         Button buttonFormula = (Button) view.findViewById(R.id.dialog_choice_formula);
-        buttonFormula.setOnClickListener(new View.OnClickListener()
-        {
+        buttonFormula.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 LinearLayout extraInfoFormula =
                         (LinearLayout) getDialog().findViewById(R.id.container_formula_entry);
                 extraInfoFormula.setVisibility(View.VISIBLE);
             }
         });
         Button formulaOK = (Button) view.findViewById(R.id.button_formula_ok);
-        formulaOK.setOnClickListener(new View.OnClickListener()
-        {
+        formulaOK.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 EditText inputVolume = (EditText) getDialog().findViewById(R.id.entry_text_volume);
                 String volume = inputVolume.getText().toString();
 
-                if (!FormatUtils.isValidNumber(volume))
-                {
+                if (!FormatUtils.isValidNumber(volume)) {
                     Toast invalidNumber =
                             Toast.makeText(getActivity(), "invalid number", Toast.LENGTH_LONG);
                     invalidNumber.show();
@@ -100,5 +82,9 @@ public class NursingDialog extends DialogFragment
             }
         });
         return view;
+    }
+
+    public static interface Callbacks {
+        public void onNursingChoiceSelected(int resultCode, Intent data);
     }
 }

@@ -14,9 +14,7 @@ import com.progrema.superbaby.util.SelectionBuilder;
 /**
  * @
  */
-public class BabyLogProvider extends ContentProvider
-{
-    private BabyLogDatabase mOpenHelper;
+public class BabyLogProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private static final int USER = 100;
     private static final int USER_BABY_MAP = 200;
@@ -32,9 +30,9 @@ public class BabyLogProvider extends ContentProvider
     private static final int MEASUREMENT_MAX_TIMESTAMP = 701;
     private static final int PHOTO = 800;
     private static final int ACTIVITY = 900;
+    private BabyLogDatabase mOpenHelper;
 
-    private static UriMatcher buildUriMatcher()
-    {
+    private static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = BabyLogContract.CONTENT_AUTHORITY;
 
@@ -57,20 +55,17 @@ public class BabyLogProvider extends ContentProvider
     }
 
     @Override
-    public boolean onCreate()
-    {
+    public boolean onCreate() {
         mOpenHelper = new BabyLogDatabase(getContext());
         return true;
     }
 
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)
-    {
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
         final int match = sUriMatcher.match(uri);
 
-        switch (match)
-        {
+        switch (match) {
             //TODO: improve the ugly code by not using rawQuery!!
             case ACTIVITY:
                 return db.rawQuery(BabyLogDatabase.JOIN_ALL, selectionArgs);
@@ -84,8 +79,7 @@ public class BabyLogProvider extends ContentProvider
                 return db.rawQuery("SELECT MAX(timestamp) FROM diaper WHERE baby_id = ?", selectionArgs);
             case MEASUREMENT_MAX_TIMESTAMP:
                 return db.rawQuery("SELECT MAX(timestamp) FROM measurement WHERE baby_id = ?", selectionArgs);
-            default:
-            {
+            default: {
                 final SelectionBuilder builder = buildExpandableSelection(uri, match);
                 return builder.where(selection, selectionArgs).query(db, projection, sortOrder);
             }
@@ -93,28 +87,23 @@ public class BabyLogProvider extends ContentProvider
     }
 
     @Override
-    public String getType(Uri uri)
-    {
+    public String getType(Uri uri) {
         return null;
     }
 
     @Override
-    public Uri insert(Uri uri, ContentValues contentValues)
-    {
+    public Uri insert(Uri uri, ContentValues contentValues) {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
 
-        switch (match)
-        {
-            case USER:
-            {
+        switch (match) {
+            case USER: {
                 // add new user to user table
                 db.insertOrThrow(BabyLogDatabase.Tables.USER, null, contentValues);
                 return BabyLogContract.User.buildUri(contentValues.getAsString(BaseColumns._ID));
             }
 
-            case BABY:
-            {
+            case BABY: {
                 // add new baby to baby table
                 ContentValues values = new ContentValues();
                 values.put(BabyLogContract.Baby.NAME, contentValues.getAsString(BabyLogContract.Baby.NAME));
@@ -131,8 +120,7 @@ public class BabyLogProvider extends ContentProvider
                 return BabyLogContract.Baby.buildUri(contentValues.getAsString(BaseColumns._ID));
             }
 
-            case SLEEP:
-            {
+            case SLEEP: {
                 // add new sleep activity to activity table
                 ContentValues values = new ContentValues();
                 values.put(BabyLogContract.ActivityColumns.BABY_ID,
@@ -151,8 +139,7 @@ public class BabyLogProvider extends ContentProvider
                 notifyChange(BabyLogContract.Activity.CONTENT_URI);
                 return BabyLogContract.Sleep.buildUri(contentValues.getAsString(BaseColumns._ID));
             }
-            case DIAPER:
-            {
+            case DIAPER: {
                 // add new diaper activity to activity table
                 ContentValues values = new ContentValues();
                 values.put(BabyLogContract.ActivityColumns.BABY_ID,
@@ -173,8 +160,7 @@ public class BabyLogProvider extends ContentProvider
 
             }
 
-            case NURSING:
-            {
+            case NURSING: {
                 // add new nursing activity to activity table
                 ContentValues values = new ContentValues();
                 values.put(BabyLogContract.ActivityColumns.BABY_ID,
@@ -194,8 +180,7 @@ public class BabyLogProvider extends ContentProvider
                 return BabyLogContract.Nursing.buildUri(contentValues.getAsString(BaseColumns._ID));
             }
 
-            case MEASUREMENT:
-            {
+            case MEASUREMENT: {
                 // add new measurement activity  to activity table
                 ContentValues values = new ContentValues();
                 values.put(BabyLogContract.Measurement.BABY_ID,
@@ -215,74 +200,59 @@ public class BabyLogProvider extends ContentProvider
                 return BabyLogContract.Measurement.buildUri(contentValues.getAsString(BaseColumns._ID));
             }
 
-            default:
-            {
+            default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
             }
         }
     }
 
     @Override
-    public int delete(Uri uri, String s, String[] strings)
-    {
+    public int delete(Uri uri, String s, String[] strings) {
         deleteDataBase();
         return 0;
     }
 
-    private void deleteDataBase()
-    {
+    private void deleteDataBase() {
         mOpenHelper.close();
         BabyLogDatabase.deleteDataBase(getContext());
         mOpenHelper = new BabyLogDatabase(getContext());
     }
 
     @Override
-    public int update(Uri uri, ContentValues contentValues, String s, String[] strings)
-    {
+    public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
         return 0;
     }
 
-    private void notifyChange(Uri uri)
-    {
+    private void notifyChange(Uri uri) {
         Context context = getContext();
         context.getContentResolver().notifyChange(uri, null);
     }
 
-    private SelectionBuilder buildExpandableSelection(Uri uri, int match)
-    {
+    private SelectionBuilder buildExpandableSelection(Uri uri, int match) {
         final SelectionBuilder builder = new SelectionBuilder();
-        switch (match)
-        {
-            case USER:
-            {
+        switch (match) {
+            case USER: {
                 return builder.table(BabyLogDatabase.Tables.USER);
             }
-            case BABY:
-            {
+            case BABY: {
                 return builder.table(BabyLogDatabase.Tables.BABY);
             }
-            case USER_BABY_MAP:
-            {
+            case USER_BABY_MAP: {
                 return builder.table(BabyLogDatabase.Tables.USER_BABY_MAP);
             }
-            case SLEEP:
-            {
+            case SLEEP: {
                 return builder.table(BabyLogDatabase.Tables.SLEEP);
             }
-            case DIAPER:
-            {
+            case DIAPER: {
                 return builder.table(BabyLogDatabase.Tables.DIAPER);
             }
-            case NURSING:
-            {
+            case NURSING: {
                 return builder.table(BabyLogDatabase.Tables.NURSING);
             }
-            case MEASUREMENT:
-            {
+            case MEASUREMENT: {
                 return builder.table(BabyLogDatabase.Tables.MEASUREMENT);
             }
-            default:
-            {
+            default: {
                 return null;
             }
         }

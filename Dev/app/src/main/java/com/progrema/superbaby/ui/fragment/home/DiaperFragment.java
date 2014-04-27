@@ -21,21 +21,18 @@ import com.progrema.superbaby.widget.customview.ObserveAbleListView;
  *
  * @author aria
  */
-public class DiaperFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
-{
+public class DiaperFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final int LOADER_ID = 0;
     private ObserveAbleListView diaperHistoryList;
     private DiaperHistoryAdapter mAdapter;
 
-    public static DiaperFragment getInstance()
-    {
+    public static DiaperFragment getInstance() {
         return new DiaperFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
-    {
+                             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_diaper, container, false);
 
         // set adapter to list view
@@ -50,8 +47,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle)
-    {
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         String[] args = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
         CursorLoader cl = new CursorLoader(getActivity(), BabyLogContract.Diaper.CONTENT_URI,
                 BabyLogContract.Diaper.Query.PROJECTION,
@@ -62,23 +58,18 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor)
-    {
-        if (cursor.getCount() > 0)
-        {
+    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        if (cursor.getCount() > 0) {
             /** show last inserted row */
             cursor.moveToFirst();
             mAdapter.swapCursor(cursor);
-        }
-        else
-        {
+        } else {
             mAdapter.swapCursor(null);
         }
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader)
-    {
+    public void onLoaderReset(Loader<Cursor> cursorLoader) {
         mAdapter.swapCursor(null);
     }
 }

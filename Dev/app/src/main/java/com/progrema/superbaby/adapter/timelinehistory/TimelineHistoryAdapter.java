@@ -16,23 +16,19 @@ import com.progrema.superbaby.util.FormatUtils;
 /**
  * Created by aria on 21/2/14.
  */
-public class TimeLineHistoryAdapter extends CursorAdapter
-{
-    public TimeLineHistoryAdapter(Context context, Cursor c, int flags)
-    {
+public class TimeLineHistoryAdapter extends CursorAdapter {
+    public TimeLineHistoryAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
 
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent)
-    {
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
         return inflater.inflate(R.layout.history_item_activity, parent, false);
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor)
-    {
+    public void bindView(View view, Context context, Cursor cursor) {
         String timeStamp = cursor.getString(BabyLogContract.Activity.Query.OFFSET_TIMESTAMP);
         String activityType = cursor.getString(BabyLogContract.Activity.Query.OFFSET_ACTIVITY_TYPE);
         String sleepDuration = cursor.getString(BabyLogContract.Activity.Query.OFFSET_SLEEP_DURATION);
@@ -61,27 +57,21 @@ public class TimeLineHistoryAdapter extends CursorAdapter
         extra_1.setVisibility(View.GONE);
         extra_2.setVisibility(View.GONE);
 
-        if (activityType.equals(BabyLogContract.Activity.TYPE_SLEEP))
-        {
+        if (activityType.equals(BabyLogContract.Activity.TYPE_SLEEP)) {
             extra_0.setVisibility(View.VISIBLE);
             extra_1.setVisibility(View.VISIBLE);
             extra_0.setText(FormatUtils.formatTimeBoundary(context, timeStamp, sleepDuration));
             extra_1.setText(FormatUtils.formatDuration(context, sleepDuration));
-        }
-        else if (activityType.equals(BabyLogContract.Activity.TYPE_DIAPER))
-        {
+        } else if (activityType.equals(BabyLogContract.Activity.TYPE_DIAPER)) {
             extra_0.setVisibility(View.VISIBLE);
             extra_0.setText(diaperType);
-        }
-        else if (activityType.equals(BabyLogContract.Activity.TYPE_NURSING))
-        {
+        } else if (activityType.equals(BabyLogContract.Activity.TYPE_NURSING)) {
             extra_0.setVisibility(View.VISIBLE);
             extra_1.setVisibility(View.VISIBLE);
             extra_0.setText(nursingSides);
             extra_1.setText(FormatUtils.formatDuration(context, nursingDuration));
 
-            if (nursingSides.equals(Nursing.NursingType.FORMULA.getTitle()))
-            {
+            if (nursingSides.equals(Nursing.NursingType.FORMULA.getTitle())) {
                 extra_2.setVisibility(View.VISIBLE);
                 extra_2.setText(nursingVolume);
             }

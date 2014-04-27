@@ -20,8 +20,7 @@ import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.FormatUtils;
 import com.progrema.superbaby.widget.customview.ObserveAbleListView;
 
-public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
-{
+public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_LAST_NURSING = 1;
     private static final int LOADER_LAST_SLEEP = 2;
@@ -38,15 +37,13 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
     private TextView headerLastDiaper;
     private TextView headerLastMeasurement;
 
-    public static TimeLineFragment getInstance()
-    {
+    public static TimeLineFragment getInstance() {
         return new TimeLineFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
-    {
+                             Bundle savedInstanceState) {
         // inflate fragment layout
         View rootView = inflater.inflate(R.layout.fragment_timeline, container, false);
 
@@ -77,8 +74,7 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         Baby baby = ActiveContext.getActiveBaby(getActivity());
         headerBabyName.setText(baby.getName());
@@ -88,14 +84,11 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle)
-    {
+    public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle) {
         String[] argumentSelection =
                 {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
-        switch (loaderId)
-        {
-            case LOADER_LIST_VIEW:
-            {
+        switch (loaderId) {
+            case LOADER_LIST_VIEW: {
                 return new CursorLoader(getActivity(),
                         BabyLogContract.Activity.CONTENT_URI,
                         BabyLogContract.Activity.Query.PROJECTION,
@@ -103,8 +96,7 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                         argumentSelection,
                         BabyLogContract.Activity.Query.SORT_BY_TIMESTAMP_DESC);
             }
-            case LOADER_LAST_NURSING:
-            {
+            case LOADER_LAST_NURSING: {
                 String[] projection = {BabyLogContract.Nursing.TIMESTAMP};
                 return new CursorLoader(getActivity(),
                         BabyLogContract.Nursing.MAX_TIMESTAMP,
@@ -113,8 +105,7 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                         argumentSelection,
                         null);
             }
-            case LOADER_LAST_SLEEP:
-            {
+            case LOADER_LAST_SLEEP: {
                 String[] projection = {BabyLogContract.Sleep.TIMESTAMP};
                 return new CursorLoader(getActivity(),
                         BabyLogContract.Sleep.MAX_TIMESTAMP,
@@ -123,8 +114,7 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                         argumentSelection,
                         null);
             }
-            case LOADER_LAST_DIAPER:
-            {
+            case LOADER_LAST_DIAPER: {
                 String[] projection = {BabyLogContract.Diaper.TIMESTAMP};
                 return new CursorLoader(getActivity(),
                         BabyLogContract.Diaper.MAX_TIMESTAMP,
@@ -133,8 +123,7 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                         argumentSelection,
                         null);
             }
-            case LOADER_LAST_MEASUREMENT:
-            {
+            case LOADER_LAST_MEASUREMENT: {
                 String[] projection = {BabyLogContract.Measurement.TIMESTAMP};
                 return new CursorLoader(getActivity(),
                         BabyLogContract.Measurement.MAX_TIMESTAMP,
@@ -143,76 +132,70 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                         argumentSelection,
                         null);
             }
-            default:
-            {
+            default: {
                 return null;
             }
         }
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> cl, Cursor cursor)
-    {
-        if (cursor.getCount() > 0)
-        {
+    public void onLoadFinished(Loader<Cursor> cl, Cursor cursor) {
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
-            switch (cl.getId())
-            {
-                case LOADER_LIST_VIEW:
-                {
+            switch (cl.getId()) {
+                case LOADER_LIST_VIEW: {
                     mAdapter.swapCursor(cursor);
                     break;
                 }
-                case LOADER_LAST_NURSING:
-                {
+                case LOADER_LAST_NURSING: {
                     String timestamp = cursor.getString(0);
-                    if (timestamp != null)
-                    {
+                    if (timestamp != null) {
                         String time = DateUtils.
                                 getRelativeTimeSpanString(Long.parseLong(timestamp)).toString();
                         headerLastNursing.setText(
                                 FormatUtils.formatLastActivity(getActivity(),
-                                        BabyLogContract.Measurement.table, time));
+                                        BabyLogContract.Measurement.table, time)
+                        );
                     }
                     break;
                 }
-                case LOADER_LAST_SLEEP:
-                {
+                case LOADER_LAST_SLEEP: {
                     String timestamp = cursor.getString(0);
-                    if (timestamp != null)
-                    {
+                    if (timestamp != null) {
                         String time = DateUtils.
                                 getRelativeTimeSpanString(Long.parseLong(timestamp)).toString();
                         headerLastSleep.setText(
                                 FormatUtils.formatLastActivity(getActivity(),
-                                        BabyLogContract.Sleep.table, time));
-                    };
+                                        BabyLogContract.Sleep.table, time)
+                        );
+                    }
+                    ;
                     break;
                 }
-                case LOADER_LAST_DIAPER:
-                {
+                case LOADER_LAST_DIAPER: {
                     String timestamp = cursor.getString(0);
-                    if (timestamp != null)
-                    {
+                    if (timestamp != null) {
                         String time = DateUtils.
                                 getRelativeTimeSpanString(Long.parseLong(timestamp)).toString();
                         headerLastDiaper.setText(
                                 FormatUtils.formatLastActivity(getActivity(),
-                                        BabyLogContract.Diaper.table, time));
-                    };
+                                        BabyLogContract.Diaper.table, time)
+                        );
+                    }
+                    ;
                     break;
                 }
-                case LOADER_LAST_MEASUREMENT:
-                {
+                case LOADER_LAST_MEASUREMENT: {
                     String timestamp = cursor.getString(0);
-                    if (timestamp != null)
-                    {
+                    if (timestamp != null) {
                         String time = DateUtils.
                                 getRelativeTimeSpanString(Long.parseLong(timestamp)).toString();
                         headerLastMeasurement.setText(
                                 FormatUtils.formatLastActivity(getActivity(),
-                                        BabyLogContract.Measurement.table, time));
-                    };
+                                        BabyLogContract.Measurement.table, time)
+                        );
+                    }
+                    ;
                     break;
                 }
             }
@@ -220,10 +203,8 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> cl)
-    {
-        if (cl.getId() == LOADER_LIST_VIEW)
-        {
+    public void onLoaderReset(Loader<Cursor> cl) {
+        if (cl.getId() == LOADER_LIST_VIEW) {
             mAdapter.swapCursor(null);
         }
     }

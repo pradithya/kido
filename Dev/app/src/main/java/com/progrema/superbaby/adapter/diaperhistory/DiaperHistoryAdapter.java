@@ -15,23 +15,19 @@ import com.progrema.superbaby.util.FormatUtils;
 /**
  * Created by aria on 20/2/14.
  */
-public class DiaperHistoryAdapter extends CursorAdapter
-{
-    public DiaperHistoryAdapter(Context context, Cursor c, int flags)
-    {
+public class DiaperHistoryAdapter extends CursorAdapter {
+    public DiaperHistoryAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
 
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent)
-    {
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
         return inflater.inflate(R.layout.history_item_diaper, parent, false);
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor)
-    {
+    public void bindView(View view, Context context, Cursor cursor) {
         String timeStamp = cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP);
         String type = cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TYPE);
 

@@ -14,9 +14,19 @@ import java.util.Date;
 /**
  * Created by iqbalpakeh on 20/1/14.
  */
-public class Baby extends BaseActor
-{
+public class Baby extends BaseActor {
 
+    public static final Creator CREATOR = new Creator<Baby>() {
+        @Override
+        public Baby createFromParcel(Parcel parcel) {
+            return new Baby(parcel);
+        }
+
+        @Override
+        public Baby[] newArray(int size) {
+            return new Baby[size];
+        }
+    };
     /**
      * Baby privates data
      */
@@ -26,8 +36,7 @@ public class Baby extends BaseActor
      * Standard basic constructor for non-parcel
      * object creation
      */
-    public Baby()
-    {
+    public Baby() {
         /** empty constructor */
     }
 
@@ -37,8 +46,7 @@ public class Baby extends BaseActor
      *
      * @param parcel parcel instance
      */
-    public Baby(Parcel parcel)
-    {
+    public Baby(Parcel parcel) {
         readFromParcel(parcel);
     }
 
@@ -47,8 +55,7 @@ public class Baby extends BaseActor
      *
      * @param parcel parcel from which to re-create object
      */
-    public void readFromParcel(Parcel parcel)
-    {
+    public void readFromParcel(Parcel parcel) {
 
         // read each field parcel the order that it
         // was written to the parcel
@@ -58,52 +65,32 @@ public class Baby extends BaseActor
     }
 
     @Override
-    public int describeContents()
-    {
+    public int describeContents() {
         return 0;
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i)
-    {
+    public void writeToParcel(Parcel parcel, int i) {
         // write each field into the parcel
         super.writeToParcel(parcel, i);
         parcel.writeString(String.valueOf(birthday.getTimeInMillis())); //in timeinmillis format
     }
-
-    public static final Creator CREATOR = new Creator<Baby>()
-    {
-        @Override
-        public Baby createFromParcel(Parcel parcel)
-        {
-            return new Baby(parcel);
-        }
-
-        @Override
-        public Baby[] newArray(int size)
-        {
-            return new Baby[size];
-        }
-    };
 
     /**
      * Get baby birthday in string format
      *
      * @return baby birthday in string format
      */
-    public String getBirthdayInString()
-    {
+    public String getBirthdayInString() {
         return String.valueOf(birthday.getTimeInMillis());
     }
 
-    public String getAgeInReadableFormat(Context context)
-    {
+    public String getAgeInReadableFormat(Context context) {
         return FormatUtils.formatAge(context,
                 birthday.getTimeInMillis(), Calendar.getInstance().getTimeInMillis());
     }
 
-    public String getBirthdayInReadableFormat(Context context)
-    {
+    public String getBirthdayInReadableFormat(Context context) {
         return FormatUtils.formatDate(context, getBirthdayInString());
     }
 
@@ -112,8 +99,7 @@ public class Baby extends BaseActor
      *
      * @return calendar object
      */
-    public Calendar getBirthdayInCalendar()
-    {
+    public Calendar getBirthdayInCalendar() {
         return birthday;
     }
 
@@ -122,8 +108,7 @@ public class Baby extends BaseActor
      *
      * @param birthday baby birthday
      */
-    public void setBirthday(String birthday)
-    {
+    public void setBirthday(String birthday) {
         this.birthday = Calendar.getInstance();
         this.birthday.setTimeInMillis(Long.valueOf(birthday));
     }
@@ -133,14 +118,12 @@ public class Baby extends BaseActor
      *
      * @param dateOfBirth Date object of baby birthday
      */
-    public void setBirthday(Date dateOfBirth)
-    {
+    public void setBirthday(Date dateOfBirth) {
         birthday.setTime(dateOfBirth);
     }
 
     @Override
-    public void insert(Context context)
-    {
+    public void insert(Context context) {
         User user = ActiveContext.getActiveUser(context);
         ContentValues values = new ContentValues();
         values.put(BabyLogContract.Baby.NAME, getName());
@@ -152,7 +135,6 @@ public class Baby extends BaseActor
     }
 
     @Override
-    public void delete(Context context)
-    {
+    public void delete(Context context) {
     }
 }

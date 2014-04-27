@@ -15,23 +15,19 @@ import com.progrema.superbaby.util.FormatUtils;
 /**
  * Created by aria on 26/1/14.
  */
-public class SleepHistoryAdapter extends CursorAdapter
-{
-    public SleepHistoryAdapter(Context context, Cursor c, int flags)
-    {
+public class SleepHistoryAdapter extends CursorAdapter {
+    public SleepHistoryAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
 
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent)
-    {
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
         return inflater.inflate(R.layout.history_item_sleep, parent, false);
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor)
-    {
+    public void bindView(View view, Context context, Cursor cursor) {
         String timeStamp = cursor.getString(3);
         String duration = cursor.getString(4);
 

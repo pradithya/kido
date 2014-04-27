@@ -8,36 +8,30 @@ import com.progrema.superbaby.provider.BabyLogContract;
 /**
  * Created by iqbalpakeh on 27/2/14.
  */
-public class Measurement extends BaseActivity
-{
-    private float height;
-    private float weight;
+public class Measurement extends BaseActivity {
     public final static String HEIGHT_KEY = "height";
     public final static String WEIGHT_KEY = "weight";
+    private float height;
+    private float weight;
 
-    public float getHeight()
-    {
+    public float getHeight() {
         return height;
     }
 
-    public void setHeight(float height)
-    {
+    public void setHeight(float height) {
         this.height = height;
     }
 
-    public float getWeight()
-    {
+    public float getWeight() {
         return weight;
     }
 
-    public void setWeight(float weight)
-    {
+    public void setWeight(float weight) {
         this.weight = weight;
     }
 
     @Override
-    public void insert(Context context)
-    {
+    public void insert(Context context) {
         ContentValues values = new ContentValues();
         values.put(BabyLogContract.Measurement.BABY_ID, getBabyID());
         values.put(BabyLogContract.Measurement.TIMESTAMP, getTimeStampInString());
@@ -47,8 +41,7 @@ public class Measurement extends BaseActivity
     }
 
     @Override
-    public void delete(Context context)
-    {
+    public void delete(Context context) {
 
     }
 }

@@ -13,47 +13,35 @@ import com.progrema.superbaby.R;
 /**
  * Created by iqbalpakeh on 5/2/14.
  */
-public class SplashScreenFragment extends Fragment
-{
+public class SplashScreenFragment extends Fragment {
     private final int SPLASH_TIME = 2000;
     private final String TAG = "SplashActivity";
     private boolean isActive = true;
 
-    public static SplashScreenFragment getInstance()
-    {
+    public static SplashScreenFragment getInstance() {
         return new SplashScreenFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
-    {
+                             Bundle savedInstanceState) {
         // inflate fragment layout
         View rootView = inflater.inflate(R.layout.fragment_splash_screen, container, false);
 
         //a separate thread to manage splash screen
-        final Thread splashScreenThread = new Thread()
-        {
-            public void run()
-            {
+        final Thread splashScreenThread = new Thread() {
+            public void run() {
                 int wait = 0;
-                try
-                {
-                    while (isActive && (SPLASH_TIME > wait))
-                    {
+                try {
+                    while (isActive && (SPLASH_TIME > wait)) {
                         sleep(100);
-                        if (isActive)
-                        {
+                        if (isActive) {
                             wait += 100;
                         }
                     }
-                }
-                catch (InterruptedException e)
-                {
+                } catch (InterruptedException e) {
                     Log.d(TAG, e.getMessage());
-                }
-                finally
-                {
+                } finally {
                     // move to login fragment
                     FragmentTransaction fragmentTransaction =
                             getFragmentManager().beginTransaction();

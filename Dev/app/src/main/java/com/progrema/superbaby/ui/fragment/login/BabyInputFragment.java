@@ -26,10 +26,10 @@ import java.util.Calendar;
 
 /**
  * Created by iqbalpakeh on 5/2/14.
+ *
  * @author aria
  */
-public class BabyInputFragment extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener
-{
+public class BabyInputFragment extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
     private static BabyInputFragment singletonBabyInputFragment = null;
     private EditText babyNameInput;
     private Button babyBirthdayInput;
@@ -37,13 +37,11 @@ public class BabyInputFragment extends Fragment implements View.OnClickListener,
     private Button doneButton;
     private int year, month, date;
 
-    public static BabyInputFragment getInstance()
-    {
+    public static BabyInputFragment getInstance() {
         return new BabyInputFragment();
     }
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_baby_input_login, container, false);
 
         doneButton = (Button) rootView.findViewById(R.id.fragment_baby_input_button_done);
@@ -74,21 +72,17 @@ public class BabyInputFragment extends Fragment implements View.OnClickListener,
     }
 
     @Override
-    public void onClick(View view)
-    {
+    public void onClick(View view) {
 
-        switch (view.getId())
-        {
-            case R.id.fragment_baby_input_birthday:
-            {
+        switch (view.getId()) {
+            case R.id.fragment_baby_input_birthday: {
 
                 DatePickerDialog dateChoser =
                         new DatePickerDialog(getActivity(), this, year, month, date);
                 dateChoser.show();
                 break;
             }
-            case R.id.fragment_baby_input_button_done:
-            {
+            case R.id.fragment_baby_input_button_done: {
                 String babyName, babyBirthday, babySextType;
                 babyName = babyNameInput.getText().toString();
                 Calendar dob = Calendar.getInstance();
@@ -101,12 +95,9 @@ public class BabyInputFragment extends Fragment implements View.OnClickListener,
                 Baby baby = new Baby();
                 baby.setName(babyName);
                 baby.setBirthday(babyBirthday);
-                if (babySextType.equals(BaseActor.Sex.MALE.getTitle()))
-                {
+                if (babySextType.equals(BaseActor.Sex.MALE.getTitle())) {
                     baby.setSex(BaseActor.Sex.MALE);
-                }
-                else if (babySextType.equals(BaseActor.Sex.FEMALE.getTitle()))
-                {
+                } else if (babySextType.equals(BaseActor.Sex.FEMALE.getTitle())) {
                     baby.setSex(BaseActor.Sex.FEMALE);
                 }
                 baby.insert(getActivity());
@@ -131,8 +122,7 @@ public class BabyInputFragment extends Fragment implements View.OnClickListener,
     }
 
     @Override
-    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
-    {
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         this.year = year;
         this.month = monthOfYear;
         this.date = dayOfMonth;

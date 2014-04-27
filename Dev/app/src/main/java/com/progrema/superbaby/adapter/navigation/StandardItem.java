@@ -11,10 +11,8 @@ import com.progrema.superbaby.R;
 /**
  * Created by iqbalpakeh on 22/2/14.
  */
-public class StandardItem extends Item
-{
-    public StandardItem(String text)
-    {
+public class StandardItem extends Item {
+    public StandardItem(String text) {
         this.setText(text);
         this.setLayout(R.layout.navigation_drawer_text_container);
     }
@@ -28,8 +26,7 @@ public class StandardItem extends Item
      * @return inflated view
      */
     @Override
-    public View inflate(Context context, View view, ViewGroup viewGroup)
-    {
+    public View inflate(Context context, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(getLayout(), viewGroup, false);
 

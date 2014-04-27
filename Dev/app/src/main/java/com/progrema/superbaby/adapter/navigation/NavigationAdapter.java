@@ -10,8 +10,7 @@ import java.util.ArrayList;
 /**
  * Created by iqbalpakeh on 15/2/14.
  */
-public class NavigationAdapter extends ArrayAdapter<Item>
-{
+public class NavigationAdapter extends ArrayAdapter<Item> {
     /**
      * private field
      */
@@ -24,16 +23,14 @@ public class NavigationAdapter extends ArrayAdapter<Item>
      * @param context application context
      * @param items   items holding list of Item object
      */
-    public NavigationAdapter(Context context, ArrayList<Item> items)
-    {
+    public NavigationAdapter(Context context, ArrayList<Item> items) {
         super(context, 0, items);
         this.items = items;
         this.context = context;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
-    {
+    public View getView(int position, View convertView, ViewGroup parent) {
         return items.get(position).inflate(context, convertView, parent);
     }
 }

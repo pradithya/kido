@@ -18,8 +18,7 @@ import static com.progrema.superbaby.util.LogUtils.makeLogTag;
  * appended clause is combined using {@code AND}. This class is <em>not</em>
  * thread safe.
  */
-public class SelectionBuilder
-{
+public class SelectionBuilder {
     private static final String TAG = makeLogTag(SelectionBuilder.class);
     private String mTable = null;
     private Map<String, String> mProjectionMap = Maps.newHashMap();
@@ -29,8 +28,7 @@ public class SelectionBuilder
     /**
      * Reset any internal state, allowing this builder to be recycled.
      */
-    public SelectionBuilder reset()
-    {
+    public SelectionBuilder reset() {
         mTable = null;
         mSelection.setLength(0);
         mSelectionArgs.clear();
@@ -41,12 +39,9 @@ public class SelectionBuilder
      * Append the given selection clause to the internal state. Each clause is
      * surrounded with parenthesis and combined using {@code AND}.
      */
-    public SelectionBuilder where(String selection, String... selectionArgs)
-    {
-        if (TextUtils.isEmpty(selection))
-        {
-            if (selectionArgs != null && selectionArgs.length > 0)
-            {
+    public SelectionBuilder where(String selection, String... selectionArgs) {
+        if (TextUtils.isEmpty(selection)) {
+            if (selectionArgs != null && selectionArgs.length > 0) {
                 throw new IllegalArgumentException(
                         "Valid selection required when including arguments=");
             }
@@ -55,42 +50,35 @@ public class SelectionBuilder
             return this;
         }
 
-        if (mSelection.length() > 0)
-        {
+        if (mSelection.length() > 0) {
             mSelection.append(" AND ");
         }
 
         mSelection.append("(").append(selection).append(")");
-        if (selectionArgs != null)
-        {
+        if (selectionArgs != null) {
             Collections.addAll(mSelectionArgs, selectionArgs);
         }
 
         return this;
     }
 
-    public SelectionBuilder table(String table)
-    {
+    public SelectionBuilder table(String table) {
         mTable = table;
         return this;
     }
 
-    private void assertTable()
-    {
-        if (mTable == null)
-        {
+    private void assertTable() {
+        if (mTable == null) {
             throw new IllegalStateException("Table not specified");
         }
     }
 
-    public SelectionBuilder mapToTable(String column, String table)
-    {
+    public SelectionBuilder mapToTable(String column, String table) {
         mProjectionMap.put(column, table + "." + column);
         return this;
     }
 
-    public SelectionBuilder map(String fromColumn, String toClause)
-    {
+    public SelectionBuilder map(String fromColumn, String toClause) {
         mProjectionMap.put(fromColumn, toClause + " AS " + fromColumn);
         return this;
     }
@@ -100,8 +88,7 @@ public class SelectionBuilder
      *
      * @see #getSelectionArgs()
      */
-    public String getSelection()
-    {
+    public String getSelection() {
         return mSelection.toString();
     }
 
@@ -110,26 +97,21 @@ public class SelectionBuilder
      *
      * @see #getSelection()
      */
-    public String[] getSelectionArgs()
-    {
+    public String[] getSelectionArgs() {
         return mSelectionArgs.toArray(new String[mSelectionArgs.size()]);
     }
 
-    private void mapColumns(String[] columns)
-    {
-        for (int i = 0; i < columns.length; i++)
-        {
+    private void mapColumns(String[] columns) {
+        for (int i = 0; i < columns.length; i++) {
             final String target = mProjectionMap.get(columns[i]);
-            if (target != null)
-            {
+            if (target != null) {
                 columns[i] = target;
             }
         }
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "SelectionBuilder[table=" + mTable + ", selection=" + getSelection()
                 + ", selectionArgs=" + Arrays.toString(getSelectionArgs()) + "]";
     }
@@ -137,8 +119,7 @@ public class SelectionBuilder
     /**
      * Execute query using the current internal state as {@code WHERE} clause.
      */
-    public Cursor query(SQLiteDatabase db, String[] columns, String orderBy)
-    {
+    public Cursor query(SQLiteDatabase db, String[] columns, String orderBy) {
         return query(db, columns, null, null, orderBy, null);
     }
 
@@ -146,8 +127,7 @@ public class SelectionBuilder
      * Execute query using the current internal state as {@code WHERE} clause.
      */
     public Cursor query(SQLiteDatabase db, String[] columns, String groupBy,
-                        String having, String orderBy, String limit)
-    {
+                        String having, String orderBy, String limit) {
         assertTable();
         if (columns != null) mapColumns(columns);
         LOGV(TAG, "query(columns=" + Arrays.toString(columns) + ") " + this);
@@ -158,8 +138,7 @@ public class SelectionBuilder
     /**
      * Execute update using the current internal state as {@code WHERE} clause.
      */
-    public int update(SQLiteDatabase db, ContentValues values)
-    {
+    public int update(SQLiteDatabase db, ContentValues values) {
         assertTable();
         LOGV(TAG, "update() " + this);
         return db.update(mTable, values, getSelection(), getSelectionArgs());
@@ -168,8 +147,7 @@ public class SelectionBuilder
     /**
      * Execute delete using the current internal state as {@code WHERE} clause.
      */
-    public int delete(SQLiteDatabase db)
-    {
+    public int delete(SQLiteDatabase db) {
         assertTable();
         LOGV(TAG, "delete() " + this);
         return db.delete(mTable, getSelection(), getSelectionArgs());

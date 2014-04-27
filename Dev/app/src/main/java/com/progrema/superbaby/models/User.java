@@ -7,8 +7,18 @@ import android.os.Parcel;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.SecurityUtils;
 
-public class User extends BaseActor
-{
+public class User extends BaseActor {
+    public static final Creator CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel parcel) {
+            return new User(parcel);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
     /**
      * User private data
      */
@@ -19,8 +29,7 @@ public class User extends BaseActor
     /**
      * Empty Constructor
      */
-    public User()
-    {
+    public User() {
     }
 
     /**
@@ -29,20 +38,17 @@ public class User extends BaseActor
      *
      * @param parcel parcel instance
      */
-    public User(Parcel parcel)
-    {
+    public User(Parcel parcel) {
         readFromParcel(parcel);
     }
 
     @Override
-    public int describeContents()
-    {
+    public int describeContents() {
         return 0;
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i)
-    {
+    public void writeToParcel(Parcel parcel, int i) {
         // Write each field into parcel
         super.writeToParcel(parcel, i);
         parcel.writeString(password);
@@ -55,8 +61,7 @@ public class User extends BaseActor
      *
      * @param parcel parcel from which to re-create object
      */
-    public void readFromParcel(Parcel parcel)
-    {
+    public void readFromParcel(Parcel parcel) {
         // read each field parcel the order that it
         // was written to the parcel
         super.readFromParcel(parcel);
@@ -65,39 +70,22 @@ public class User extends BaseActor
         securityAnswer = parcel.readString();
     }
 
-    public static final Creator CREATOR = new Creator<User>()
-    {
-        @Override
-        public User createFromParcel(Parcel parcel)
-        {
-            return new User(parcel);
-        }
-
-        @Override
-        public User[] newArray(int size)
-        {
-            return new User[size];
-        }
-    };
+    /**
+     * used in changing password
+     *
+     * @return password
+     */
+    public String getPassword() {
+        return password;
+    }
 
     /**
      * used in changing password
      *
      * @param inputPlainText user's password in plaintext
      */
-    public void setPassword(String inputPlainText)
-    {
+    public void setPassword(String inputPlainText) {
         this.password = SecurityUtils.computeSHA1(inputPlainText);
-    }
-
-    /**
-     * used in changing password
-     *
-     * @return password
-     */
-    public String getPassword()
-    {
-        return password;
     }
 
     /**
@@ -105,16 +93,14 @@ public class User extends BaseActor
      *
      * @return security question
      */
-    public String getSecurityQuestion()
-    {
+    public String getSecurityQuestion() {
         return securityQuestion;
     }
 
     /**
      * changing security question
      */
-    public void setSecurityQuestion(String securityQuestion)
-    {
+    public void setSecurityQuestion(String securityQuestion) {
         this.securityQuestion = securityQuestion;
     }
 
@@ -123,8 +109,7 @@ public class User extends BaseActor
      *
      * @return security answer
      */
-    public String getSecurityAnswer()
-    {
+    public String getSecurityAnswer() {
         return securityAnswer;
     }
 
@@ -133,14 +118,12 @@ public class User extends BaseActor
      *
      * @param inputPlainText user's answer
      */
-    public void setSecurityAnswer(String inputPlainText)
-    {
+    public void setSecurityAnswer(String inputPlainText) {
         this.securityAnswer = SecurityUtils.computeSHA1(inputPlainText);
     }
 
     @Override
-    public void insert(Context context)
-    {
+    public void insert(Context context) {
         ContentValues values = new ContentValues();
         values.put(BabyLogContract.User.USER_NAME, getName());
         values.put(BabyLogContract.User.PASSWORD, getPassword());
@@ -150,7 +133,6 @@ public class User extends BaseActor
     }
 
     @Override
-    public void delete(Context context)
-    {
+    public void delete(Context context) {
     }
 }

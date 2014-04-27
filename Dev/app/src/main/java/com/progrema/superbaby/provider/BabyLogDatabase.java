@@ -11,9 +11,9 @@ import com.progrema.superbaby.provider.BabyLogContract.BabyColumns;
 import com.progrema.superbaby.provider.BabyLogContract.Diaper;
 import com.progrema.superbaby.provider.BabyLogContract.DiaperColumns;
 import com.progrema.superbaby.provider.BabyLogContract.Measurement;
+import com.progrema.superbaby.provider.BabyLogContract.MeasurementColumns;
 import com.progrema.superbaby.provider.BabyLogContract.Nursing;
 import com.progrema.superbaby.provider.BabyLogContract.NursingColumns;
-import com.progrema.superbaby.provider.BabyLogContract.MeasurementColumns;
 import com.progrema.superbaby.provider.BabyLogContract.Photo;
 import com.progrema.superbaby.provider.BabyLogContract.Sleep;
 import com.progrema.superbaby.provider.BabyLogContract.SleepColumns;
@@ -26,10 +26,27 @@ import com.progrema.superbaby.provider.BabyLogContract.UserColumns;
  *
  * @author aria
  */
-public class BabyLogDatabase extends SQLiteOpenHelper
-{
+public class BabyLogDatabase extends SQLiteOpenHelper {
+    public final static String JOIN_ALL = ("SELECT "
+            + Tables.ACTIVITY + "." + BaseColumns._ID
+            + " , " + Tables.ACTIVITY + "." + ActivityColumns.BABY_ID
+            + " , " + ActivityColumns.ACTIVITY_TYPE
+            + " , " + Tables.ACTIVITY + "." + ActivityColumns.TIMESTAMP
+            + " , " + Tables.DIAPER + "." + Diaper.TYPE
+            + " , " + Tables.SLEEP + "." + Sleep.DURATION
+            + " , " + Tables.NURSING + "." + Nursing.SIDES
+            + " , " + Tables.NURSING + "." + Nursing.DURATION
+            + " , " + Tables.NURSING + "." + Nursing.VOLUME
+            + " , " + Tables.MEASUREMENT + "." + Measurement.HEIGHT
+            + " , " + Tables.MEASUREMENT + "." + Measurement.WEIGHT
+            + " FROM " + Tables.ACTIVITY
+            + " LEFT JOIN " + Tables.DIAPER + " ON " + Tables.ACTIVITY + "." + BaseColumns._ID + " = " + Tables.DIAPER + "." + DiaperColumns.ACTIVITY_ID
+            + " LEFT JOIN " + Tables.SLEEP + " ON " + Tables.ACTIVITY + "." + BaseColumns._ID + " = " + Tables.SLEEP + "." + SleepColumns.ACTIVITY_ID
+            + " LEFT JOIN " + Tables.NURSING + " ON " + Tables.ACTIVITY + "." + BaseColumns._ID + " = " + Tables.NURSING + "." + SleepColumns.ACTIVITY_ID
+            + " LEFT JOIN " + Tables.MEASUREMENT + " ON " + Tables.ACTIVITY + "." + BaseColumns._ID + " = " + Tables.MEASUREMENT + "." + MeasurementColumns.ACTIVITY_ID
+            + " WHERE " + Tables.ACTIVITY + "." + ActivityColumns.BABY_ID + " = ? "
+            + " ORDER BY " + Tables.ACTIVITY + "." + BabyLogContract.Activity.Query.SORT_BY_TIMESTAMP_DESC + " ;");
     private static final String DATABASE_NAME = "babylog.db";
-
     /**
      * NOTE:
      * carefully update onUpgrade() when bumping database versions to make
@@ -38,53 +55,19 @@ public class BabyLogDatabase extends SQLiteOpenHelper
 
     private static final int VER_2014_01 = 100; // 1.0
     private static final int DATABASE_VERSION = VER_2014_01;
-
     private final Context mContext;
 
-    interface Tables
-    {
-        String USER = "user";
-        String USER_BABY_MAP = "user_baby_map";
-        String BABY = "baby";
-        String ACTIVITY = "activity";
-        String NURSING = "nursing";
-        String SLEEP = "sleep";
-        String DIAPER = "diaper";
-        String MEASUREMENT = "measurement";
-        String PHOTO = "photo";
-    }
-
-    public BabyLogDatabase(Context context)
-    {
+    public BabyLogDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         mContext = context;
     }
 
-    private interface TriggersName
-    {
-        // Deletes from all activities table, when corresponding baby deleted
-        String BABY_NURSING_DELETE = "baby_nursing_delete";
-        String BABY_SLEEP_DELETE = "baby_sleep_delete";
-        String BABY_DIAPER_DELETE = "baby_diaper_delete";
-        String BABY_FOOD_DELETE = "baby_food_delete";
-        String BABY_USER_DELETE = "baby_user_delete";
-        String BABY_MEASUREMENT_DELETE = "baby_measurement_delete";
-        String BABY_PHOTO_DELETE = "baby_photo_delete";
-    }
-
-    private interface Qualified
-    {
-        String BABY_DIAPER = Tables.DIAPER + "." + Diaper.BABY_ID;
-        String BABY_SLEEP = Tables.SLEEP + "." + Sleep.BABY_ID;
-        String BABY_NURSING = Tables.NURSING + "." + Nursing.BABY_ID;
-        String BABY_USER_MAP = Tables.USER_BABY_MAP + "." + UserBabyMap.BABY_ID;
-        String BABY_MEASUREMENT = Tables.MEASUREMENT + "." + Measurement.BABY_ID;
-        String BABY_PHOTO = Tables.PHOTO + "." + Photo.BABY_ID;
+    public static void deleteDataBase(Context context) {
+        context.deleteDatabase(DATABASE_NAME);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db)
-    {
+    public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + Tables.USER + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + UserColumns.USER_NAME + " TEXT NOT NULL,"
@@ -205,42 +188,14 @@ public class BabyLogDatabase extends SQLiteOpenHelper
                 + ";" + " END;");
     }
 
-    public final static String JOIN_ALL = ("SELECT "
-            + Tables.ACTIVITY + "." + BaseColumns._ID
-            + " , " + Tables.ACTIVITY + "." + ActivityColumns.BABY_ID
-            + " , " + ActivityColumns.ACTIVITY_TYPE
-            + " , " + Tables.ACTIVITY + "." + ActivityColumns.TIMESTAMP
-            + " , " + Tables.DIAPER + "." + Diaper.TYPE
-            + " , " + Tables.SLEEP + "." + Sleep.DURATION
-            + " , " + Tables.NURSING + "." + Nursing.SIDES
-            + " , " + Tables.NURSING + "." + Nursing.DURATION
-            + " , " + Tables.NURSING + "." + Nursing.VOLUME
-            + " , " + Tables.MEASUREMENT + "." + Measurement.HEIGHT
-            + " , " + Tables.MEASUREMENT + "." + Measurement.WEIGHT
-            + " FROM " + Tables.ACTIVITY
-            + " LEFT JOIN " + Tables.DIAPER + " ON " + Tables.ACTIVITY + "." + BaseColumns._ID + " = " + Tables.DIAPER + "." + DiaperColumns.ACTIVITY_ID
-            + " LEFT JOIN " + Tables.SLEEP + " ON " + Tables.ACTIVITY + "." + BaseColumns._ID + " = " + Tables.SLEEP + "." + SleepColumns.ACTIVITY_ID
-            + " LEFT JOIN " + Tables.NURSING + " ON " + Tables.ACTIVITY + "." + BaseColumns._ID + " = " + Tables.NURSING + "." + SleepColumns.ACTIVITY_ID
-            + " LEFT JOIN " + Tables.MEASUREMENT + " ON " + Tables.ACTIVITY + "." + BaseColumns._ID + " = " + Tables.MEASUREMENT + "." + MeasurementColumns.ACTIVITY_ID
-            + " WHERE " + Tables.ACTIVITY + "." + ActivityColumns.BABY_ID + " = ? "
-            + " ORDER BY " + Tables.ACTIVITY + "." + BabyLogContract.Activity.Query.SORT_BY_TIMESTAMP_DESC + " ;");
-
     @Override
-    public void onUpgrade(SQLiteDatabase db, int i, int i2)
-    {
-    }
-
-    public static void deleteDataBase(Context context)
-    {
-        context.deleteDatabase(DATABASE_NAME);
+    public void onUpgrade(SQLiteDatabase db, int i, int i2) {
     }
 
     @Override
-    public SQLiteDatabase getReadableDatabase()
-    {
+    public SQLiteDatabase getReadableDatabase() {
         SQLiteDatabase db = super.getReadableDatabase();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-        {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             //TODO: reactivate foreign key after debugging
             db.setForeignKeyConstraintsEnabled(false);
         }
@@ -248,15 +203,45 @@ public class BabyLogDatabase extends SQLiteOpenHelper
     }
 
     @Override
-    public SQLiteDatabase getWritableDatabase()
-    {
+    public SQLiteDatabase getWritableDatabase() {
         SQLiteDatabase db = super.getWritableDatabase();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-        {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             //TODO: reactivate foreign key after debugging
             db.setForeignKeyConstraintsEnabled(false);
         }
         return db;
+    }
+
+    interface Tables {
+        String USER = "user";
+        String USER_BABY_MAP = "user_baby_map";
+        String BABY = "baby";
+        String ACTIVITY = "activity";
+        String NURSING = "nursing";
+        String SLEEP = "sleep";
+        String DIAPER = "diaper";
+        String MEASUREMENT = "measurement";
+        String PHOTO = "photo";
+    }
+
+    private interface TriggersName {
+        // Deletes from all activities table, when corresponding baby deleted
+        String BABY_NURSING_DELETE = "baby_nursing_delete";
+        String BABY_SLEEP_DELETE = "baby_sleep_delete";
+        String BABY_DIAPER_DELETE = "baby_diaper_delete";
+        String BABY_FOOD_DELETE = "baby_food_delete";
+        String BABY_USER_DELETE = "baby_user_delete";
+        String BABY_MEASUREMENT_DELETE = "baby_measurement_delete";
+        String BABY_PHOTO_DELETE = "baby_photo_delete";
+    }
+
+    private interface Qualified {
+        String BABY_DIAPER = Tables.DIAPER + "." + Diaper.BABY_ID;
+        String BABY_SLEEP = Tables.SLEEP + "." + Sleep.BABY_ID;
+        String BABY_NURSING = Tables.NURSING + "." + Nursing.BABY_ID;
+        String BABY_USER_MAP = Tables.USER_BABY_MAP + "." + UserBabyMap.BABY_ID;
+        String BABY_MEASUREMENT = Tables.MEASUREMENT + "." + Measurement.BABY_ID;
+        String BABY_PHOTO = Tables.PHOTO + "." + Photo.BABY_ID;
     }
 
 }

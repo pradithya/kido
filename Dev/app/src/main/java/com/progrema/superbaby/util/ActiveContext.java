@@ -15,8 +15,7 @@ import com.progrema.superbaby.provider.BabyLogContract;
  * <p/>
  * Created by iqbalpakeh on 10/2/14.
  */
-public class ActiveContext
-{
+public class ActiveContext {
     /**
      * preference name of the active context object
      */
@@ -34,8 +33,7 @@ public class ActiveContext
      * @param context  application context
      * @param babyName active baby name
      */
-    public static void setActiveBaby(Context context, String babyName)
-    {
+    public static void setActiveBaby(Context context, String babyName) {
         Cursor cursor = babyQuery(context, babyName);
         SharedPreferences setting = context.getSharedPreferences(PREF_CONTEXT, 0);
         SharedPreferences.Editor editor = setting.edit();
@@ -54,20 +52,16 @@ public class ActiveContext
      * @param context application context
      * @return active Baby object
      */
-    public static Baby getActiveBaby(Context context)
-    {
+    public static Baby getActiveBaby(Context context) {
         SharedPreferences setting = context.getSharedPreferences(PREF_CONTEXT, 0);
         Baby baby = new Baby();
 
         baby.setID(setting.getLong(PREF_BABY_ID, 0));
         baby.setName(setting.getString(PREF_BABY_NAME, ""));
         baby.setBirthday(setting.getString(PREF_BABY_BIRTHDAY, ""));
-        if (setting.getString(PREF_BABY_SEX, "").equals(BaseActor.Sex.MALE.getTitle()))
-        {
+        if (setting.getString(PREF_BABY_SEX, "").equals(BaseActor.Sex.MALE.getTitle())) {
             baby.setSex(BaseActor.Sex.MALE);
-        }
-        else if (setting.getString(PREF_BABY_SEX, "").equals(BaseActor.Sex.FEMALE.getTitle()))
-        {
+        } else if (setting.getString(PREF_BABY_SEX, "").equals(BaseActor.Sex.FEMALE.getTitle())) {
             baby.setSex(BaseActor.Sex.FEMALE);
         }
         return baby;
@@ -79,8 +73,7 @@ public class ActiveContext
      * @param context  application context
      * @param userName active user's name
      */
-    public static void setActiveUser(Context context, String userName)
-    {
+    public static void setActiveUser(Context context, String userName) {
         Cursor cursor = userQuery(context, userName);
         SharedPreferences setting = context.getSharedPreferences(PREF_CONTEXT, 0);
         SharedPreferences.Editor editor = setting.edit();
@@ -97,8 +90,7 @@ public class ActiveContext
      * @param context application context
      * @return active User object
      */
-    public static User getActiveUser(Context context)
-    {
+    public static User getActiveUser(Context context) {
         SharedPreferences setting = context.getSharedPreferences(PREF_CONTEXT, 0);
         User user = new User();
 
@@ -114,8 +106,7 @@ public class ActiveContext
      * @param username user name
      * @return cursor holding the user data from database
      */
-    private static Cursor userQuery(Context context, String username)
-    {
+    private static Cursor userQuery(Context context, String username) {
         //TODO: we should do query on another thread and show the waiting icon
 
         String[] selectionArgument = {username};
@@ -134,8 +125,7 @@ public class ActiveContext
      * @param babyName baby name
      * @return cursor holding baby data from database
      */
-    private static Cursor babyQuery(Context context, String babyName)
-    {
+    private static Cursor babyQuery(Context context, String babyName) {
         //TODO: we should do query on another thread and show the waiting icon
 
         String[] selectionArgument = {babyName};

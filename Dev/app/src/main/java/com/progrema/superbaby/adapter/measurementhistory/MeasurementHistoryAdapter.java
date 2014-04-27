@@ -15,23 +15,19 @@ import com.progrema.superbaby.util.FormatUtils;
 /**
  * Created by iqbalpakeh on 27/2/14.
  */
-public class MeasurementHistoryAdapter extends CursorAdapter
-{
-    public MeasurementHistoryAdapter(Context context, Cursor c, int flags)
-    {
+public class MeasurementHistoryAdapter extends CursorAdapter {
+    public MeasurementHistoryAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
 
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent)
-    {
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
         return inflater.inflate(R.layout.history_item_measurement, parent, false);
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor)
-    {
+    public void bindView(View view, Context context, Cursor cursor) {
         String timeStamp = cursor.getString(BabyLogContract.Measurement.Query.OFFSET_TIMESTAMP);
         String height = cursor.getString(BabyLogContract.Measurement.Query.OFFSET_HEIGHT);
         String weight = cursor.getString(BabyLogContract.Measurement.Query.OFFSET_WEIGHT);
