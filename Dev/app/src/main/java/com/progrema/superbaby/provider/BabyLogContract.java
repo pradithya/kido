@@ -102,7 +102,8 @@ public class BabyLogContract
      */
     public static class User implements UserColumns, BaseColumns
     {
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_USER).build();
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_USER).build();
 
         public interface Query
         {
@@ -132,7 +133,8 @@ public class BabyLogContract
      */
     public static class UserBabyMap implements UserBabyMapColumns, BaseColumns
     {
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_USER_BABY_MAP).build();
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_USER_BABY_MAP).build();
 
         public static Uri buildUri(String activityId)
         {
@@ -145,7 +147,8 @@ public class BabyLogContract
      */
     public static class Baby implements BabyColumns, BaseColumns
     {
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_BABY).build();
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_BABY).build();
 
         public interface Query
         {
@@ -173,7 +176,8 @@ public class BabyLogContract
      */
     public static class Activity implements ActivityColumns, BaseColumns
     {
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_ACTIVITY).build();
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_ACTIVITY).build();
         public static final String TYPE_SLEEP = "SLEEP";
         public static final String TYPE_DIAPER = "DIAPER";
         public static final String TYPE_NURSING = "NURSING";
@@ -215,11 +219,14 @@ public class BabyLogContract
     {
         public static final String table = PATH_NURSING;
 
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_NURSING).build();
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_NURSING).build();
 
-        public static final Uri MAX_TIMESTAMP = BASE_CONTENT_URI.buildUpon().appendPath("nursing_max_timestamp").build();
+        public static final Uri MAX_TIMESTAMP =
+                BASE_CONTENT_URI.buildUpon().appendPath("nursing_max_timestamp").build();
 
-        public static final Uri LAST_SIDES = BASE_CONTENT_URI.buildUpon().appendPath("nursing_last_side").build();
+        public static final Uri LAST_SIDES =
+                BASE_CONTENT_URI.buildUpon().appendPath("nursing_last_side").build();
 
         public interface Query
         {
@@ -259,9 +266,11 @@ public class BabyLogContract
     {
         public static final String table = PATH_SLEEP;
 
-        public static final Uri MAX_TIMESTAMP = BASE_CONTENT_URI.buildUpon().appendPath("sleep_max_timestamp").build();
+        public static final Uri MAX_TIMESTAMP =
+                BASE_CONTENT_URI.buildUpon().appendPath("sleep_max_timestamp").build();
 
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_SLEEP).build();
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_SLEEP).build();
 
         public interface Query
         {
@@ -295,9 +304,11 @@ public class BabyLogContract
     {
         public static final String table = PATH_DIAPER;
 
-        public static final Uri MAX_TIMESTAMP = BASE_CONTENT_URI.buildUpon().appendPath("diaper_max_timestamp").build();
+        public static final Uri MAX_TIMESTAMP =
+                BASE_CONTENT_URI.buildUpon().appendPath("diaper_max_timestamp").build();
 
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_DIAPER).build();
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_DIAPER).build();
 
         public interface Query
         {
@@ -332,9 +343,11 @@ public class BabyLogContract
     {
         public static final String table = PATH_MEASUREMENT;
 
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_MEASUREMENT).build();
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_MEASUREMENT).build();
 
-        public static final Uri MAX_TIMESTAMP = BASE_CONTENT_URI.buildUpon().appendPath("measurement_max_timestamp").build();
+        public static final Uri MAX_TIMESTAMP =
+                BASE_CONTENT_URI.buildUpon().appendPath("measurement_max_timestamp").build();
 
         public static Uri buildUri(String activityId)
         {
@@ -368,7 +381,8 @@ public class BabyLogContract
      */
     public static class Photo implements PhotoColumns, BaseColumns
     {
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_PHOTO).build();
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_PHOTO).build();
     }
 
 }

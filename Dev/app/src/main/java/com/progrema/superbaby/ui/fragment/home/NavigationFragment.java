@@ -106,7 +106,8 @@ public class NavigationFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        mDrawerListView = (ListView) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+        mDrawerListView = (ListView) inflater.
+                inflate(R.layout.fragment_navigation_drawer, container, false);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
@@ -280,7 +281,8 @@ public class NavigationFragment extends Fragment
         }
         if (mCallbacks != null)
         {
-            if ((position < mActionPositionOffset) && (items != null) && (items.get(position) instanceof Baby))
+            if ((position < mActionPositionOffset) &&
+                    (items != null) && (items.get(position) instanceof Baby))
             {
                 // Change the active baby context
                 ActiveContext.setActiveBaby(getActivity(), items.get(position).getText());

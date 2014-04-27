@@ -9,12 +9,17 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.sleephistory.SleepHistoryAdapter;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
+import com.progrema.superbaby.util.FormatUtils;
 import com.progrema.superbaby.widget.customview.ObserveAbleListView;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Fragment to log all sleep activity
@@ -22,8 +27,18 @@ import com.progrema.superbaby.widget.customview.ObserveAbleListView;
 public class SleepFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
     private ObserveAbleListView sleepHistoryList;
+    private Calendar now = Calendar.getInstance();
     private SleepHistoryAdapter mAdapter;
-    private static final int LOADER_ID = 0;
+    private static final int LOADER_LIST_VIEW = 0;
+    private static final int LOADER_SLEEP_FROM_TIME_REFERENCE = 1;
+    private TextView nightPercentage;
+    private TextView napPercentage;
+    private TextView avgNightSleepDuration;
+    private TextView avgNapDuration;
+    private TextView sleepPercentage;
+    private TextView activePercentage;
+    private TextView avgSleepDuration;
+    private TextView avgActiveDuration;
 
     public static SleepFragment getInstance()
     {
@@ -37,6 +52,16 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
         // inflate fragment layout
         View rootView = inflater.inflate(R.layout.fragment_sleep, container, false);
 
+        // get UI object
+        nightPercentage = (TextView) rootView.findViewById(R.id.night_percentage);
+        napPercentage = (TextView) rootView.findViewById(R.id.nap_percentage);
+        avgNightSleepDuration = (TextView) rootView.findViewById(R.id.avg_night_duration);
+        avgNapDuration = (TextView) rootView.findViewById(R.id.avg_nap_duration);
+        sleepPercentage = (TextView) rootView.findViewById(R.id.sleep_percentage);
+        activePercentage = (TextView) rootView.findViewById(R.id.active_percentage);
+        avgSleepDuration = (TextView) rootView.findViewById(R.id.avg_sleep_duration);
+        avgActiveDuration = (TextView) rootView.findViewById(R.id.avg_active_duration);
+
         // set adapter to list view
         sleepHistoryList = (ObserveAbleListView) rootView.findViewById(R.id.activity_list);
         mAdapter = new SleepHistoryAdapter(getActivity(), null, 0);
@@ -44,23 +69,50 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
 
         // prepare loader
         LoaderManager lm = getLoaderManager();
-        lm.initLoader(LOADER_ID, null, this);
+        lm.initLoader(LOADER_LIST_VIEW, null, this);
+        lm.initLoader(LOADER_SLEEP_FROM_TIME_REFERENCE, null, this);
 
         return rootView;
     }
 
 
     @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle)
+    public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle)
     {
-        String[] args = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
-        CursorLoader cl = new CursorLoader(getActivity(),
-                BabyLogContract.Sleep.CONTENT_URI,
-                BabyLogContract.Sleep.Query.PROJECTION,
-                BabyLogContract.BABY_SELECTION_ARG,
-                args,
-                BabyLogContract.Sleep.Query.SORT_BY_TIMESTAMP_DESC);
-        return cl;
+        switch (loaderId)
+        {
+            case LOADER_LIST_VIEW:
+            {
+                String[] args = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
+                return new CursorLoader(getActivity(),
+                        BabyLogContract.Sleep.CONTENT_URI,
+                        BabyLogContract.Sleep.Query.PROJECTION,
+                        BabyLogContract.BABY_SELECTION_ARG,
+                        args,
+                        BabyLogContract.Sleep.Query.SORT_BY_TIMESTAMP_DESC);
+            }
+            case LOADER_SLEEP_FROM_TIME_REFERENCE:
+            {
+                // TODO: timeReference must be configurable based on user input
+                String timeReference =
+                        String.valueOf(now.getTimeInMillis() - 7 * FormatUtils.DAY_MILLIS);
+                String[] argumentSelection =
+                        {
+                                String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID()),
+                                timeReference
+                        };
+                return new CursorLoader(getActivity(),
+                        BabyLogContract.Sleep.CONTENT_URI,
+                        BabyLogContract.Sleep.Query.PROJECTION,
+                        "baby_id = ? AND timestamp >= ?",
+                        argumentSelection,
+                        BabyLogContract.Sleep.Query.SORT_BY_TIMESTAMP_DESC);
+            }
+            default:
+            {
+                return null;
+            }
+        }
     }
 
     @Override
@@ -70,18 +122,133 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
         {
             // show last inserted row
             cursor.moveToFirst();
-            mAdapter.swapCursor(cursor);
-        }
-        else
-        {
-            mAdapter.swapCursor(null);
-        }
 
+            switch (cursorLoader.getId())
+            {
+                case LOADER_LIST_VIEW:
+                {
+                    mAdapter.swapCursor(cursor);
+                    break;
+                }
+                case LOADER_SLEEP_FROM_TIME_REFERENCE:
+                {
+                    /**
+                     * Calculate average value of nursing from both side since the last 7 days.
+                     * That is, get the value from DB than calculate the average value.
+                     */
+                    float duration = 0, totalDuration = 0;
+                    float napDuration = 0, nightDuration = 0, timestamp = 0;
+                    float percentageNight, percentageNap;
+                    float percentageActive, percentageSleep;
+                    float averageNight, averageNap, averageSleep;
+                    float one_week_duration = 7 * 24 * 60 * 60 * 1000;
+
+                    ArrayList<Float> nightSleepList = new ArrayList<Float>();
+                    ArrayList<Float> napSleepList = new ArrayList<Float>();
+                    ArrayList<Float> sleepList = new ArrayList<Float>();
+
+                    for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext())
+                    {
+                        duration = Float.valueOf(
+                                cursor.getString(BabyLogContract.Sleep.Query.OFFSET_DURATION));
+                        timestamp = Float.valueOf(
+                                cursor.getString(BabyLogContract.Sleep.Query.OFFSET_TIMESTAMP));
+                        sleepList.add(duration);
+                        totalDuration += duration;
+                        if (isNight(timestamp))
+                        {
+                            nightDuration += duration;
+                            nightSleepList.add(duration);
+                        }
+                        else
+                        {
+                            napDuration += duration;
+                            napSleepList.add(duration);
+                        }
+                    }
+
+                    percentageNap = napDuration / duration * 100;
+                    percentageNight = nightDuration / duration * 100;
+                    percentageSleep = duration / one_week_duration * 100;
+                    percentageActive = 100 - percentageSleep;
+                    averageNight = calculateAverage(nightSleepList);
+                    averageNap = calculateAverage(napSleepList);
+                    averageSleep = calculateAverage(sleepList);
+                    //TODO: calculate average active
+
+                    napPercentage.setText(
+                            FormatUtils.formatSleepNapPercentage(getActivity(),
+                                    String.valueOf(percentageNap))
+                    );
+
+                    nightPercentage.setText(
+                        FormatUtils.formatSleepNightPercentage(getActivity(),
+                                    String.valueOf(percentageNight))
+                    );
+
+                    avgNightSleepDuration.setText(
+                            FormatUtils.formatSleepAvgNight(getActivity(),
+                                    String.valueOf(averageNight))
+                    );
+
+                    avgNapDuration.setText(
+                            FormatUtils.formatSleepAvgNap(getActivity(),
+                                    String.valueOf(averageNap))
+                    );
+
+                    sleepPercentage.setText(
+                            FormatUtils.formatSleepPercentage(getActivity(),
+                                    String.valueOf(percentageSleep))
+                    );
+
+                    activePercentage.setText(
+                            FormatUtils.formatActivePercentage(getActivity(),
+                                    String.valueOf(percentageActive))
+                    );
+
+                    avgSleepDuration.setText(
+                            FormatUtils.formatAvgSleep(getActivity(),
+                                    String.valueOf(averageSleep))
+                    );
+
+                    //TODO: show average active
+
+                    break;
+                }
+            }
+        }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader)
     {
         mAdapter.swapCursor(null);
+    }
+
+    private float calculateAverage(ArrayList<Float> collection)
+    {
+        float average = 0;
+        for (float data : collection)
+        {
+            average += data;
+        }
+        average = average / collection.size();
+        return average;
+    }
+
+    private boolean isNight(Float timeStamp)
+    {
+        // assuming day is start at 00.00
+        float oneDayInMilisecond = 24 * 60 * 60 * 1000;
+        float sixAmInMilisecond = 6 * 60 * 60 * 1000;
+        float sixPmInMilisecond = 18 * 60 * 60 * 1000;
+        float reminder;
+
+        reminder = timeStamp % oneDayInMilisecond;
+
+        if ((reminder < sixAmInMilisecond) || (reminder > sixPmInMilisecond))
+            return true;
+
+        return false;
     }
 }

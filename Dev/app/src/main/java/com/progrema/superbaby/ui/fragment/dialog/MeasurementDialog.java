@@ -50,7 +50,8 @@ public class MeasurementDialog extends DialogFragment
                 String height = inputHeight.getText().toString();
                 if (!FormatUtils.isValidNumber(height))
                 {
-                    Toast invalidNumber = Toast.makeText(getActivity(), "invalid number", Toast.LENGTH_LONG);
+                    Toast invalidNumber =
+                            Toast.makeText(getActivity(), "invalid number", Toast.LENGTH_LONG);
                     invalidNumber.show();
                     return; //invalid height
                 }
@@ -59,7 +60,8 @@ public class MeasurementDialog extends DialogFragment
                 String weight = inputWeight.getText().toString();
                 if (!FormatUtils.isValidNumber(height))
                 {
-                    Toast invalidNumber = Toast.makeText(getActivity(), "invalid number", Toast.LENGTH_LONG);
+                    Toast invalidNumber =
+                            Toast.makeText(getActivity(), "invalid number", Toast.LENGTH_LONG);
                     invalidNumber.show();
                     return; //invalid weight
                 }

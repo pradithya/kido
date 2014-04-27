@@ -90,7 +90,8 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle)
     {
-        String[] argumentSelection = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
+        String[] argumentSelection =
+                {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
         switch (loaderId)
         {
             case LOADER_LIST_VIEW:
@@ -170,7 +171,8 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                         String time = DateUtils.
                                 getRelativeTimeSpanString(Long.parseLong(timestamp)).toString();
                         headerLastNursing.setText(
-                                FormatUtils.formatLastActivity(getActivity(), BabyLogContract.Measurement.table, time));
+                                FormatUtils.formatLastActivity(getActivity(),
+                                        BabyLogContract.Measurement.table, time));
                     }
                     break;
                 }
@@ -182,7 +184,8 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                         String time = DateUtils.
                                 getRelativeTimeSpanString(Long.parseLong(timestamp)).toString();
                         headerLastSleep.setText(
-                                FormatUtils.formatLastActivity(getActivity(), BabyLogContract.Sleep.table, time));
+                                FormatUtils.formatLastActivity(getActivity(),
+                                        BabyLogContract.Sleep.table, time));
                     };
                     break;
                 }
@@ -194,7 +197,8 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                         String time = DateUtils.
                                 getRelativeTimeSpanString(Long.parseLong(timestamp)).toString();
                         headerLastDiaper.setText(
-                                FormatUtils.formatLastActivity(getActivity(), BabyLogContract.Diaper.table, time));
+                                FormatUtils.formatLastActivity(getActivity(),
+                                        BabyLogContract.Diaper.table, time));
                     };
                     break;
                 }
@@ -206,7 +210,8 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                         String time = DateUtils.
                                 getRelativeTimeSpanString(Long.parseLong(timestamp)).toString();
                         headerLastMeasurement.setText(
-                                FormatUtils.formatLastActivity(getActivity(), BabyLogContract.Measurement.table, time));
+                                FormatUtils.formatLastActivity(getActivity(),
+                                        BabyLogContract.Measurement.table, time));
                     };
                     break;
                 }

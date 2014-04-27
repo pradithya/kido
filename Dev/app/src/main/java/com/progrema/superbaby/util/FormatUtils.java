@@ -24,6 +24,22 @@ public class FormatUtils
     private static final String[] MONTH_OF_YEAR = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
+    public static boolean isDay(Context context, String timestamp)
+    {
+        // TODO: get better algorithm to check day and night condition
+
+        // get time reference at 18.00
+        Calendar today1800 = Calendar.getInstance();
+        today1800.set(Calendar.HOUR_OF_DAY, 18);
+        today1800.set(Calendar.MINUTE, 0);
+        today1800.set(Calendar.SECOND, 0);
+        today1800.set(Calendar.MILLISECOND, 0);
+
+        // get time reference at 06.00
+
+        return false;
+    }
+
     /**
      * @param startTime in timemillis format
      * @param duration  in timemillis format
@@ -87,6 +103,78 @@ public class FormatUtils
         return String.valueOf(formatted);
     }
 
+    public static String formatSleepNightPercentage(Context context, String values)
+    {
+        CharSequence formatted = Phrase.from(context.getResources()
+                .getString(R.string.night_percentage))
+                .put("percentage", values)
+                .format();
+        return String.valueOf(formatted);
+    }
+
+    public static String formatSleepNapPercentage(Context context, String values)
+    {
+        CharSequence formatted = Phrase.from(context.getResources()
+                .getString(R.string.nap_percentage))
+                .put("percentage", values)
+                .format();
+        return String.valueOf(formatted);
+    }
+
+    public static String formatSleepAvgNight(Context context, String values)
+    {
+        CharSequence formatted = Phrase.from(context.getResources()
+                .getString(R.string.avg_night_sleep))
+                .put("average", values)
+                .format();
+        return String.valueOf(formatted);
+    }
+
+    public static String formatSleepAvgNap(Context context, String values)
+    {
+        CharSequence formatted = Phrase.from(context.getResources()
+                .getString(R.string.avg_nap_duration))
+                .put("average", values)
+                .format();
+        return String.valueOf(formatted);
+    }
+
+    public static String formatSleepPercentage(Context context, String values)
+    {
+        CharSequence formatted = Phrase.from(context.getResources()
+                .getString(R.string.sleep_percentage))
+                .put("percentage", values)
+                .format();
+        return String.valueOf(formatted);
+    }
+
+    public static String formatActivePercentage(Context context, String values)
+    {
+        CharSequence formatted = Phrase.from(context.getResources()
+                .getString(R.string.active_percentage))
+                .put("percentage", values)
+                .format();
+        return String.valueOf(formatted);
+    }
+
+    public static String formatAvgSleep(Context context, String values)
+    {
+        CharSequence formatted = Phrase.from(context.getResources()
+                .getString(R.string.avg_sleep_duration))
+                .put("average", values)
+                .format();
+        return String.valueOf(formatted);
+    }
+
+    public static String formatAvgActive(Context context, String values)
+    {
+        CharSequence formatted = Phrase.from(context.getResources()
+                .getString(R.string.avg_active_duration))
+                .put("average", values)
+                .format();
+        return String.valueOf(formatted);
+    }
+
     public static String formatNursingPerDay(Context context, String side, String values, String unit)
     {
         CharSequence formatted = Phrase.from(context.getResources().getString(R.string.nursing_per_day))
@@ -107,7 +195,8 @@ public class FormatUtils
 
     public static String formatNursingPercentage(Context context, String side, String percentage)
     {
-        CharSequence formatted = Phrase.from(context.getResources().getString(R.string.nursing_percentage_format))
+        CharSequence formatted = Phrase.from(context.getResources()
+                .getString(R.string.nursing_percentage_format))
                 .put("side", side)
                 .put("percentage", percentage)
                 .format();

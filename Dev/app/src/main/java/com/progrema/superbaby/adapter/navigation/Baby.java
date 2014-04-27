@@ -32,7 +32,8 @@ public class Baby extends Item
     @Override
     public View inflate(Context context, View view, ViewGroup viewGroup)
     {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) context.
+                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(getLayout(), viewGroup, false);
 
         TextView baby;

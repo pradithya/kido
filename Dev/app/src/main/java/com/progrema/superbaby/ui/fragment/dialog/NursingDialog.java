@@ -71,7 +71,8 @@ public class NursingDialog extends DialogFragment
             @Override
             public void onClick(View v)
             {
-                LinearLayout extraInfoFormula = (LinearLayout) getDialog().findViewById(R.id.container_formula_entry);
+                LinearLayout extraInfoFormula =
+                        (LinearLayout) getDialog().findViewById(R.id.container_formula_entry);
                 extraInfoFormula.setVisibility(View.VISIBLE);
             }
         });
@@ -86,7 +87,8 @@ public class NursingDialog extends DialogFragment
 
                 if (!FormatUtils.isValidNumber(volume))
                 {
-                    Toast invalidNumber = Toast.makeText(getActivity(), "invalid number", Toast.LENGTH_LONG);
+                    Toast invalidNumber =
+                            Toast.makeText(getActivity(), "invalid number", Toast.LENGTH_LONG);
                     invalidNumber.show();
                     return; //invalid volume
                 }

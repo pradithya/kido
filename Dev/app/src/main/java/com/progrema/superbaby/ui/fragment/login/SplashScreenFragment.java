@@ -55,8 +55,10 @@ public class SplashScreenFragment extends Fragment
                 finally
                 {
                     // move to login fragment
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.login_activity_container, LogInFragment.getInstance());
+                    FragmentTransaction fragmentTransaction =
+                            getFragmentManager().beginTransaction();
+                    fragmentTransaction.
+                            replace(R.id.login_activity_container, LogInFragment.getInstance());
                     fragmentTransaction.commit();
                 }
             }

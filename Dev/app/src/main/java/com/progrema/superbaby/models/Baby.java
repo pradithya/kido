@@ -98,7 +98,8 @@ public class Baby extends BaseActor
 
     public String getAgeInReadableFormat(Context context)
     {
-        return FormatUtils.formatAge(context, birthday.getTimeInMillis(), Calendar.getInstance().getTimeInMillis());
+        return FormatUtils.formatAge(context,
+                birthday.getTimeInMillis(), Calendar.getInstance().getTimeInMillis());
     }
 
     public String getBirthdayInReadableFormat(Context context)

@@ -36,14 +36,14 @@
     <string name="nursing_percentage_format">{side} {percentage}%</string>
     <string name="nursing_last_side">Last Side: {side}</string>
     <string name="nursing_per_day">{side} {values} {unit}</string>
-    <string name="night_percentage_string"></string>
-    <string name="nap_percentage_string"></string>
-    <string name="avg_night_sleep_string"></string>
-    <string name="avg_nap_duration_string"></string>
-    <string name="sleep_percentage_string"></string>
-    <string name="active_percentage_string"></string>
-    <string name="avg_sleep_duration_string"></string>
-    <string name="avg_active_duration_string"></string>
+    <string name="night_percentage">Night: {percentage}%</string>
+    <string name="nap_percentage">Nap: {percentage}%</string>
+    <string name="avg_night_sleep">Avg. Night Sleep {average}</string>
+    <string name="avg_nap_duration">Avg. Nap Duration {average}</string>
+    <string name="sleep_percentage">Sleep: {percentage}%</string>
+    <string name="active_percentage">Active: {percentage}%</string>
+    <string name="avg_sleep_duration">Avg. Sleep {average}</string>
+    <string name="avg_active_duration">Avg. Active {average}</string>
 
     <!--warning message-->
     <string name="ok_message">ok</string>

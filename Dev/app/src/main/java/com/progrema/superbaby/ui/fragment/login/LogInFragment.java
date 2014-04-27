@@ -49,13 +49,20 @@ public class LogInFragment extends Fragment implements View.OnClickListener
     {
         View rootView = inflater.inflate(R.layout.fragment_login, container, false);
 
-        loginButton = (Button) rootView.findViewById(R.id.fragment_authentication_button_login);
-        registerButton = (Button) rootView.findViewById(R.id.fragment_authentication_button_register);
-        finishRegisterButton = (Button) rootView.findViewById(R.id.fragment_authentication_button_finish_register);
-        userName = (EditText) rootView.findViewById(R.id.fragment_authentication_edit_text_name);
-        userPassword = (EditText) rootView.findViewById(R.id.fragment_authentication_edit_text_password);
-        userSecurityQuestion = (EditText) rootView.findViewById(R.id.fragment_authentication_edit_text_security_question);
-        userSecurityAnswer = (EditText) rootView.findViewById(R.id.fragment_authentication_edit_text_security_answer);
+        loginButton =
+                (Button) rootView.findViewById(R.id.fragment_authentication_button_login);
+        registerButton =
+                (Button) rootView.findViewById(R.id.fragment_authentication_button_register);
+        finishRegisterButton =
+                (Button) rootView.findViewById(R.id.fragment_authentication_button_finish_register);
+        userName =
+                (EditText) rootView.findViewById(R.id.fragment_authentication_edit_text_name);
+        userPassword =
+                (EditText) rootView.findViewById(R.id.fragment_authentication_edit_text_password);
+        userSecurityQuestion =
+                (EditText) rootView.findViewById(R.id.fragment_authentication_edit_text_security_question);
+        userSecurityAnswer =
+                (EditText) rootView.findViewById(R.id.fragment_authentication_edit_text_security_answer);
 
         // we use this because of the EditText property of password set the font to be different!!
         userPassword.setTypeface(Typeface.DEFAULT);

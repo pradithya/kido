@@ -27,7 +27,7 @@ import java.util.Calendar;
 public class NursingFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
     private static final int LOADER_LIST_VIEW = 0;
-    private static final int LOADER_NURSING_FROM_LAST_WEEK = 1;
+    private static final int LOADER_NURSING_FROM_TIME_REFERENCE = 1;
     private static final int LOADER_NURSING_LAST_SIDE = 2;
     private Calendar now = Calendar.getInstance();
     private NursingHistoryAdapter mAdapter;
@@ -66,7 +66,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
         // prepare loader
         LoaderManager lm = getLoaderManager();
         lm.initLoader(LOADER_LIST_VIEW, null, this);
-        lm.initLoader(LOADER_NURSING_FROM_LAST_WEEK, null, this);
+        lm.initLoader(LOADER_NURSING_FROM_TIME_REFERENCE, null, this);
         lm.initLoader(LOADER_NURSING_LAST_SIDE, null, this);
         return rootView;
     }
@@ -78,7 +78,8 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
         {
             case LOADER_LIST_VIEW:
             {
-                String[] argumentSelection = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
+                String[] argumentSelection =
+                        {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
                 return new CursorLoader(getActivity(),
                         BabyLogContract.Nursing.CONTENT_URI,
                         BabyLogContract.Nursing.Query.PROJECTION,
@@ -86,9 +87,11 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                         argumentSelection,
                         BabyLogContract.Nursing.Query.SORT_BY_TIMESTAMP_DESC);
             }
-            case LOADER_NURSING_FROM_LAST_WEEK:
+            case LOADER_NURSING_FROM_TIME_REFERENCE:
             {
-                String timeReference = String.valueOf(now.getTimeInMillis() - 7 * FormatUtils.DAY_MILLIS);
+                // TODO: timeReference must be configurable based on user input
+                String timeReference =
+                        String.valueOf(now.getTimeInMillis() - 7 * FormatUtils.DAY_MILLIS);
                 String[] argumentSelection =
                         {
                                 String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID()),
@@ -104,7 +107,8 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
             case LOADER_NURSING_LAST_SIDE:
             {
                 String[] projection = {BabyLogContract.Nursing.SIDES};
-                String[] argumentSelection = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
+                String[] argumentSelection =
+                        {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
                 return new CursorLoader(getActivity(),
                         BabyLogContract.Nursing.LAST_SIDES,
                         projection,
@@ -112,7 +116,6 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                         argumentSelection,
                         null);
             }
-
             default:
             {
                 return null;
@@ -134,12 +137,18 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                     mAdapter.swapCursor(cursor);
                     break;
                 }
-                case LOADER_NURSING_FROM_LAST_WEEK:
+                case LOADER_NURSING_FROM_TIME_REFERENCE:
                 {
-                    float duration = 0, totalDuration = 0, leftDuration = 0, rightDuration = 0, formulaVol = 0, result = 0;
+                    /**
+                     * Calculate average value of nursing from both side since the last 7 days.
+                     * That is, get the value from DB than calculate the average value.
+                     */
+                    float duration = 0, totalDuration = 0,
+                            leftDuration = 0, rightDuration = 0, formulaVol = 0, result = 0;
                     for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext())
                     {
-                        duration = Float.valueOf(cursor.getString(BabyLogContract.Nursing.Query.OFFSET_DURATION));
+                        duration = Float.valueOf(
+                                cursor.getString(BabyLogContract.Nursing.Query.OFFSET_DURATION));
                         String side = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_SIDES);
                         totalDuration += duration;
                         if (side.equals(Nursing.NursingType.LEFT.getTitle()))
@@ -152,39 +161,48 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                         }
                         else if (side.equals(Nursing.NursingType.FORMULA.getTitle()))
                         {
-                            formulaVol += Float.valueOf(cursor.getString(BabyLogContract.Nursing.Query.OFFSET_VOLUME));
+                            formulaVol += Float.valueOf(
+                                    cursor.getString(BabyLogContract.Nursing.Query.OFFSET_VOLUME));
                         }
                     }
 
                     result = leftDuration / totalDuration * 100;
                     percentageLeft.setText(
                             FormatUtils.formatNursingPercentage(getActivity(),
-                                    getActivity().getResources().getString(R.string.left_side), String.valueOf(result)));
+                                    getActivity().getResources().getString(R.string.left_side),
+                                    String.valueOf(result)));
 
                     result = rightDuration / totalDuration * 100;
                     percentageRight.setText(
                             FormatUtils.formatNursingPercentage(getActivity(),
-                                    getActivity().getResources().getString(R.string.right_side), String.valueOf(result)));
+                                    getActivity().getResources().getString(R.string.right_side),
+                                    String.valueOf(result)));
 
                     // calculate total left side
                     result = leftDuration / FormatUtils.MINUTE_MILLIS; // convert to minutes
                     result = result / 7; // meantime from one week (7 days)
+                    // TODO: timeReference must be configurable based on user input
                     leftPerDay.setText(
                             FormatUtils.formatNursingPerDay(getActivity(),
-                                    getActivity().getResources().getString(R.string.left_side), String.valueOf(result), "m/d"));
+                                    getActivity().getResources().getString(R.string.left_side),
+                                    String.valueOf(result), "m/d"));
 
                     // calculate total right side
                     result = rightDuration / FormatUtils.MINUTE_MILLIS; // convert to minutes
                     result = result / 7; // meantime from one week (7 days)
+                    // TODO: timeReference must be configurable based on user input
                     rightPerDay.setText(
                             FormatUtils.formatNursingPerDay(getActivity(),
-                                    getActivity().getResources().getString(R.string.right_side), String.valueOf(result), "m/d"));
+                                    getActivity().getResources().getString(R.string.right_side),
+                                    String.valueOf(result), "m/d"));
 
                     // calculate total formula
                     result = formulaVol / 7; // meantime from one week (7 days)
+                    // TODO: timeReference must be configurable based on user input
                     formulaPerDay.setText(
                             FormatUtils.formatNursingPerDay(getActivity(),
-                                    getActivity().getResources().getString(R.string.formula), String.valueOf(result), "mL/d"));
+                                    getActivity().getResources().getString(R.string.formula),
+                                    String.valueOf(result), "mL/d"));
 
                     break;
                 }

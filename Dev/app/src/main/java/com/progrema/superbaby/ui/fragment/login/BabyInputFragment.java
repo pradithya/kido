@@ -55,13 +55,16 @@ public class BabyInputFragment extends Fragment implements View.OnClickListener,
         date = now.get(Calendar.DATE);
 
         babyBirthdayInput = (Button) rootView.findViewById(R.id.fragment_baby_input_birthday);
-        babyBirthdayInput.setText(FormatUtils.formatDate(getActivity(), String.valueOf(Calendar.getInstance().getTimeInMillis())));
+        babyBirthdayInput.setText(FormatUtils.formatDate(getActivity(),
+                String.valueOf(Calendar.getInstance().getTimeInMillis())));
         babyBirthdayInput.setOnClickListener(this);
 
 
         babySexTypeInput = (Spinner) rootView.findViewById(R.id.fragment_baby_input_sex_type);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,
-                                                                getResources().getStringArray(R.array.gender_array));
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(getActivity(),
+                        android.R.layout.simple_spinner_item,
+                        getResources().getStringArray(R.array.gender_array));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         babySexTypeInput.setAdapter(adapter);
 
@@ -79,7 +82,8 @@ public class BabyInputFragment extends Fragment implements View.OnClickListener,
             case R.id.fragment_baby_input_birthday:
             {
 
-                DatePickerDialog dateChoser = new DatePickerDialog(getActivity(), this, year, month, date);
+                DatePickerDialog dateChoser =
+                        new DatePickerDialog(getActivity(), this, year, month, date);
                 dateChoser.show();
                 break;
             }
@@ -90,7 +94,8 @@ public class BabyInputFragment extends Fragment implements View.OnClickListener,
                 Calendar dob = Calendar.getInstance();
                 dob.set(year, month, date);
                 babyBirthday = String.valueOf(dob.getTimeInMillis());
-                babySextType = (String) babySexTypeInput.getAdapter().getItem(babySexTypeInput.getSelectedItemPosition());
+                babySextType = (String) babySexTypeInput.
+                        getAdapter().getItem(babySexTypeInput.getSelectedItemPosition());
 
                 // get new baby info and store it to DB
                 Baby baby = new Baby();
@@ -110,7 +115,8 @@ public class BabyInputFragment extends Fragment implements View.OnClickListener,
                 ActiveContext.setActiveBaby(getActivity(), babyName);
 
                 // skip login for the next application startup
-                SharedPreferences setting = getActivity().getSharedPreferences(LoginActivity.PREF_LOGIN, 0);
+                SharedPreferences setting = getActivity().
+                        getSharedPreferences(LoginActivity.PREF_LOGIN, 0);
                 SharedPreferences.Editor editor = setting.edit();
                 editor.putBoolean(LoginActivity.PREF_SKIP_LOGIN, true);
                 editor.commit();
@@ -133,7 +139,8 @@ public class BabyInputFragment extends Fragment implements View.OnClickListener,
 
         Calendar dob = Calendar.getInstance();
         dob.set(year, month, date);
-        babyBirthdayInput.setText(FormatUtils.formatDate(getActivity(), String.valueOf(dob.getTimeInMillis())));
+        babyBirthdayInput.setText(
+                FormatUtils.formatDate(getActivity(), String.valueOf(dob.getTimeInMillis())));
     }
 
 }
