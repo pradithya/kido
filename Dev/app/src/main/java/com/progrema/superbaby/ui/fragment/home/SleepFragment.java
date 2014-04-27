@@ -123,21 +123,21 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
                      * Calculate average value of nursing from both side since the last 7 days.
                      * That is, get the value from DB than calculate the average value.
                      */
-                    float duration = 0, totalDuration = 0;
-                    float napDuration = 0, nightDuration = 0, timestamp = 0;
-                    float percentageNight, percentageNap;
-                    float percentageActive, percentageSleep;
-                    float averageNight, averageNap, averageSleep;
-                    float one_week_duration = 7 * 24 * 60 * 60 * 1000;
+                    long duration = 0, totalDuration = 0;
+                    long napDuration = 0, nightDuration = 0, timestamp = 0;
+                    long percentageNight, percentageNap;
+                    long percentageActive, percentageSleep;
+                    long averageNight, averageNap, averageSleep;
+                    long one_week_duration = 7 * 24 * 60 * 60 * 1000;
 
-                    ArrayList<Float> nightSleepList = new ArrayList<Float>();
-                    ArrayList<Float> napSleepList = new ArrayList<Float>();
-                    ArrayList<Float> sleepList = new ArrayList<Float>();
+                    ArrayList<Long> nightSleepList = new ArrayList<Long>();
+                    ArrayList<Long> napSleepList = new ArrayList<Long>();
+                    ArrayList<Long> sleepList = new ArrayList<Long>();
 
                     for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                        duration = Float.valueOf(
+                        duration = Long.valueOf(
                                 cursor.getString(BabyLogContract.Sleep.Query.OFFSET_DURATION));
-                        timestamp = Float.valueOf(
+                        timestamp = Long.valueOf(
                                 cursor.getString(BabyLogContract.Sleep.Query.OFFSET_TIMESTAMP));
                         sleepList.add(duration);
                         totalDuration += duration;
@@ -150,9 +150,9 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
                         }
                     }
 
-                    percentageNap = napDuration / duration * 100;
-                    percentageNight = nightDuration / duration * 100;
-                    percentageSleep = duration / one_week_duration * 100;
+                    percentageNap = napDuration / totalDuration * 100;
+                    percentageNight = nightDuration / totalDuration * 100;
+                    percentageSleep = totalDuration / one_week_duration * 100;
                     percentageActive = 100 - percentageSleep;
                     averageNight = calculateAverage(nightSleepList);
                     averageNap = calculateAverage(napSleepList);
@@ -207,25 +207,27 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
         mAdapter.swapCursor(null);
     }
 
-    private float calculateAverage(ArrayList<Float> collection) {
-        float average = 0;
+    private long calculateAverage(ArrayList<Long> collection) {
+        long average = 0;
         for (float data : collection) {
             average += data;
         }
-        average = average / collection.size();
-        return average;
+        try {
+            average = average / collection.size();
+        } catch (ArithmeticException e) {
+            // do nothing if divided by zero
+        } finally {
+            return average;
+        }
     }
 
-    private boolean isNight(Float timeStamp) {
-        // assuming day is start at 00.00
-        float oneDayInMilisecond = 24 * 60 * 60 * 1000;
-        float sixAmInMilisecond = 6 * 60 * 60 * 1000;
-        float sixPmInMilisecond = 18 * 60 * 60 * 1000;
-        float reminder;
+    private boolean isNight(long timeStamp) {
+        Calendar object = Calendar.getInstance();
+        object.setTimeInMillis(timeStamp);
+        int hour = object.get(Calendar.HOUR_OF_DAY);
 
-        reminder = timeStamp % oneDayInMilisecond;
-
-        if ((reminder < sixAmInMilisecond) || (reminder > sixPmInMilisecond))
+        // TODO: Let user change this day and night boundary
+        if ((hour < 6) || (hour > 18))
             return true;
 
         return false;
