@@ -45,6 +45,17 @@
     <string name="avg_sleep_duration">Avg. Sleep {average}</string>
     <string name="avg_active_duration">Avg. Active {average}</string>
 
+    <!--fragment diaper string-->
+    <string name="wet_icon">Wet</string>
+    <string name="dry_icon">Dry</string>
+    <string name="mix_icon">Mix</string>
+    <string name="wet_average">Avg. Wet {value}</string>
+    <string name="dry_average">Avg. Dry {value}</string>
+    <string name="mix_average">Avg. Mix {value}</string>
+    <string name="wet_last">Last Wet {value}</string>
+    <string name="dry_last">Last Dry {value}</string>
+    <string name="mix_last">Last Mix {value}</string>
+
     <!--warning message-->
     <string name="ok_message">ok</string>
     <string name="input_not_complete_message">Please input all required data.</string>

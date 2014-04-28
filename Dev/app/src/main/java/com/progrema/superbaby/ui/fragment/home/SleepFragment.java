@@ -25,7 +25,7 @@ import java.util.Calendar;
  * Fragment to log all sleep activity
  */
 public class SleepFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
-    private static final int LOADER_LIST_VIEW = 0;
+    private static final int LOADER_SLEEP_LIST_VIEW = 0;
     private static final int LOADER_SLEEP_FROM_TIME_REFERENCE = 1;
     private ObserveAbleListView sleepHistoryList;
     private Calendar now = Calendar.getInstance();
@@ -49,7 +49,7 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
         // inflate fragment layout
         View rootView = inflater.inflate(R.layout.fragment_sleep, container, false);
 
-        // get UI object
+        // get Header UI object
         nightPercentage = (TextView) rootView.findViewById(R.id.night_percentage);
         napPercentage = (TextView) rootView.findViewById(R.id.nap_percentage);
         avgNightSleepDuration = (TextView) rootView.findViewById(R.id.avg_night_duration);
@@ -67,7 +67,7 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
 
         // prepare loader
         LoaderManager lm = getLoaderManager();
-        lm.initLoader(LOADER_LIST_VIEW, null, this);
+        lm.initLoader(LOADER_SLEEP_LIST_VIEW, null, this);
         lm.initLoader(LOADER_SLEEP_FROM_TIME_REFERENCE, null, this);
 
         return rootView;
@@ -77,7 +77,8 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle) {
         switch (loaderId) {
-            case LOADER_LIST_VIEW: {
+
+            case LOADER_SLEEP_LIST_VIEW:
                 String[] args = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
                 return new CursorLoader(getActivity(),
                         BabyLogContract.Sleep.CONTENT_URI,
@@ -85,8 +86,8 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
                         BabyLogContract.BABY_SELECTION_ARG,
                         args,
                         BabyLogContract.Sleep.Query.SORT_BY_TIMESTAMP_DESC);
-            }
-            case LOADER_SLEEP_FROM_TIME_REFERENCE: {
+
+            case LOADER_SLEEP_FROM_TIME_REFERENCE:
                 // TODO: timeReference must be configurable based on user input
                 String timeReference =
                         String.valueOf(now.getTimeInMillis() - 7 * FormatUtils.DAY_MILLIS);
@@ -101,25 +102,26 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
                         "baby_id = ? AND timestamp >= ?",
                         argumentSelection,
                         BabyLogContract.Sleep.Query.SORT_BY_TIMESTAMP_DESC);
-            }
-            default: {
+
+            default:
                 return null;
-            }
         }
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+
         if (cursor.getCount() > 0) {
             // show last inserted row
             cursor.moveToFirst();
 
             switch (cursorLoader.getId()) {
-                case LOADER_LIST_VIEW: {
+
+                case LOADER_SLEEP_LIST_VIEW:
                     mAdapter.swapCursor(cursor);
                     break;
-                }
-                case LOADER_SLEEP_FROM_TIME_REFERENCE: {
+
+                case LOADER_SLEEP_FROM_TIME_REFERENCE:
                     /**
                      * Calculate average value of nursing from both side since the last 7 days.
                      * That is, get the value from DB than calculate the average value.
@@ -199,7 +201,6 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
                     //TODO: show average active
 
                     break;
-                }
             }
         }
     }

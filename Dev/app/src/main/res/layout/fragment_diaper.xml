@@ -1,23 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/sleep_header_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/diaper_header_left_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/wet_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wet_icon" />
+
+                <TextView
+                    android:id="@+id/dry_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/wet_icon"
+                    android:text="@string/dry_icon" />
+
+                <TextView
+                    android:id="@+id/mix_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/dry_icon"
+                    android:text="@string/mix_icon" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/diaper_header_middle_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/wet_average"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wet_average" />
+
+                <TextView
+                    android:id="@+id/dry_average"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/wet_average"
+                    android:text="@string/dry_average" />
+
+                <TextView
+                    android:id="@+id/mix_average"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/dry_average"
+                    android:text="@string/mix_average" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/diaper_header_right_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/wet_last"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wet_last" />
+
+                <TextView
+                    android:id="@+id/dry_last"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/wet_last"
+                    android:text="@string/dry_last" />
+
+                <TextView
+                    android:id="@+id/mix_last"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/dry_last"
+                    android:text="@string/mix_last" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
 
         <com.progrema.superbaby.widget.customview.ObserveAbleListView
             android:id="@+id/activity_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
-
+            android:layout_weight="1" />
 
     </LinearLayout>
 
-    <include layout="@layout/quick_button"/>
+    <include layout="@layout/quick_button" />
 </FrameLayout>
