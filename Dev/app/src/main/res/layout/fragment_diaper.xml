@@ -82,21 +82,21 @@
                     android:id="@+id/wet_last"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/wet_last" />
+                    android:text="@string/activity_last" />
 
                 <TextView
                     android:id="@+id/dry_last"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/wet_last"
-                    android:text="@string/dry_last" />
+                    android:text="@string/activity_last" />
 
                 <TextView
                     android:id="@+id/mix_last"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/dry_last"
-                    android:text="@string/mix_last" />
+                    android:text="@string/activity_last" />
 
             </RelativeLayout>
 

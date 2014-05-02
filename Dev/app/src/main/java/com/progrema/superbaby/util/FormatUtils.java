@@ -1,6 +1,7 @@
 package com.progrema.superbaby.util;
 
 import android.content.Context;
+import android.text.format.DateUtils;
 
 import com.progrema.superbaby.R;
 import com.squareup.phrase.Phrase;
@@ -176,6 +177,39 @@ public class FormatUtils {
                 .getString(R.string.nursing_percentage_format))
                 .put("side", side)
                 .put("percentage", percentage)
+                .format();
+        return String.valueOf(formatted);
+    }
+
+    public static String formatDiaperAverageWet(Context context, String values){
+        CharSequence formatted = Phrase.from(context.getResources()
+                .getString(R.string.wet_average))
+                .put("value", values)
+                .format();
+        return String.valueOf(formatted);
+    }
+
+    public static String formatDiaperAverageDry(Context context, String values){
+        CharSequence formatted = Phrase.from(context.getResources()
+                .getString(R.string.dry_average))
+                .put("value", values)
+                .format();
+        return String.valueOf(formatted);
+    }
+
+    public static String formatDiaperAverageMix(Context context, String values){
+        CharSequence formatted = Phrase.from(context.getResources()
+                .getString(R.string.mix_average))
+                .put("value", values)
+                .format();
+        return String.valueOf(formatted);
+    }
+
+    public static String formatDiaperLastActivity(Context context, String time){
+        String lastTime = DateUtils.getRelativeTimeSpanString(Long.parseLong(time)).toString();
+        CharSequence formatted = Phrase.from(context.getResources()
+                .getString(R.string.activity_last))
+                .put("value", lastTime)
                 .format();
         return String.valueOf(formatted);
     }
