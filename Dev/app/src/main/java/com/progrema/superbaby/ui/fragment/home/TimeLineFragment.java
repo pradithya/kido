@@ -170,7 +170,6 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                                         BabyLogContract.Sleep.table, time)
                         );
                     }
-                    ;
                     break;
                 }
                 case LOADER_LAST_DIAPER: {
@@ -183,7 +182,6 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                                         BabyLogContract.Diaper.table, time)
                         );
                     }
-                    ;
                     break;
                 }
                 case LOADER_LAST_MEASUREMENT: {
@@ -196,7 +194,6 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                                         BabyLogContract.Measurement.table, time)
                         );
                     }
-                    ;
                     break;
                 }
             }

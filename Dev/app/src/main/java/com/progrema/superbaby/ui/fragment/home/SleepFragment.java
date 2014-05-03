@@ -124,11 +124,11 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
                      */
                     float duration = 0, totalDuration = 0;
                     float napDuration = 0, nightDuration = 0;
+                    float deviceDuration = 0;
                     float percentageNight, percentageNap;
                     float percentageActive, percentageSleep;
                     float averageNight, averageNap, averageSleep;
-                    float one_week_duration = 7 * 24 * 60 * 60 * 1000;
-                    long timestamp = 0;
+                    long timestamp;
 
                     ArrayList<Float> nightSleepList = new ArrayList<Float>();
                     ArrayList<Float> napSleepList = new ArrayList<Float>();
@@ -150,9 +150,17 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
                         }
                     }
 
+                    // calculate device duration
+                    float firstTimeSleep, now;
+                    now = Calendar.getInstance().getTimeInMillis();
+                    cursor.moveToLast();
+                    firstTimeSleep = Float.valueOf(
+                            cursor.getString(BabyLogContract.Sleep.Query.OFFSET_TIMESTAMP));
+                    deviceDuration = now - firstTimeSleep;
+
                     percentageNap = napDuration / totalDuration * 100;
                     percentageNight = nightDuration / totalDuration * 100;
-                    percentageSleep = totalDuration / one_week_duration * 100;
+                    percentageSleep = totalDuration / deviceDuration * 100;
                     percentageActive = 100 - percentageSleep;
                     averageNight = calculateAverage(nightSleepList);
                     averageNap = calculateAverage(napSleepList);
