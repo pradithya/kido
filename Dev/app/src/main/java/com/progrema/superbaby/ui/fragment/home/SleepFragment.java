@@ -88,18 +88,14 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
                         BabyLogContract.Sleep.Query.SORT_BY_TIMESTAMP_DESC);
 
             case LOADER_SLEEP_FROM_TIME_REFERENCE:
-                // TODO: timeReference must be configurable based on user input
-                String timeReference =
-                        String.valueOf(now.getTimeInMillis() - 7 * FormatUtils.DAY_MILLIS);
                 String[] argumentSelection =
                         {
-                                String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID()),
-                                timeReference
+                                String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())
                         };
                 return new CursorLoader(getActivity(),
                         BabyLogContract.Sleep.CONTENT_URI,
                         BabyLogContract.Sleep.Query.PROJECTION,
-                        "baby_id = ? AND timestamp >= ?",
+                        "baby_id = ?",
                         argumentSelection,
                         BabyLogContract.Sleep.Query.SORT_BY_TIMESTAMP_DESC);
 

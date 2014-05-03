@@ -21,6 +21,7 @@ import com.progrema.superbaby.util.FormatUtils;
 import com.progrema.superbaby.widget.customview.ObserveAbleListView;
 
 public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_LAST_NURSING = 1;
     private static final int LOADER_LAST_SLEEP = 2;
@@ -154,7 +155,7 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                                 getRelativeTimeSpanString(Long.parseLong(timestamp)).toString();
                         headerLastNursing.setText(
                                 FormatUtils.formatLastActivity(getActivity(),
-                                        BabyLogContract.Measurement.table, time)
+                                        BabyLogContract.Nursing.table, time)
                         );
                     }
                     break;

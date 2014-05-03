@@ -26,6 +26,7 @@ import java.util.Calendar;
  * @author aria
  */
 public class DiaperFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_LAST_WET = 1;
     private static final int LOADER_LAST_DRY = 2;
@@ -46,6 +47,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // inflate fragment layout
         View rootView = inflater.inflate(R.layout.fragment_diaper, container, false);
 
@@ -68,6 +70,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
         lm.initLoader(LOADER_LAST_WET, null, this);
         lm.initLoader(LOADER_LAST_DRY, null, this);
         lm.initLoader(LOADER_LAST_MIXED, null, this);
+
         return rootView;
     }
 
@@ -75,7 +78,6 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
     public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle) {
 
         switch (loaderId){
-
             case LOADER_LIST_VIEW: {
                 String[] args = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
                 CursorLoader cl = new CursorLoader(getActivity(), BabyLogContract.Diaper.CONTENT_URI,
@@ -123,7 +125,6 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
             }
             default:
                 return null;
-
         }
     }
 
@@ -176,9 +177,8 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
 
     private String calculateUsageAverage(Cursor cursor){
 
-        // calculate date range
         double minDateInMilis, maxDateInMilis, oneDayInMilis;
-        double dayCount=0, average=0;
+        double dayCount, average = 0;
 
         cursor.moveToLast();
 
