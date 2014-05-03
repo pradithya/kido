@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/sleep_header_container"
@@ -26,28 +26,28 @@
                     android:id="@+id/night_percentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/night_percentage"/>
+                    android:text="@string/night_percentage" />
 
                 <TextView
                     android:id="@+id/nap_percentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/nap_percentage"
-                    android:layout_below="@id/night_percentage"/>
+                    android:layout_below="@id/night_percentage"
+                    android:text="@string/nap_percentage" />
 
                 <TextView
                     android:id="@+id/avg_night_duration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/avg_night_sleep"
-                    android:layout_below="@id/nap_percentage"/>
+                    android:layout_below="@id/nap_percentage"
+                    android:text="@string/avg_night_sleep" />
 
                 <TextView
                     android:id="@+id/avg_nap_duration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/avg_nap_duration"
-                    android:layout_below="@id/avg_night_duration"/>
+                    android:layout_below="@id/avg_night_duration"
+                    android:text="@string/avg_nap_duration" />
 
             </RelativeLayout>
 
@@ -61,28 +61,28 @@
                     android:id="@+id/sleep_percentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/sleep_percentage"/>
+                    android:text="@string/sleep_percentage" />
 
                 <TextView
                     android:id="@+id/active_percentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/active_percentage"
-                    android:layout_below="@id/sleep_percentage"/>
+                    android:layout_below="@id/sleep_percentage"
+                    android:text="@string/active_percentage" />
 
                 <TextView
                     android:id="@+id/avg_sleep_duration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/avg_sleep_duration"
-                    android:layout_below="@id/active_percentage"/>
+                    android:layout_below="@id/active_percentage"
+                    android:text="@string/avg_sleep_duration" />
 
                 <TextView
                     android:id="@+id/avg_active_duration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/avg_active_duration"
-                    android:layout_below="@id/avg_sleep_duration"/>
+                    android:layout_below="@id/avg_sleep_duration"
+                    android:text="@string/avg_active_duration" />
 
             </RelativeLayout>
 
@@ -92,10 +92,10 @@
             android:id="@+id/activity_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
     </LinearLayout>
 
-    <include layout="@layout/quick_button"/>
+    <include layout="@layout/quick_button" />
 
 </FrameLayout>

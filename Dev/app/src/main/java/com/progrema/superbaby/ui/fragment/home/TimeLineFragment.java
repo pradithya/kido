@@ -61,6 +61,8 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
         // prepare adapter
         historyList = (ObserveAbleListView) rootView.findViewById(R.id.activity_list);
         mAdapter = new TimeLineHistoryAdapter(getActivity(), null, 0);
+        historyList.addHeaderView(new View(getActivity()));
+        historyList.addFooterView(new View(getActivity()));
         historyList.setAdapter(mAdapter);
 
         // prepare loader

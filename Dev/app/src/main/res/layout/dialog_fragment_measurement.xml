@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/container_height_entry"
@@ -16,13 +16,13 @@
             android:id="@+id/entry_text_height"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:hint="@string/height_hint"/>
+            android:hint="@string/height_hint" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/height_unit"/>
+            android:text="@string/height_unit" />
 
     </LinearLayout>
 
@@ -37,13 +37,13 @@
             android:id="@+id/entry_text_weight"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:hint="@string/weight_hint"/>
+            android:hint="@string/weight_hint" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/weight_unit"/>
+            android:text="@string/weight_unit" />
 
     </LinearLayout>
 
@@ -52,6 +52,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/ok_button"/>
+        android:text="@string/ok_button" />
 
 </LinearLayout>
