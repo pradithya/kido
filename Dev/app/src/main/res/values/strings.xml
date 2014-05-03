@@ -49,9 +49,7 @@
     <string name="wet_icon">Wet</string>
     <string name="dry_icon">Dry</string>
     <string name="mix_icon">Mix</string>
-    <string name="wet_average">Avg. Wet {value}</string>
-    <string name="dry_average">Avg. Dry {value}</string>
-    <string name="mix_average">Avg. Mix {value}</string>
+    <string name="activity_average">Avg. {value} times/d</string>
     <string name="activity_last">Last {value}</string>
 
     <!--warning message-->

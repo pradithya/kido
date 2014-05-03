@@ -181,25 +181,9 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String formatDiaperAverageWet(Context context, String values){
+    public static String formatDiaperAverageActivity(Context context, String values) {
         CharSequence formatted = Phrase.from(context.getResources()
-                .getString(R.string.wet_average))
-                .put("value", values)
-                .format();
-        return String.valueOf(formatted);
-    }
-
-    public static String formatDiaperAverageDry(Context context, String values){
-        CharSequence formatted = Phrase.from(context.getResources()
-                .getString(R.string.dry_average))
-                .put("value", values)
-                .format();
-        return String.valueOf(formatted);
-    }
-
-    public static String formatDiaperAverageMix(Context context, String values){
-        CharSequence formatted = Phrase.from(context.getResources()
-                .getString(R.string.mix_average))
+                .getString(R.string.activity_average))
                 .put("value", values)
                 .format();
         return String.valueOf(formatted);

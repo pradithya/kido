@@ -54,21 +54,21 @@
                     android:id="@+id/wet_average"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/wet_average" />
+                    android:text="@string/activity_average" />
 
                 <TextView
                     android:id="@+id/dry_average"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/wet_average"
-                    android:text="@string/dry_average" />
+                    android:text="@string/activity_average" />
 
                 <TextView
                     android:id="@+id/mix_average"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/dry_average"
-                    android:text="@string/mix_average" />
+                    android:text="@string/activity_average" />
 
             </RelativeLayout>
 
