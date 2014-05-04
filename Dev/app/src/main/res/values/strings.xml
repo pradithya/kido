@@ -27,7 +27,9 @@
     <string name="quick_button_title_measurement">Measure</string>
 
     <!--fragment sleep string-->
-    <string name="date_format">{day}, {date} {month} {year}</string>
+    <string name="date_complete_format">{day}, {date} {month} {year}</string>
+    <string name="day_only_format">{day}</string>
+    <string name="date_simple_format">{date} {month} {year}</string>
     <string name="age_format">{day} days old</string>
     <string name="time_format">{hour}:{minute}</string>
     <string name="duration_format">{hour} h {minute} m {second} s</string>

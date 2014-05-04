@@ -39,7 +39,7 @@ public class TimeLineHistoryAdapter extends CursorAdapter {
 
         // TextView for common info
         TextView textViewActivityType = (TextView) view.findViewById(R.id.history_item_act_type);
-        TextView textViewDate = (TextView) view.findViewById(R.id.history_item_date);
+        TextView textViewDate = (TextView) view.findViewById(R.id.history_item_day);
         TextView textViewTime = (TextView) view.findViewById(R.id.history_item_time);
 
         // TextView for extra information

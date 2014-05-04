@@ -20,9 +20,12 @@ public class FormatUtils {
     public final static long HOUR_MILLIS = MINUTE_MILLIS * 60;
     public final static long DAY_MILLIS = HOUR_MILLIS * 24;
 
-    private static final String[] DAY_OF_WEEK = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+    private static final String[] DAY_OF_WEEK_SHORT = {"Sun", "Mon", "Tue", "Wed",
+            "Thur", "Fri", "Sat"};
     private static final String[] MONTH_OF_YEAR = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+    private static final String[] DAY_OF_WEEK_COMPLETE = {"Sunday", "Monday", "Tuesday", "Wednesday",
+            "Thursday", "Friday", "Saturday"};
 
     public static boolean isDay(Context context, String timestamp) {
         // TODO: get better algorithm to check day and night condition
@@ -221,13 +224,41 @@ public class FormatUtils {
     public static String formatDate(Context context, String timeStamp) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(Long.parseLong(timeStamp));
-        String day = DAY_OF_WEEK[cal.get(Calendar.DAY_OF_WEEK) - 1];
+        String day = DAY_OF_WEEK_SHORT[cal.get(Calendar.DAY_OF_WEEK) - 1];
         String date = String.valueOf(cal.get(Calendar.DATE));
         String month = MONTH_OF_YEAR[cal.get(Calendar.MONTH)];
         String year = String.valueOf(cal.get(Calendar.YEAR));
 
-        CharSequence formatted = Phrase.from(context.getResources().getString(R.string.date_format))
+        CharSequence formatted = Phrase.from(context.getResources()
+                .getString(R.string.date_complete_format))
                 .put("day", day)
+                .put("date", date)
+                .put("month", month)
+                .put("year", year)
+                .format();
+        return String.valueOf(formatted);
+    }
+
+    public static String formatDayOnly(Context context, String timeStamp){
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(Long.parseLong(timeStamp));
+        String day = DAY_OF_WEEK_COMPLETE[cal.get(Calendar.DAY_OF_WEEK) - 1];
+        CharSequence formatted = Phrase.from(context.getResources()
+                .getString(R.string.day_only_format))
+                .put("day", day)
+                .format();
+        return String.valueOf(formatted);
+    }
+
+    public static String formatDateOnly(Context context, String timeStamp){
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(Long.parseLong(timeStamp));
+        String date = String.valueOf(cal.get(Calendar.DATE));
+        String month = MONTH_OF_YEAR[cal.get(Calendar.MONTH)];
+        String year = String.valueOf(cal.get(Calendar.YEAR));
+
+        CharSequence formatted = Phrase.from(context.getResources()
+                .getString(R.string.date_simple_format))
                 .put("date", date)
                 .put("month", month)
                 .put("year", year)

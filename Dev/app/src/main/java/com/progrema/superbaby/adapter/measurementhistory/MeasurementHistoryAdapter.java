@@ -32,7 +32,7 @@ public class MeasurementHistoryAdapter extends CursorAdapter {
         String height = cursor.getString(BabyLogContract.Measurement.Query.OFFSET_HEIGHT);
         String weight = cursor.getString(BabyLogContract.Measurement.Query.OFFSET_WEIGHT);
 
-        TextView textViewDate = (TextView) view.findViewById(R.id.history_item_date);
+        TextView textViewDate = (TextView) view.findViewById(R.id.history_item_day);
         TextView textViewTime = (TextView) view.findViewById(R.id.history_item_time);
         TextView textViewHeight = (TextView) view.findViewById(R.id.history_item_height);
         TextView textViewWeight = (TextView) view.findViewById(R.id.history_item_weight);
