@@ -62,6 +62,8 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
         // set adapter to list view
         diaperHistoryList = (ObserveAbleListView) rootView.findViewById(R.id.activity_list);
         mAdapter = new DiaperHistoryAdapter(getActivity(), null, 0);
+        diaperHistoryList.addHeaderView(new View(getActivity()));
+        diaperHistoryList.addFooterView(new View(getActivity()));
         diaperHistoryList.setAdapter(mAdapter);
 
         // prepare loader

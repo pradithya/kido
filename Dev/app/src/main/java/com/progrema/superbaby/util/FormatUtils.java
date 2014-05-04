@@ -238,7 +238,7 @@ public class FormatUtils {
     public static String formatTime(Context context, String timeStamp) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(Long.parseLong(timeStamp));
-        return new SimpleDateFormat("HH:mm a").format(cal.getTime());
+        return new SimpleDateFormat("HH:mm").format(cal.getTime());
     }
 
     public static boolean isValidNumber(String str) {

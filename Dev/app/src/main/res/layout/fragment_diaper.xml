@@ -14,7 +14,10 @@
             android:id="@+id/sleep_header_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_margin="15dp"
+            android:background="@drawable/layer_header_card_background"
+            android:orientation="horizontal"
+            android:padding="15dp">
 
             <RelativeLayout
                 android:id="@+id/diaper_header_left_container"
@@ -48,7 +51,7 @@
                 android:id="@+id/diaper_header_middle_container"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="2">
 
                 <TextView
                     android:id="@+id/wet_average"
@@ -76,7 +79,7 @@
                 android:id="@+id/diaper_header_right_container"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="2">
 
                 <TextView
                     android:id="@+id/wet_last"
@@ -106,7 +109,15 @@
             android:id="@+id/activity_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:divider="@null"
+            android:dividerHeight="10dp"
+            android:listSelector="@android:color/transparent"
+            android:cacheColorHint="@android:color/transparent"
+            android:headerDividersEnabled="true"
+            android:footerDividersEnabled="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" />
 
     </LinearLayout>
 
