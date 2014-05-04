@@ -21,9 +21,6 @@ import com.progrema.superbaby.widget.customview.ObserveAbleListView;
 
 import java.util.Calendar;
 
-/**
- * Created by iqbalpakeh on 18/1/14.
- */
 public class NursingFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_NURSING_FROM_TIME_REFERENCE = 1;

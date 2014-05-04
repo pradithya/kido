@@ -6,9 +6,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ListView;
 
-/**
- * Created by iqbalpakeh on 22/2/14.
- */
 public class ObserveAbleListView extends ListView {
     private final int INVALID_POINTER_ID = MotionEvent.INVALID_POINTER_ID;
     private int mActivePointerId = INVALID_POINTER_ID;

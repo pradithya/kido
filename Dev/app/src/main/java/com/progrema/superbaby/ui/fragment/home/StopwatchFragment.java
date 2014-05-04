@@ -20,11 +20,6 @@ import com.progrema.superbaby.widget.stopwatch.Stopwatch;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by iqbalpakeh on 29/1/14.
- *
- * @author aria
- */
 public class StopwatchFragment extends Fragment implements View.OnClickListener {
     private Stopwatch stopwatch;
     private Stopwatch stopwatch2;

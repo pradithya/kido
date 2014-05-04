@@ -11,9 +11,6 @@ import android.widget.Button;
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.models.Diaper;
 
-/**
- * Created by aria on 20/2/14.
- */
 public class DiaperDialog extends DialogFragment {
     private Callbacks mCallbacks;
 

@@ -6,11 +6,6 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/**
- * Created by aria on 23/1/14.
- *
- * @author aria
- */
 public class SecurityUtils {
     public static String computeSHA1(String inputPlainText) {
         MessageDigest sha1 = null;

@@ -4,9 +4,6 @@ import android.os.Parcel;
 
 import java.util.Calendar;
 
-/**
- * Created by aria on 24/1/14.
- */
 abstract public class BaseActivity extends BaseModel {
     protected long babyID; //owner of the activity
     protected String timeStamp;

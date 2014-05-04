@@ -24,11 +24,6 @@ import com.progrema.superbaby.util.FormatUtils;
 
 import java.util.Calendar;
 
-/**
- * Created by iqbalpakeh on 5/2/14.
- *
- * @author aria
- */
 public class BabyInputFragment extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
     private static BabyInputFragment singletonBabyInputFragment = null;
     private EditText babyNameInput;

@@ -13,10 +13,6 @@ import com.progrema.superbaby.models.Nursing;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
-
-/**
- * Created by aria on 26/1/14.
- */
 public class NursingHistoryAdapter extends CursorAdapter {
     public NursingHistoryAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);

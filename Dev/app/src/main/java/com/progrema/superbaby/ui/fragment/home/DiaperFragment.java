@@ -20,11 +20,6 @@ import com.progrema.superbaby.widget.customview.ObserveAbleListView;
 
 import java.util.Calendar;
 
-/**
- * Created by iqbalpakeh on 18/1/14.
- *
- * @author aria
- */
 public class DiaperFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int LOADER_LIST_VIEW = 0;

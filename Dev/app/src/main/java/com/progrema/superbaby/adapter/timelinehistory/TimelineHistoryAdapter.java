@@ -13,9 +13,6 @@ import com.progrema.superbaby.models.Nursing;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
-/**
- * Created by aria on 21/2/14.
- */
 public class TimeLineHistoryAdapter extends CursorAdapter {
     public TimeLineHistoryAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);

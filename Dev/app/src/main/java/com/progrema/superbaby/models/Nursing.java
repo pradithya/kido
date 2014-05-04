@@ -6,11 +6,6 @@ import android.os.Parcel;
 
 import com.progrema.superbaby.provider.BabyLogContract;
 
-/**
- * Created by iqbalpakeh on 22/1/14.
- *
- * @author aria
- */
 public class Nursing extends BaseActivity {
     public final static String NURSING_TYPE_KEY = "type";
     public final static String FORMULA_VOLUME_KEY = "volume";

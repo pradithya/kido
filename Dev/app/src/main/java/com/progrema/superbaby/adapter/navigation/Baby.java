@@ -10,9 +10,6 @@ import android.widget.TextView;
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.util.ActiveContext;
 
-/**
- * Created by iqbalpakeh on 15/2/14.
- */
 public class Baby extends Item {
     public Baby(String text) {
         this.setText(text);

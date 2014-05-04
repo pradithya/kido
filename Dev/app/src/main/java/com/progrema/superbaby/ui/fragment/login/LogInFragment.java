@@ -18,9 +18,6 @@ import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.SecurityUtils;
 
-/**
- * Created by iqbalpakeh on 5/2/14.
- */
 public class LogInFragment extends Fragment implements View.OnClickListener {
     /**
      * LogInFragment private data

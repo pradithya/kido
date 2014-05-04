@@ -11,9 +11,6 @@ import android.provider.BaseColumns;
 
 import com.progrema.superbaby.util.SelectionBuilder;
 
-/**
- * @
- */
 public class BabyLogProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private static final int USER = 100;

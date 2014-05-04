@@ -2,9 +2,6 @@ package com.progrema.superbaby.models;
 
 import android.os.Parcel;
 
-/**
- * Created by aria on 25/1/14.
- */
 abstract public class BaseActor extends BaseModel {
     /**
      * Protected field of BaseActor class

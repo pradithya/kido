@@ -7,9 +7,6 @@ import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 
-/**
- * Created by iqbalpakeh on 15/2/14.
- */
 public class NavigationAdapter extends ArrayAdapter<Item> {
     /**
      * private field

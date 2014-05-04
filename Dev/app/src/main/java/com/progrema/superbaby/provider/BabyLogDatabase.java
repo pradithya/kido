@@ -21,11 +21,6 @@ import com.progrema.superbaby.provider.BabyLogContract.UserBabyMap;
 import com.progrema.superbaby.provider.BabyLogContract.UserBabyMapColumns;
 import com.progrema.superbaby.provider.BabyLogContract.UserColumns;
 
-/**
- * Created by iqbalpakeh on 18/1/14.
- *
- * @author aria
- */
 public class BabyLogDatabase extends SQLiteOpenHelper {
     public final static String JOIN_ALL = ("SELECT "
             + Tables.ACTIVITY + "." + BaseColumns._ID

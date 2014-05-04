@@ -5,9 +5,6 @@ import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.widget.Chronometer;
 
-/**
- * Created by iqbalpakeh on 30/1/14.
- */
 public class Stopwatch extends Chronometer implements TimerService {
     private long miliSeconds;
     private long timeWhenStop;

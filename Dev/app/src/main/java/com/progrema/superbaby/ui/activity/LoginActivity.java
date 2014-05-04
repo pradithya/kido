@@ -12,9 +12,6 @@ import com.progrema.superbaby.R;
 import com.progrema.superbaby.ui.fragment.login.BabyInputFragment;
 import com.progrema.superbaby.ui.fragment.login.SplashScreenFragment;
 
-/**
- * Created by iqbalpakeh on 5/2/14.
- */
 public class LoginActivity extends FragmentActivity {
     public static final String PREF_LOGIN = "PrefLogin";
     public static final String PREF_SKIP_LOGIN = "SkipLogin";

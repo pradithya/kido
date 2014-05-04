@@ -14,9 +14,6 @@ import com.progrema.superbaby.R;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
-/**
- * Created by iqbalpakeh on 27/2/14.
- */
 public class MeasurementDialog extends DialogFragment {
     private Callbacks mCallbacks;
 

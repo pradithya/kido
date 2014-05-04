@@ -10,9 +10,6 @@ import android.view.ViewGroup;
 
 import com.progrema.superbaby.R;
 
-/**
- * Created by iqbalpakeh on 5/2/14.
- */
 public class SplashScreenFragment extends Fragment {
     private final int SPLASH_TIME = 2000;
     private final String TAG = "SplashActivity";

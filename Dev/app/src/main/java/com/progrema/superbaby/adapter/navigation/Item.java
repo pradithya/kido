@@ -4,9 +4,6 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by iqbalpakeh on 15/2/14.
- */
 public abstract class Item {
     protected int layout;
     /**

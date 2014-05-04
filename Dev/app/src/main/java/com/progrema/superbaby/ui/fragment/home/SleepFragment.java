@@ -21,9 +21,6 @@ import com.progrema.superbaby.widget.customview.ObserveAbleListView;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-/**
- * Fragment to log all sleep activity
- */
 public class SleepFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final int LOADER_SLEEP_LIST_VIEW = 0;
     private static final int LOADER_SLEEP_FROM_TIME_REFERENCE = 1;

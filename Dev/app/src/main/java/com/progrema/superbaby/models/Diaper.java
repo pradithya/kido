@@ -6,12 +6,6 @@ import android.os.Parcel;
 
 import com.progrema.superbaby.provider.BabyLogContract;
 
-/**
- * Created by iqbalpakeh on 22/1/14.
- *
- * @author aria
- * @author iqbalpakeh
- */
 public class Diaper extends BaseActivity {
     public final static String DIAPER_TYPE_KEY = "diaper_type";
     private DiaperType type;

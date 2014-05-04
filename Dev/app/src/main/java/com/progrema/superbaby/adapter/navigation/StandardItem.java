@@ -8,9 +8,6 @@ import android.widget.TextView;
 
 import com.progrema.superbaby.R;
 
-/**
- * Created by iqbalpakeh on 22/2/14.
- */
 public class StandardItem extends Item {
     public StandardItem(String text) {
         this.setText(text);

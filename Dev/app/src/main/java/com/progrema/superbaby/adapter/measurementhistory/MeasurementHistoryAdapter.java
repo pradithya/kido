@@ -12,9 +12,6 @@ import com.progrema.superbaby.R;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
-/**
- * Created by iqbalpakeh on 27/2/14.
- */
 public class MeasurementHistoryAdapter extends CursorAdapter {
     public MeasurementHistoryAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);

@@ -16,9 +16,6 @@ import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.widget.customview.ObserveAbleListView;
 
-/**
- * Created by iqbalpakeh on 26/2/14.
- */
 public class MeasurementFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final int LOADER_ID = 0;
     private ObserveAbleListView measurementHistoryList;

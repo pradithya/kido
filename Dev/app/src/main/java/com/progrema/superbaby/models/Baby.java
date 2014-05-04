@@ -11,9 +11,6 @@ import com.progrema.superbaby.util.FormatUtils;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Created by iqbalpakeh on 20/1/14.
- */
 public class Baby extends BaseActor {
 
     public static final Creator CREATOR = new Creator<Baby>() {

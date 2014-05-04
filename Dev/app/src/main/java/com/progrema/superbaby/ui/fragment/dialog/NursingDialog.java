@@ -15,9 +15,6 @@ import com.progrema.superbaby.R;
 import com.progrema.superbaby.models.Nursing;
 import com.progrema.superbaby.util.FormatUtils;
 
-/**
- * Created by aria on 20/2/14.
- */
 public class NursingDialog extends DialogFragment {
     private Callbacks mCallbacks;
 

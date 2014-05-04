@@ -3,9 +3,6 @@ package com.progrema.superbaby.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by iqbalpakeh on 20/1/14.
- */
 abstract public class BaseModel implements Parcelable, IDBServices {
     protected long ID;
 

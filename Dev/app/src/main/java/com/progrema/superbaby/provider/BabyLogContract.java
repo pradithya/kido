@@ -3,11 +3,6 @@ package com.progrema.superbaby.provider;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
-/**
- * Created by iqbalpakeh on 18/1/14.
- *
- * @author aria
- */
 public class BabyLogContract {
 
     public static final String CONTENT_AUTHORITY = "com.progrema.superbaby";

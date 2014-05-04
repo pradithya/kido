@@ -12,9 +12,6 @@ import com.progrema.superbaby.R;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
-/**
- * Created by aria on 20/2/14.
- */
 public class DiaperHistoryAdapter extends CursorAdapter {
     public DiaperHistoryAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);

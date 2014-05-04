@@ -11,10 +11,6 @@ import android.widget.TextView;
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.util.FormatUtils;
 
-
-/**
- * Created by aria on 26/1/14.
- */
 public class SleepHistoryAdapter extends CursorAdapter {
     public SleepHistoryAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
