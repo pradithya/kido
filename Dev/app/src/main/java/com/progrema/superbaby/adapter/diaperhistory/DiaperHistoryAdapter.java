@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
+import com.progrema.superbaby.models.Diaper;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
@@ -31,11 +33,17 @@ public class DiaperHistoryAdapter extends CursorAdapter {
         TextView textViewDay = (TextView) view.findViewById(R.id.history_item_day);
         TextView textViewDate = (TextView) view.findViewById(R.id.history_item_date);
         TextView textViewTime = (TextView) view.findViewById(R.id.history_item_time);
-        TextView textViewType = (TextView) view.findViewById(R.id.history_item_type);
+        ImageView imageViewType = (ImageView) view.findViewById(R.id.icon_type);
 
         textViewDay.setText(FormatUtils.formatDayOnly(context, timeStamp));
         textViewDate.setText(FormatUtils.formatDateOnly(context, timeStamp));
         textViewTime.setText(FormatUtils.formatTime(context, timeStamp));
-        textViewType.setText(type);
+
+        if (type.equals(Diaper.DiaperType.WET.getTitle()))
+            imageViewType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_wet));
+        else if (type.equals(Diaper.DiaperType.DRY.getTitle()))
+            imageViewType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_dry));
+        if (type.equals(Diaper.DiaperType.MIXED.getTitle()))
+            imageViewType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_mixed));
     }
 }
