@@ -76,7 +76,7 @@
                     android:id="@+id/wet_average"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/activity_average"
+                    android:text="@string/activity_today"
                     android:textSize="@dimen/text_size_micro" />
 
                 <TextView
@@ -84,7 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/wet_average"
-                    android:text="@string/activity_average"
+                    android:text="@string/activity_today"
                     android:textSize="@dimen/text_size_micro" />
 
                 <TextView
@@ -92,7 +92,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/dry_average"
-                    android:text="@string/activity_average"
+                    android:text="@string/activity_today"
                     android:textSize="@dimen/text_size_micro" />
 
             </RelativeLayout>

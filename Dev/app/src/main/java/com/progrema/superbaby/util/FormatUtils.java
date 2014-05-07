@@ -184,9 +184,9 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String formatDiaperAverageActivity(Context context, String values) {
+    public static String formatDiaperTotalToday(Context context, String values) {
         CharSequence formatted = Phrase.from(context.getResources()
-                .getString(R.string.activity_average))
+                .getString(R.string.activity_today))
                 .put("value", values)
                 .format();
         return String.valueOf(formatted);
