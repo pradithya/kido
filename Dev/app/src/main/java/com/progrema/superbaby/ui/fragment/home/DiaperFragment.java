@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.diaperhistory.DiaperHistoryAdapter;
+import com.progrema.superbaby.holograph.PieGraph;
+import com.progrema.superbaby.holograph.PieSlice;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.FormatUtils;
@@ -34,6 +36,10 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
     private TextView DryLast;
     private TextView MixAverage;
     private TextView MixLast;
+    private PieGraph HeaderPieGraph;
+    private PieSlice WetPieSlice;
+    private PieSlice DryPieSlice;
+    private PieSlice MixPieSlice;
 
     public static DiaperFragment getInstance() {
         return new DiaperFragment();
@@ -53,6 +59,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
         WetLast = (TextView) rootView.findViewById(R.id.wet_last);
         DryLast = (TextView) rootView.findViewById(R.id.dry_last);
         MixLast = (TextView) rootView.findViewById(R.id.mix_last);
+        HeaderPieGraph = (PieGraph) rootView.findViewById(R.id.diaper_piegraph);
 
         // set adapter to list view
         diaperHistoryList = (ObserveAbleListView) rootView.findViewById(R.id.activity_list);
@@ -127,7 +134,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-
+        String value;
         if (cursor.getCount() > 0) {
             //show last inserted row
             cursor.moveToFirst();
@@ -138,30 +145,45 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
                     break;
 
                 case LOADER_LAST_WET:
+                    value = calculateUsageAverage(cursor);
                     //show last activity
                     WetLast.setText(FormatUtils.formatDiaperLastActivity(getActivity(),
                             cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP)));
                     //show average
-                    WetAverage.setText(FormatUtils.formatDiaperAverageActivity(getActivity(),
-                            calculateUsageAverage(cursor)));
+                    WetAverage.setText(FormatUtils.formatDiaperAverageActivity(getActivity(), value));
+                    //set pie chart
+                    WetPieSlice = new PieSlice();
+                    WetPieSlice.setColor(getResources().getColor(R.color.blue));
+                    WetPieSlice.setValue(Float.parseFloat(value));
+                    HeaderPieGraph.addSlice(WetPieSlice);
                     break;
 
                 case LOADER_LAST_DRY:
+                    value = calculateUsageAverage(cursor);
                     //show last activity
                     DryLast.setText(FormatUtils.formatDiaperLastActivity(getActivity(),
                             cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP)));
                     //show average
-                    DryAverage.setText(FormatUtils.formatDiaperAverageActivity(getActivity(),
-                            calculateUsageAverage(cursor)));
+                    DryAverage.setText(FormatUtils.formatDiaperAverageActivity(getActivity(), value));
+                    //set pie chart
+                    DryPieSlice = new PieSlice();
+                    DryPieSlice.setColor(getResources().getColor(R.color.orange));
+                    DryPieSlice.setValue(Float.parseFloat(value));
+                    HeaderPieGraph.addSlice(DryPieSlice);
                     break;
 
                 case LOADER_LAST_MIXED:
+                    value = calculateUsageAverage(cursor);
                     //show last activity
                     MixLast.setText(FormatUtils.formatDiaperLastActivity(getActivity(),
                             cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP)));
                     //show average
-                    MixAverage.setText(FormatUtils.formatDiaperAverageActivity(getActivity(),
-                            calculateUsageAverage(cursor)));
+                    MixAverage.setText(FormatUtils.formatDiaperAverageActivity(getActivity(), value));
+                    // set pie chart
+                    MixPieSlice = new PieSlice();
+                    MixPieSlice.setColor(getResources().getColor(R.color.purple));
+                    MixPieSlice.setValue(Float.parseFloat(value));
+                    HeaderPieGraph.addSlice(MixPieSlice);
                     break;
             }
         }

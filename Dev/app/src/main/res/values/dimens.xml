@@ -1,4 +1,5 @@
 <resources>
+
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -11,4 +12,12 @@
     <dimen name="header_card_radius">2dp</dimen>
     <dimen name="body_card_right_side_radius">2dp</dimen>
     <dimen name="body_card_left_side_radius">2dp</dimen>
+
+    <!-- Android standard typographic scale per design guidelines:
+     http://developer.android.com/design/style/typography.html  -->
+    <dimen name="text_size_micro">12sp</dimen>
+    <dimen name="text_size_small">14sp</dimen>
+    <dimen name="text_size_medium">18sp</dimen>
+    <dimen name="text_size_large">22sp</dimen>
+
 </resources>
