@@ -192,11 +192,11 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String formatDiaperLastActivity(Context context, String time){
-        String lastTime = DateUtils.getRelativeTimeSpanString(Long.parseLong(time)).toString();
+    public static String formatDiaperLastActivity(Context context, String numberToday){
+        String value = DateUtils.getRelativeTimeSpanString(Long.parseLong(numberToday)).toString();
         CharSequence formatted = Phrase.from(context.getResources()
                 .getString(R.string.activity_last))
-                .put("value", lastTime)
+                .put("value", value)
                 .format();
         return String.valueOf(formatted);
     }

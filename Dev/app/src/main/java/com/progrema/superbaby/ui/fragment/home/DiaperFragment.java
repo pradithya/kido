@@ -69,6 +69,14 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
         MixedLast = (TextView) rootView.findViewById(R.id.mix_last);
         HeaderPieGraph = (PieGraph) rootView.findViewById(R.id.diaper_piegraph);
 
+        // Init text value for the first time
+        WetTotalToday.setText(getResources().getString(R.string.activity_today_initial));
+        DryTotalToday.setText(getResources().getString(R.string.activity_today_initial));
+        MixedTotalToday.setText(getResources().getString(R.string.activity_today_initial));
+        WetLast.setText(getResources().getString(R.string.activity_last_initial));
+        DryLast.setText(getResources().getString(R.string.activity_last_initial));
+        MixedLast.setText(getResources().getString(R.string.activity_last_initial));
+
         // set adapter to list view
         diaperHistoryList = (ObserveAbleListView) rootView.findViewById(R.id.activity_list);
         mAdapter = new DiaperHistoryAdapter(getActivity(), null, 0);
