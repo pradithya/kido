@@ -111,18 +111,18 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String formatSleepAvgNight(Context context, String values) {
+    public static String formatSleepNight(Context context, String values) {
         CharSequence formatted = Phrase.from(context.getResources()
-                .getString(R.string.avg_night_sleep))
-                .put("average", values)
+                .getString(R.string.night_total))
+                .put("total", values)
                 .format();
         return String.valueOf(formatted);
     }
 
-    public static String formatSleepAvgNap(Context context, String values) {
+    public static String formatSleepNap(Context context, String values) {
         CharSequence formatted = Phrase.from(context.getResources()
-                .getString(R.string.avg_nap_duration))
-                .put("average", values)
+                .getString(R.string.nap_total))
+                .put("total", values)
                 .format();
         return String.valueOf(formatted);
     }
@@ -143,18 +143,18 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String formatAvgSleep(Context context, String values) {
+    public static String formatSleepDuration(Context context, String values) {
         CharSequence formatted = Phrase.from(context.getResources()
-                .getString(R.string.avg_sleep_duration))
-                .put("average", values)
+                .getString(R.string.sleep_duration))
+                .put("total", values)
                 .format();
         return String.valueOf(formatted);
     }
 
-    public static String formatAvgActive(Context context, String values) {
+    public static String formatActiveDuration(Context context, String values) {
         CharSequence formatted = Phrase.from(context.getResources()
-                .getString(R.string.avg_active_duration))
-                .put("average", values)
+                .getString(R.string.active_duration))
+                .put("total", values)
                 .format();
         return String.valueOf(formatted);
     }

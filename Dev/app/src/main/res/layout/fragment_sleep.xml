@@ -14,7 +14,10 @@
             android:id="@+id/sleep_header_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_margin="4dp"
+            android:background="@drawable/layer_header_card_background"
+            android:orientation="horizontal"
+            android:padding="4dp">
 
             <RelativeLayout
                 android:id="@+id/sleep_header_left_container"
@@ -26,28 +29,32 @@
                     android:id="@+id/night_percentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/night_percentage" />
+                    android:text="@string/night_percentage"
+                    android:textSize="@dimen/text_size_micro" />
 
                 <TextView
                     android:id="@+id/nap_percentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/night_percentage"
-                    android:text="@string/nap_percentage" />
+                    android:text="@string/nap_percentage"
+                    android:textSize="@dimen/text_size_micro" />
 
                 <TextView
-                    android:id="@+id/avg_night_duration"
+                    android:id="@+id/today_night_duration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/nap_percentage"
-                    android:text="@string/avg_night_sleep" />
+                    android:text="@string/night_total"
+                    android:textSize="@dimen/text_size_micro" />
 
                 <TextView
-                    android:id="@+id/avg_nap_duration"
+                    android:id="@+id/today_nap_duration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/avg_night_duration"
-                    android:text="@string/avg_nap_duration" />
+                    android:layout_below="@id/today_night_duration"
+                    android:text="@string/nap_total"
+                    android:textSize="@dimen/text_size_micro" />
 
             </RelativeLayout>
 
@@ -61,28 +68,32 @@
                     android:id="@+id/sleep_percentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/sleep_percentage" />
+                    android:text="@string/sleep_percentage"
+                    android:textSize="@dimen/text_size_micro" />
 
                 <TextView
                     android:id="@+id/active_percentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/sleep_percentage"
-                    android:text="@string/active_percentage" />
+                    android:text="@string/active_percentage"
+                    android:textSize="@dimen/text_size_micro" />
 
                 <TextView
-                    android:id="@+id/avg_sleep_duration"
+                    android:id="@+id/today_sleep_duration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/active_percentage"
-                    android:text="@string/avg_sleep_duration" />
+                    android:text="@string/sleep_duration"
+                    android:textSize="@dimen/text_size_micro" />
 
                 <TextView
-                    android:id="@+id/avg_active_duration"
+                    android:id="@+id/today_active_duration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/avg_sleep_duration"
-                    android:text="@string/avg_active_duration" />
+                    android:layout_below="@id/today_sleep_duration"
+                    android:text="@string/active_duration"
+                    android:textSize="@dimen/text_size_micro" />
 
             </RelativeLayout>
 

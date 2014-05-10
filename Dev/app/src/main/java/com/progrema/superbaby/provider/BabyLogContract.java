@@ -17,26 +17,31 @@ public class BabyLogContract {
     private static final String PATH_DIAPER = "diaper";
     private static final String PATH_MEASUREMENT = "measurement";
     private static final String PATH_PHOTO = "photo";
+
     interface UserColumns {
         String USER_NAME = "user_name";
         String PASSWORD = "password";
         String SEC_QUESTION = "security_question";
         String SEC_ANSWER = "security_answer";
     }
+
     interface UserBabyMapColumns {
         String USER_ID = "user_id";
         String BABY_ID = "baby_id";
     }
+
     interface BabyColumns {
         String NAME = "name";
         String BIRTHDAY = "birthday";
         String SEX = "sex";
     }
+
     interface ActivityColumns {
         String BABY_ID = "baby_id";
         String ACTIVITY_TYPE = "activity_type";
         String TIMESTAMP = "timestamp";
     }
+
     interface NursingColumns {
         String ACTIVITY_ID = "activity_id";
         String BABY_ID = "baby_id";
@@ -45,18 +50,21 @@ public class BabyLogContract {
         String SIDES = "sides"; // Left or Right or Formula
         String VOLUME = "volume";
     }
+
     interface SleepColumns {
         String ACTIVITY_ID = "activity_id";
         String BABY_ID = "baby_id";
         String TIMESTAMP = "timestamp";
         String DURATION = "duration";
     }
+
     interface DiaperColumns {
         String ACTIVITY_ID = "activity_id";
         String BABY_ID = "baby_id";
         String TIMESTAMP = "timestamp";
         String TYPE = "type"; // Wet or Dry or Mix
     }
+
     interface MeasurementColumns {
         String ACTIVITY_ID = "activity_id"; //same column name as activity
         String BABY_ID = "baby_id";
@@ -84,7 +92,8 @@ public class BabyLogContract {
         }
 
         public interface Query {
-            final int OFFSET_ID = 0;            String[] PROJECTION =
+            final int OFFSET_ID = 0;
+            String[] PROJECTION =
                     {
                             BaseColumns._ID,
                             BabyLogContract.User.USER_NAME,
@@ -181,23 +190,16 @@ public class BabyLogContract {
      * Nursing table contract class
      */
     public static class Nursing implements NursingColumns, BaseColumns {
-        public static final String table = PATH_NURSING;
-
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_NURSING).build();
-
         public static final Uri MAX_TIMESTAMP =
                 BASE_CONTENT_URI.buildUpon().appendPath("nursing_max_timestamp").build();
-
         public static final Uri LAST_SIDES =
                 BASE_CONTENT_URI.buildUpon().appendPath("nursing_last_side").build();
 
         public static Uri buildUri(String activityId) {
             return CONTENT_URI.buildUpon().appendPath(activityId).build();
-        }
-
-
-        public interface Query {
+        }                public interface Query {
             String[] PROJECTION =
                     {
                             BaseColumns._ID,
@@ -219,17 +221,17 @@ public class BabyLogContract {
             final String SORT_BY_TIMESTAMP_ASC = NursingColumns.TIMESTAMP + " ASC ";
             final String SORT_BY_TIMESTAMP_DESC = NursingColumns.TIMESTAMP + " DESC ";
         }
+
+        public static final String table = PATH_NURSING;
+
     }
 
     /**
      * Sleep table contract class
      */
     public static class Sleep implements SleepColumns, BaseColumns {
-        public static final String table = PATH_SLEEP;
-
         public static final Uri MAX_TIMESTAMP =
                 BASE_CONTENT_URI.buildUpon().appendPath("sleep_max_timestamp").build();
-
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_SLEEP).build();
 
@@ -254,17 +256,17 @@ public class BabyLogContract {
             final String SORT_BY_TIMESTAMP_ASC = SleepColumns.TIMESTAMP + " ASC ";
             final String SORT_BY_TIMESTAMP_DESC = SleepColumns.TIMESTAMP + " DESC ";
         }
+
+        public static final String table = PATH_SLEEP;
+
     }
 
     /**
      * Diaper table contract class
      */
     public static class Diaper implements DiaperColumns, BaseColumns {
-        public static final String table = PATH_DIAPER;
-
         public static final Uri MAX_TIMESTAMP =
                 BASE_CONTENT_URI.buildUpon().appendPath("diaper_max_timestamp").build();
-
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_DIAPER).build();
 
@@ -290,17 +292,17 @@ public class BabyLogContract {
             final String SORT_BY_TIMESTAMP_ASC = DiaperColumns.TIMESTAMP + " ASC ";
             final String SORT_BY_TIMESTAMP_DESC = DiaperColumns.TIMESTAMP + " DESC ";
         }
+
+        public static final String table = PATH_DIAPER;
+
     }
 
     /**
      * Measurement table contract class
      */
     public static class Measurement implements MeasurementColumns, BaseColumns {
-        public static final String table = PATH_MEASUREMENT;
-
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_MEASUREMENT).build();
-
         public static final Uri MAX_TIMESTAMP =
                 BASE_CONTENT_URI.buildUpon().appendPath("measurement_max_timestamp").build();
 
@@ -327,6 +329,7 @@ public class BabyLogContract {
             final String SORT_BY_TIMESTAMP_ASC = DiaperColumns.TIMESTAMP + " ASC ";
             final String SORT_BY_TIMESTAMP_DESC = DiaperColumns.TIMESTAMP + " DESC ";
         }
+        public static final String table = PATH_MEASUREMENT;
     }
 
     /**

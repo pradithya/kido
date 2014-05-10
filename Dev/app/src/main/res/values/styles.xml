@@ -3,6 +3,11 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <!-- item name="android:textViewStyle">@style/RobotoTextStyle</item -->
     </style>
 
+    <!-- Roboto Text Style-->
+    <style name="RobotoTextStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
 </resources>
