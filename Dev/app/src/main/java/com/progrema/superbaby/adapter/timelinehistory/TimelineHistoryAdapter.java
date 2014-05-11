@@ -46,8 +46,8 @@ public class TimeLineHistoryAdapter extends CursorAdapter {
 
         // Set data on common information
         textViewActivityType.setText(activityType);
-        textViewDate.setText(FormatUtils.formatDate(context, timeStamp));
-        textViewTime.setText(FormatUtils.formatTime(context, timeStamp));
+        textViewDate.setText(FormatUtils.fmtDate(context, timeStamp));
+        textViewTime.setText(FormatUtils.fmtTime(context, timeStamp));
 
         // Set all info visibility to "GONE" by default
         extra_0.setVisibility(View.GONE);
@@ -57,8 +57,8 @@ public class TimeLineHistoryAdapter extends CursorAdapter {
         if (activityType.equals(BabyLogContract.Activity.TYPE_SLEEP)) {
             extra_0.setVisibility(View.VISIBLE);
             extra_1.setVisibility(View.VISIBLE);
-            extra_0.setText(FormatUtils.formatTimeBoundary(context, timeStamp, sleepDuration));
-            extra_1.setText(FormatUtils.formatDuration(context, sleepDuration));
+            extra_0.setText(FormatUtils.fmtTimeBoundary(context, timeStamp, sleepDuration));
+            extra_1.setText(FormatUtils.fmtDuration(context, sleepDuration));
         } else if (activityType.equals(BabyLogContract.Activity.TYPE_DIAPER)) {
             extra_0.setVisibility(View.VISIBLE);
             extra_0.setText(diaperType);
@@ -66,7 +66,7 @@ public class TimeLineHistoryAdapter extends CursorAdapter {
             extra_0.setVisibility(View.VISIBLE);
             extra_1.setVisibility(View.VISIBLE);
             extra_0.setText(nursingSides);
-            extra_1.setText(FormatUtils.formatDuration(context, nursingDuration));
+            extra_1.setText(FormatUtils.fmtDuration(context, nursingDuration));
 
             if (nursingSides.equals(Nursing.NursingType.FORMULA.getTitle())) {
                 extra_2.setVisibility(View.VISIBLE);

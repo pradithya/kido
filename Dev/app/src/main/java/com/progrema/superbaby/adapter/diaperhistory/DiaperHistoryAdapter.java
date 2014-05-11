@@ -35,9 +35,9 @@ public class DiaperHistoryAdapter extends CursorAdapter {
         TextView textViewTime = (TextView) view.findViewById(R.id.history_item_time);
         ImageView imageViewType = (ImageView) view.findViewById(R.id.icon_type);
 
-        textViewDay.setText(FormatUtils.formatDayOnly(context, timeStamp));
-        textViewDate.setText(FormatUtils.formatDateOnly(context, timeStamp));
-        textViewTime.setText(FormatUtils.formatTime(context, timeStamp));
+        textViewDay.setText(FormatUtils.fmtDayOnly(context, timeStamp));
+        textViewDate.setText(FormatUtils.fmtDateOnly(context, timeStamp));
+        textViewTime.setText(FormatUtils.fmtTime(context, timeStamp));
 
         if (type.equals(Diaper.DiaperType.WET.getTitle()))
             imageViewType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_wet));

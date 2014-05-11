@@ -193,22 +193,22 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
                     break;
 
                 case LOADER_LAST_WET:
-                    WetLast.setText(FormatUtils.formatDiaperLastActivity(getActivity(),
+                    WetLast.setText(FormatUtils.fmtDiaperLastActivity(getActivity(),
                             cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP)));
                     break;
 
                 case LOADER_LAST_DRY:
-                    DryLast.setText(FormatUtils.formatDiaperLastActivity(getActivity(),
+                    DryLast.setText(FormatUtils.fmtDiaperLastActivity(getActivity(),
                             cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP)));
                     break;
 
                 case LOADER_LAST_MIXED:
-                    MixedLast.setText(FormatUtils.formatDiaperLastActivity(getActivity(),
+                    MixedLast.setText(FormatUtils.fmtDiaperLastActivity(getActivity(),
                             cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP)));
                     break;
 
                 case LOADER_TODAY_WET:
-                    WetTotalToday.setText(FormatUtils.formatDiaperTotalToday(getActivity(),
+                    WetTotalToday.setText(FormatUtils.fmtDiaperTotalToday(getActivity(),
                             String.valueOf(cursor.getCount())));
                     WetPieSlice = new PieSlice();
                     WetPieSlice.setColor(getResources().getColor(R.color.blue));
@@ -217,7 +217,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
                     break;
 
                 case LOADER_TODAY_DRY:
-                    DryTotalToday.setText(FormatUtils.formatDiaperTotalToday(getActivity(),
+                    DryTotalToday.setText(FormatUtils.fmtDiaperTotalToday(getActivity(),
                             String.valueOf(cursor.getCount())));
                     DryPieSlice = new PieSlice();
                     DryPieSlice.setColor(getResources().getColor(R.color.orange));
@@ -226,8 +226,8 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
                     break;
 
                 case LOADER_TODAY_MIXED:
-                    MixedTotalToday.setText(FormatUtils.formatDiaperTotalToday(getActivity(),
-                         String.valueOf(cursor.getCount())));
+                    MixedTotalToday.setText(FormatUtils.fmtDiaperTotalToday(getActivity(),
+                            String.valueOf(cursor.getCount())));
                     MixedPieSlice = new PieSlice();
                     MixedPieSlice.setColor(getResources().getColor(R.color.purple));
                     MixedPieSlice.setValue(cursor.getCount());

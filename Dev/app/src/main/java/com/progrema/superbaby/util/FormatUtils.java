@@ -47,7 +47,7 @@ public class FormatUtils {
      * @param duration  in timemillis format
      * @return "HH:MM - HH:MM" format
      */
-    public static String formatTimeBoundary(Context context, String startTime, String duration) {
+    public static String fmtTimeBoundary(Context context, String startTime, String duration) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(Long.parseLong(startTime));
         String start = new SimpleDateFormat("HH:mm a").format(cal.getTime());
@@ -67,11 +67,12 @@ public class FormatUtils {
      * @param duration
      * @return "XX h YY m" format
      */
-    public static String formatDuration(Context context, String duration) {
+    public static String fmtDuration(Context context, String duration) {
         long dur = Long.parseLong(duration); // in miliseccond
         long hour = TimeUnit.MILLISECONDS.toHours(dur);
         long min;
         long sec;
+
         if (hour != 0) {
             min = TimeUnit.MILLISECONDS.toMinutes(dur % TimeUnit.HOURS.toMillis(hour));
         } else {
@@ -79,7 +80,8 @@ public class FormatUtils {
         }
 
         if ((min != 0) && (hour != 0)) {
-            sec = TimeUnit.MILLISECONDS.toSeconds(dur % TimeUnit.MINUTES.toMillis(min));
+            sec = TimeUnit.MILLISECONDS.toSeconds((dur % TimeUnit.HOURS.toMillis(hour))
+                    % TimeUnit.MINUTES.toMillis(min));
         } else if ((min == 0) && (hour != 0)) {
             sec = TimeUnit.MILLISECONDS.toSeconds(dur % TimeUnit.HOURS.toMillis(hour));
         } else {
@@ -95,7 +97,7 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String formatSleepNightPercentage(Context context, String values) {
+    public static String fmtSleepNightPct(Context context, String values) {
         CharSequence formatted = Phrase.from(context.getResources()
                 .getString(R.string.night_percentage))
                 .put("percentage", values)
@@ -103,7 +105,8 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String formatSleepNapPercentage(Context context, String values) {
+    public static String fmtSleepNapPct(Context context, String values) {
+
         CharSequence formatted = Phrase.from(context.getResources()
                 .getString(R.string.nap_percentage))
                 .put("percentage", values)
@@ -111,23 +114,67 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String formatSleepNight(Context context, String values) {
+    public static String fmtSleepNightDrt(Context context, String duration) {
+        long dur = Long.parseLong(duration); // in miliseccond
+        long hour = TimeUnit.MILLISECONDS.toHours(dur);
+        long min;
+        long sec;
+
+        if (hour != 0) {
+            min = TimeUnit.MILLISECONDS.toMinutes(dur % TimeUnit.HOURS.toMillis(hour));
+        } else {
+            min = TimeUnit.MILLISECONDS.toMinutes(dur);
+        }
+
+        if ((min != 0) && (hour != 0)) {
+            sec = TimeUnit.MILLISECONDS.toSeconds((dur % TimeUnit.HOURS.toMillis(hour))
+                    % TimeUnit.MINUTES.toMillis(min));
+        } else if ((min == 0) && (hour != 0)) {
+            sec = TimeUnit.MILLISECONDS.toSeconds(dur % TimeUnit.HOURS.toMillis(hour));
+        } else {
+            sec = TimeUnit.MILLISECONDS.toSeconds(dur);
+        }
+
         CharSequence formatted = Phrase.from(context.getResources()
-                .getString(R.string.night_total))
-                .put("total", values)
+                .getString(R.string.night_duration))
+                .put("hour", String.valueOf(hour))
+                .put("minute", String.valueOf(min))
+                .put("second", String.valueOf(sec))
                 .format();
         return String.valueOf(formatted);
     }
 
-    public static String formatSleepNap(Context context, String values) {
+    public static String fmtSleepNapDrt(Context context, String duration) {
+        long dur = Long.parseLong(duration); // in miliseccond
+        long hour = TimeUnit.MILLISECONDS.toHours(dur);
+        long min;
+        long sec;
+
+        if (hour != 0) {
+            min = TimeUnit.MILLISECONDS.toMinutes(dur % TimeUnit.HOURS.toMillis(hour));
+        } else {
+            min = TimeUnit.MILLISECONDS.toMinutes(dur);
+        }
+
+        if ((min != 0) && (hour != 0)) {
+            sec = TimeUnit.MILLISECONDS.toSeconds((dur % TimeUnit.HOURS.toMillis(hour))
+                    % TimeUnit.MINUTES.toMillis(min));
+        } else if ((min == 0) && (hour != 0)) {
+            sec = TimeUnit.MILLISECONDS.toSeconds(dur % TimeUnit.HOURS.toMillis(hour));
+        } else {
+            sec = TimeUnit.MILLISECONDS.toSeconds(dur);
+        }
+
         CharSequence formatted = Phrase.from(context.getResources()
-                .getString(R.string.nap_total))
-                .put("total", values)
+                .getString(R.string.nap_duration))
+                .put("hour", String.valueOf(hour))
+                .put("minute", String.valueOf(min))
+                .put("second", String.valueOf(sec))
                 .format();
         return String.valueOf(formatted);
     }
 
-    public static String formatSleepPercentage(Context context, String values) {
+    public static String fmtSleepPct(Context context, String values) {
         CharSequence formatted = Phrase.from(context.getResources()
                 .getString(R.string.sleep_percentage))
                 .put("percentage", values)
@@ -135,7 +182,7 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String formatActivePercentage(Context context, String values) {
+    public static String fmtActivePct(Context context, String values) {
         CharSequence formatted = Phrase.from(context.getResources()
                 .getString(R.string.active_percentage))
                 .put("percentage", values)
@@ -143,23 +190,66 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String formatSleepDuration(Context context, String values) {
+    public static String fmtSleepDrt(Context context, String duration) {
+        long dur = Long.parseLong(duration); // in miliseccond
+        long hour = TimeUnit.MILLISECONDS.toHours(dur);
+        long min;
+        long sec;
+
+        if (hour != 0) {
+            min = TimeUnit.MILLISECONDS.toMinutes(dur % TimeUnit.HOURS.toMillis(hour));
+        } else {
+            min = TimeUnit.MILLISECONDS.toMinutes(dur);
+        }
+
+        if ((min != 0) && (hour != 0)) {
+            sec = TimeUnit.MILLISECONDS.toSeconds((dur % TimeUnit.HOURS.toMillis(hour))
+                    % TimeUnit.MINUTES.toMillis(min));
+        } else if ((min == 0) && (hour != 0)) {
+            sec = TimeUnit.MILLISECONDS.toSeconds(dur % TimeUnit.HOURS.toMillis(hour));
+        } else {
+            sec = TimeUnit.MILLISECONDS.toSeconds(dur);
+        }
         CharSequence formatted = Phrase.from(context.getResources()
                 .getString(R.string.sleep_duration))
-                .put("total", values)
+                .put("hour", String.valueOf(hour))
+                .put("minute", String.valueOf(min))
+                .put("second", String.valueOf(sec))
                 .format();
         return String.valueOf(formatted);
     }
 
-    public static String formatActiveDuration(Context context, String values) {
+    public static String fmtActiveDrt(Context context, String duration) {
+        long dur = Long.parseLong(duration); // in miliseccond
+        long hour = TimeUnit.MILLISECONDS.toHours(dur);
+        long min;
+        long sec;
+
+        if (hour != 0) {
+            min = TimeUnit.MILLISECONDS.toMinutes(dur % TimeUnit.HOURS.toMillis(hour));
+        } else {
+            min = TimeUnit.MILLISECONDS.toMinutes(dur);
+        }
+
+        if ((min != 0) && (hour != 0)) {
+            sec = TimeUnit.MILLISECONDS.toSeconds((dur % TimeUnit.HOURS.toMillis(hour))
+                    % TimeUnit.MINUTES.toMillis(min));
+        } else if ((min == 0) && (hour != 0)) {
+            sec = TimeUnit.MILLISECONDS.toSeconds(dur % TimeUnit.HOURS.toMillis(hour));
+        } else {
+            sec = TimeUnit.MILLISECONDS.toSeconds(dur);
+        }
+
         CharSequence formatted = Phrase.from(context.getResources()
                 .getString(R.string.active_duration))
-                .put("total", values)
+                .put("hour", String.valueOf(hour))
+                .put("minute", String.valueOf(min))
+                .put("second", String.valueOf(sec))
                 .format();
         return String.valueOf(formatted);
     }
 
-    public static String formatNursingPerDay(Context context, String side, String values, String unit) {
+    public static String fmtNursingPerDay(Context context, String side, String values, String unit) {
         CharSequence formatted = Phrase.from(context.getResources().getString(R.string.nursing_per_day))
                 .put("side", side)
                 .put("values", values)
@@ -168,14 +258,14 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String formatNursingLastSide(Context context, String side) {
+    public static String fmtNursingLastSide(Context context, String side) {
         CharSequence formatted = Phrase.from(context.getResources().getString(R.string.nursing_last_side))
                 .put("side", side)
                 .format();
         return String.valueOf(formatted);
     }
 
-    public static String formatNursingPercentage(Context context, String side, String percentage) {
+    public static String fmtNursingPct(Context context, String side, String percentage) {
         CharSequence formatted = Phrase.from(context.getResources()
                 .getString(R.string.nursing_percentage_format))
                 .put("side", side)
@@ -184,7 +274,7 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String formatDiaperTotalToday(Context context, String values) {
+    public static String fmtDiaperTotalToday(Context context, String values) {
         CharSequence formatted = Phrase.from(context.getResources()
                 .getString(R.string.activity_today))
                 .put("value", values)
@@ -192,7 +282,7 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String formatDiaperLastActivity(Context context, String numberToday){
+    public static String fmtDiaperLastActivity(Context context, String numberToday){
         String value = DateUtils.getRelativeTimeSpanString(Long.parseLong(numberToday)).toString();
         CharSequence formatted = Phrase.from(context.getResources()
                 .getString(R.string.activity_last))
@@ -201,7 +291,7 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String formatAge(Context context, long dob, long now) {
+    public static String fmtAge(Context context, long dob, long now) {
         long duration = Math.abs(now - dob);
         long days = duration / DAY_MILLIS;
 
@@ -213,7 +303,7 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String formatLastActivity(Context context, String activity, String time) {
+    public static String fmtLastActivity(Context context, String activity, String time) {
         CharSequence formatted = Phrase.from(context.getResources().getString(R.string.last_activity_format))
                 .put("activity", activity)
                 .put("time", time)
@@ -221,7 +311,7 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String formatDate(Context context, String timeStamp) {
+    public static String fmtDate(Context context, String timeStamp) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(Long.parseLong(timeStamp));
         String day = DAY_OF_WEEK_SHORT[cal.get(Calendar.DAY_OF_WEEK) - 1];
@@ -239,7 +329,7 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String formatDayOnly(Context context, String timeStamp){
+    public static String fmtDayOnly(Context context, String timeStamp){
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(Long.parseLong(timeStamp));
         String day = DAY_OF_WEEK_COMPLETE[cal.get(Calendar.DAY_OF_WEEK) - 1];
@@ -250,7 +340,7 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String formatDateOnly(Context context, String timeStamp){
+    public static String fmtDateOnly(Context context, String timeStamp){
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(Long.parseLong(timeStamp));
         String date = String.valueOf(cal.get(Calendar.DATE));
@@ -266,7 +356,7 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String formatTime(Context context, String timeStamp) {
+    public static String fmtTime(Context context, String timeStamp) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(Long.parseLong(timeStamp));
         return new SimpleDateFormat("HH:mm").format(cal.getTime());

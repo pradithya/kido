@@ -145,14 +145,14 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
 
                     result = leftDuration / totalDuration * 100;
                     percentageLeft.setText(
-                            FormatUtils.formatNursingPercentage(getActivity(),
+                            FormatUtils.fmtNursingPct(getActivity(),
                                     getActivity().getResources().getString(R.string.left_side),
                                     String.valueOf(result))
                     );
 
                     result = rightDuration / totalDuration * 100;
                     percentageRight.setText(
-                            FormatUtils.formatNursingPercentage(getActivity(),
+                            FormatUtils.fmtNursingPct(getActivity(),
                                     getActivity().getResources().getString(R.string.right_side),
                                     String.valueOf(result))
                     );
@@ -162,7 +162,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                     result = result / 7; // meantime from one week (7 days)
                     // TODO: timeReference must be configurable based on user input
                     leftPerDay.setText(
-                            FormatUtils.formatNursingPerDay(getActivity(),
+                            FormatUtils.fmtNursingPerDay(getActivity(),
                                     getActivity().getResources().getString(R.string.left_side),
                                     String.valueOf(result), "m/d")
                     );
@@ -172,7 +172,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                     result = result / 7; // meantime from one week (7 days)
                     // TODO: timeReference must be configurable based on user input
                     rightPerDay.setText(
-                            FormatUtils.formatNursingPerDay(getActivity(),
+                            FormatUtils.fmtNursingPerDay(getActivity(),
                                     getActivity().getResources().getString(R.string.right_side),
                                     String.valueOf(result), "m/d")
                     );
@@ -181,7 +181,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                     result = formulaVol / 7; // meantime from one week (7 days)
                     // TODO: timeReference must be configurable based on user input
                     formulaPerDay.setText(
-                            FormatUtils.formatNursingPerDay(getActivity(),
+                            FormatUtils.fmtNursingPerDay(getActivity(),
                                     getActivity().getResources().getString(R.string.formula),
                                     String.valueOf(result), "mL/d")
                     );
@@ -191,7 +191,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                 case LOADER_NURSING_LAST_SIDE: {
                     String sides = cursor.getString(0);
                     if (sides != null) {
-                        lastSlide.setText(FormatUtils.formatNursingLastSide(getActivity(), sides));
+                        lastSlide.setText(FormatUtils.fmtNursingLastSide(getActivity(), sides));
                     }
                     break;
                 }

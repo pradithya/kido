@@ -26,14 +26,15 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
     private static final int LOADER_TODAY_ENTRY = 1;
     private ObserveAbleListView sleepHistoryList;
     private SleepHistoryAdapter mAdapter;
-    private TextView nightPercentageView;
-    private TextView napPercentageView;
-    private TextView todayNightDurationView;
-    private TextView todayNapDurationView;
-    private TextView sleepPercentageView;
-    private TextView activePercentageView;
-    private TextView todaySleepDurationView;
-    private TextView todayActiveDurationView;
+    private TextView tvNightPct;
+    private TextView tvNapPct;
+    private TextView tvTodayNightDrt;
+    private TextView tvTodayNapDrt;
+    private TextView tvSleepPct;
+    private TextView tvActivePct;
+    private TextView tvTodaySleepDrt;
+    private TextView tvTodayActiveDrt;
+    private Calendar today;
 
     public static SleepFragment getInstance() {
         return new SleepFragment();
@@ -46,18 +47,20 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
         View rootView = inflater.inflate(R.layout.fragment_sleep, container, false);
 
         // get Header UI object
-        nightPercentageView = (TextView) rootView.findViewById(R.id.night_percentage);
-        napPercentageView = (TextView) rootView.findViewById(R.id.nap_percentage);
-        todayNightDurationView = (TextView) rootView.findViewById(R.id.today_night_duration);
-        todayNapDurationView = (TextView) rootView.findViewById(R.id.today_nap_duration);
-        sleepPercentageView = (TextView) rootView.findViewById(R.id.sleep_percentage);
-        activePercentageView = (TextView) rootView.findViewById(R.id.active_percentage);
-        todaySleepDurationView = (TextView) rootView.findViewById(R.id.today_sleep_duration);
-        todayActiveDurationView = (TextView) rootView.findViewById(R.id.today_active_duration);
+        tvNightPct = (TextView) rootView.findViewById(R.id.night_percentage);
+        tvNapPct = (TextView) rootView.findViewById(R.id.nap_percentage);
+        tvTodayNightDrt = (TextView) rootView.findViewById(R.id.today_night_duration);
+        tvTodayNapDrt = (TextView) rootView.findViewById(R.id.today_nap_duration);
+        tvSleepPct = (TextView) rootView.findViewById(R.id.sleep_percentage);
+        tvActivePct = (TextView) rootView.findViewById(R.id.active_percentage);
+        tvTodaySleepDrt = (TextView) rootView.findViewById(R.id.today_sleep_duration);
+        tvTodayActiveDrt = (TextView) rootView.findViewById(R.id.today_active_duration);
 
         // set adapter to list view
         sleepHistoryList = (ObserveAbleListView) rootView.findViewById(R.id.activity_list);
         mAdapter = new SleepHistoryAdapter(getActivity(), null, 0);
+        sleepHistoryList.addHeaderView(new View(getActivity()));
+        sleepHistoryList.addFooterView(new View(getActivity()));
         sleepHistoryList.setAdapter(mAdapter);
 
         // prepare loader
@@ -78,7 +81,7 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
          * That is, 23:59 on Dec 31, 1969 < 24:00 on Jan 1, 1970 < 24:01:00 on Jan 1, 1970
          * form a sequence of three consecutive minutes in time.
          */
-        Calendar today = Calendar.getInstance();
+        today = Calendar.getInstance();
         today.set(Calendar.HOUR_OF_DAY, 0);
         today.set(Calendar.MINUTE, 0);
         today.set(Calendar.SECOND, 0);
@@ -127,20 +130,20 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
 
                 case LOADER_TODAY_ENTRY:
 
-                    float totalOneDay = 24 * 60 * 60;
-                    float totalSleepDuration = 0;
                     float totalSleepPercentage;
-                    float totalActiveDuration = 0;
                     float totalActivePercentage;
-                    float duration;
-                    float nightDuration = 0;
                     float nightPercentage;
-                    float napDuration = 0;
                     float napPercentage;
+                    long totalOneDay = 24 * 60 * 60;
+                    long totalSleepDuration = 0;
+                    long totalActiveDuration;
+                    long duration;
+                    long nightDuration = 0;
+                    long napDuration = 0;
                     long timestamp;
 
                     for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
-                        duration = Float.valueOf(
+                        duration = Long.valueOf(
                                 cursor.getString(BabyLogContract.Sleep.Query.OFFSET_DURATION));
                         timestamp = Long.valueOf(
                                 cursor.getString(BabyLogContract.Sleep.Query.OFFSET_TIMESTAMP));
@@ -152,49 +155,51 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
                         }
                     }
 
-                    totalActiveDuration = totalOneDay - totalSleepDuration;
-                    totalSleepPercentage = totalSleepDuration / totalOneDay * 100;
-                    totalActivePercentage = totalActiveDuration / totalOneDay * 100;
+                    totalActiveDuration
+                            = (Calendar.getInstance().getTimeInMillis()
+                            - today.getTimeInMillis()) - totalSleepDuration;
+                    totalSleepPercentage = ((float)totalSleepDuration / (float)totalOneDay) * 100;
+                    totalActivePercentage = 100 - totalSleepPercentage;
                     nightPercentage = nightDuration / totalSleepDuration * 100;
                     napPercentage = napDuration / totalSleepDuration * 100;
 
-                    napPercentageView.setText(
-                            FormatUtils.formatSleepNapPercentage(getActivity(),
+                    tvNapPct.setText(
+                            FormatUtils.fmtSleepNapPct(getActivity(),
                                     String.valueOf(napPercentage))
                     );
 
-                    nightPercentageView.setText(
-                            FormatUtils.formatSleepNightPercentage(getActivity(),
+                    tvNightPct.setText(
+                            FormatUtils.fmtSleepNightPct(getActivity(),
                                     String.valueOf(nightPercentage))
                     );
 
-                    todayNightDurationView.setText(
-                            FormatUtils.formatSleepNight(getActivity(),
+                    tvTodayNightDrt.setText(
+                            FormatUtils.fmtSleepNightDrt(getActivity(),
                                     String.valueOf(nightDuration))
                     );
 
-                    todayNapDurationView.setText(
-                            FormatUtils.formatSleepNap(getActivity(),
+                    tvTodayNapDrt.setText(
+                            FormatUtils.fmtSleepNapDrt(getActivity(),
                                     String.valueOf(napDuration))
                     );
 
-                    sleepPercentageView.setText(
-                            FormatUtils.formatSleepPercentage(getActivity(),
+                    tvSleepPct.setText(
+                            FormatUtils.fmtSleepPct(getActivity(),
                                     String.valueOf(totalSleepPercentage))
                     );
 
-                    activePercentageView.setText(
-                            FormatUtils.formatActivePercentage(getActivity(),
+                    tvActivePct.setText(
+                            FormatUtils.fmtActivePct(getActivity(),
                                     String.valueOf(totalActivePercentage))
                     );
 
-                    todaySleepDurationView.setText(
-                            FormatUtils.formatSleepDuration(getActivity(),
+                    tvTodaySleepDrt.setText(
+                            FormatUtils.fmtSleepDrt(getActivity(),
                                     String.valueOf(totalSleepDuration))
                     );
 
-                    todayActiveDurationView.setText(
-                            FormatUtils.formatActiveDuration(getActivity(),
+                    tvTodayActiveDrt.setText(
+                            FormatUtils.fmtActiveDrt(getActivity(),
                                     String.valueOf(totalActiveDuration))
                     );
 

@@ -40,12 +40,12 @@
     <string name="nursing_per_day">{side} {values} {unit}</string>
     <string name="night_percentage">Night {percentage}%</string>
     <string name="nap_percentage">Nap {percentage}%</string>
-    <string name="night_total">Night {total}</string>
-    <string name="nap_total">Nap {total}</string>
+    <string name="night_duration">Night {hour} h {minute} m {second} s</string>
+    <string name="nap_duration">Nap {hour} h {minute} m {second} s</string>
     <string name="sleep_percentage">Sleep {percentage}%</string>
     <string name="active_percentage">Active {percentage}%</string>
-    <string name="sleep_duration">Sleep {total}</string>
-    <string name="active_duration">Active {total}</string>
+    <string name="sleep_duration">Sleep {hour} h {minute} m {second} s</string>
+    <string name="active_duration">Active {hour} h {minute} m {second} s</string>
 
     <!--fragment diaper string-->
     <string name="wet_icon">Wet</string>

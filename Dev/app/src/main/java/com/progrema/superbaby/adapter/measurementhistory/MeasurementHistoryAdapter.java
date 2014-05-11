@@ -34,8 +34,8 @@ public class MeasurementHistoryAdapter extends CursorAdapter {
         TextView textViewHeight = (TextView) view.findViewById(R.id.history_item_height);
         TextView textViewWeight = (TextView) view.findViewById(R.id.history_item_weight);
 
-        textViewDate.setText(FormatUtils.formatDate(context, timeStamp));
-        textViewTime.setText(FormatUtils.formatTime(context, timeStamp));
+        textViewDate.setText(FormatUtils.fmtDate(context, timeStamp));
+        textViewTime.setText(FormatUtils.fmtTime(context, timeStamp));
         textViewHeight.setText(height + " cm");
         textViewWeight.setText(weight + " kg");
     }

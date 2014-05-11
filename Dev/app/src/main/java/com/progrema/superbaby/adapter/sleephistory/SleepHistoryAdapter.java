@@ -9,6 +9,7 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
+import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
 public class SleepHistoryAdapter extends CursorAdapter {
@@ -24,15 +25,17 @@ public class SleepHistoryAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        String timeStamp = cursor.getString(3);
-        String duration = cursor.getString(4);
+        String vTimestamp = cursor.getString(BabyLogContract.Sleep.Query.OFFSET_TIMESTAMP);
+        String vDuration = cursor.getString(BabyLogContract.Sleep.Query.OFFSET_DURATION);
 
-        TextView textViewTimeStamp = (TextView) view.findViewById(R.id.history_item_timestamp);
-        TextView textViewTimeBoundary = (TextView) view.findViewById(R.id.history_item_time_boundary);
-        TextView textViewDuration = (TextView) view.findViewById(R.id.history_item_duration);
+        TextView tvTimestamp = (TextView) view.findViewById(R.id.history_item_timestamp);
+        TextView tvTimeBoundary = (TextView) view.findViewById(R.id.history_item_time_boundary);
+        TextView tvDuration = (TextView) view.findViewById(R.id.history_item_duration);
+        TextView tvTime = (TextView) view.findViewById(R.id.history_item_time);
 
-        textViewTimeStamp.setText(FormatUtils.formatDate(context, timeStamp));
-        textViewTimeBoundary.setText(FormatUtils.formatTimeBoundary(context, timeStamp, duration));
-        textViewDuration.setText(FormatUtils.formatDuration(context, duration));
+        tvTimestamp.setText(FormatUtils.fmtDate(context, vTimestamp));
+        tvTimeBoundary.setText(FormatUtils.fmtTimeBoundary(context, vTimestamp, vDuration));
+        tvDuration.setText(FormatUtils.fmtDuration(context, vDuration));
+        tvTime.setText(FormatUtils.fmtTime(context, vTimestamp));
     }
 }

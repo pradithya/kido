@@ -48,7 +48,7 @@ public class BabyInputFragment extends Fragment implements View.OnClickListener,
         date = now.get(Calendar.DATE);
 
         babyBirthdayInput = (Button) rootView.findViewById(R.id.fragment_baby_input_birthday);
-        babyBirthdayInput.setText(FormatUtils.formatDate(getActivity(),
+        babyBirthdayInput.setText(FormatUtils.fmtDate(getActivity(),
                 String.valueOf(Calendar.getInstance().getTimeInMillis())));
         babyBirthdayInput.setOnClickListener(this);
 
@@ -125,7 +125,7 @@ public class BabyInputFragment extends Fragment implements View.OnClickListener,
         Calendar dob = Calendar.getInstance();
         dob.set(year, month, date);
         babyBirthdayInput.setText(
-                FormatUtils.formatDate(getActivity(), String.valueOf(dob.getTimeInMillis())));
+                FormatUtils.fmtDate(getActivity(), String.valueOf(dob.getTimeInMillis())));
     }
 
 }

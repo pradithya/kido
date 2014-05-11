@@ -38,10 +38,10 @@ public class NursingHistoryAdapter extends CursorAdapter {
         TextView textViewVolume = (TextView) view.findViewById(R.id.history_item_volume);
         textViewVolume.setVisibility(View.GONE);
 
-        textViewDate.setText(FormatUtils.formatDate(context, timeStamp));
-        textViewTime.setText(FormatUtils.formatTime(context, timeStamp));
+        textViewDate.setText(FormatUtils.fmtDate(context, timeStamp));
+        textViewTime.setText(FormatUtils.fmtTime(context, timeStamp));
         textViewSides.setText(sides);
-        textViewDuration.setText(FormatUtils.formatDuration(context, duration));
+        textViewDuration.setText(FormatUtils.fmtDuration(context, duration));
 
         if (sides.compareTo(Nursing.NursingType.FORMULA.getTitle()) == 0) {
             textViewVolume.setVisibility(View.VISIBLE);
