@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:textSize="@dimen/text_size_micro"/>
+        android:textSize="@dimen/text_size_micro" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -19,26 +19,60 @@
         android:layout_weight="4"
         android:background="@drawable/selector_body_card_background"
         android:descendantFocusability="afterDescendants"
-        android:orientation="vertical"
-        android:padding="4dp">
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/history_item_timestamp"
+        <ImageView
+            android:id="@+id/icon_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_micro" />
+            android:layout_gravity="center"
+            android:padding="8dp"
+            android:src="@drawable/ic_sleep_night" />
 
-        <TextView
-            android:id="@+id/history_item_time_boundary"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_micro" />
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="4dp">
+
+            <TextView
+                android:id="@+id/history_item_timestamp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_micro" />
+
+            <TextView
+                android:id="@+id/history_item_time_boundary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_micro" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/history_item_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_micro" />
+            android:layout_gravity="center"
+            android:padding="4dp"
+            android:textSize="@dimen/text_size_medium" />
+
+        <ImageView
+            android:id="@+id/button_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="4dp"
+            android:src="@drawable/ic_action_edit" />
+
+        <ImageView
+            android:id="@+id/button_remove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="4dp"
+            android:src="@drawable/ic_action_remove" />
 
     </LinearLayout>
 

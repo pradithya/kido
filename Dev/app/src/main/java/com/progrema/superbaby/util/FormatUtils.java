@@ -27,21 +27,6 @@ public class FormatUtils {
     private static final String[] DAY_OF_WEEK_COMPLETE = {"Sunday", "Monday", "Tuesday", "Wednesday",
             "Thursday", "Friday", "Saturday"};
 
-    public static boolean isDay(Context context, String timestamp) {
-        // TODO: get better algorithm to check day and night condition
-
-        // get time reference at 18.00
-        Calendar today1800 = Calendar.getInstance();
-        today1800.set(Calendar.HOUR_OF_DAY, 18);
-        today1800.set(Calendar.MINUTE, 0);
-        today1800.set(Calendar.SECOND, 0);
-        today1800.set(Calendar.MILLISECOND, 0);
-
-        // get time reference at 06.00
-
-        return false;
-    }
-
     /**
      * @param startTime in timemillis format
      * @param duration  in timemillis format
@@ -369,5 +354,17 @@ public class FormatUtils {
             return false;
         }
         return true;
+    }
+
+    public static boolean isNight(Long timeStamp) {
+        Calendar object = Calendar.getInstance();
+        object.setTimeInMillis(timeStamp);
+        int hour = object.get(Calendar.HOUR_OF_DAY);
+
+        // TODO: Let user change this day and night boundary
+        if ((hour < 6) || (hour > 18))
+            return true;
+
+        return false;
     }
 }

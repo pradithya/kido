@@ -24,17 +24,17 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
 
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_TODAY_ENTRY = 1;
-    private ObserveAbleListView sleepHistoryList;
-    private SleepHistoryAdapter mAdapter;
-    private TextView tvNightPct;
-    private TextView tvNapPct;
-    private TextView tvTodayNightDrt;
-    private TextView tvTodayNapDrt;
-    private TextView tvSleepPct;
-    private TextView tvActivePct;
-    private TextView tvTodaySleepDrt;
-    private TextView tvTodayActiveDrt;
-    private Calendar today;
+    private ObserveAbleListView olv_sleepHistoryList;
+    private SleepHistoryAdapter sha_adapter;
+    private TextView tv_nightPct;
+    private TextView tv_napPct;
+    private TextView tv_todayNightDrt;
+    private TextView tv_todayNapDrt;
+    private TextView tv_sleepPct;
+    private TextView tv_activePct;
+    private TextView tv_todaySleepDrt;
+    private TextView tv_todayActiveDrt;
+    private Calendar c_today;
 
     public static SleepFragment getInstance() {
         return new SleepFragment();
@@ -44,31 +44,31 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // inflate fragment layout
-        View rootView = inflater.inflate(R.layout.fragment_sleep, container, false);
+        View v_rootView = inflater.inflate(R.layout.fragment_sleep, container, false);
 
         // get Header UI object
-        tvNightPct = (TextView) rootView.findViewById(R.id.night_percentage);
-        tvNapPct = (TextView) rootView.findViewById(R.id.nap_percentage);
-        tvTodayNightDrt = (TextView) rootView.findViewById(R.id.today_night_duration);
-        tvTodayNapDrt = (TextView) rootView.findViewById(R.id.today_nap_duration);
-        tvSleepPct = (TextView) rootView.findViewById(R.id.sleep_percentage);
-        tvActivePct = (TextView) rootView.findViewById(R.id.active_percentage);
-        tvTodaySleepDrt = (TextView) rootView.findViewById(R.id.today_sleep_duration);
-        tvTodayActiveDrt = (TextView) rootView.findViewById(R.id.today_active_duration);
+        tv_nightPct = (TextView) v_rootView.findViewById(R.id.night_percentage);
+        tv_napPct = (TextView) v_rootView.findViewById(R.id.nap_percentage);
+        tv_todayNightDrt = (TextView) v_rootView.findViewById(R.id.today_night_duration);
+        tv_todayNapDrt = (TextView) v_rootView.findViewById(R.id.today_nap_duration);
+        tv_sleepPct = (TextView) v_rootView.findViewById(R.id.sleep_percentage);
+        tv_activePct = (TextView) v_rootView.findViewById(R.id.active_percentage);
+        tv_todaySleepDrt = (TextView) v_rootView.findViewById(R.id.today_sleep_duration);
+        tv_todayActiveDrt = (TextView) v_rootView.findViewById(R.id.today_active_duration);
 
         // set adapter to list view
-        sleepHistoryList = (ObserveAbleListView) rootView.findViewById(R.id.activity_list);
-        mAdapter = new SleepHistoryAdapter(getActivity(), null, 0);
-        sleepHistoryList.addHeaderView(new View(getActivity()));
-        sleepHistoryList.addFooterView(new View(getActivity()));
-        sleepHistoryList.setAdapter(mAdapter);
+        olv_sleepHistoryList = (ObserveAbleListView) v_rootView.findViewById(R.id.activity_list);
+        sha_adapter = new SleepHistoryAdapter(getActivity(), null, 0);
+        olv_sleepHistoryList.addHeaderView(new View(getActivity()));
+        olv_sleepHistoryList.addFooterView(new View(getActivity()));
+        olv_sleepHistoryList.setAdapter(sha_adapter);
 
         // prepare loader
-        LoaderManager lm = getLoaderManager();
-        lm.initLoader(LOADER_LIST_VIEW, null, this);
-        lm.initLoader(LOADER_TODAY_ENTRY, null, this);
+        LoaderManager lm_loaderManager = getLoaderManager();
+        lm_loaderManager.initLoader(LOADER_LIST_VIEW, null, this);
+        lm_loaderManager.initLoader(LOADER_TODAY_ENTRY, null, this);
 
-        return rootView;
+        return v_rootView;
     }
 
 
@@ -81,20 +81,20 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
          * That is, 23:59 on Dec 31, 1969 < 24:00 on Jan 1, 1970 < 24:01:00 on Jan 1, 1970
          * form a sequence of three consecutive minutes in time.
          */
-        today = Calendar.getInstance();
-        today.set(Calendar.HOUR_OF_DAY, 0);
-        today.set(Calendar.MINUTE, 0);
-        today.set(Calendar.SECOND, 0);
-        today.set(Calendar.MILLISECOND, 0);
-        String timestampReference = String.valueOf(today.getTimeInMillis());
+        c_today = Calendar.getInstance();
+        c_today.set(Calendar.HOUR_OF_DAY, 0);
+        c_today.set(Calendar.MINUTE, 0);
+        c_today.set(Calendar.SECOND, 0);
+        c_today.set(Calendar.MILLISECOND, 0);
+        String s_timestampReference = String.valueOf(c_today.getTimeInMillis());
 
-        String[] argumentSelectionOne = {
+        String[] sa_argumentSelectionOne = {
                 String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())
         };
 
-        String[] argumentSelectionTwo = {
+        String[] sa_argumentSelectionTwo = {
                 String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID()),
-                timestampReference
+                s_timestampReference
         };
 
         switch (loaderId) {
@@ -103,7 +103,7 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
                         BabyLogContract.Sleep.CONTENT_URI,
                         BabyLogContract.Sleep.Query.PROJECTION,
                         BabyLogContract.BABY_SELECTION_ARG,
-                        argumentSelectionOne,
+                        sa_argumentSelectionOne,
                         BabyLogContract.Sleep.Query.SORT_BY_TIMESTAMP_DESC);
 
             case LOADER_TODAY_ENTRY:
@@ -111,7 +111,7 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
                         BabyLogContract.Sleep.CONTENT_URI,
                         BabyLogContract.Sleep.Query.PROJECTION,
                         "baby_id = ? AND timestamp >= ?",
-                        argumentSelectionTwo,
+                        sa_argumentSelectionTwo,
                         BabyLogContract.Sleep.Query.SORT_BY_TIMESTAMP_DESC);
 
             default:
@@ -125,82 +125,82 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
             cursor.moveToFirst();
             switch (cursorLoader.getId()) {
                 case LOADER_LIST_VIEW:
-                    mAdapter.swapCursor(cursor);
+                    sha_adapter.swapCursor(cursor);
                     break;
 
                 case LOADER_TODAY_ENTRY:
 
-                    float totalSleepPercentage;
-                    float totalActivePercentage;
-                    float nightPercentage;
-                    float napPercentage;
-                    long totalOneDay = 24 * 60 * 60;
-                    long totalSleepDuration = 0;
-                    long totalActiveDuration;
-                    long duration;
-                    long nightDuration = 0;
-                    long napDuration = 0;
-                    long timestamp;
+                    float f_totalSleepPercentage;
+                    float f_totalActivePercentage;
+                    float f_nightPercentage;
+                    float f_napPercentage;
+                    long l_totalOneDay = 24 * 60 * 60;
+                    long l_totalSleepDuration = 0;
+                    long l_totalActiveDuration;
+                    long l_duration;
+                    long l_nightDuration = 0;
+                    long l_napDuration = 0;
+                    long l_timestamp;
 
                     for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
-                        duration = Long.valueOf(
+                        l_duration = Long.valueOf(
                                 cursor.getString(BabyLogContract.Sleep.Query.OFFSET_DURATION));
-                        timestamp = Long.valueOf(
+                        l_timestamp = Long.valueOf(
                                 cursor.getString(BabyLogContract.Sleep.Query.OFFSET_TIMESTAMP));
-                        totalSleepDuration += duration;
-                        if (isNight(timestamp)) {
-                            nightDuration += duration;
+                        l_totalSleepDuration += l_duration;
+                        if (FormatUtils.isNight(l_timestamp)) {
+                            l_nightDuration += l_duration;
                         } else {
-                            napDuration += duration;
+                            l_napDuration += l_duration;
                         }
                     }
 
-                    totalActiveDuration
+                    l_totalActiveDuration
                             = (Calendar.getInstance().getTimeInMillis()
-                            - today.getTimeInMillis()) - totalSleepDuration;
-                    totalSleepPercentage = ((float)totalSleepDuration / (float)totalOneDay) * 100;
-                    totalActivePercentage = 100 - totalSleepPercentage;
-                    nightPercentage = nightDuration / totalSleepDuration * 100;
-                    napPercentage = napDuration / totalSleepDuration * 100;
+                            - c_today.getTimeInMillis()) - l_totalSleepDuration;
+                    f_totalSleepPercentage = ((float)l_totalSleepDuration / (float)l_totalOneDay) * 100;
+                    f_totalActivePercentage = 100 - f_totalSleepPercentage;
+                    f_nightPercentage = l_nightDuration / l_totalSleepDuration * 100;
+                    f_napPercentage = l_napDuration / l_totalSleepDuration * 100;
 
-                    tvNapPct.setText(
+                    tv_napPct.setText(
                             FormatUtils.fmtSleepNapPct(getActivity(),
-                                    String.valueOf(napPercentage))
+                                    String.valueOf(f_napPercentage))
                     );
 
-                    tvNightPct.setText(
+                    tv_nightPct.setText(
                             FormatUtils.fmtSleepNightPct(getActivity(),
-                                    String.valueOf(nightPercentage))
+                                    String.valueOf(f_nightPercentage))
                     );
 
-                    tvTodayNightDrt.setText(
+                    tv_todayNightDrt.setText(
                             FormatUtils.fmtSleepNightDrt(getActivity(),
-                                    String.valueOf(nightDuration))
+                                    String.valueOf(l_nightDuration))
                     );
 
-                    tvTodayNapDrt.setText(
+                    tv_todayNapDrt.setText(
                             FormatUtils.fmtSleepNapDrt(getActivity(),
-                                    String.valueOf(napDuration))
+                                    String.valueOf(l_napDuration))
                     );
 
-                    tvSleepPct.setText(
+                    tv_sleepPct.setText(
                             FormatUtils.fmtSleepPct(getActivity(),
-                                    String.valueOf(totalSleepPercentage))
+                                    String.valueOf(f_totalSleepPercentage))
                     );
 
-                    tvActivePct.setText(
+                    tv_activePct.setText(
                             FormatUtils.fmtActivePct(getActivity(),
-                                    String.valueOf(totalActivePercentage))
+                                    String.valueOf(f_totalActivePercentage))
                     );
 
-                    tvTodaySleepDrt.setText(
+                    tv_todaySleepDrt.setText(
                             FormatUtils.fmtSleepDrt(getActivity(),
-                                    String.valueOf(totalSleepDuration))
+                                    String.valueOf(l_totalSleepDuration))
                     );
 
-                    tvTodayActiveDrt.setText(
+                    tv_todayActiveDrt.setText(
                             FormatUtils.fmtActiveDrt(getActivity(),
-                                    String.valueOf(totalActiveDuration))
+                                    String.valueOf(l_totalActiveDuration))
                     );
 
                     break;
@@ -210,18 +210,7 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
-        mAdapter.swapCursor(null);
+        sha_adapter.swapCursor(null);
     }
 
-    private boolean isNight(Long timeStamp) {
-        Calendar object = Calendar.getInstance();
-        object.setTimeInMillis(timeStamp);
-        int hour = object.get(Calendar.HOUR_OF_DAY);
-
-        // TODO: Let user change this day and night boundary
-        if ((hour < 6) || (hour > 18))
-            return true;
-
-        return false;
-    }
 }

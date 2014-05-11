@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
@@ -19,23 +20,31 @@ public class SleepHistoryAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        return inflater.inflate(R.layout.history_item_sleep, parent, false);
+        LayoutInflater li_inflater = LayoutInflater.from(context);
+        return li_inflater.inflate(R.layout.history_item_sleep, parent, false);
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        String vTimestamp = cursor.getString(BabyLogContract.Sleep.Query.OFFSET_TIMESTAMP);
-        String vDuration = cursor.getString(BabyLogContract.Sleep.Query.OFFSET_DURATION);
+        String s_timestamp = cursor.getString(BabyLogContract.Sleep.Query.OFFSET_TIMESTAMP);
+        String s_duration = cursor.getString(BabyLogContract.Sleep.Query.OFFSET_DURATION);
 
-        TextView tvTimestamp = (TextView) view.findViewById(R.id.history_item_timestamp);
-        TextView tvTimeBoundary = (TextView) view.findViewById(R.id.history_item_time_boundary);
-        TextView tvDuration = (TextView) view.findViewById(R.id.history_item_duration);
-        TextView tvTime = (TextView) view.findViewById(R.id.history_item_time);
+        TextView tv_timestamp = (TextView) view.findViewById(R.id.history_item_timestamp);
+        TextView tv_timeBoundary = (TextView) view.findViewById(R.id.history_item_time_boundary);
+        TextView tv_duration = (TextView) view.findViewById(R.id.history_item_duration);
+        TextView tv_time = (TextView) view.findViewById(R.id.history_item_time);
+        ImageView iv_type = (ImageView) view.findViewById(R.id.icon_type);
 
-        tvTimestamp.setText(FormatUtils.fmtDate(context, vTimestamp));
-        tvTimeBoundary.setText(FormatUtils.fmtTimeBoundary(context, vTimestamp, vDuration));
-        tvDuration.setText(FormatUtils.fmtDuration(context, vDuration));
-        tvTime.setText(FormatUtils.fmtTime(context, vTimestamp));
+        tv_timestamp.setText(FormatUtils.fmtDate(context, s_timestamp));
+        tv_timeBoundary.setText(FormatUtils.fmtTimeBoundary(context, s_timestamp, s_duration));
+        tv_duration.setText(FormatUtils.fmtDuration(context, s_duration));
+        tv_time.setText(FormatUtils.fmtTime(context, s_timestamp));
+
+        if (FormatUtils.isNight(Long.parseLong(s_timestamp))) {
+            iv_type.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_sleep_night));
+        } else {
+            iv_type.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_sleep_nap));
+        }
+
     }
 }

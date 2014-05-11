@@ -27,23 +27,23 @@ public class DiaperHistoryAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        String timeStamp = cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP);
-        String type = cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TYPE);
+        String sTimestamp = cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP);
+        String sType = cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TYPE);
 
-        TextView textViewDay = (TextView) view.findViewById(R.id.history_item_day);
-        TextView textViewDate = (TextView) view.findViewById(R.id.history_item_date);
-        TextView textViewTime = (TextView) view.findViewById(R.id.history_item_time);
-        ImageView imageViewType = (ImageView) view.findViewById(R.id.icon_type);
+        TextView tvDay = (TextView) view.findViewById(R.id.history_item_day);
+        TextView tvDate = (TextView) view.findViewById(R.id.history_item_date);
+        TextView tvTime = (TextView) view.findViewById(R.id.history_item_time);
+        ImageView ivType = (ImageView) view.findViewById(R.id.icon_type);
 
-        textViewDay.setText(FormatUtils.fmtDayOnly(context, timeStamp));
-        textViewDate.setText(FormatUtils.fmtDateOnly(context, timeStamp));
-        textViewTime.setText(FormatUtils.fmtTime(context, timeStamp));
+        tvDay.setText(FormatUtils.fmtDayOnly(context, sTimestamp));
+        tvDate.setText(FormatUtils.fmtDateOnly(context, sTimestamp));
+        tvTime.setText(FormatUtils.fmtTime(context, sTimestamp));
 
-        if (type.equals(Diaper.DiaperType.WET.getTitle()))
-            imageViewType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_wet));
-        else if (type.equals(Diaper.DiaperType.DRY.getTitle()))
-            imageViewType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_dry));
-        if (type.equals(Diaper.DiaperType.MIXED.getTitle()))
-            imageViewType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_mixed));
+        if (sType.equals(Diaper.DiaperType.WET.getTitle()))
+            ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_wet));
+        else if (sType.equals(Diaper.DiaperType.DRY.getTitle()))
+            ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_dry));
+        if (sType.equals(Diaper.DiaperType.MIXED.getTitle()))
+            ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_mixed));
     }
 }
