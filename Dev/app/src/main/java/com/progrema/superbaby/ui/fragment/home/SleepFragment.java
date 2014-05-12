@@ -13,11 +13,14 @@ import android.widget.TextView;
 
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.sleephistory.SleepHistoryAdapter;
+import com.progrema.superbaby.holograph.PieGraph;
+import com.progrema.superbaby.holograph.PieSlice;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.FormatUtils;
 import com.progrema.superbaby.widget.customview.ObserveAbleListView;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 
 public class SleepFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -35,6 +38,8 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
     private TextView tv_todaySleepDrt;
     private TextView tv_todayActiveDrt;
     private Calendar c_today;
+    private PieGraph pg_napNight;
+    private PieGraph pg_activeSleep;
 
     public static SleepFragment getInstance() {
         return new SleepFragment();
@@ -55,6 +60,8 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
         tv_activePct = (TextView) v_rootView.findViewById(R.id.active_percentage);
         tv_todaySleepDrt = (TextView) v_rootView.findViewById(R.id.today_sleep_duration);
         tv_todayActiveDrt = (TextView) v_rootView.findViewById(R.id.today_active_duration);
+        pg_napNight = (PieGraph) v_rootView.findViewById(R.id.sleep_nap_night_piegraph);
+        pg_activeSleep = (PieGraph) v_rootView.findViewById(R.id.sleep_active_sleep_piegraph);
 
         // set adapter to list view
         olv_sleepHistoryList = (ObserveAbleListView) v_rootView.findViewById(R.id.activity_list);
@@ -163,45 +170,71 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
                     f_nightPercentage = l_nightDuration / l_totalSleepDuration * 100;
                     f_napPercentage = l_napDuration / l_totalSleepDuration * 100;
 
+                    DecimalFormat df_form = new DecimalFormat("0.00");
+
+                    // today nap percentage information
                     tv_napPct.setText(
                             FormatUtils.fmtSleepNapPct(getActivity(),
-                                    String.valueOf(f_napPercentage))
+                                    String.valueOf(df_form.format(f_napPercentage)))
                     );
 
+                    // today night sleep percentage information
                     tv_nightPct.setText(
                             FormatUtils.fmtSleepNightPct(getActivity(),
-                                    String.valueOf(f_nightPercentage))
+                                    String.valueOf(df_form.format(f_nightPercentage)))
                     );
 
-                    tv_todayNightDrt.setText(
-                            FormatUtils.fmtSleepNightDrt(getActivity(),
-                                    String.valueOf(l_nightDuration))
-                    );
-
+                    // today nap duration information
                     tv_todayNapDrt.setText(
                             FormatUtils.fmtSleepNapDrt(getActivity(),
                                     String.valueOf(l_napDuration))
                     );
+                    PieSlice ps_nap = new PieSlice();
+                    ps_nap.setColor(getResources().getColor(R.color.orange));
+                    ps_nap.setValue(l_napDuration);
+                    pg_napNight.addSlice(ps_nap);
 
+                    // today night duration information
+                    tv_todayNightDrt.setText(
+                            FormatUtils.fmtSleepNightDrt(getActivity(),
+                                    String.valueOf(l_nightDuration))
+                    );
+                    PieSlice ps_night = new PieSlice();
+                    ps_night.setColor(getResources().getColor(R.color.blue));
+                    ps_night.setValue(l_nightDuration);
+                    pg_napNight.addSlice(ps_night);
+
+                    // today sleep percentage information
                     tv_sleepPct.setText(
                             FormatUtils.fmtSleepPct(getActivity(),
-                                    String.valueOf(f_totalSleepPercentage))
+                                    String.valueOf(df_form.format(f_totalSleepPercentage)))
                     );
 
+                    // today active percentage information
                     tv_activePct.setText(
                             FormatUtils.fmtActivePct(getActivity(),
-                                    String.valueOf(f_totalActivePercentage))
+                                    String.valueOf(df_form.format(f_totalActivePercentage)))
                     );
 
+                    // today sleep duration information
                     tv_todaySleepDrt.setText(
                             FormatUtils.fmtSleepDrt(getActivity(),
                                     String.valueOf(l_totalSleepDuration))
                     );
+                    PieSlice ps_sleep = new PieSlice();
+                    ps_sleep.setColor(getResources().getColor(R.color.black));
+                    ps_sleep.setValue(l_totalSleepDuration);
+                    pg_activeSleep.addSlice(ps_sleep);
 
+                    // today active duration information
                     tv_todayActiveDrt.setText(
                             FormatUtils.fmtActiveDrt(getActivity(),
                                     String.valueOf(l_totalActiveDuration))
                     );
+                    PieSlice ps_active = new PieSlice();
+                    ps_active.setColor(getResources().getColor(R.color.red));
+                    ps_active.setValue(l_totalActiveDuration);
+                    pg_activeSleep.addSlice(ps_active);
 
                     break;
             }

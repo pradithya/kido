@@ -33,6 +33,7 @@
     <string name="age_format">{day} days old</string>
     <string name="time_format">{hour}:{minute}</string>
     <string name="duration_format">{hour} h {minute} m {second} s</string>
+    <string name="duration_in_minute_format">{minute} m</string>
     <string name="time_span_format">{start} - {end}</string>
     <string name="last_activity_format">Last {activity}: {time}</string>
     <string name="nursing_percentage_format">{side} {percentage}%</string>

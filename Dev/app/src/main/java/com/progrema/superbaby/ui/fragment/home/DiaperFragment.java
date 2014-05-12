@@ -41,9 +41,6 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
     private TextView MixedTotalToday;
     private TextView MixedLast;
     private PieGraph HeaderPieGraph;
-    private PieSlice WetPieSlice;
-    private PieSlice DryPieSlice;
-    private PieSlice MixedPieSlice;
 
     public static DiaperFragment getInstance() {
         return new DiaperFragment();
@@ -210,7 +207,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
                 case LOADER_TODAY_WET:
                     WetTotalToday.setText(FormatUtils.fmtDiaperTotalToday(getActivity(),
                             String.valueOf(cursor.getCount())));
-                    WetPieSlice = new PieSlice();
+                    PieSlice WetPieSlice = new PieSlice();
                     WetPieSlice.setColor(getResources().getColor(R.color.blue));
                     WetPieSlice.setValue(cursor.getCount());
                     HeaderPieGraph.addSlice(WetPieSlice);
@@ -219,7 +216,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
                 case LOADER_TODAY_DRY:
                     DryTotalToday.setText(FormatUtils.fmtDiaperTotalToday(getActivity(),
                             String.valueOf(cursor.getCount())));
-                    DryPieSlice = new PieSlice();
+                    PieSlice DryPieSlice = new PieSlice();
                     DryPieSlice.setColor(getResources().getColor(R.color.orange));
                     DryPieSlice.setValue(cursor.getCount());
                     HeaderPieGraph.addSlice(DryPieSlice);
@@ -228,7 +225,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
                 case LOADER_TODAY_MIXED:
                     MixedTotalToday.setText(FormatUtils.fmtDiaperTotalToday(getActivity(),
                             String.valueOf(cursor.getCount())));
-                    MixedPieSlice = new PieSlice();
+                    PieSlice MixedPieSlice = new PieSlice();
                     MixedPieSlice.setColor(getResources().getColor(R.color.purple));
                     MixedPieSlice.setValue(cursor.getCount());
                     HeaderPieGraph.addSlice(MixedPieSlice);

@@ -35,10 +35,10 @@ public class FormatUtils {
     public static String fmtTimeBoundary(Context context, String startTime, String duration) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(Long.parseLong(startTime));
-        String start = new SimpleDateFormat("HH:mm a").format(cal.getTime());
+        String start = new SimpleDateFormat("HH:mm").format(cal.getTime());
 
         cal.setTimeInMillis(Long.parseLong(startTime) + Long.parseLong(duration));
-        String end = new SimpleDateFormat("HH:mm a").format(cal.getTime());
+        String end = new SimpleDateFormat("HH:mm").format(cal.getTime());
 
         CharSequence formatted = Phrase.from(context.getResources().getString(R.string.time_span_format))
                 .put("start", start)

@@ -21,7 +21,7 @@ public class SleepHistoryAdapter extends CursorAdapter {
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         LayoutInflater li_inflater = LayoutInflater.from(context);
-        return li_inflater.inflate(R.layout.history_item_sleep, parent, false);
+        return li_inflater.inflate(R.layout.adapter_history_item_sleep, parent, false);
     }
 
     @Override
@@ -31,13 +31,13 @@ public class SleepHistoryAdapter extends CursorAdapter {
 
         TextView tv_timestamp = (TextView) view.findViewById(R.id.history_item_timestamp);
         TextView tv_timeBoundary = (TextView) view.findViewById(R.id.history_item_time_boundary);
-        TextView tv_duration = (TextView) view.findViewById(R.id.history_item_duration);
+        //TextView tv_duration = (TextView) view.findViewById(R.id.history_item_duration);
         TextView tv_time = (TextView) view.findViewById(R.id.history_item_time);
         ImageView iv_type = (ImageView) view.findViewById(R.id.icon_type);
 
         tv_timestamp.setText(FormatUtils.fmtDate(context, s_timestamp));
         tv_timeBoundary.setText(FormatUtils.fmtTimeBoundary(context, s_timestamp, s_duration));
-        tv_duration.setText(FormatUtils.fmtDuration(context, s_duration));
+        //tv_duration.setText(FormatUtils.fmtDuration(context, s_duration));
         tv_time.setText(FormatUtils.fmtTime(context, s_timestamp));
 
         if (FormatUtils.isNight(Long.parseLong(s_timestamp))) {

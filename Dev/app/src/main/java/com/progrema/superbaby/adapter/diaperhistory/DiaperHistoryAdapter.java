@@ -22,7 +22,7 @@ public class DiaperHistoryAdapter extends CursorAdapter {
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        return inflater.inflate(R.layout.history_item_diaper, parent, false);
+        return inflater.inflate(R.layout.adapter_history_item_diaper, parent, false);
     }
 
     @Override
