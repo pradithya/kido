@@ -18,7 +18,7 @@ import com.progrema.superbaby.models.Baby;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.FormatUtils;
-import com.progrema.superbaby.widget.customview.ObserveAbleListView;
+import com.progrema.superbaby.widget.customview.ObserveableListView;
 
 public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -28,7 +28,7 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
     private static final int LOADER_LAST_DIAPER = 3;
     private static final int LOADER_LAST_MEASUREMENT = 4;
     private TimeLineHistoryAdapter mAdapter;
-    private ObserveAbleListView historyList;
+    private ObserveableListView historyList;
     private TextView headerBabyName;
     private TextView headerBabyBirthday;
     private TextView headerBabyAge;
@@ -59,7 +59,7 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
         headerLastMeasurement = (TextView) rootView.findViewById(R.id.last_measurement);
 
         // prepare adapter
-        historyList = (ObserveAbleListView) rootView.findViewById(R.id.activity_list);
+        historyList = (ObserveableListView) rootView.findViewById(R.id.activity_list);
         mAdapter = new TimeLineHistoryAdapter(getActivity(), null, 0);
         historyList.addHeaderView(new View(getActivity()));
         historyList.addFooterView(new View(getActivity()));

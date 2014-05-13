@@ -31,13 +31,13 @@ import com.progrema.superbaby.ui.fragment.home.SleepFragment;
 import com.progrema.superbaby.ui.fragment.home.StopwatchFragment;
 import com.progrema.superbaby.ui.fragment.home.TimeLineFragment;
 import com.progrema.superbaby.util.ActiveContext;
-import com.progrema.superbaby.widget.customview.ObserveAbleListView;
+import com.progrema.superbaby.widget.customview.ObserveableListView;
 
 import java.util.Calendar;
 
 public class HomeActivity extends FragmentActivity
         implements NavigationFragment.NavigationDrawerCallbacks, View.OnClickListener,
-        ObserveAbleListView.Callbacks, NursingDialog.Callbacks, DiaperDialog.Callbacks, MeasurementDialog.Callbacks {
+        ObserveableListView.Callbacks, NursingDialog.Callbacks, DiaperDialog.Callbacks, MeasurementDialog.Callbacks {
     public final static int RESULT_OK = 0;
     public final static String ACTIVITY_TRIGGER_KEY = "trigger";
     /**
@@ -60,7 +60,7 @@ public class HomeActivity extends FragmentActivity
     private Button buttonQuickDiaper;
     private Button buttonQuickNursing;
     private Button buttonQuickMeasurement;
-    private ObserveAbleListView historyList;
+    private ObserveableListView historyList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +97,7 @@ public class HomeActivity extends FragmentActivity
         buttonQuickNursing = (Button) findViewById(R.id.quick_button_nursing);
         buttonQuickDiaper = (Button) findViewById(R.id.quick_button_diaper);
         buttonQuickMeasurement = (Button) findViewById(R.id.quick_button_measurement);
-        historyList = (ObserveAbleListView) findViewById(R.id.activity_list);
+        historyList = (ObserveableListView) findViewById(R.id.activity_list);
 
         if (buttonQuickDiaper != null && buttonQuickNursing != null
                 && buttonQuickSleep != null && historyList != null) {

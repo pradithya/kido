@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.progrema.superbaby.widget.customview.ObserveAbleListView
+        <com.progrema.superbaby.widget.customview.ObserveableListView
             android:id="@+id/activity_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -18,6 +18,6 @@
 
     </LinearLayout>
 
-    <include layout="@layout/quick_button" />
+    <include layout="@layout/layout_quick_button" />
 
 </FrameLayout>

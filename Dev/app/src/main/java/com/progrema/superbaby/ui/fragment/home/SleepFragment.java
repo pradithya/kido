@@ -1,5 +1,6 @@
 package com.progrema.superbaby.ui.fragment.home;
 
+import android.app.ActionBar;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,7 +19,7 @@ import com.progrema.superbaby.holograph.PieSlice;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.FormatUtils;
-import com.progrema.superbaby.widget.customview.ObserveAbleListView;
+import com.progrema.superbaby.widget.customview.ObserveableListView;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
@@ -27,7 +28,7 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
 
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_TODAY_ENTRY = 1;
-    private ObserveAbleListView olv_sleepHistoryList;
+    private ObserveableListView olv_sleepHistoryList;
     private SleepHistoryAdapter sha_adapter;
     private TextView tv_nightPct;
     private TextView tv_napPct;
@@ -37,7 +38,7 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
     private TextView tv_activePct;
     private TextView tv_todaySleepDrt;
     private TextView tv_todayActiveDrt;
-    private Calendar c_today;
+    private Calendar c_midnight;
     private PieGraph pg_napNight;
     private PieGraph pg_activeSleep;
 
@@ -49,22 +50,36 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // inflate fragment layout
-        View v_rootView = inflater.inflate(R.layout.fragment_sleep, container, false);
+        View v_root = inflater.inflate(R.layout.fragment_sleep, container, false);
+
+        // set action bar icon and title
+        ActionBar ab_actionBar = getActivity().getActionBar();
+        ab_actionBar.setIcon(getResources().getDrawable(R.drawable.ic_sleep_action_bar_top));
 
         // get Header UI object
-        tv_nightPct = (TextView) v_rootView.findViewById(R.id.night_percentage);
-        tv_napPct = (TextView) v_rootView.findViewById(R.id.nap_percentage);
-        tv_todayNightDrt = (TextView) v_rootView.findViewById(R.id.today_night_duration);
-        tv_todayNapDrt = (TextView) v_rootView.findViewById(R.id.today_nap_duration);
-        tv_sleepPct = (TextView) v_rootView.findViewById(R.id.sleep_percentage);
-        tv_activePct = (TextView) v_rootView.findViewById(R.id.active_percentage);
-        tv_todaySleepDrt = (TextView) v_rootView.findViewById(R.id.today_sleep_duration);
-        tv_todayActiveDrt = (TextView) v_rootView.findViewById(R.id.today_active_duration);
-        pg_napNight = (PieGraph) v_rootView.findViewById(R.id.sleep_nap_night_piegraph);
-        pg_activeSleep = (PieGraph) v_rootView.findViewById(R.id.sleep_active_sleep_piegraph);
+        tv_nightPct = (TextView) v_root.findViewById(R.id.night_percentage);
+        tv_napPct = (TextView) v_root.findViewById(R.id.nap_percentage);
+        tv_todayNightDrt = (TextView) v_root.findViewById(R.id.today_night_duration);
+        tv_todayNapDrt = (TextView) v_root.findViewById(R.id.today_nap_duration);
+        tv_sleepPct = (TextView) v_root.findViewById(R.id.sleep_percentage);
+        tv_activePct = (TextView) v_root.findViewById(R.id.active_percentage);
+        tv_todaySleepDrt = (TextView) v_root.findViewById(R.id.today_sleep_duration);
+        tv_todayActiveDrt = (TextView) v_root.findViewById(R.id.today_active_duration);
+        pg_napNight = (PieGraph) v_root.findViewById(R.id.sleep_nap_night_pie_chart);
+        pg_activeSleep = (PieGraph) v_root.findViewById(R.id.sleep_active_sleep_pie_chart);
+
+        // initiate text value for the first time
+        tv_nightPct.setText(getResources().getString(R.string.night_percentage_initial));
+        tv_napPct.setText(getResources().getString(R.string.nap_percentage_initial));
+        tv_todayNightDrt.setText(getResources().getString(R.string.night_duration_initial));
+        tv_todayNapDrt.setText(getResources().getString(R.string.nap_duration_initial));
+        tv_sleepPct.setText(getResources().getString(R.string.sleep_percentage_initial));
+        tv_activePct.setText(getResources().getString(R.string.active_percentage_initial));
+        tv_todaySleepDrt.setText(getResources().getString(R.string.sleep_duration_initial));
+        tv_todayActiveDrt.setText(getResources().getString(R.string.active_duration_initial));
 
         // set adapter to list view
-        olv_sleepHistoryList = (ObserveAbleListView) v_rootView.findViewById(R.id.activity_list);
+        olv_sleepHistoryList = (ObserveableListView) v_root.findViewById(R.id.activity_list);
         sha_adapter = new SleepHistoryAdapter(getActivity(), null, 0);
         olv_sleepHistoryList.addHeaderView(new View(getActivity()));
         olv_sleepHistoryList.addFooterView(new View(getActivity()));
@@ -75,7 +90,7 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
         lm_loaderManager.initLoader(LOADER_LIST_VIEW, null, this);
         lm_loaderManager.initLoader(LOADER_TODAY_ENTRY, null, this);
 
-        return v_rootView;
+        return v_root;
     }
 
 
@@ -88,12 +103,12 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
          * That is, 23:59 on Dec 31, 1969 < 24:00 on Jan 1, 1970 < 24:01:00 on Jan 1, 1970
          * form a sequence of three consecutive minutes in time.
          */
-        c_today = Calendar.getInstance();
-        c_today.set(Calendar.HOUR_OF_DAY, 0);
-        c_today.set(Calendar.MINUTE, 0);
-        c_today.set(Calendar.SECOND, 0);
-        c_today.set(Calendar.MILLISECOND, 0);
-        String s_timestampReference = String.valueOf(c_today.getTimeInMillis());
+        c_midnight = Calendar.getInstance();
+        c_midnight.set(Calendar.HOUR_OF_DAY, 0);
+        c_midnight.set(Calendar.MINUTE, 0);
+        c_midnight.set(Calendar.SECOND, 0);
+        c_midnight.set(Calendar.MILLISECOND, 0);
+        String s_timestampReference = String.valueOf(c_midnight.getTimeInMillis());
 
         String[] sa_argumentSelectionOne = {
                 String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())
@@ -149,7 +164,7 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
                     long l_napDuration = 0;
                     long l_timestamp;
 
-                    for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
+                    for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
                         l_duration = Long.valueOf(
                                 cursor.getString(BabyLogContract.Sleep.Query.OFFSET_DURATION));
                         l_timestamp = Long.valueOf(
@@ -164,8 +179,8 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
 
                     l_totalActiveDuration
                             = (Calendar.getInstance().getTimeInMillis()
-                            - c_today.getTimeInMillis()) - l_totalSleepDuration;
-                    f_totalSleepPercentage = ((float)l_totalSleepDuration / (float)l_totalOneDay) * 100;
+                            - c_midnight.getTimeInMillis()) - l_totalSleepDuration;
+                    f_totalSleepPercentage = ((float) l_totalSleepDuration / (float) l_totalOneDay) * 100;
                     f_totalActivePercentage = 100 - f_totalSleepPercentage;
                     f_nightPercentage = l_nightDuration / l_totalSleepDuration * 100;
                     f_napPercentage = l_napDuration / l_totalSleepDuration * 100;

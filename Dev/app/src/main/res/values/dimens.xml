@@ -20,4 +20,7 @@
     <dimen name="text_size_medium">18sp</dimen>
     <dimen name="text_size_large">22sp</dimen>
 
+    <!-- Pie Chart dimension -->
+    <dimen name="sleep_fragment_pie_chart">60dp</dimen>
+
 </resources>

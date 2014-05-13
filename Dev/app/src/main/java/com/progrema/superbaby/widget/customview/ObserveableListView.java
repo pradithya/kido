@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ListView;
 
-public class ObserveAbleListView extends ListView {
+public class ObserveableListView extends ListView {
     private final int INVALID_POINTER_ID = MotionEvent.INVALID_POINTER_ID;
     private int mActivePointerId = INVALID_POINTER_ID;
     private final int SCROLLING_BUFFER = 3;
@@ -14,15 +14,15 @@ public class ObserveAbleListView extends ListView {
     private float mLastTouchX, mLastTouchY, mPosX, mPosY;
     private boolean isScrollUp = true;
 
-    public ObserveAbleListView(Context context) {
+    public ObserveableListView(Context context) {
         super(context);
     }
 
-    public ObserveAbleListView(Context context, AttributeSet attrs) {
+    public ObserveableListView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ObserveAbleListView(Context context, AttributeSet attrs, int defStyle) {
+    public ObserveableListView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 

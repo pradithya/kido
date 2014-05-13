@@ -234,7 +234,7 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String fmtNursingPerDay(Context context, String side, String values, String unit) {
+    public static String fmtNursingToday(Context context, String side, String values, String unit) {
         CharSequence formatted = Phrase.from(context.getResources().getString(R.string.nursing_per_day))
                 .put("side", side)
                 .put("values", values)
@@ -267,7 +267,7 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String fmtDiaperLastActivity(Context context, String numberToday){
+    public static String fmtDiaperLastActivity(Context context, String numberToday) {
         String value = DateUtils.getRelativeTimeSpanString(Long.parseLong(numberToday)).toString();
         CharSequence formatted = Phrase.from(context.getResources()
                 .getString(R.string.activity_last))
@@ -314,7 +314,7 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String fmtDayOnly(Context context, String timeStamp){
+    public static String fmtDayOnly(Context context, String timeStamp) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(Long.parseLong(timeStamp));
         String day = DAY_OF_WEEK_COMPLETE[cal.get(Calendar.DAY_OF_WEEK) - 1];
@@ -325,7 +325,7 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String fmtDateOnly(Context context, String timeStamp){
+    public static String fmtDateOnly(Context context, String timeStamp) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(Long.parseLong(timeStamp));
         String date = String.valueOf(cal.get(Calendar.DATE));

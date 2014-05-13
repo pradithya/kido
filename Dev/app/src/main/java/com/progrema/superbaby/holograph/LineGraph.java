@@ -219,17 +219,17 @@ public class LineGraph extends View {
         return mLines;
     }
 
-    public void setLineToFill(int indexOfLine) {
-        this.mLineToFill = indexOfLine;
-        postInvalidate();
+    public void setLines(ArrayList<Line> lines) {
+        this.mLines = lines;
     }
 
     public int getLineToFill() {
         return mLineToFill;
     }
 
-    public void setLines(ArrayList<Line> lines) {
-        this.mLines = lines;
+    public void setLineToFill(int indexOfLine) {
+        this.mLineToFill = indexOfLine;
+        postInvalidate();
     }
 
     public Line getLine(int index) {

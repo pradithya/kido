@@ -27,9 +27,9 @@
                 android:layout_weight="1">
 
                 <com.progrema.superbaby.holograph.PieGraph
-                    android:id="@+id/sleep_nap_night_piegraph"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:id="@+id/sleep_nap_night_pie_chart"
+                    android:layout_width="@dimen/sleep_fragment_pie_chart"
+                    android:layout_height="@dimen/sleep_fragment_pie_chart"
                     android:layout_marginRight="4dp"
                     app:pieInnerCircleRatio="128"
                     app:pieSlicePadding="0dp" />
@@ -38,16 +38,16 @@
                     android:id="@+id/night_percentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/sleep_nap_night_pie_chart"
                     android:text="@string/night_percentage"
-                    android:layout_toRightOf="@id/sleep_nap_night_piegraph"
                     android:textSize="@dimen/text_size_micro" />
 
                 <TextView
                     android:id="@+id/nap_percentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/sleep_nap_night_piegraph"
                     android:layout_below="@id/night_percentage"
+                    android:layout_toRightOf="@id/sleep_nap_night_pie_chart"
                     android:text="@string/nap_percentage"
                     android:textSize="@dimen/text_size_micro" />
 
@@ -55,7 +55,7 @@
                     android:id="@+id/today_night_duration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/sleep_nap_night_piegraph"
+                    android:layout_below="@id/sleep_nap_night_pie_chart"
                     android:text="@string/night_duration"
                     android:textSize="@dimen/text_size_micro" />
 
@@ -76,9 +76,9 @@
                 android:layout_weight="1">
 
                 <com.progrema.superbaby.holograph.PieGraph
-                    android:id="@+id/sleep_active_sleep_piegraph"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:id="@+id/sleep_active_sleep_pie_chart"
+                    android:layout_width="@dimen/sleep_fragment_pie_chart"
+                    android:layout_height="@dimen/sleep_fragment_pie_chart"
                     android:layout_marginRight="4dp"
                     app:pieInnerCircleRatio="128"
                     app:pieSlicePadding="0dp" />
@@ -87,16 +87,16 @@
                     android:id="@+id/sleep_percentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/sleep_active_sleep_pie_chart"
                     android:text="@string/sleep_percentage"
-                    android:layout_toRightOf="@id/sleep_active_sleep_piegraph"
                     android:textSize="@dimen/text_size_micro" />
 
                 <TextView
                     android:id="@+id/active_percentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/sleep_active_sleep_piegraph"
                     android:layout_below="@id/sleep_percentage"
+                    android:layout_toRightOf="@id/sleep_active_sleep_pie_chart"
                     android:text="@string/active_percentage"
                     android:textSize="@dimen/text_size_micro" />
 
@@ -104,7 +104,7 @@
                     android:id="@+id/today_sleep_duration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/sleep_active_sleep_piegraph"
+                    android:layout_below="@id/sleep_active_sleep_pie_chart"
                     android:text="@string/sleep_duration"
                     android:textSize="@dimen/text_size_micro" />
 
@@ -120,7 +120,7 @@
 
         </LinearLayout>
 
-        <com.progrema.superbaby.widget.customview.ObserveAbleListView
+        <com.progrema.superbaby.widget.customview.ObserveableListView
             android:id="@+id/activity_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -135,6 +135,6 @@
 
     </LinearLayout>
 
-    <include layout="@layout/quick_button" />
+    <include layout="@layout/layout_quick_button" />
 
 </FrameLayout>

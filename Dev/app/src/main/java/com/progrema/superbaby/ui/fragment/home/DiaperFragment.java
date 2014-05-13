@@ -19,7 +19,7 @@ import com.progrema.superbaby.holograph.PieSlice;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.FormatUtils;
-import com.progrema.superbaby.widget.customview.ObserveAbleListView;
+import com.progrema.superbaby.widget.customview.ObserveableListView;
 
 import java.util.Calendar;
 
@@ -32,70 +32,70 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
     private static final int LOADER_TODAY_WET = 4;
     private static final int LOADER_TODAY_DRY = 5;
     private static final int LOADER_TODAY_MIXED = 6;
-    private ObserveAbleListView diaperHistoryList;
-    private DiaperHistoryAdapter mAdapter;
-    private TextView WetTotalToday;
-    private TextView WetLast;
-    private TextView DryTotalToday;
-    private TextView DryLast;
-    private TextView MixedTotalToday;
-    private TextView MixedLast;
-    private PieGraph HeaderPieGraph;
+    private ObserveableListView olv_diaperHistoryList;
+    private DiaperHistoryAdapter dha_adapter;
+    private TextView tv_wetTotalToday;
+    private TextView tv_wetLast;
+    private TextView tv_dryTotalToday;
+    private TextView tv_dryLast;
+    private TextView tv_mixedTotalToday;
+    private TextView tv_mixedLast;
+    private PieGraph pg_header;
 
     public static DiaperFragment getInstance() {
         return new DiaperFragment();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater li_inflater, ViewGroup vg_container,
+                             Bundle b_savedInstanceState) {
 
         // inflate fragment layout
-        View rootView = inflater.inflate(R.layout.fragment_diaper, container, false);
+        View v_root = li_inflater.inflate(R.layout.fragment_diaper, vg_container, false);
 
         // set action bar icon and title
-        ActionBar actionBar = getActivity().getActionBar();
-        actionBar.setIcon(getResources().getDrawable(R.drawable.ic_baby_nappy_white));
+        ActionBar ab_actionBar = getActivity().getActionBar();
+        ab_actionBar.setIcon(getResources().getDrawable(R.drawable.ic_diaper_action_bar_top));
 
         // get Header UI object
-        WetTotalToday = (TextView) rootView.findViewById(R.id.wet_average);
-        DryTotalToday = (TextView) rootView.findViewById(R.id.dry_average);
-        MixedTotalToday = (TextView) rootView.findViewById(R.id.mix_average);
-        WetLast = (TextView) rootView.findViewById(R.id.wet_last);
-        DryLast = (TextView) rootView.findViewById(R.id.dry_last);
-        MixedLast = (TextView) rootView.findViewById(R.id.mix_last);
-        HeaderPieGraph = (PieGraph) rootView.findViewById(R.id.diaper_piegraph);
+        tv_wetTotalToday = (TextView) v_root.findViewById(R.id.wet_average);
+        tv_dryTotalToday = (TextView) v_root.findViewById(R.id.dry_average);
+        tv_mixedTotalToday = (TextView) v_root.findViewById(R.id.mix_average);
+        tv_wetLast = (TextView) v_root.findViewById(R.id.wet_last);
+        tv_dryLast = (TextView) v_root.findViewById(R.id.dry_last);
+        tv_mixedLast = (TextView) v_root.findViewById(R.id.mix_last);
+        pg_header = (PieGraph) v_root.findViewById(R.id.diaper_piegraph);
 
-        // Init text value for the first time
-        WetTotalToday.setText(getResources().getString(R.string.activity_today_initial));
-        DryTotalToday.setText(getResources().getString(R.string.activity_today_initial));
-        MixedTotalToday.setText(getResources().getString(R.string.activity_today_initial));
-        WetLast.setText(getResources().getString(R.string.activity_last_initial));
-        DryLast.setText(getResources().getString(R.string.activity_last_initial));
-        MixedLast.setText(getResources().getString(R.string.activity_last_initial));
+        // initiate text value for the first time
+        tv_wetTotalToday.setText(getResources().getString(R.string.activity_today_initial));
+        tv_dryTotalToday.setText(getResources().getString(R.string.activity_today_initial));
+        tv_mixedTotalToday.setText(getResources().getString(R.string.activity_today_initial));
+        tv_wetLast.setText(getResources().getString(R.string.activity_last_initial));
+        tv_dryLast.setText(getResources().getString(R.string.activity_last_initial));
+        tv_mixedLast.setText(getResources().getString(R.string.activity_last_initial));
 
         // set adapter to list view
-        diaperHistoryList = (ObserveAbleListView) rootView.findViewById(R.id.activity_list);
-        mAdapter = new DiaperHistoryAdapter(getActivity(), null, 0);
-        diaperHistoryList.addHeaderView(new View(getActivity()));
-        diaperHistoryList.addFooterView(new View(getActivity()));
-        diaperHistoryList.setAdapter(mAdapter);
+        olv_diaperHistoryList = (ObserveableListView) v_root.findViewById(R.id.activity_list);
+        dha_adapter = new DiaperHistoryAdapter(getActivity(), null, 0);
+        olv_diaperHistoryList.addHeaderView(new View(getActivity()));
+        olv_diaperHistoryList.addFooterView(new View(getActivity()));
+        olv_diaperHistoryList.setAdapter(dha_adapter);
 
         // prepare loader
-        LoaderManager lm = getLoaderManager();
-        lm.initLoader(LOADER_LIST_VIEW, null, this);
-        lm.initLoader(LOADER_LAST_WET, null, this);
-        lm.initLoader(LOADER_LAST_DRY, null, this);
-        lm.initLoader(LOADER_LAST_MIXED, null, this);
-        lm.initLoader(LOADER_TODAY_WET, null, this);
-        lm.initLoader(LOADER_TODAY_DRY, null, this);
-        lm.initLoader(LOADER_TODAY_MIXED, null, this);
+        LoaderManager lm_loaderManager = getLoaderManager();
+        lm_loaderManager.initLoader(LOADER_LIST_VIEW, null, this);
+        lm_loaderManager.initLoader(LOADER_LAST_WET, null, this);
+        lm_loaderManager.initLoader(LOADER_LAST_DRY, null, this);
+        lm_loaderManager.initLoader(LOADER_LAST_MIXED, null, this);
+        lm_loaderManager.initLoader(LOADER_TODAY_WET, null, this);
+        lm_loaderManager.initLoader(LOADER_TODAY_DRY, null, this);
+        lm_loaderManager.initLoader(LOADER_TODAY_MIXED, null, this);
 
-        return rootView;
+        return v_root;
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle) {
+    public Loader<Cursor> onCreateLoader(int i_loaderId, Bundle b_bundle) {
 
         /**
          * as stated here: http://developer.android.com/reference/java/util/Calendar.html
@@ -103,28 +103,28 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
          * That is, 23:59 on Dec 31, 1969 < 24:00 on Jan 1, 1970 < 24:01:00 on Jan 1, 1970
          * form a sequence of three consecutive minutes in time.
          */
-        Calendar today = Calendar.getInstance();
-        today.set(Calendar.HOUR_OF_DAY, 0);
-        today.set(Calendar.MINUTE, 0);
-        today.set(Calendar.SECOND, 0);
-        today.set(Calendar.MILLISECOND, 0);
-        String timestampReference = String.valueOf(today.getTimeInMillis());
+        Calendar c_midnight = Calendar.getInstance();
+        c_midnight.set(Calendar.HOUR_OF_DAY, 0);
+        c_midnight.set(Calendar.MINUTE, 0);
+        c_midnight.set(Calendar.SECOND, 0);
+        c_midnight.set(Calendar.MILLISECOND, 0);
+        String s_timestampReference = String.valueOf(c_midnight.getTimeInMillis());
 
-        String[] argumentSelectionOne = {
+        String[] sa_argumentSelectionOne = {
                 String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())
         };
 
-        String[] argumentSelectionTwo = {
+        String[] sa_argumentSelectionTwo = {
                 String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID()),
-                timestampReference
+                s_timestampReference
         };
 
-        switch (loaderId) {
+        switch (i_loaderId) {
             case LOADER_LIST_VIEW:
                 return new CursorLoader(getActivity(), BabyLogContract.Diaper.CONTENT_URI,
                         BabyLogContract.Diaper.Query.PROJECTION,
                         BabyLogContract.BABY_SELECTION_ARG,
-                        argumentSelectionOne,
+                        sa_argumentSelectionOne,
                         BabyLogContract.Diaper.Query.SORT_BY_TIMESTAMP_DESC);
 
             case LOADER_LAST_WET:
@@ -132,7 +132,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
                         BabyLogContract.Diaper.CONTENT_URI,
                         BabyLogContract.Diaper.Query.PROJECTION,
                         "baby_id = ? AND type = 'WET'",
-                        argumentSelectionOne,
+                        sa_argumentSelectionOne,
                         BabyLogContract.Diaper.Query.SORT_BY_TIMESTAMP_DESC);
 
             case LOADER_LAST_DRY:
@@ -140,7 +140,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
                         BabyLogContract.Diaper.CONTENT_URI,
                         BabyLogContract.Diaper.Query.PROJECTION,
                         "baby_id = ? AND type = 'DRY'",
-                        argumentSelectionOne,
+                        sa_argumentSelectionOne,
                         BabyLogContract.Diaper.Query.SORT_BY_TIMESTAMP_DESC);
 
             case LOADER_LAST_MIXED:
@@ -148,7 +148,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
                         BabyLogContract.Diaper.CONTENT_URI,
                         BabyLogContract.Diaper.Query.PROJECTION,
                         "baby_id = ? AND type = 'MIXED'",
-                        argumentSelectionOne,
+                        sa_argumentSelectionOne,
                         BabyLogContract.Diaper.Query.SORT_BY_TIMESTAMP_DESC);
 
             case LOADER_TODAY_DRY:
@@ -156,7 +156,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
                         BabyLogContract.Diaper.CONTENT_URI,
                         BabyLogContract.Diaper.Query.PROJECTION,
                         "baby_id = ? AND type = 'DRY' AND timestamp >= ?",
-                        argumentSelectionTwo,
+                        sa_argumentSelectionTwo,
                         BabyLogContract.Diaper.Query.SORT_BY_TIMESTAMP_DESC);
 
             case LOADER_TODAY_WET:
@@ -164,7 +164,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
                         BabyLogContract.Diaper.CONTENT_URI,
                         BabyLogContract.Diaper.Query.PROJECTION,
                         "baby_id = ? AND type = 'WET' AND timestamp >= ?",
-                        argumentSelectionTwo,
+                        sa_argumentSelectionTwo,
                         BabyLogContract.Diaper.Query.SORT_BY_TIMESTAMP_DESC);
 
             case LOADER_TODAY_MIXED:
@@ -172,7 +172,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
                         BabyLogContract.Diaper.CONTENT_URI,
                         BabyLogContract.Diaper.Query.PROJECTION,
                         "baby_id = ? AND type = 'MIXED' AND timestamp >= ?",
-                        argumentSelectionTwo,
+                        sa_argumentSelectionTwo,
                         BabyLogContract.Diaper.Query.SORT_BY_TIMESTAMP_DESC);
 
             default:
@@ -181,54 +181,54 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            switch (cursorLoader.getId()) {
+    public void onLoadFinished(Loader<Cursor> l_cursorLoader, Cursor c_cursor) {
+        if (c_cursor.getCount() > 0) {
+            c_cursor.moveToFirst();
+            switch (l_cursorLoader.getId()) {
                 case LOADER_LIST_VIEW:
-                    mAdapter.swapCursor(cursor);
+                    dha_adapter.swapCursor(c_cursor);
                     break;
 
                 case LOADER_LAST_WET:
-                    WetLast.setText(FormatUtils.fmtDiaperLastActivity(getActivity(),
-                            cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP)));
+                    tv_wetLast.setText(FormatUtils.fmtDiaperLastActivity(getActivity(),
+                            c_cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP)));
                     break;
 
                 case LOADER_LAST_DRY:
-                    DryLast.setText(FormatUtils.fmtDiaperLastActivity(getActivity(),
-                            cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP)));
+                    tv_dryLast.setText(FormatUtils.fmtDiaperLastActivity(getActivity(),
+                            c_cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP)));
                     break;
 
                 case LOADER_LAST_MIXED:
-                    MixedLast.setText(FormatUtils.fmtDiaperLastActivity(getActivity(),
-                            cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP)));
+                    tv_mixedLast.setText(FormatUtils.fmtDiaperLastActivity(getActivity(),
+                            c_cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP)));
                     break;
 
                 case LOADER_TODAY_WET:
-                    WetTotalToday.setText(FormatUtils.fmtDiaperTotalToday(getActivity(),
-                            String.valueOf(cursor.getCount())));
+                    tv_wetTotalToday.setText(FormatUtils.fmtDiaperTotalToday(getActivity(),
+                            String.valueOf(c_cursor.getCount())));
                     PieSlice WetPieSlice = new PieSlice();
                     WetPieSlice.setColor(getResources().getColor(R.color.blue));
-                    WetPieSlice.setValue(cursor.getCount());
-                    HeaderPieGraph.addSlice(WetPieSlice);
+                    WetPieSlice.setValue(c_cursor.getCount());
+                    pg_header.addSlice(WetPieSlice);
                     break;
 
                 case LOADER_TODAY_DRY:
-                    DryTotalToday.setText(FormatUtils.fmtDiaperTotalToday(getActivity(),
-                            String.valueOf(cursor.getCount())));
+                    tv_dryTotalToday.setText(FormatUtils.fmtDiaperTotalToday(getActivity(),
+                            String.valueOf(c_cursor.getCount())));
                     PieSlice DryPieSlice = new PieSlice();
                     DryPieSlice.setColor(getResources().getColor(R.color.orange));
-                    DryPieSlice.setValue(cursor.getCount());
-                    HeaderPieGraph.addSlice(DryPieSlice);
+                    DryPieSlice.setValue(c_cursor.getCount());
+                    pg_header.addSlice(DryPieSlice);
                     break;
 
                 case LOADER_TODAY_MIXED:
-                    MixedTotalToday.setText(FormatUtils.fmtDiaperTotalToday(getActivity(),
-                            String.valueOf(cursor.getCount())));
+                    tv_mixedTotalToday.setText(FormatUtils.fmtDiaperTotalToday(getActivity(),
+                            String.valueOf(c_cursor.getCount())));
                     PieSlice MixedPieSlice = new PieSlice();
                     MixedPieSlice.setColor(getResources().getColor(R.color.purple));
-                    MixedPieSlice.setValue(cursor.getCount());
-                    HeaderPieGraph.addSlice(MixedPieSlice);
+                    MixedPieSlice.setValue(c_cursor.getCount());
+                    pg_header.addSlice(MixedPieSlice);
                     break;
             }
         }
@@ -236,7 +236,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
-        mAdapter.swapCursor(null);
+        dha_adapter.swapCursor(null);
     }
 
 }

@@ -89,13 +89,13 @@ public class BarGraph extends View {
         mShowAxis = show;
     }
 
+    public ArrayList<Bar> getBars() {
+        return this.mBars;
+    }
+
     public void setBars(ArrayList<Bar> points) {
         this.mBars = points;
         postInvalidate();
-    }
-
-    public ArrayList<Bar> getBars() {
-        return this.mBars;
     }
 
     public void setAxisColor(int axisColor) {

@@ -17,7 +17,7 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:text="@string/quick_button_title_sleep"
-        android:textColor="@color/white"
+        android:textColor="@color/blue"
         android:textStyle="bold" />
 
     <Button
@@ -28,7 +28,7 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:text="@string/quick_button_title_nursing"
-        android:textColor="@color/white"
+        android:textColor="@color/red"
         android:textStyle="bold" />
 
     <Button
@@ -39,7 +39,7 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:text="@string/quick_button_title_diaper"
-        android:textColor="@color/white"
+        android:textColor="@color/green"
         android:textStyle="bold" />
 
     <Button
@@ -50,7 +50,7 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:text="@string/quick_button_title_measurement"
-        android:textColor="@color/white"
+        android:textColor="@color/orange"
         android:textStyle="bold" />
 
 </LinearLayout>

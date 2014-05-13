@@ -21,7 +21,7 @@ public class SleepHistoryAdapter extends CursorAdapter {
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         LayoutInflater li_inflater = LayoutInflater.from(context);
-        return li_inflater.inflate(R.layout.adapter_history_item_sleep, parent, false);
+        return li_inflater.inflate(R.layout.adapter_history_sleep, parent, false);
     }
 
     @Override

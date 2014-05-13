@@ -199,7 +199,9 @@ public class BabyLogContract {
 
         public static Uri buildUri(String activityId) {
             return CONTENT_URI.buildUpon().appendPath(activityId).build();
-        }                public interface Query {
+        }
+
+        public interface Query {
             String[] PROJECTION =
                     {
                             BaseColumns._ID,
@@ -329,6 +331,7 @@ public class BabyLogContract {
             final String SORT_BY_TIMESTAMP_ASC = DiaperColumns.TIMESTAMP + " ASC ";
             final String SORT_BY_TIMESTAMP_DESC = DiaperColumns.TIMESTAMP + " DESC ";
         }
+
         public static final String table = PATH_MEASUREMENT;
     }
 
