@@ -26,6 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
+                android:text="@string/nursing_left_percentage_initial"
                 android:textSize="@dimen/text_size_micro" />
 
             <TextView
@@ -33,6 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
+                android:text="@string/nursing_right_percentage_initial"
                 android:textSize="@dimen/text_size_micro" />
 
             <TextView
@@ -40,6 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
+                android:text="@string/nursing_last_side_initial"
                 android:textSize="@dimen/text_size_micro" />
 
             <TextView
@@ -47,6 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
+                android:text="@string/nursing_left_today_initial"
                 android:textSize="@dimen/text_size_micro" />
 
             <TextView
@@ -54,6 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
+                android:text="@string/nursing_right_today_initial"
                 android:textSize="@dimen/text_size_micro" />
 
             <TextView
@@ -61,6 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
+                android:text="@string/nursing_left_today_initial"
                 android:textSize="@dimen/text_size_micro" />
 
         </LinearLayout>

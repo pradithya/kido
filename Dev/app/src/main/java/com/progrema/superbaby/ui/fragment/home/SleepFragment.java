@@ -68,16 +68,6 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
         pg_napNight = (PieGraph) v_root.findViewById(R.id.sleep_nap_night_pie_chart);
         pg_activeSleep = (PieGraph) v_root.findViewById(R.id.sleep_active_sleep_pie_chart);
 
-        // initiate text value for the first time
-        tv_nightPct.setText(getResources().getString(R.string.night_percentage_initial));
-        tv_napPct.setText(getResources().getString(R.string.nap_percentage_initial));
-        tv_todayNightDrt.setText(getResources().getString(R.string.night_duration_initial));
-        tv_todayNapDrt.setText(getResources().getString(R.string.nap_duration_initial));
-        tv_sleepPct.setText(getResources().getString(R.string.sleep_percentage_initial));
-        tv_activePct.setText(getResources().getString(R.string.active_percentage_initial));
-        tv_todaySleepDrt.setText(getResources().getString(R.string.sleep_duration_initial));
-        tv_todayActiveDrt.setText(getResources().getString(R.string.active_duration_initial));
-
         // set adapter to list view
         olv_sleepHistoryList = (ObserveableListView) v_root.findViewById(R.id.activity_list);
         sha_adapter = new SleepHistoryAdapter(getActivity(), null, 0);

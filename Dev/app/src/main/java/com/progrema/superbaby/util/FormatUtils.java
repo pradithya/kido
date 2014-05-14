@@ -235,7 +235,7 @@ public class FormatUtils {
     }
 
     public static String fmtNursingToday(Context context, String side, String values, String unit) {
-        CharSequence formatted = Phrase.from(context.getResources().getString(R.string.nursing_per_day))
+        CharSequence formatted = Phrase.from(context.getResources().getString(R.string.nursing_today))
                 .put("side", side)
                 .put("values", values)
                 .put("unit", unit)
@@ -252,7 +252,7 @@ public class FormatUtils {
 
     public static String fmtNursingPct(Context context, String side, String percentage) {
         CharSequence formatted = Phrase.from(context.getResources()
-                .getString(R.string.nursing_percentage_format))
+                .getString(R.string.nursing_percentage))
                 .put("side", side)
                 .put("percentage", percentage)
                 .format();
