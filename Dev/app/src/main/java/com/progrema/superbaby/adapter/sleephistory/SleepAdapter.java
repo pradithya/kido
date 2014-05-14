@@ -13,15 +13,15 @@ import com.progrema.superbaby.R;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
-public class SleepHistoryAdapter extends CursorAdapter {
-    public SleepHistoryAdapter(Context context, Cursor c, int flags) {
+public class SleepAdapter extends CursorAdapter {
+    public SleepAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         LayoutInflater li_inflater = LayoutInflater.from(context);
-        return li_inflater.inflate(R.layout.adapter_history_sleep, parent, false);
+        return li_inflater.inflate(R.layout.adapter_sleep, parent, false);
     }
 
     @Override

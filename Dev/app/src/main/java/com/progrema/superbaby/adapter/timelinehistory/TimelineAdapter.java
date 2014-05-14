@@ -13,15 +13,15 @@ import com.progrema.superbaby.models.Nursing;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
-public class TimeLineHistoryAdapter extends CursorAdapter {
-    public TimeLineHistoryAdapter(Context context, Cursor c, int flags) {
+public class TimelineAdapter extends CursorAdapter {
+    public TimelineAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        return inflater.inflate(R.layout.adapter_history_activity, parent, false);
+        return inflater.inflate(R.layout.adapter_timeline, parent, false);
     }
 
     @Override

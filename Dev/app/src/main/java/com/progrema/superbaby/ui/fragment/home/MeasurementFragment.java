@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.adapter.measurementhistory.MeasurementHistoryAdapter;
+import com.progrema.superbaby.adapter.measurementhistory.MeasurementAdapter;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.widget.customview.ObserveableListView;
@@ -19,7 +19,7 @@ import com.progrema.superbaby.widget.customview.ObserveableListView;
 public class MeasurementFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final int LOADER_ID = 0;
     private ObserveableListView measurementHistoryList;
-    private MeasurementHistoryAdapter mAdapter;
+    private MeasurementAdapter mAdapter;
 
     public static MeasurementFragment getInstance() {
         return new MeasurementFragment();
@@ -32,7 +32,7 @@ public class MeasurementFragment extends Fragment implements LoaderManager.Loade
 
         // set adapter to list view
         measurementHistoryList = (ObserveableListView) rootView.findViewById(R.id.activity_list);
-        mAdapter = new MeasurementHistoryAdapter(getActivity(), null, 0);
+        mAdapter = new MeasurementAdapter(getActivity(), null, 0);
         measurementHistoryList.setAdapter(mAdapter);
 
         // prepare loader

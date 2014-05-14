@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.adapter.sleephistory.SleepHistoryAdapter;
+import com.progrema.superbaby.adapter.sleephistory.SleepAdapter;
 import com.progrema.superbaby.holograph.PieGraph;
 import com.progrema.superbaby.holograph.PieSlice;
 import com.progrema.superbaby.provider.BabyLogContract;
@@ -29,7 +29,7 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_TODAY_ENTRY = 1;
     private ObserveableListView olv_sleepHistoryList;
-    private SleepHistoryAdapter sha_adapter;
+    private SleepAdapter sa_adapter;
     private TextView tv_nightPct;
     private TextView tv_napPct;
     private TextView tv_todayNightDrt;
@@ -70,10 +70,10 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
 
         // set adapter to list view
         olv_sleepHistoryList = (ObserveableListView) v_root.findViewById(R.id.activity_list);
-        sha_adapter = new SleepHistoryAdapter(getActivity(), null, 0);
+        sa_adapter = new SleepAdapter(getActivity(), null, 0);
         olv_sleepHistoryList.addHeaderView(new View(getActivity()));
         olv_sleepHistoryList.addFooterView(new View(getActivity()));
-        olv_sleepHistoryList.setAdapter(sha_adapter);
+        olv_sleepHistoryList.setAdapter(sa_adapter);
 
         // prepare loader
         LoaderManager lm_loaderManager = getLoaderManager();
@@ -137,7 +137,7 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
             cursor.moveToFirst();
             switch (cursorLoader.getId()) {
                 case LOADER_LIST_VIEW:
-                    sha_adapter.swapCursor(cursor);
+                    sa_adapter.swapCursor(cursor);
                     break;
 
                 case LOADER_TODAY_ENTRY:
@@ -248,7 +248,7 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
-        sha_adapter.swapCursor(null);
+        sa_adapter.swapCursor(null);
     }
 
 }

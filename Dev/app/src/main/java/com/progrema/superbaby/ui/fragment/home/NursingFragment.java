@@ -10,10 +10,13 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.adapter.nursinghistory.NursingHistoryAdapter;
+import com.progrema.superbaby.adapter.nursinghistory.NursingAdapter;
+import com.progrema.superbaby.holograph.PieGraph;
+import com.progrema.superbaby.holograph.PieSlice;
 import com.progrema.superbaby.models.Nursing;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
@@ -28,14 +31,15 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_TODAY_ENTRY = 1;
     private static final int LOADER_LAST_SIDE = 2;
-    private NursingHistoryAdapter nha_adapter;
+    private NursingAdapter na_adapter;
     private ObserveableListView olv_nursingHistoryList;
     private TextView tv_leftPct;
     private TextView tv_rightPct;
-    private TextView tv_lastSide;
     private TextView tv_rightToday;
     private TextView tv_leftToday;
     private TextView tv_formulaToday;
+    private ImageView iv_lastSide;
+    private PieGraph pg_leftRight;
 
     public static NursingFragment getInstance() {
         return new NursingFragment();
@@ -53,17 +57,18 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
         // get ui object
         tv_leftPct = (TextView) v_root.findViewById(R.id.percentage_left);
         tv_rightPct = (TextView) v_root.findViewById(R.id.percentage_right);
-        tv_lastSide = (TextView) v_root.findViewById(R.id.last_side);
         tv_rightToday = (TextView) v_root.findViewById(R.id.right_today);
         tv_leftToday = (TextView) v_root.findViewById(R.id.left_today);
         tv_formulaToday = (TextView) v_root.findViewById(R.id.formula_today);
+        iv_lastSide = (ImageView) v_root.findViewById(R.id.last_side);
+        pg_leftRight = (PieGraph) v_root.findViewById(R.id.nursing_left_right_pie_chart);
 
         // set adapter to list view
         olv_nursingHistoryList = (ObserveableListView) v_root.findViewById(R.id.activity_list);
-        nha_adapter = new NursingHistoryAdapter(getActivity(), null, 0);
+        na_adapter = new NursingAdapter(getActivity(), null, 0);
         olv_nursingHistoryList.addHeaderView(new View(getActivity()));
         olv_nursingHistoryList.addFooterView(new View(getActivity()));
-        olv_nursingHistoryList.setAdapter(nha_adapter);
+        olv_nursingHistoryList.setAdapter(na_adapter);
 
         // prepare loader
         LoaderManager lm_loaderManager = getLoaderManager();
@@ -138,7 +143,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
             c_cursor.moveToFirst();
             switch (l_cursorLoader.getId()) {
                 case LOADER_LIST_VIEW:
-                    nha_adapter.swapCursor(c_cursor);
+                    na_adapter.swapCursor(c_cursor);
                     break;
 
                 case LOADER_TODAY_ENTRY:
@@ -188,6 +193,10 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                                     getActivity().getResources().getString(R.string.left_side),
                                     String.valueOf(f_result), "m")
                     );
+                    PieSlice ps_left = new PieSlice();
+                    ps_left.setColor(getResources().getColor(R.color.green));
+                    ps_left.setValue(l_leftDuration);
+                    pg_leftRight.addSlice(ps_left);
 
                     // right side duration information
                     f_result = TimeUnit.MILLISECONDS.toMinutes(l_rightDuration);
@@ -196,6 +205,10 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                                     getActivity().getResources().getString(R.string.right_side),
                                     String.valueOf(f_result), "m")
                     );
+                    PieSlice ps_right = new PieSlice();
+                    ps_right.setColor(getResources().getColor(R.color.orange));
+                    ps_right.setValue(l_rightDuration);
+                    pg_leftRight.addSlice(ps_right);
 
                     // formula volume information
                     tv_formulaToday.setText(
@@ -206,8 +219,14 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                     break;
 
                 case LOADER_LAST_SIDE:
-                    String s_sides = c_cursor.getString(0);
-                    tv_lastSide.setText(FormatUtils.fmtNursingLastSide(getActivity(), s_sides));
+                    String s_type = c_cursor.getString(0);
+                    if (s_type.compareTo(Nursing.NursingType.RIGHT.getTitle()) == 0) {
+                        iv_lastSide.setImageDrawable(getResources()
+                                .getDrawable(R.drawable.ic_nursing_right));
+                    } else if(s_type.compareTo(Nursing.NursingType.LEFT.getTitle()) == 0) {
+                        iv_lastSide.setImageDrawable(getResources()
+                                .getDrawable(R.drawable.ic_nursing_left));
+                    }
                     break;
             }
         }
@@ -215,6 +234,6 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
 
     @Override
     public void onLoaderReset(Loader<Cursor> cl) {
-        nha_adapter.swapCursor(null);
+        na_adapter.swapCursor(null);
     }
 }

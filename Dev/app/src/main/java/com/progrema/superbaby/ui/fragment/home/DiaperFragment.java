@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.adapter.diaperhistory.DiaperHistoryAdapter;
+import com.progrema.superbaby.adapter.diaperhistory.DiaperAdapter;
 import com.progrema.superbaby.holograph.PieGraph;
 import com.progrema.superbaby.holograph.PieSlice;
 import com.progrema.superbaby.provider.BabyLogContract;
@@ -33,7 +33,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
     private static final int LOADER_TODAY_DRY = 5;
     private static final int LOADER_TODAY_MIXED = 6;
     private ObserveableListView olv_diaperHistoryList;
-    private DiaperHistoryAdapter dha_adapter;
+    private DiaperAdapter da_adapter;
     private TextView tv_wetTotalToday;
     private TextView tv_wetLast;
     private TextView tv_dryTotalToday;
@@ -68,10 +68,10 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
 
         // set adapter to list view
         olv_diaperHistoryList = (ObserveableListView) v_root.findViewById(R.id.activity_list);
-        dha_adapter = new DiaperHistoryAdapter(getActivity(), null, 0);
+        da_adapter = new DiaperAdapter(getActivity(), null, 0);
         olv_diaperHistoryList.addHeaderView(new View(getActivity()));
         olv_diaperHistoryList.addFooterView(new View(getActivity()));
-        olv_diaperHistoryList.setAdapter(dha_adapter);
+        olv_diaperHistoryList.setAdapter(da_adapter);
 
         // prepare loader
         LoaderManager lm_loaderManager = getLoaderManager();
@@ -178,7 +178,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
             c_cursor.moveToFirst();
             switch (l_cursorLoader.getId()) {
                 case LOADER_LIST_VIEW:
-                    dha_adapter.swapCursor(c_cursor);
+                    da_adapter.swapCursor(c_cursor);
                     break;
 
                 case LOADER_LAST_WET:
@@ -228,7 +228,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
-        dha_adapter.swapCursor(null);
+        da_adapter.swapCursor(null);
     }
 
 }

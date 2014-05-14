@@ -14,15 +14,15 @@ import com.progrema.superbaby.models.Diaper;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
-public class DiaperHistoryAdapter extends CursorAdapter {
-    public DiaperHistoryAdapter(Context context, Cursor c, int flags) {
+public class DiaperAdapter extends CursorAdapter {
+    public DiaperAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        return inflater.inflate(R.layout.adapter_history_diaper, parent, false);
+        return inflater.inflate(R.layout.adapter_diaper, parent, false);
     }
 
     @Override

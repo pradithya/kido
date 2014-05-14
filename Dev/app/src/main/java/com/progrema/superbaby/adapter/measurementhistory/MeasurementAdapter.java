@@ -12,15 +12,15 @@ import com.progrema.superbaby.R;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
-public class MeasurementHistoryAdapter extends CursorAdapter {
-    public MeasurementHistoryAdapter(Context context, Cursor c, int flags) {
+public class MeasurementAdapter extends CursorAdapter {
+    public MeasurementAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        return inflater.inflate(R.layout.adapter_history_measurement, parent, false);
+        return inflater.inflate(R.layout.adapter_measurement, parent, false);
     }
 
     @Override

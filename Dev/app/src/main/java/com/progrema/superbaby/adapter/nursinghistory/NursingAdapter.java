@@ -14,15 +14,15 @@ import com.progrema.superbaby.models.Nursing;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
-public class NursingHistoryAdapter extends CursorAdapter {
-    public NursingHistoryAdapter(Context context, Cursor c, int flags) {
+public class NursingAdapter extends CursorAdapter {
+    public NursingAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        return inflater.inflate(R.layout.adapter_history_nursing, parent, false);
+        return inflater.inflate(R.layout.adapter_nursing, parent, false);
     }
 
     @Override

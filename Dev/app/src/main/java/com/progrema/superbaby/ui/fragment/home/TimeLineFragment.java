@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.adapter.timelinehistory.TimeLineHistoryAdapter;
+import com.progrema.superbaby.adapter.timelinehistory.TimelineAdapter;
 import com.progrema.superbaby.models.Baby;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
@@ -27,7 +27,7 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
     private static final int LOADER_LAST_SLEEP = 2;
     private static final int LOADER_LAST_DIAPER = 3;
     private static final int LOADER_LAST_MEASUREMENT = 4;
-    private TimeLineHistoryAdapter mAdapter;
+    private TimelineAdapter ta_adapter;
     private ObserveableListView historyList;
     private TextView headerBabyName;
     private TextView headerBabyBirthday;
@@ -60,10 +60,10 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
 
         // prepare adapter
         historyList = (ObserveableListView) rootView.findViewById(R.id.activity_list);
-        mAdapter = new TimeLineHistoryAdapter(getActivity(), null, 0);
+        ta_adapter = new TimelineAdapter(getActivity(), null, 0);
         historyList.addHeaderView(new View(getActivity()));
         historyList.addFooterView(new View(getActivity()));
-        historyList.setAdapter(mAdapter);
+        historyList.setAdapter(ta_adapter);
 
         // prepare loader
         LoaderManager lm = getLoaderManager();
@@ -147,7 +147,7 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
             cursor.moveToFirst();
             switch (cl.getId()) {
                 case LOADER_LIST_VIEW: {
-                    mAdapter.swapCursor(cursor);
+                    ta_adapter.swapCursor(cursor);
                     break;
                 }
                 case LOADER_LAST_NURSING: {
@@ -205,7 +205,7 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onLoaderReset(Loader<Cursor> cl) {
         if (cl.getId() == LOADER_LIST_VIEW) {
-            mAdapter.swapCursor(null);
+            ta_adapter.swapCursor(null);
         }
     }
 }
