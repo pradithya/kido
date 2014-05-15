@@ -20,30 +20,30 @@ public class SleepAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        LayoutInflater li_inflater = LayoutInflater.from(context);
-        return li_inflater.inflate(R.layout.adapter_sleep, parent, false);
+        LayoutInflater liInflater = LayoutInflater.from(context);
+        return liInflater.inflate(R.layout.adapter_sleep, parent, false);
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        String s_timestamp = cursor.getString(BabyLogContract.Sleep.Query.OFFSET_TIMESTAMP);
-        String s_duration = cursor.getString(BabyLogContract.Sleep.Query.OFFSET_DURATION);
+        String sTimestamp = cursor.getString(BabyLogContract.Sleep.Query.OFFSET_TIMESTAMP);
+        String sDuration = cursor.getString(BabyLogContract.Sleep.Query.OFFSET_DURATION);
 
-        TextView tv_timestamp = (TextView) view.findViewById(R.id.history_item_timestamp);
-        TextView tv_timeBoundary = (TextView) view.findViewById(R.id.history_item_time_boundary);
-        //TextView tv_duration = (TextView) view.findViewById(R.id.history_item_duration);
-        TextView tv_time = (TextView) view.findViewById(R.id.history_item_time);
-        ImageView iv_type = (ImageView) view.findViewById(R.id.icon_type);
+        TextView tvTimestamp = (TextView) view.findViewById(R.id.history_item_timestamp);
+        TextView tvTimeBoundary = (TextView) view.findViewById(R.id.history_item_time_boundary);
+        //TextView tvDuration = (TextView) view.findViewById(R.id.history_item_duration);
+        TextView tvTime = (TextView) view.findViewById(R.id.history_item_time);
+        ImageView ivType = (ImageView) view.findViewById(R.id.icon_type);
 
-        tv_timestamp.setText(FormatUtils.fmtDate(context, s_timestamp));
-        tv_timeBoundary.setText(FormatUtils.fmtTimeBoundary(context, s_timestamp, s_duration));
-        //tv_duration.setText(FormatUtils.fmtDuration(context, s_duration));
-        tv_time.setText(FormatUtils.fmtTime(context, s_timestamp));
+        tvTimestamp.setText(FormatUtils.fmtDate(context, sTimestamp));
+        tvTimeBoundary.setText(FormatUtils.fmtTimeBoundary(context, sTimestamp, sDuration));
+        //tvDuration.setText(FormatUtils.fmtDuration(context, sDuration));
+        tvTime.setText(FormatUtils.fmtTime(context, sTimestamp));
 
-        if (FormatUtils.isNight(Long.parseLong(s_timestamp))) {
-            iv_type.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_sleep_night));
+        if (FormatUtils.isNight(Long.parseLong(sTimestamp))) {
+            ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_sleep_night));
         } else {
-            iv_type.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_sleep_nap));
+            ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_sleep_nap));
         }
 
     }

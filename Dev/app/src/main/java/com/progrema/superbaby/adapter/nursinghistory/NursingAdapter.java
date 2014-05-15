@@ -27,30 +27,30 @@ public class NursingAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        String s_timestamp = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_TIMESTAMP);
-        String s_type = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_SIDES);
-        String s_duration = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_DURATION);
-        String s_volume = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_VOLUME);
+        String sTimestamp = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_TIMESTAMP);
+        String sType = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_SIDES);
+        String sDuration = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_DURATION);
+        String sVolume = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_VOLUME);
 
-        TextView tv_date = (TextView) view.findViewById(R.id.history_item_day);
-        TextView tv_time = (TextView) view.findViewById(R.id.history_item_time);
-        TextView tv_duration = (TextView) view.findViewById(R.id.history_item_duration);
-        TextView tv_volume = (TextView) view.findViewById(R.id.history_item_volume);
-        ImageView iv_type = (ImageView) view.findViewById(R.id.icon_type);
+        TextView tvDate = (TextView) view.findViewById(R.id.history_item_day);
+        TextView tvTime = (TextView) view.findViewById(R.id.history_item_time);
+        TextView tvDuration = (TextView) view.findViewById(R.id.history_item_duration);
+        TextView tvVolume = (TextView) view.findViewById(R.id.history_item_volume);
+        ImageView ivType = (ImageView) view.findViewById(R.id.icon_type);
 
-        tv_volume.setVisibility(View.GONE);
-        tv_date.setText(FormatUtils.fmtDate(context, s_timestamp));
-        tv_time.setText(FormatUtils.fmtTime(context, s_timestamp));
-        tv_duration.setText(FormatUtils.fmtDuration(context, s_duration));
+        tvVolume.setVisibility(View.GONE);
+        tvDate.setText(FormatUtils.fmtDate(context, sTimestamp));
+        tvTime.setText(FormatUtils.fmtTime(context, sTimestamp));
+        tvDuration.setText(FormatUtils.fmtDuration(context, sDuration));
 
-        if (s_type.compareTo(Nursing.NursingType.FORMULA.getTitle()) == 0) {
-            tv_volume.setVisibility(View.VISIBLE);
-            tv_volume.setText(s_volume + " mL");
-            iv_type.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_formula));
-        } else if (s_type.compareTo(Nursing.NursingType.RIGHT.getTitle()) == 0) {
-            iv_type.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_right));
-        } else if(s_type.compareTo(Nursing.NursingType.LEFT.getTitle()) == 0) {
-            iv_type.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_left));
+        if (sType.compareTo(Nursing.NursingType.FORMULA.getTitle()) == 0) {
+            tvVolume.setVisibility(View.VISIBLE);
+            tvVolume.setText(sVolume + " mL");
+            ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_formula));
+        } else if (sType.compareTo(Nursing.NursingType.RIGHT.getTitle()) == 0) {
+            ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_right));
+        } else if(sType.compareTo(Nursing.NursingType.LEFT.getTitle()) == 0) {
+            ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_left));
         }
     }
 }

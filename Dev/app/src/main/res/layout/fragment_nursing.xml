@@ -98,7 +98,6 @@
 
             </RelativeLayout>
 
-
         </LinearLayout>
 
         <com.progrema.superbaby.widget.customview.ObserveableListView
