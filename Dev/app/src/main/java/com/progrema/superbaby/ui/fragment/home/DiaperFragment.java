@@ -55,7 +55,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
 
         // set action bar icon and title
         ActionBar abActionBar = getActivity().getActionBar();
-        abActionBar.setIcon(getResources().getDrawable(R.drawable.ic_diaper_action_bar_top));
+        abActionBar.setIcon(getResources().getDrawable(R.drawable.ic_diaper_top));
 
         // get Header UI object
         tvWetTotalToday = (TextView) vRoot.findViewById(R.id.wet_average);

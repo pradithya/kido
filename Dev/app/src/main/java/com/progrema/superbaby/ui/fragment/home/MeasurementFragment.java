@@ -1,5 +1,6 @@
 package com.progrema.superbaby.ui.fragment.home;
 
+import android.app.ActionBar;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,9 +18,10 @@ import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.widget.customview.ObserveableListView;
 
 public class MeasurementFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
-    private static final int LOADER_ID = 0;
-    private ObserveableListView measurementHistoryList;
-    private MeasurementAdapter mAdapter;
+
+    private static final int LOADER_LIST_VIEW = 0;
+    private ObserveableListView olvMeasurementHistoryList;
+    private MeasurementAdapter maAdapter;
 
     public static MeasurementFragment getInstance() {
         return new MeasurementFragment();
@@ -28,28 +30,33 @@ public class MeasurementFragment extends Fragment implements LoaderManager.Loade
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // inflate fragment layout
-        View rootView = inflater.inflate(R.layout.fragment_measurement, container, false);
+        View vRoot = inflater.inflate(R.layout.fragment_measurement, container, false);
+
+        // set action bar icon and title
+        ActionBar abActionBar = getActivity().getActionBar();
+        abActionBar.setIcon(getResources().getDrawable(R.drawable.ic_measurement_top));
 
         // set adapter to list view
-        measurementHistoryList = (ObserveableListView) rootView.findViewById(R.id.activity_list);
-        mAdapter = new MeasurementAdapter(getActivity(), null, 0);
-        measurementHistoryList.setAdapter(mAdapter);
+        olvMeasurementHistoryList = (ObserveableListView) vRoot.findViewById(R.id.activity_list);
+        maAdapter = new MeasurementAdapter(getActivity(), null, 0);
+        olvMeasurementHistoryList.setAdapter(maAdapter);
 
         // prepare loader
-        LoaderManager lm = getLoaderManager();
-        lm.initLoader(LOADER_ID, null, this);
-        return rootView;
+        LoaderManager lmLoaderManager = getLoaderManager();
+        lmLoaderManager.initLoader(LOADER_LIST_VIEW, null, this);
+        return vRoot;
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String[] selArgs = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
-        CursorLoader cl = new CursorLoader(getActivity(), BabyLogContract.Measurement.CONTENT_URI,
+        String[] saSelectionArgument = {
+                String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())
+        };
+        return new CursorLoader(getActivity(), BabyLogContract.Measurement.CONTENT_URI,
                 BabyLogContract.Measurement.Query.PROJECTION,
                 BabyLogContract.BABY_SELECTION_ARG,
-                selArgs,
+                saSelectionArgument,
                 BabyLogContract.Measurement.Query.SORT_BY_TIMESTAMP_DESC);
-        return cl;
     }
 
     @Override
@@ -57,14 +64,14 @@ public class MeasurementFragment extends Fragment implements LoaderManager.Loade
         if (cursor.getCount() > 0) {
             // show last inserted row
             cursor.moveToFirst();
-            mAdapter.swapCursor(cursor);
+            maAdapter.swapCursor(cursor);
         } else {
-            mAdapter.swapCursor(null);
+            maAdapter.swapCursor(null);
         }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        mAdapter.swapCursor(null);
+        maAdapter.swapCursor(null);
     }
 }

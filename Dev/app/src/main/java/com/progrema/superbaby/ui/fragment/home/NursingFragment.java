@@ -52,7 +52,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
 
         // set action bar icon and title
         ActionBar ab_actionBar = getActivity().getActionBar();
-        ab_actionBar.setIcon(getResources().getDrawable(R.drawable.ic_nursing_action_bar_top));
+        ab_actionBar.setIcon(getResources().getDrawable(R.drawable.ic_nursing_top));
 
         // get ui object
         tvLeftPct = (TextView) vRoot.findViewById(R.id.percentage_left);

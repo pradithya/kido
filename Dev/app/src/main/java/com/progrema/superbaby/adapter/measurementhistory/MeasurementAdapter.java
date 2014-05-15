@@ -19,24 +19,24 @@ public class MeasurementAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        return inflater.inflate(R.layout.adapter_measurement, parent, false);
+        LayoutInflater liInflater = LayoutInflater.from(context);
+        return liInflater.inflate(R.layout.adapter_measurement, parent, false);
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
-        String timeStamp = cursor.getString(BabyLogContract.Measurement.Query.OFFSET_TIMESTAMP);
-        String height = cursor.getString(BabyLogContract.Measurement.Query.OFFSET_HEIGHT);
-        String weight = cursor.getString(BabyLogContract.Measurement.Query.OFFSET_WEIGHT);
+    public void bindView(View vView, Context cContext, Cursor cCursor) {
+        String sTimestamp = cCursor.getString(BabyLogContract.Measurement.Query.OFFSET_TIMESTAMP);
+        String sHeight = cCursor.getString(BabyLogContract.Measurement.Query.OFFSET_HEIGHT);
+        String sWeight = cCursor.getString(BabyLogContract.Measurement.Query.OFFSET_WEIGHT);
 
-        TextView textViewDate = (TextView) view.findViewById(R.id.history_item_day);
-        TextView textViewTime = (TextView) view.findViewById(R.id.history_item_time);
-        TextView textViewHeight = (TextView) view.findViewById(R.id.history_item_height);
-        TextView textViewWeight = (TextView) view.findViewById(R.id.history_item_weight);
+        TextView tvDate = (TextView) vView.findViewById(R.id.history_item_day);
+        TextView tvTime = (TextView) vView.findViewById(R.id.history_item_time);
+        TextView tvHeight = (TextView) vView.findViewById(R.id.history_item_height);
+        TextView tvWeight = (TextView) vView.findViewById(R.id.history_item_weight);
 
-        textViewDate.setText(FormatUtils.fmtDate(context, timeStamp));
-        textViewTime.setText(FormatUtils.fmtTime(context, timeStamp));
-        textViewHeight.setText(height + " cm");
-        textViewWeight.setText(weight + " kg");
+        tvDate.setText(FormatUtils.fmtDate(cContext, sTimestamp));
+        tvTime.setText(FormatUtils.fmtTime(cContext, sTimestamp));
+        tvHeight.setText(sHeight + " cm");
+        tvWeight.setText(sWeight + " kg");
     }
 }
