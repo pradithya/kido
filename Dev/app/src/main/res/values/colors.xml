@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="transparent_actionbar_color">#AA000000</color>
-    <color name="white">#AAFFFFFF</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="white_transparent">#AAFFFFFF</color>
     <color name="black">#000000</color>
     <color name="red">#FFFF0000</color>
     <color name="blue">#FF0000FF</color>
@@ -9,6 +10,6 @@
     <color name="green">#FF27ae60</color>
     <color name="green_light">#FF99CC00</color>
     <color name="orange">#FFFFBB33</color>
-    <color name="transparent_orange">#80FFBB33</color>
+    <color name="orange_transparent">#80FFBB33</color>
     <color name="purple">#FFAA66CC</color>
 </resources>

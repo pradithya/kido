@@ -1,11 +1,19 @@
 package com.progrema.superbaby.adapter.navigation;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 
 public abstract class Item {
+
+    /**
+     * protected fields
+     */
     protected int layout;
+    protected int cTextColor;
+    protected Drawable dThumbnail;
+
     /**
      * private field
      */
@@ -45,6 +53,42 @@ public abstract class Item {
      */
     public void setLayout(int layout) {
         this.layout = layout;
+    }
+
+    /**
+     * set thumbnail
+     *
+     * @return
+     */
+    public Drawable getThumbnail() {
+        return dThumbnail;
+    }
+
+    /**
+     * get thumbnail
+     *
+     * @param dThumbnail
+     */
+    public void setThumbnail(Drawable dThumbnail) {
+        this.dThumbnail = dThumbnail;
+    }
+
+    /**
+     * set text color
+     *
+     * @return
+     */
+    public int getTextColor() {
+        return cTextColor;
+    }
+
+    /**
+     * set text color
+     *
+     * @param cTextColor
+     */
+    public void setTextColor(int cTextColor) {
+        this.cTextColor = cTextColor;
     }
 
     /**

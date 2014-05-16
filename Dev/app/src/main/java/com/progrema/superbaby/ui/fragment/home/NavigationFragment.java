@@ -113,7 +113,11 @@ public class NavigationFragment extends Fragment {
         // prepare user name
         Cursor cursor = userQuery(getActivity());
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-            items.add(new StandardItem(cursor.getString(BabyLogContract.User.Query.OFFSET_NAME)));
+            StandardItem siUserEntry = new StandardItem(cursor
+                    .getString(BabyLogContract.User.Query.OFFSET_NAME));
+            siUserEntry.setThumbnail(getResources().getDrawable(R.drawable.ic_nursing_button)); //TODO: get user icon
+            siUserEntry.setTextColor(getResources().getColor(R.color.black));
+            items.add(siUserEntry);
         }
 
         // Set section divider
@@ -135,11 +139,30 @@ public class NavigationFragment extends Fragment {
         }
 
         // prepare action supported
-        items.add(new StandardItem(getString(R.string.title_timeline_fragment)));
-        items.add(new StandardItem(getString(R.string.title_nursing_fragment)));
-        items.add(new StandardItem(getString(R.string.title_diaper_fragment)));
-        items.add(new StandardItem(getString(R.string.title_sleep_fragment)));
-        items.add(new StandardItem(getString(R.string.title_measure_fragment)));
+        StandardItem siTimelineEntry = new StandardItem(getString(R.string.title_timeline_fragment));
+        siTimelineEntry.setThumbnail(getResources().getDrawable(R.drawable.ic_nursing_button)); //TODO: get timeline icon
+        siTimelineEntry.setTextColor(getResources().getColor(R.color.black));
+        items.add(siTimelineEntry);
+
+        StandardItem siNursingEntry = new StandardItem(getString(R.string.title_nursing_fragment));
+        siNursingEntry.setThumbnail(getResources().getDrawable(R.drawable.ic_nursing_button));
+        siNursingEntry.setTextColor(getResources().getColor(R.color.black));
+        items.add(siNursingEntry);
+
+        StandardItem siDiaperEntry = new StandardItem(getString(R.string.title_diaper_fragment));
+        siDiaperEntry.setThumbnail(getResources().getDrawable(R.drawable.ic_diaper_button));
+        siDiaperEntry.setTextColor(getResources().getColor(R.color.black));
+        items.add(siDiaperEntry);
+
+        StandardItem siSleepEntry = new StandardItem(getString(R.string.title_sleep_fragment));
+        siSleepEntry.setThumbnail(getResources().getDrawable(R.drawable.ic_sleep_button));
+        siSleepEntry.setTextColor(getResources().getColor(R.color.black));
+        items.add(siSleepEntry);
+
+        StandardItem siMeasurementEntry = new StandardItem(getString(R.string.title_measure_fragment));
+        siMeasurementEntry.setThumbnail(getResources().getDrawable(R.drawable.ic_measurement_button));
+        siMeasurementEntry.setTextColor(getResources().getColor(R.color.black));
+        items.add(siMeasurementEntry);
 
         // set adapter
         adapter = new NavigationAdapter(getActivity(), items);
