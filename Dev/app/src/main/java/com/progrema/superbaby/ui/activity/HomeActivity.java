@@ -14,8 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
-import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.models.Diaper;
@@ -56,10 +56,10 @@ public class HomeActivity extends FragmentActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-    private Button buttonQuickSleep;
-    private Button buttonQuickDiaper;
-    private Button buttonQuickNursing;
-    private Button buttonQuickMeasurement;
+    private RelativeLayout rlSleepButton;
+    private RelativeLayout rlDiaperButton;
+    private RelativeLayout rlNursingButton;
+    private RelativeLayout rlMeasurementButton;
     private ObserveableListView historyList;
 
     @Override
@@ -93,19 +93,19 @@ public class HomeActivity extends FragmentActivity
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
         // find quick action button in new inflated view
-        buttonQuickSleep = (Button) findViewById(R.id.quick_button_sleep);
-        buttonQuickNursing = (Button) findViewById(R.id.quick_button_nursing);
-        buttonQuickDiaper = (Button) findViewById(R.id.quick_button_diaper);
-        buttonQuickMeasurement = (Button) findViewById(R.id.quick_button_measurement);
+        rlSleepButton = (RelativeLayout) findViewById(R.id.quick_button_sleep);
+        rlNursingButton = (RelativeLayout) findViewById(R.id.quick_button_nursing);
+        rlDiaperButton = (RelativeLayout) findViewById(R.id.quick_button_diaper);
+        rlMeasurementButton = (RelativeLayout) findViewById(R.id.quick_button_measurement);
         historyList = (ObserveableListView) findViewById(R.id.activity_list);
 
-        if (buttonQuickDiaper != null && buttonQuickNursing != null
-                && buttonQuickSleep != null && historyList != null) {
+        if (rlDiaperButton != null && rlNursingButton != null
+                && rlSleepButton != null && historyList != null) {
             // if it's not there don't attach any callback
-            buttonQuickSleep.setOnClickListener(this);
-            buttonQuickNursing.setOnClickListener(this);
-            buttonQuickDiaper.setOnClickListener(this);
-            buttonQuickMeasurement.setOnClickListener(this);
+            rlSleepButton.setOnClickListener(this);
+            rlNursingButton.setOnClickListener(this);
+            rlDiaperButton.setOnClickListener(this);
+            rlMeasurementButton.setOnClickListener(this);
             historyList.setCallbacks(this);
         }
         return super.onCreateView(name, context, attrs);
