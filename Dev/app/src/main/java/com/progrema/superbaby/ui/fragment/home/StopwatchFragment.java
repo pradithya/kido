@@ -1,5 +1,6 @@
 package com.progrema.superbaby.ui.fragment.home;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -45,6 +46,9 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
+
         Bundle args = getArguments();
         if (args != null && args.containsKey(HomeActivity.ACTIVITY_TRIGGER_KEY)) {
             sourceTrigger = args.getString(HomeActivity.ACTIVITY_TRIGGER_KEY);
@@ -66,6 +70,11 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
         // get object from fragment layout
         titleView = (TextView) rootView.findViewById(R.id.stopwatch_title_view);
         titleView.setText(sourceTrigger);
+
+        ActionBar abActionBar = getActivity().getActionBar();
+        abActionBar.setDisplayShowTitleEnabled(true);
+        abActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        abActionBar.setTitle(sourceTrigger);
 
         startButton = (Button) rootView.findViewById(R.id.button_stopwatch_start);
         pauseButton = (Button) rootView.findViewById(R.id.button_stopwatch_pause);
@@ -193,6 +202,10 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
             }
         }
         // Go back to timeLine fragment
+        ActionBar actionBar = getActivity().getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        actionBar.setDisplayShowTitleEnabled(false);
+
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.home_activity_container, TimeLineFragment.getInstance());
         fragmentTransaction.commit();

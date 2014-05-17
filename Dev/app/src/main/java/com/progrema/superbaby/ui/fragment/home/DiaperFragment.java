@@ -10,7 +10,10 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.diaper.DiaperAdapter;
@@ -23,7 +26,8 @@ import com.progrema.superbaby.widget.customview.ObserveableListView;
 
 import java.util.Calendar;
 
-public class DiaperFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class DiaperFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
+{
 
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_LAST_WET = 1;
@@ -46,6 +50,8 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
         return new DiaperFragment();
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater liInflater, ViewGroup vgContainer,
                              Bundle bSavedInstanceState) {
@@ -56,7 +62,11 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
         // set action bar icon and title
         ActionBar abActionBar = getActivity().getActionBar();
         abActionBar.setIcon(getResources().getDrawable(R.drawable.ic_diaper_top));
-        abActionBar.setTitle(getString(R.string.title_diaper_fragment));
+//        abActionBar.setTitle(getString(R.string.title_diaper_fragment));
+//        abActionBar.setDisplayShowTitleEnabled(false);
+//        abActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+
+
 
         // get Header UI object
         tvWetTotalToday = (TextView) vRoot.findViewById(R.id.wet_average);

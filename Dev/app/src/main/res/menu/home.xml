@@ -2,6 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.progrema.superbaby.ui.activity.HomeActivity">
 
+    <!--<item-->
+        <!--android:id="@+id/time_selection"-->
+        <!--android:showAsAction="ifRoom"-->
+        <!--android:actionLayout="@layout/action_time_selection"/>-->
+
     <item
         android:id="@+id/action_new_baby"
         android:orderInCategory="99"

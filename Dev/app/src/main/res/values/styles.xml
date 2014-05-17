@@ -6,12 +6,18 @@
         <!-- item name="android:textViewStyle">@style/RobotoTextStyle</item -->
         <!--<item name="android:imageButtonStyle">@android:style/Widget.DeviceDefault.Light.ImageButton</item>-->
         <item name="android:imageButtonStyle">@style/SuperBabyButton</item>
+        <item name="android:spinnerDropDownItemStyle">@style/SuperBabyDropDownItemStyle</item>
     </style>
 
     <style name="SuperBabyButton" parent="android:Widget.DeviceDefault.Light.ImageButton">
         <item name="android:background">#00000000</item>
     </style>
 
+    <style name="SuperBabyDropDownItemStyle" parent="android:Widget.DeviceDefault.DropDownItem.Spinner">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+
+    </style>
     <!-- Roboto Text Style-->
     <style name="RobotoTextStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">sans-serif-light</item>

@@ -99,4 +99,11 @@
         <item>Girl</item>
     </string-array>
 
+    <string-array name="time_selection">
+        <item>Today</item>
+        <item>This Week</item>
+        <item>This Month</item>
+        <item>All</item>
+    </string-array>
+
 </resources>

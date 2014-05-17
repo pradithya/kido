@@ -55,7 +55,7 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
         // set action bar icon and title
         ActionBar abActionBar = getActivity().getActionBar();
         abActionBar.setIcon(getResources().getDrawable(R.drawable.ic_sleep_top));
-        abActionBar.setTitle(getString(R.string.title_sleep_fragment));
+        //abActionBar.setTitle(getString(R.string.title_sleep_fragment));
 
         // get Header UI object
         tvNightPct = (TextView) vRoot.findViewById(R.id.night_percentage);

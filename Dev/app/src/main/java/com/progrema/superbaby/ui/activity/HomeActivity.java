@@ -14,10 +14,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 import com.progrema.superbaby.R;
+import com.progrema.superbaby.adapter.ActionBarDropDownAdapter;
 import com.progrema.superbaby.models.Diaper;
 import com.progrema.superbaby.models.Measurement;
 import com.progrema.superbaby.ui.fragment.dialog.DiaperDialog;
@@ -37,7 +41,8 @@ import java.util.Calendar;
 
 public class HomeActivity extends FragmentActivity
         implements NavigationFragment.NavigationDrawerCallbacks, View.OnClickListener,
-        ObserveableListView.Callbacks, NursingDialog.Callbacks, DiaperDialog.Callbacks, MeasurementDialog.Callbacks {
+        ObserveableListView.Callbacks, NursingDialog.Callbacks, DiaperDialog.Callbacks,
+        MeasurementDialog.Callbacks, ActionBar.OnNavigationListener {
 
     public final static int RESULT_OK = 0;
     public final static String ACTIVITY_TRIGGER_KEY = "trigger";
@@ -59,12 +64,13 @@ public class HomeActivity extends FragmentActivity
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
-    private CharSequence mTitle;
+    private String mTitle;
     private RelativeLayout rlSleepButton;
     private RelativeLayout rlDiaperButton;
     private RelativeLayout rlNursingButton;
     private RelativeLayout rlMeasurementButton;
     private ObserveableListView historyList;
+    private ActionBarDropDownAdapter mSpinnerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,11 +79,18 @@ public class HomeActivity extends FragmentActivity
 
         mNavigationFragment = (NavigationFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
+        mTitle = getTitle().toString();
 
         // Set up the drawer.
         mNavigationFragment.setUp(R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        String[] items = getResources().getStringArray(R.array.time_selection);
+        mSpinnerAdapter = new ActionBarDropDownAdapter(this, R.layout.action_bar_spinner,
+                                                                  items,"");
+
+        getActionBar().setListNavigationCallbacks(mSpinnerAdapter, this);
+
     }
 
     @Override
@@ -125,18 +138,23 @@ public class HomeActivity extends FragmentActivity
         switch (position - calibration) {
             case POSITION_HOME_FRAGMENT:
                 module = TimeLineFragment.getInstance();
+                mTitle = getString(R.string.title_timeline_fragment);
                 break;
             case POSITION_MILK_FRAGMENT:
                 module = NursingFragment.getInstance();
+                mTitle = getString(R.string.title_nursing_fragment);
                 break;
             case POSITION_DIAPER_FRAGMENT:
                 module = DiaperFragment.getInstance();
+                mTitle = getString(R.string.title_diaper_fragment);
                 break;
             case POSITION_SLEEP_FRAGMENT:
                 module = SleepFragment.getInstance();
+                mTitle = getString(R.string.title_sleep_fragment);
                 break;
             case POSITION_MEASUREMENT_FRAGMENT:
                 module = MeasurementFragment.getInstance();
+                mTitle = getString(R.string.title_measure_fragment);
         }
 
         if (module != null) {
@@ -146,9 +164,12 @@ public class HomeActivity extends FragmentActivity
 
     public void restoreActionBar() {
         ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        actionBar.setDisplayShowTitleEnabled(false);
+        mSpinnerAdapter.setTitle(mTitle);
         //actionBar.setTitle(mTitle);
+
+
     }
 
     @Override
@@ -309,9 +330,9 @@ public class HomeActivity extends FragmentActivity
     }
 
     public enum Trigger {
-        SLEEP("sleep"),
-        NURSING("nursing"),
-        DIAPER("diaper");
+        SLEEP("Sleep"),
+        NURSING("Nursing"),
+        DIAPER("Diaper");
 
         private String title;
 
@@ -322,5 +343,11 @@ public class HomeActivity extends FragmentActivity
         public String getTitle() {
             return this.title;
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(int arg0, long arg1){
+        //TODO: change query of active fragment
+        return true;
     }
 }
