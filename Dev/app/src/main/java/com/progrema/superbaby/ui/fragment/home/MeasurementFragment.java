@@ -35,6 +35,7 @@ public class MeasurementFragment extends Fragment implements LoaderManager.Loade
         // set action bar icon and title
         ActionBar abActionBar = getActivity().getActionBar();
         abActionBar.setIcon(getResources().getDrawable(R.drawable.ic_measurement_top));
+        abActionBar.setTitle(getString(R.string.title_measure_fragment));
 
         // set adapter to list view
         olvMeasurementHistoryList = (ObserveableListView) vRoot.findViewById(R.id.activity_list);

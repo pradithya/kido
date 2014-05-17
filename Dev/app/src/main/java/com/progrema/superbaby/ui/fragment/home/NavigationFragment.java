@@ -27,6 +27,7 @@ import com.progrema.superbaby.adapter.navigation.Divider;
 import com.progrema.superbaby.adapter.navigation.Item;
 import com.progrema.superbaby.adapter.navigation.NavigationAdapter;
 import com.progrema.superbaby.adapter.navigation.StandardItem;
+import com.progrema.superbaby.models.BaseActor;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 
@@ -126,7 +127,15 @@ public class NavigationFragment extends Fragment {
         // prepare baby name
         cursor = babyQuery(getActivity());
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-            items.add(new Baby(cursor.getString(BabyLogContract.Baby.Query.OFFSET_NAME)));
+            //TODO: "Icon made by Freepik from Flaticon.com"
+            String sType = cursor.getString(BabyLogContract.Baby.Query.OFFSET_SEX );
+            Baby bBabyEntry = new Baby(cursor.getString(BabyLogContract.Baby.Query.OFFSET_NAME));
+            if (sType.equals(BaseActor.Sex.FEMALE.getTitle())){
+                bBabyEntry.setThumbnail(getResources().getDrawable(R.drawable.ic_baby_girl));
+            } else if (sType.equals(BaseActor.Sex.MALE.getTitle())) {
+                bBabyEntry.setThumbnail(getResources().getDrawable(R.drawable.ic_baby_boy));
+            }
+            items.add(bBabyEntry);
         }
 
         // Set section divider
@@ -345,7 +354,7 @@ public class NavigationFragment extends Fragment {
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setTitle(R.string.app_name);
+        //actionBar.setTitle(R.string.app_name);
     }
 
     private ActionBar getActionBar() {

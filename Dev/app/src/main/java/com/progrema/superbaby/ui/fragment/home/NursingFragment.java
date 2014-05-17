@@ -51,8 +51,9 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
         View vRoot = inflater.inflate(R.layout.fragment_nursing, container, false);
 
         // set action bar icon and title
-        ActionBar ab_actionBar = getActivity().getActionBar();
-        ab_actionBar.setIcon(getResources().getDrawable(R.drawable.ic_nursing_top));
+        ActionBar abActionBar = getActivity().getActionBar();
+        abActionBar.setIcon(getResources().getDrawable(R.drawable.ic_nursing_top));
+        abActionBar.setTitle(getString(R.string.title_nursing_fragment));
 
         // get ui object
         tvLeftPct = (TextView) vRoot.findViewById(R.id.percentage_left);

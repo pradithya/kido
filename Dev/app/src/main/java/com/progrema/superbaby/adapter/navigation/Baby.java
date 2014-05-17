@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -26,6 +27,10 @@ public class Baby extends Item {
         TextView baby;
         baby = (TextView) view.findViewById(R.id.baby_name_type_view);
         baby.setText(getText());
+
+        ImageView ivThumbnail;
+        ivThumbnail = (ImageView) view.findViewById(R.id.thumbnail_section);
+        ivThumbnail.setImageDrawable(getThumbnail());
 
         RadioButton activeFlag;
         activeFlag = (RadioButton) view.findViewById(R.id.active_baby_flag);

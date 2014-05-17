@@ -38,8 +38,10 @@ import java.util.Calendar;
 public class HomeActivity extends FragmentActivity
         implements NavigationFragment.NavigationDrawerCallbacks, View.OnClickListener,
         ObserveableListView.Callbacks, NursingDialog.Callbacks, DiaperDialog.Callbacks, MeasurementDialog.Callbacks {
+
     public final static int RESULT_OK = 0;
     public final static String ACTIVITY_TRIGGER_KEY = "trigger";
+
     /**
      * Used to locate the fragment position
      */
@@ -48,10 +50,12 @@ public class HomeActivity extends FragmentActivity
     private static final int POSITION_DIAPER_FRAGMENT = 2;
     private static final int POSITION_SLEEP_FRAGMENT = 3;
     private static final int POSITION_MEASUREMENT_FRAGMENT = 4;
+
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationFragment mNavigationFragment;
+
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
@@ -72,8 +76,7 @@ public class HomeActivity extends FragmentActivity
         mTitle = getTitle();
 
         // Set up the drawer.
-        mNavigationFragment.setUp(
-                R.id.navigation_drawer,
+        mNavigationFragment.setUp(R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
@@ -145,7 +148,7 @@ public class HomeActivity extends FragmentActivity
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
+        //actionBar.setTitle(mTitle);
     }
 
     @Override

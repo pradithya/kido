@@ -1,5 +1,6 @@
 package com.progrema.superbaby.ui.fragment.home;
 
+import android.app.ActionBar;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -47,6 +48,11 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
                              Bundle savedInstanceState) {
         // inflate fragment layout
         View rootView = inflater.inflate(R.layout.fragment_timeline, container, false);
+
+        // set action bar icon and title
+        ActionBar abActionBar = getActivity().getActionBar();
+        abActionBar.setIcon(getResources().getDrawable(R.drawable.ic_timeline_top));
+        abActionBar.setTitle(getString(R.string.title_timeline_fragment));
 
         // get ui object
         headerBabyName = (TextView) rootView.findViewById(R.id.baby_name);

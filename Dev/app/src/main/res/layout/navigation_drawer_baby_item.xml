@@ -5,18 +5,18 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <RadioButton
-        android:id="@+id/active_baby_flag"
+    <ImageView
+        android:id="@+id/thumbnail_section"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="false"
-        android:focusable="false"
-        android:gravity="center_vertical" />
+        android:layout_gravity="center"
+        android:padding="8dp" />
 
     <TextView
         android:id="@+id/baby_name_type_view"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:background="?android:attr/activatedBackgroundIndicator"
         android:focusable="false"
         android:gravity="center_vertical"
@@ -25,5 +25,13 @@
         android:paddingStart="?android:attr/listPreferredItemPaddingStart"
         android:text="Safiya Salsabila"
         android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+
+    <RadioButton
+        android:id="@+id/active_baby_flag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="false"
+        android:gravity="center_vertical" />
 
 </LinearLayout>
