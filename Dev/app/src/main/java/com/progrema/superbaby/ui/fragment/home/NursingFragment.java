@@ -53,7 +53,6 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
         // set action bar icon and title
         ActionBar abActionBar = getActivity().getActionBar();
         abActionBar.setIcon(getResources().getDrawable(R.drawable.ic_nursing_top));
-        //abActionBar.setTitle(getString(R.string.title_nursing_fragment));
 
         // get ui object
         tvLeftPct = (TextView) vRoot.findViewById(R.id.percentage_left);
@@ -63,6 +62,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
         tvFormulaToday = (TextView) vRoot.findViewById(R.id.formula_today);
         ivLastSide = (ImageView) vRoot.findViewById(R.id.last_side);
         pgLeftRight = (PieGraph) vRoot.findViewById(R.id.nursing_left_right_pie_chart);
+
 
         // set adapter to list view
         olvNursingHistoryList = (ObserveableListView) vRoot.findViewById(R.id.activity_list);
@@ -95,16 +95,16 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
         cMidnight.set(Calendar.MILLISECOND, 0);
         String sTimestampReference = String.valueOf(cMidnight.getTimeInMillis());
 
-        String[] saArgumentSelectionOne = {
+        String[] aArgumentSelectionOne = {
                 String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())
         };
 
-        String[] saArgumentSelectionTwo = {
+        String[] aArgumentSelectionTwo = {
                 String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID()),
                 sTimestampReference
         };
 
-        String[] saLastSideProjection = {
+        String[] aLastSideProjection = {
                 BabyLogContract.Nursing.SIDES
         };
 
@@ -114,7 +114,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                         BabyLogContract.Nursing.CONTENT_URI,
                         BabyLogContract.Nursing.Query.PROJECTION,
                         BabyLogContract.BABY_SELECTION_ARG,
-                        saArgumentSelectionOne,
+                        aArgumentSelectionOne,
                         BabyLogContract.Nursing.Query.SORT_BY_TIMESTAMP_DESC);
 
             case LOADER_TODAY_ENTRY:
@@ -122,15 +122,15 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                         BabyLogContract.Nursing.CONTENT_URI,
                         BabyLogContract.Nursing.Query.PROJECTION,
                         "baby_id = ? AND timestamp >= ?",
-                        saArgumentSelectionTwo,
+                        aArgumentSelectionTwo,
                         BabyLogContract.Nursing.Query.SORT_BY_TIMESTAMP_DESC);
 
             case LOADER_LAST_SIDE:
                 return new CursorLoader(getActivity(),
                         BabyLogContract.Nursing.LAST_SIDES,
-                        saLastSideProjection,
+                        aLastSideProjection,
                         BabyLogContract.BABY_SELECTION_ARG,
-                        saArgumentSelectionOne,
+                        aArgumentSelectionOne,
                         null);
 
             default:
@@ -159,13 +159,13 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                     for (cCursor.moveToFirst(); !cCursor.isAfterLast(); cCursor.moveToNext()) {
                         lDuration = Long.valueOf(
                                 cCursor.getString(BabyLogContract.Nursing.Query.OFFSET_DURATION));
-                        String s_side = cCursor.getString(BabyLogContract.Nursing.Query.OFFSET_SIDES);
+                        String sSide = cCursor.getString(BabyLogContract.Nursing.Query.OFFSET_SIDES);
                         lTotalDuration += lDuration;
-                        if (s_side.equals(Nursing.NursingType.LEFT.getTitle())) {
+                        if (sSide.equals(Nursing.NursingType.LEFT.getTitle())) {
                             lLeftDuration += lDuration;
-                        } else if (s_side.equals(Nursing.NursingType.RIGHT.getTitle())) {
+                        } else if (sSide.equals(Nursing.NursingType.RIGHT.getTitle())) {
                             lRightDuration += lDuration;
-                        } else if (s_side.equals(Nursing.NursingType.FORMULA.getTitle())) {
+                        } else if (sSide.equals(Nursing.NursingType.FORMULA.getTitle())) {
                             lFormulaVolume += Float.valueOf(
                                     cCursor.getString(BabyLogContract.Nursing.Query.OFFSET_VOLUME));
                         }
@@ -175,7 +175,6 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                     fResult = lLeftDuration / lTotalDuration * 100;
                     tvLeftPct.setText(
                             FormatUtils.fmtNursingPct(getActivity(),
-                                    getActivity().getResources().getString(R.string.left_side),
                                     String.valueOf(fResult))
                     );
 
@@ -183,7 +182,6 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                     fResult = lRightDuration / lTotalDuration * 100;
                     tvRightPct.setText(
                             FormatUtils.fmtNursingPct(getActivity(),
-                                    getActivity().getResources().getString(R.string.right_side),
                                     String.valueOf(fResult))
                     );
 
@@ -191,7 +189,6 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                     fResult = TimeUnit.MILLISECONDS.toMinutes(lLeftDuration);
                     tvLeftToday.setText(
                             FormatUtils.fmtNursingToday(getActivity(),
-                                    getActivity().getResources().getString(R.string.left_side),
                                     String.valueOf(fResult), "m")
                     );
                     PieSlice psLeft = new PieSlice();
@@ -203,7 +200,6 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                     fResult = TimeUnit.MILLISECONDS.toMinutes(lRightDuration);
                     tvRightToday.setText(
                             FormatUtils.fmtNursingToday(getActivity(),
-                                    getActivity().getResources().getString(R.string.right_side),
                                     String.valueOf(fResult), "m")
                     );
                     PieSlice psRight = new PieSlice();
@@ -214,8 +210,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                     // formula volume information
                     tvFormulaToday.setText(
                             FormatUtils.fmtNursingToday(getActivity(),
-                                    getActivity().getResources().getString(R.string.formula),
-                                    String.valueOf(lFormulaVolume), "mL")
+                                    String.valueOf(lFormulaVolume), "ml")
                     );
                     break;
 

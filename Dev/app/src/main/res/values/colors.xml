@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Color of object-->
     <color name="transparent_actionbar_color">#AA000000</color>
+    <color name="card_shadow_color">#CABBBBBB</color>
+
+    <!-- Color pallets-->
     <color name="white">#FFFFFFFF</color>
     <color name="white_transparent">#AAFFFFFF</color>
     <color name="black">#000000</color>

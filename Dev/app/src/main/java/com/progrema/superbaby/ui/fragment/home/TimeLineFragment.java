@@ -52,7 +52,6 @@ public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCa
         // set action bar icon and title
         ActionBar abActionBar = getActivity().getActionBar();
         abActionBar.setIcon(getResources().getDrawable(R.drawable.ic_timeline_top));
-        //abActionBar.setTitle(getString(R.string.title_timeline_fragment));
 
         // get ui object
         headerBabyName = (TextView) rootView.findViewById(R.id.baby_name);

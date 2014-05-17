@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:layout_margin="15dp"
-            android:background="@drawable/layer_header_card_background"
+            android:background="@drawable/header_card_background"
             android:orientation="vertical"
             android:padding="15dp">
 

@@ -2,12 +2,12 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#CABBBBBB" />
+            <solid android:color="@color/card_shadow_color" />
             <corners
                 android:bottomLeftRadius="@dimen/body_card_left_side_radius"
+                android:bottomRightRadius="@dimen/body_card_right_side_radius"
                 android:topLeftRadius="@dimen/body_card_left_side_radius"
-                android:topRightRadius="@dimen/body_card_right_side_radius"
-                android:bottomRightRadius="@dimen/body_card_right_side_radius" />
+                android:topRightRadius="@dimen/body_card_right_side_radius" />
         </shape>
     </item>
 
@@ -17,12 +17,12 @@
         android:right="0dp"
         android:top="0dp">
         <shape android:shape="rectangle">
-            <solid android:color="@android:color/white" />
+            <solid android:color="#CCCCCC" />
             <corners
                 android:bottomLeftRadius="@dimen/body_card_left_side_radius"
+                android:bottomRightRadius="@dimen/body_card_right_side_radius"
                 android:topLeftRadius="@dimen/body_card_left_side_radius"
-                android:topRightRadius="@dimen/body_card_right_side_radius"
-                android:bottomRightRadius="@dimen/body_card_right_side_radius" />
+                android:topRightRadius="@dimen/body_card_right_side_radius" />
         </shape>
     </item>
 </layer-list>

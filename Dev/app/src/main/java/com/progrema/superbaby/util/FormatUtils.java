@@ -100,61 +100,67 @@ public class FormatUtils {
     }
 
     public static String fmtSleepNightDrt(Context context, String duration) {
-        long dur = Long.parseLong(duration); // in miliseccond
-        long hour = TimeUnit.MILLISECONDS.toHours(dur);
-        long min;
-        long sec;
+        long lDurationInMilliseconds = Long.parseLong(duration);
+        long lHours = TimeUnit.MILLISECONDS.toHours(lDurationInMilliseconds);
+        long lMinutes;
+        long lSeconds;
 
-        if (hour != 0) {
-            min = TimeUnit.MILLISECONDS.toMinutes(dur % TimeUnit.HOURS.toMillis(hour));
+        if (lHours != 0) {
+            lMinutes = TimeUnit.MILLISECONDS.toMinutes(
+                    lDurationInMilliseconds % TimeUnit.HOURS.toMillis(lHours));
         } else {
-            min = TimeUnit.MILLISECONDS.toMinutes(dur);
+            lMinutes = TimeUnit.MILLISECONDS.toMinutes(lDurationInMilliseconds);
         }
 
-        if ((min != 0) && (hour != 0)) {
-            sec = TimeUnit.MILLISECONDS.toSeconds((dur % TimeUnit.HOURS.toMillis(hour))
-                    % TimeUnit.MINUTES.toMillis(min));
-        } else if ((min == 0) && (hour != 0)) {
-            sec = TimeUnit.MILLISECONDS.toSeconds(dur % TimeUnit.HOURS.toMillis(hour));
+        if ((lMinutes != 0) && (lHours != 0)) {
+            lSeconds = TimeUnit.MILLISECONDS.toSeconds(
+                    (lDurationInMilliseconds % TimeUnit.HOURS.toMillis(lHours))
+                    % TimeUnit.MINUTES.toMillis(lMinutes));
+        } else if ((lMinutes == 0) && (lHours != 0)) {
+            lSeconds = TimeUnit.MILLISECONDS.toSeconds(
+                    lDurationInMilliseconds % TimeUnit.HOURS.toMillis(lHours));
         } else {
-            sec = TimeUnit.MILLISECONDS.toSeconds(dur);
+            lSeconds = TimeUnit.MILLISECONDS.toSeconds(lDurationInMilliseconds);
         }
 
         CharSequence formatted = Phrase.from(context.getResources()
                 .getString(R.string.night_duration))
-                .put("hour", String.valueOf(hour))
-                .put("minute", String.valueOf(min))
-                .put("second", String.valueOf(sec))
+                .put("hour", String.valueOf(lHours))
+                .put("minute", String.valueOf(lMinutes))
+                .put("second", String.valueOf(lSeconds))
                 .format();
         return String.valueOf(formatted);
     }
 
     public static String fmtSleepNapDrt(Context context, String duration) {
-        long dur = Long.parseLong(duration); // in miliseccond
-        long hour = TimeUnit.MILLISECONDS.toHours(dur);
-        long min;
-        long sec;
+        long lDurationInMilliseconds = Long.parseLong(duration);
+        long lHours = TimeUnit.MILLISECONDS.toHours(lDurationInMilliseconds);
+        long lMinutes;
+        long lSeconds;
 
-        if (hour != 0) {
-            min = TimeUnit.MILLISECONDS.toMinutes(dur % TimeUnit.HOURS.toMillis(hour));
+        if (lHours != 0) {
+            lMinutes = TimeUnit.MILLISECONDS.toMinutes(
+                    lDurationInMilliseconds % TimeUnit.HOURS.toMillis(lHours));
         } else {
-            min = TimeUnit.MILLISECONDS.toMinutes(dur);
+            lMinutes = TimeUnit.MILLISECONDS.toMinutes(lDurationInMilliseconds);
         }
 
-        if ((min != 0) && (hour != 0)) {
-            sec = TimeUnit.MILLISECONDS.toSeconds((dur % TimeUnit.HOURS.toMillis(hour))
-                    % TimeUnit.MINUTES.toMillis(min));
-        } else if ((min == 0) && (hour != 0)) {
-            sec = TimeUnit.MILLISECONDS.toSeconds(dur % TimeUnit.HOURS.toMillis(hour));
+        if ((lMinutes != 0) && (lHours != 0)) {
+            lSeconds = TimeUnit.MILLISECONDS.toSeconds(
+                    (lDurationInMilliseconds % TimeUnit.HOURS.toMillis(lHours))
+                    % TimeUnit.MINUTES.toMillis(lMinutes));
+        } else if ((lMinutes == 0) && (lHours != 0)) {
+            lSeconds = TimeUnit.MILLISECONDS.toSeconds(
+                    lDurationInMilliseconds % TimeUnit.HOURS.toMillis(lHours));
         } else {
-            sec = TimeUnit.MILLISECONDS.toSeconds(dur);
+            lSeconds = TimeUnit.MILLISECONDS.toSeconds(lDurationInMilliseconds);
         }
 
         CharSequence formatted = Phrase.from(context.getResources()
                 .getString(R.string.nap_duration))
-                .put("hour", String.valueOf(hour))
-                .put("minute", String.valueOf(min))
-                .put("second", String.valueOf(sec))
+                .put("hour", String.valueOf(lHours))
+                .put("minute", String.valueOf(lMinutes))
+                .put("second", String.valueOf(lSeconds))
                 .format();
         return String.valueOf(formatted);
     }
@@ -176,67 +182,72 @@ public class FormatUtils {
     }
 
     public static String fmtSleepDrt(Context context, String duration) {
-        long dur = Long.parseLong(duration); // in miliseccond
-        long hour = TimeUnit.MILLISECONDS.toHours(dur);
-        long min;
-        long sec;
+        long lDurationInMilliseconds = Long.parseLong(duration);
+        long lHours = TimeUnit.MILLISECONDS.toHours(lDurationInMilliseconds);
+        long lMinutes;
+        long lSeconds;
 
-        if (hour != 0) {
-            min = TimeUnit.MILLISECONDS.toMinutes(dur % TimeUnit.HOURS.toMillis(hour));
+        if (lHours != 0) {
+            lMinutes = TimeUnit.MILLISECONDS.toMinutes(
+                    lDurationInMilliseconds % TimeUnit.HOURS.toMillis(lHours));
         } else {
-            min = TimeUnit.MILLISECONDS.toMinutes(dur);
+            lMinutes = TimeUnit.MILLISECONDS.toMinutes(lDurationInMilliseconds);
         }
 
-        if ((min != 0) && (hour != 0)) {
-            sec = TimeUnit.MILLISECONDS.toSeconds((dur % TimeUnit.HOURS.toMillis(hour))
-                    % TimeUnit.MINUTES.toMillis(min));
-        } else if ((min == 0) && (hour != 0)) {
-            sec = TimeUnit.MILLISECONDS.toSeconds(dur % TimeUnit.HOURS.toMillis(hour));
+        if ((lMinutes != 0) && (lHours != 0)) {
+            lSeconds = TimeUnit.MILLISECONDS.toSeconds(
+                    (lDurationInMilliseconds % TimeUnit.HOURS.toMillis(lHours))
+                    % TimeUnit.MINUTES.toMillis(lMinutes));
+        } else if ((lMinutes == 0) && (lHours != 0)) {
+            lSeconds = TimeUnit.MILLISECONDS.toSeconds(
+                    lDurationInMilliseconds % TimeUnit.HOURS.toMillis(lHours));
         } else {
-            sec = TimeUnit.MILLISECONDS.toSeconds(dur);
+            lSeconds = TimeUnit.MILLISECONDS.toSeconds(lDurationInMilliseconds);
         }
         CharSequence formatted = Phrase.from(context.getResources()
                 .getString(R.string.sleep_duration))
-                .put("hour", String.valueOf(hour))
-                .put("minute", String.valueOf(min))
-                .put("second", String.valueOf(sec))
+                .put("hour", String.valueOf(lHours))
+                .put("minute", String.valueOf(lMinutes))
+                .put("second", String.valueOf(lSeconds))
                 .format();
         return String.valueOf(formatted);
     }
 
     public static String fmtActiveDrt(Context context, String duration) {
-        long dur = Long.parseLong(duration); // in miliseccond
-        long hour = TimeUnit.MILLISECONDS.toHours(dur);
-        long min;
-        long sec;
+        long lDurationInMilliseconds = Long.parseLong(duration);
+        long lHours = TimeUnit.MILLISECONDS.toHours(lDurationInMilliseconds);
+        long lMinutes;
+        long lSeconds;
 
-        if (hour != 0) {
-            min = TimeUnit.MILLISECONDS.toMinutes(dur % TimeUnit.HOURS.toMillis(hour));
+        if (lHours != 0) {
+            lMinutes = TimeUnit.MILLISECONDS.toMinutes(
+                    lDurationInMilliseconds % TimeUnit.HOURS.toMillis(lHours));
         } else {
-            min = TimeUnit.MILLISECONDS.toMinutes(dur);
+            lMinutes = TimeUnit.MILLISECONDS.toMinutes(lDurationInMilliseconds);
         }
 
-        if ((min != 0) && (hour != 0)) {
-            sec = TimeUnit.MILLISECONDS.toSeconds((dur % TimeUnit.HOURS.toMillis(hour))
-                    % TimeUnit.MINUTES.toMillis(min));
-        } else if ((min == 0) && (hour != 0)) {
-            sec = TimeUnit.MILLISECONDS.toSeconds(dur % TimeUnit.HOURS.toMillis(hour));
+        if ((lMinutes != 0) && (lHours != 0)) {
+            lSeconds = TimeUnit.MILLISECONDS.toSeconds(
+                    (lDurationInMilliseconds % TimeUnit.HOURS.toMillis(lHours))
+                    % TimeUnit.MINUTES.toMillis(lMinutes));
+        } else if ((lMinutes == 0) && (lHours != 0)) {
+            lSeconds = TimeUnit.MILLISECONDS.toSeconds(
+                    lDurationInMilliseconds % TimeUnit.HOURS.toMillis(lHours));
         } else {
-            sec = TimeUnit.MILLISECONDS.toSeconds(dur);
+            lSeconds = TimeUnit.MILLISECONDS.toSeconds(lDurationInMilliseconds);
         }
 
         CharSequence formatted = Phrase.from(context.getResources()
                 .getString(R.string.active_duration))
-                .put("hour", String.valueOf(hour))
-                .put("minute", String.valueOf(min))
-                .put("second", String.valueOf(sec))
+                .put("hour", String.valueOf(lHours))
+                .put("minute", String.valueOf(lMinutes))
+                .put("second", String.valueOf(lSeconds))
                 .format();
         return String.valueOf(formatted);
     }
 
-    public static String fmtNursingToday(Context context, String side, String values, String unit) {
+    public static String fmtNursingToday(Context context, String values, String unit) {
         CharSequence formatted = Phrase.from(context.getResources().getString(R.string.nursing_today))
-                .put("side", side)
                 .put("values", values)
                 .put("unit", unit)
                 .format();
@@ -250,10 +261,9 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String fmtNursingPct(Context context, String side, String percentage) {
+    public static String fmtNursingPct(Context context, String percentage) {
         CharSequence formatted = Phrase.from(context.getResources()
                 .getString(R.string.nursing_percentage))
-                .put("side", side)
                 .put("percentage", percentage)
                 .format();
         return String.valueOf(formatted);

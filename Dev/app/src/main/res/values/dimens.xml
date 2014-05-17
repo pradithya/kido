@@ -9,9 +9,9 @@
     <dimen name="navigation_drawer_width">240dp</dimen>
     <dimen name="divider_thickness">8dp</dimen>
 
-    <dimen name="header_card_radius">2dp</dimen>
-    <dimen name="body_card_right_side_radius">2dp</dimen>
-    <dimen name="body_card_left_side_radius">2dp</dimen>
+    <dimen name="header_card_radius">4dp</dimen>
+    <dimen name="body_card_right_side_radius">4dp</dimen>
+    <dimen name="body_card_left_side_radius">4dp</dimen>
 
     <!-- Android standard typographic scale per design guidelines:
      http://developer.android.com/design/style/typography.html  -->
