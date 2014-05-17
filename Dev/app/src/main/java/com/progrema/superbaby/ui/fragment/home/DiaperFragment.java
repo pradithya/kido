@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.adapter.diaperhistory.DiaperAdapter;
+import com.progrema.superbaby.adapter.diaper.DiaperAdapter;
 import com.progrema.superbaby.holograph.PieGraph;
 import com.progrema.superbaby.holograph.PieSlice;
 import com.progrema.superbaby.provider.BabyLogContract;

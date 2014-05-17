@@ -16,14 +16,6 @@ public class StandardItem extends Item {
         this.setLayout(R.layout.navigation_drawer_text_container);
     }
 
-    /**
-     * inflate view
-     *
-     * @param context   application context
-     * @param view      view to inflate
-     * @param viewGroup parent view
-     * @return inflated view
-     */
     @Override
     public View inflate(Context context, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

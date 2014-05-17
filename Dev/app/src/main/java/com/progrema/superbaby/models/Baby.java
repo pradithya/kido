@@ -24,6 +24,7 @@ public class Baby extends BaseActor {
             return new Baby[size];
         }
     };
+
     /**
      * Baby privates data
      */

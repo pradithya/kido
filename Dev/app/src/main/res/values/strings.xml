@@ -8,7 +8,7 @@
     <string name="title_food_fragment">Food</string>
     <string name="title_diaper_fragment">Diaper</string>
     <string name="title_sleep_fragment">Sleep</string>
-    <string name="title_measure_fragment">Measurement</string>
+    <string name="title_measure_fragment">Growth</string>
     <string name="title_pumping_fragment">Pumping</string>
     <string name="title_vaccine_fragment">Vaccine</string>
     <string name="title_section_baby">BABY</string>
@@ -24,7 +24,7 @@
     <string name="quick_button_title_sleep">Sleep</string>
     <string name="quick_button_title_nursing">Nursing</string>
     <string name="quick_button_title_diaper">Diaper</string>
-    <string name="quick_button_title_measurement">Measure</string>
+    <string name="quick_button_title_measurement">Growth</string>
 
     <!--nursing fragment string-->
     <string name="nursing_percentage">{side} {percentage}%</string>

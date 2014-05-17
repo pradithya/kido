@@ -1,4 +1,4 @@
-package com.progrema.superbaby.adapter.measurementhistory;
+package com.progrema.superbaby.adapter.measurement;
 
 import android.content.Context;
 import android.database.Cursor;

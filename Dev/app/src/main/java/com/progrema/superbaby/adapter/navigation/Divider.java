@@ -9,19 +9,12 @@ import android.widget.TextView;
 import com.progrema.superbaby.R;
 
 public class Divider extends Item {
+
     public Divider(String text) {
         this.setText(text);
         this.setLayout(R.layout.navigation_drawer_section_item);
     }
 
-    /**
-     * inflate view
-     *
-     * @param context   application context
-     * @param view      view to inflate
-     * @param viewGroup parent view
-     * @return inflated view
-     */
     @Override
     public View inflate(Context context, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context.

@@ -1,4 +1,4 @@
-package com.progrema.superbaby.adapter.timelinehistory;
+package com.progrema.superbaby.adapter.timeline;
 
 import android.content.Context;
 import android.database.Cursor;

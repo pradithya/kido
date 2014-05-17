@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.adapter.timelinehistory.TimelineAdapter;
+import com.progrema.superbaby.adapter.timeline.TimelineAdapter;
 import com.progrema.superbaby.models.Baby;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;

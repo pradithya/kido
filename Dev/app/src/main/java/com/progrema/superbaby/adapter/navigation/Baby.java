@@ -11,19 +11,12 @@ import com.progrema.superbaby.R;
 import com.progrema.superbaby.util.ActiveContext;
 
 public class Baby extends Item {
+
     public Baby(String text) {
         this.setText(text);
         this.setLayout(R.layout.navigation_drawer_baby_item);
     }
 
-    /**
-     * inflate view
-     *
-     * @param context   application context
-     * @param view      view to inflate
-     * @param viewGroup parent view
-     * @return inflated view
-     */
     @Override
     public View inflate(Context context, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context.

@@ -1,4 +1,4 @@
-package com.progrema.superbaby.adapter.diaperhistory;
+package com.progrema.superbaby.adapter.diaper;
 
 import android.content.Context;
 import android.database.Cursor;

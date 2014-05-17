@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.adapter.measurementhistory.MeasurementAdapter;
+import com.progrema.superbaby.adapter.measurement.MeasurementAdapter;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.widget.customview.ObserveableListView;

@@ -8,18 +8,10 @@ import android.widget.ArrayAdapter;
 import java.util.ArrayList;
 
 public class NavigationAdapter extends ArrayAdapter<Item> {
-    /**
-     * private field
-     */
+
     private ArrayList<Item> items;
     private Context context;
 
-    /**
-     * adapter constructor
-     *
-     * @param context application context
-     * @param items   items holding list of Item object
-     */
     public NavigationAdapter(Context context, ArrayList<Item> items) {
         super(context, 0, items);
         this.items = items;

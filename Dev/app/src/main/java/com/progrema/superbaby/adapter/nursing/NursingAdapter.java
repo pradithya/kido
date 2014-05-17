@@ -1,4 +1,4 @@
-package com.progrema.superbaby.adapter.nursinghistory;
+package com.progrema.superbaby.adapter.nursing;
 
 import android.content.Context;
 import android.database.Cursor;

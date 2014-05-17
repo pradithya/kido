@@ -115,7 +115,7 @@ public class NavigationFragment extends Fragment {
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
             StandardItem siUserEntry = new StandardItem(cursor
                     .getString(BabyLogContract.User.Query.OFFSET_NAME));
-            siUserEntry.setThumbnail(getResources().getDrawable(R.drawable.ic_nursing_button)); //TODO: get user icon
+            siUserEntry.setThumbnail(getResources().getDrawable(R.drawable.ic_user));
             siUserEntry.setTextColor(getResources().getColor(R.color.black));
             items.add(siUserEntry);
         }
@@ -140,7 +140,7 @@ public class NavigationFragment extends Fragment {
 
         // prepare action supported
         StandardItem siTimelineEntry = new StandardItem(getString(R.string.title_timeline_fragment));
-        siTimelineEntry.setThumbnail(getResources().getDrawable(R.drawable.ic_nursing_button)); //TODO: get timeline icon
+        siTimelineEntry.setThumbnail(getResources().getDrawable(R.drawable.ic_timeline_button));
         siTimelineEntry.setTextColor(getResources().getColor(R.color.black));
         items.add(siTimelineEntry);
 

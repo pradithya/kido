@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.adapter.nursinghistory.NursingAdapter;
+import com.progrema.superbaby.adapter.nursing.NursingAdapter;
 import com.progrema.superbaby.holograph.PieGraph;
 import com.progrema.superbaby.holograph.PieSlice;
 import com.progrema.superbaby.models.Nursing;
