@@ -63,7 +63,6 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
         ivLastSide = (ImageView) vRoot.findViewById(R.id.last_side);
         pgLeftRight = (PieGraph) vRoot.findViewById(R.id.nursing_left_right_pie_chart);
 
-
         // set adapter to list view
         olvNursingHistoryList = (ObserveableListView) vRoot.findViewById(R.id.activity_list);
         naAdapter = new NursingAdapter(getActivity(), null, 0);
