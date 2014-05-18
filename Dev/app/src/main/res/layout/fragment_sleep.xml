@@ -27,8 +27,8 @@
 
                 <com.progrema.superbaby.holograph.PieGraph
                     android:id="@+id/sleep_nap_night_pie_chart"
-                    android:layout_width="@dimen/header_fragment_pie_chart"
-                    android:layout_height="@dimen/header_fragment_pie_chart"
+                    android:layout_width="@dimen/header_fragment_pie_chart_size"
+                    android:layout_height="@dimen/header_fragment_pie_chart_size"
                     android:layout_marginRight="4dp"
                     app:pieInnerCircleRatio="128"
                     app:pieSlicePadding="0dp" />
@@ -75,8 +75,8 @@
 
                 <com.progrema.superbaby.holograph.PieGraph
                     android:id="@+id/sleep_active_sleep_pie_chart"
-                    android:layout_width="@dimen/header_fragment_pie_chart"
-                    android:layout_height="@dimen/header_fragment_pie_chart"
+                    android:layout_width="@dimen/header_fragment_pie_chart_size"
+                    android:layout_height="@dimen/header_fragment_pie_chart_size"
                     android:layout_marginRight="4dp"
                     app:pieInnerCircleRatio="128"
                     app:pieSlicePadding="0dp" />
