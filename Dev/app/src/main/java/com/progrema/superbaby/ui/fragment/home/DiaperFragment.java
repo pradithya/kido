@@ -17,6 +17,7 @@ import com.progrema.superbaby.adapter.diaper.DiaperAdapter;
 import com.progrema.superbaby.holograph.PieGraph;
 import com.progrema.superbaby.holograph.PieSlice;
 import com.progrema.superbaby.provider.BabyLogContract;
+import com.progrema.superbaby.ui.activity.HomeActivity;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.FormatUtils;
 import com.progrema.superbaby.widget.customview.ObserveableListView;
@@ -78,13 +79,13 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
 
         // prepare loader
         LoaderManager lmLoaderManager = getLoaderManager();
-        lmLoaderManager.initLoader(LOADER_LIST_VIEW, null, this);
-        lmLoaderManager.initLoader(LOADER_LAST_WET, null, this);
-        lmLoaderManager.initLoader(LOADER_LAST_DRY, null, this);
-        lmLoaderManager.initLoader(LOADER_LAST_MIXED, null, this);
-        lmLoaderManager.initLoader(LOADER_TODAY_WET, null, this);
-        lmLoaderManager.initLoader(LOADER_TODAY_DRY, null, this);
-        lmLoaderManager.initLoader(LOADER_TODAY_MIXED, null, this);
+        lmLoaderManager.initLoader(LOADER_LIST_VIEW, getArguments(), this);
+        lmLoaderManager.initLoader(LOADER_LAST_WET, getArguments(), this);
+        lmLoaderManager.initLoader(LOADER_LAST_DRY, getArguments(), this);
+        lmLoaderManager.initLoader(LOADER_LAST_MIXED, getArguments(), this);
+        lmLoaderManager.initLoader(LOADER_TODAY_WET, getArguments(), this);
+        lmLoaderManager.initLoader(LOADER_TODAY_DRY, getArguments(), this);
+        lmLoaderManager.initLoader(LOADER_TODAY_MIXED, getArguments(), this);
 
         return vRoot;
     }
@@ -92,34 +93,54 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public Loader<Cursor> onCreateLoader(int iLoaderId, Bundle bBundle) {
 
-        /**
-         * as stated here: http://developer.android.com/reference/java/util/Calendar.html
-         * 24:00:00 "belongs" to the following day.
-         * That is, 23:59 on Dec 31, 1969 < 24:00 on Jan 1, 1970 < 24:01:00 on Jan 1, 1970
-         * form a sequence of three consecutive minutes in time.
-         */
-        Calendar cMidnight = Calendar.getInstance();
-        cMidnight.set(Calendar.HOUR_OF_DAY, 0);
-        cMidnight.set(Calendar.MINUTE, 0);
-        cMidnight.set(Calendar.SECOND, 0);
-        cMidnight.set(Calendar.MILLISECOND, 0);
-        String sTimestampReference = String.valueOf(cMidnight.getTimeInMillis());
-
+//        /**
+//         * as stated here: http://developer.android.com/reference/java/util/Calendar.html
+//         * 24:00:00 "belongs" to the following day.
+//         * That is, 23:59 on Dec 31, 1969 < 24:00 on Jan 1, 1970 < 24:01:00 on Jan 1, 1970
+//         * form a sequence of three consecutive minutes in time.
+//         */
+//        Calendar cMidnight = Calendar.getInstance();
+//        cMidnight.set(Calendar.HOUR_OF_DAY, 0);
+//        cMidnight.set(Calendar.MINUTE, 0);
+//        cMidnight.set(Calendar.SECOND, 0);
+//        cMidnight.set(Calendar.MILLISECOND, 0);
+//        String sTimestampReference = String.valueOf(cMidnight.getTimeInMillis());
         String[] saArgumentSelectionOne = {
                 String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())
         };
 
+        String sStart = "";
+        String sEnd = "";
+
+        if (bBundle != null)
+        {
+            sStart = bBundle.getString(HomeActivity.TimeFilter.START.getTitle());
+            sEnd = bBundle.getString(HomeActivity.TimeFilter.END.getTitle());
+
+
+        }else
+        {
+            Calendar cStart = Calendar.getInstance();
+            sEnd = String.valueOf(cStart.getTimeInMillis()); //now, for now
+
+            cStart.set(Calendar.HOUR_OF_DAY, 0);
+            cStart.set(Calendar.MINUTE, 0);
+            cStart.set(Calendar.SECOND, 0);
+            cStart.set(Calendar.MILLISECOND, 0);
+            sStart = String.valueOf(cStart.getTimeInMillis());
+        }
+
         String[] saArgumentSelectionTwo = {
                 String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID()),
-                sTimestampReference
+                sStart, sEnd
         };
 
         switch (iLoaderId) {
             case LOADER_LIST_VIEW:
                 return new CursorLoader(getActivity(), BabyLogContract.Diaper.CONTENT_URI,
                         BabyLogContract.Diaper.Query.PROJECTION,
-                        BabyLogContract.BABY_SELECTION_ARG,
-                        saArgumentSelectionOne,
+                        "baby_id = ? AND timestamp >= ? AND timestamp <= ?",
+                        saArgumentSelectionTwo,
                         BabyLogContract.Diaper.Query.SORT_BY_TIMESTAMP_DESC);
 
             case LOADER_LAST_WET:
@@ -150,7 +171,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
                 return new CursorLoader(getActivity(),
                         BabyLogContract.Diaper.CONTENT_URI,
                         BabyLogContract.Diaper.Query.PROJECTION,
-                        "baby_id = ? AND type = 'DRY' AND timestamp >= ?",
+                        "baby_id = ? AND type = 'DRY' AND timestamp >= ? AND timestamp <= ?",
                         saArgumentSelectionTwo,
                         BabyLogContract.Diaper.Query.SORT_BY_TIMESTAMP_DESC);
 
@@ -158,7 +179,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
                 return new CursorLoader(getActivity(),
                         BabyLogContract.Diaper.CONTENT_URI,
                         BabyLogContract.Diaper.Query.PROJECTION,
-                        "baby_id = ? AND type = 'WET' AND timestamp >= ?",
+                        "baby_id = ? AND type = 'WET' AND timestamp >= ? AND timestamp <= ?",
                         saArgumentSelectionTwo,
                         BabyLogContract.Diaper.Query.SORT_BY_TIMESTAMP_DESC);
 
@@ -166,7 +187,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
                 return new CursorLoader(getActivity(),
                         BabyLogContract.Diaper.CONTENT_URI,
                         BabyLogContract.Diaper.Query.PROJECTION,
-                        "baby_id = ? AND type = 'MIXED' AND timestamp >= ?",
+                        "baby_id = ? AND type = 'MIXED' AND timestamp >= ? AND timestamp <= ?",
                         saArgumentSelectionTwo,
                         BabyLogContract.Diaper.Query.SORT_BY_TIMESTAMP_DESC);
 
