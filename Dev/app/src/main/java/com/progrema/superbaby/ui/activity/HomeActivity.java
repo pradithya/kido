@@ -135,38 +135,11 @@ public class HomeActivity extends FragmentActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position, int calibration) {
-        // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
 
-        // fragment module
-        Fragment module = null;
+        int iTimeFilterPos = getActionBar().getSelectedNavigationIndex();
+        Bundle bTimeSelection = createTimeFilter(iTimeFilterPos);
         currentFragment = position - calibration;
-        switch (currentFragment) {
-            case POSITION_HOME_FRAGMENT:
-                module = TimeLineFragment.getInstance();
-                mTitle = getString(R.string.title_timeline_fragment);
-                break;
-            case POSITION_MILK_FRAGMENT:
-                module = NursingFragment.getInstance();
-                mTitle = getString(R.string.title_nursing_fragment);
-                break;
-            case POSITION_DIAPER_FRAGMENT:
-                module = DiaperFragment.getInstance();
-                mTitle = getString(R.string.title_diaper_fragment);
-                break;
-            case POSITION_SLEEP_FRAGMENT:
-                module = SleepFragment.getInstance();
-                mTitle = getString(R.string.title_sleep_fragment);
-                break;
-            case POSITION_MEASUREMENT_FRAGMENT:
-                module = MeasurementFragment.getInstance();
-                mTitle = getString(R.string.title_measure_fragment);
-        }
-
-        if (module != null) {
-
-            fragmentManager.beginTransaction().replace(R.id.home_activity_container, module).commit();
-        }
+        switchFragment(currentFragment,bTimeSelection);
     }
 
     public void restoreActionBar() {
@@ -370,13 +343,56 @@ public class HomeActivity extends FragmentActivity
     @Override
     public boolean onNavigationItemSelected(int position, long itemId){
         //TODO: change query of active fragment
+        Bundle bTimeSelection = createTimeFilter(position);
+        switchFragment(currentFragment,bTimeSelection);
 
+        return true;
+    }
+
+    private void switchFragment(int iFragment, Bundle arg){
+        // update the main content by replacing fragments
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        // fragment module
+        Fragment module = null;
+        switch (iFragment) {
+            case POSITION_HOME_FRAGMENT:
+                module = TimeLineFragment.getInstance();
+                mTitle = getString(R.string.title_timeline_fragment);
+                break;
+            case POSITION_MILK_FRAGMENT:
+                module = NursingFragment.getInstance();
+                mTitle = getString(R.string.title_nursing_fragment);
+                break;
+            case POSITION_DIAPER_FRAGMENT:
+                module = DiaperFragment.getInstance();
+                mTitle = getString(R.string.title_diaper_fragment);
+                break;
+            case POSITION_SLEEP_FRAGMENT:
+                module = SleepFragment.getInstance();
+                mTitle = getString(R.string.title_sleep_fragment);
+                break;
+            case POSITION_MEASUREMENT_FRAGMENT:
+                module = MeasurementFragment.getInstance();
+                mTitle = getString(R.string.title_measure_fragment);
+        }
+
+        if (module != null) {
+            module.setArguments(arg);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.home_activity_container, module)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .commit();
+        }
+    }
+
+    private Bundle createTimeFilter (int position){
         //        /**
-         //         * as stated here: http://developer.android.com/reference/java/util/Calendar.html
-         //         * 24:00:00 "belongs" to the following day.
-         //         * That is, 23:59 on Dec 31, 1969 < 24:00 on Jan 1, 1970 < 24:01:00 on Jan 1, 1970
-         //         * form a sequence of three consecutive minutes in time.
-         //         */
+        //         * as stated here: http://developer.android.com/reference/java/util/Calendar.html
+        //         * 24:00:00 "belongs" to the following day.
+        //         * That is, 23:59 on Dec 31, 1969 < 24:00 on Jan 1, 1970 < 24:01:00 on Jan 1, 1970
+        //         * form a sequence of three consecutive minutes in time.
+        //         */
         Calendar cStart = Calendar.getInstance();
         String sEnd = String.valueOf(cStart.getTimeInMillis()); //now, for now
         String sStart;
@@ -405,40 +421,6 @@ public class HomeActivity extends FragmentActivity
         Bundle bTimeSelection  = new Bundle();
         bTimeSelection.putString(TimeFilter.START.getTitle(),sStart);
         bTimeSelection.putString(TimeFilter.END.getTitle(),sEnd);
-
-        // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        // fragment module
-        Fragment module = null;
-        switch (currentFragment) {
-            case POSITION_HOME_FRAGMENT:
-                module = TimeLineFragment.getInstance();
-                mTitle = getString(R.string.title_timeline_fragment);
-                break;
-            case POSITION_MILK_FRAGMENT:
-                module = NursingFragment.getInstance();
-                mTitle = getString(R.string.title_nursing_fragment);
-                break;
-            case POSITION_DIAPER_FRAGMENT:
-                module = DiaperFragment.getInstance();
-                mTitle = getString(R.string.title_diaper_fragment);
-                break;
-            case POSITION_SLEEP_FRAGMENT:
-                module = SleepFragment.getInstance();
-                mTitle = getString(R.string.title_sleep_fragment);
-                break;
-            case POSITION_MEASUREMENT_FRAGMENT:
-                module = MeasurementFragment.getInstance();
-                mTitle = getString(R.string.title_measure_fragment);
-        }
-
-        module.setArguments(bTimeSelection);
-        if (module != null) {
-            module.setArguments(bTimeSelection);
-            fragmentManager.beginTransaction().replace(R.id.home_activity_container, module).commit();
-        }
-
-        return true;
+        return bTimeSelection;
     }
 }
