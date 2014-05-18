@@ -77,6 +77,7 @@ public class HomeActivity extends FragmentActivity
     private RelativeLayout rlMeasurementButton;
     private ObserveableListView historyList;
     private ActionBarDropDownAdapter mSpinnerAdapter;
+    private Bundle previousQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,10 +137,8 @@ public class HomeActivity extends FragmentActivity
     @Override
     public void onNavigationDrawerItemSelected(int position, int calibration) {
 
-        int iTimeFilterPos = getActionBar().getSelectedNavigationIndex();
-        Bundle bTimeSelection = createTimeFilter(iTimeFilterPos);
         currentFragment = position - calibration;
-        switchFragment(currentFragment,bTimeSelection);
+        switchFragment(currentFragment,previousQuery);
     }
 
     public void restoreActionBar() {
@@ -344,6 +343,7 @@ public class HomeActivity extends FragmentActivity
     public boolean onNavigationItemSelected(int position, long itemId){
         //TODO: change query of active fragment
         Bundle bTimeSelection = createTimeFilter(position);
+        previousQuery = bTimeSelection;
         switchFragment(currentFragment,bTimeSelection);
 
         return true;
