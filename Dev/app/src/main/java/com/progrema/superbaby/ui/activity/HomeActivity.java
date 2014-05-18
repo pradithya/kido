@@ -55,6 +55,12 @@ public class HomeActivity extends FragmentActivity
     private static final int POSITION_DIAPER_FRAGMENT = 2;
     private static final int POSITION_SLEEP_FRAGMENT = 3;
     private static final int POSITION_MEASUREMENT_FRAGMENT = 4;
+    private int currentFragment;
+
+    private static final int TIMEFILTER_POSITION_TODAY = 0;
+    private static final int TIMEFILTER_POSITION_THIS_WEEK = 1;
+    private static final int TIMEFILTER_POSITION_THIS_MONTH = 2;
+    private static final int TIMEFILTER_POSITION_ALL = 3;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -134,8 +140,8 @@ public class HomeActivity extends FragmentActivity
 
         // fragment module
         Fragment module = null;
-
-        switch (position - calibration) {
+        currentFragment = position - calibration;
+        switch (currentFragment) {
             case POSITION_HOME_FRAGMENT:
                 module = TimeLineFragment.getInstance();
                 mTitle = getString(R.string.title_timeline_fragment);
@@ -158,6 +164,7 @@ public class HomeActivity extends FragmentActivity
         }
 
         if (module != null) {
+
             fragmentManager.beginTransaction().replace(R.id.home_activity_container, module).commit();
         }
     }
@@ -168,7 +175,6 @@ public class HomeActivity extends FragmentActivity
         actionBar.setDisplayShowTitleEnabled(false);
         mSpinnerAdapter.setTitle(mTitle);
         //actionBar.setTitle(mTitle);
-
 
     }
 
@@ -345,9 +351,94 @@ public class HomeActivity extends FragmentActivity
         }
     }
 
+    public enum  TimeFilter{
+        START("start"),
+        END("end");
+
+        private String title;
+
+        TimeFilter(String title) {
+            this.title = title;
+        }
+
+        public String getTitle() {
+            return this.title;
+        }
+    }
+
+
     @Override
-    public boolean onNavigationItemSelected(int arg0, long arg1){
+    public boolean onNavigationItemSelected(int position, long itemId){
         //TODO: change query of active fragment
+
+        //        /**
+         //         * as stated here: http://developer.android.com/reference/java/util/Calendar.html
+         //         * 24:00:00 "belongs" to the following day.
+         //         * That is, 23:59 on Dec 31, 1969 < 24:00 on Jan 1, 1970 < 24:01:00 on Jan 1, 1970
+         //         * form a sequence of three consecutive minutes in time.
+         //         */
+        Calendar cStart = Calendar.getInstance();
+        String sEnd = String.valueOf(cStart.getTimeInMillis()); //now, for now
+        String sStart;
+
+        cStart.set(Calendar.HOUR_OF_DAY, 0);
+        cStart.set(Calendar.MINUTE, 0);
+        cStart.set(Calendar.SECOND, 0);
+        cStart.set(Calendar.MILLISECOND, 0);
+
+
+        switch (position){
+            case TIMEFILTER_POSITION_TODAY:
+                break;
+            case TIMEFILTER_POSITION_THIS_WEEK:
+                cStart.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+                break;
+            case TIMEFILTER_POSITION_THIS_MONTH:
+                cStart.set(Calendar.DAY_OF_MONTH, 1);
+                break;
+            case TIMEFILTER_POSITION_ALL:
+                cStart.set(Calendar.YEAR,1); //year 1?
+                break;
+        }
+
+        sStart = String.valueOf(cStart.getTimeInMillis());
+        Bundle bTimeSelection  = new Bundle();
+        bTimeSelection.putString(TimeFilter.START.getTitle(),sStart);
+        bTimeSelection.putString(TimeFilter.END.getTitle(),sEnd);
+
+        // update the main content by replacing fragments
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        // fragment module
+        Fragment module = null;
+        switch (currentFragment) {
+            case POSITION_HOME_FRAGMENT:
+                module = TimeLineFragment.getInstance();
+                mTitle = getString(R.string.title_timeline_fragment);
+                break;
+            case POSITION_MILK_FRAGMENT:
+                module = NursingFragment.getInstance();
+                mTitle = getString(R.string.title_nursing_fragment);
+                break;
+            case POSITION_DIAPER_FRAGMENT:
+                module = DiaperFragment.getInstance();
+                mTitle = getString(R.string.title_diaper_fragment);
+                break;
+            case POSITION_SLEEP_FRAGMENT:
+                module = SleepFragment.getInstance();
+                mTitle = getString(R.string.title_sleep_fragment);
+                break;
+            case POSITION_MEASUREMENT_FRAGMENT:
+                module = MeasurementFragment.getInstance();
+                mTitle = getString(R.string.title_measure_fragment);
+        }
+
+        module.setArguments(bTimeSelection);
+        if (module != null) {
+            module.setArguments(bTimeSelection);
+            fragmentManager.beginTransaction().replace(R.id.home_activity_container, module).commit();
+        }
+
         return true;
     }
 }
