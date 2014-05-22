@@ -40,6 +40,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
     private TextView tvFormulaToday;
     private ImageView ivLastSide;
     private PieGraph pgLeftRight;
+    private View vHeader;
 
     public static NursingFragment getInstance() {
         return new NursingFragment();
@@ -49,6 +50,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vRoot = inflater.inflate(R.layout.fragment_nursing, container, false);
+        vHeader = inflater.inflate(R.layout.placeholder_nursing, null);
 
         // set action bar icon and title
         ActionBar abActionBar = getActivity().getActionBar();
@@ -66,8 +68,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
         // set adapter to list view
         olvNursingHistoryList = (ObserveableListView) vRoot.findViewById(R.id.activity_list);
         naAdapter = new NursingAdapter(getActivity(), null, 0);
-        olvNursingHistoryList.addHeaderView(new View(getActivity()));
-        olvNursingHistoryList.addFooterView(new View(getActivity()));
+        olvNursingHistoryList.addHeaderView(vHeader);
         olvNursingHistoryList.setAdapter(naAdapter);
 
         // prepare loader
@@ -139,6 +140,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
 
     @Override
     public void onLoadFinished(Loader<Cursor> lCursorLoader, Cursor cCursor) {
+
         if (cCursor.getCount() > 0) {
             cCursor.moveToFirst();
             switch (lCursorLoader.getId()) {

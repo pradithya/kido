@@ -9,9 +9,8 @@
     <dimen name="navigation_drawer_width">240dp</dimen>
     <dimen name="divider_thickness">8dp</dimen>
 
-    <dimen name="header_card_radius">4dp</dimen>
-    <dimen name="body_card_right_side_radius">4dp</dimen>
-    <dimen name="body_card_left_side_radius">4dp</dimen>
+    <!-- Card Background radius -->
+    <dimen name="card_background_radius">2dp</dimen>
 
     <!-- Android standard typographic scale per design guidelines:
      http://developer.android.com/design/style/typography.html  -->
@@ -22,5 +21,10 @@
 
     <!-- Pie Chart dimension -->
     <dimen name="header_fragment_pie_chart_size">60dp</dimen>
+
+    <!-- Header dimension is calculated by using View.getHeight() api. The size is generated
+     in pixels in XXHDPI device (nexus 5). So, we need convert it to dp by dividing it by 3.
+     Read the Android Design guidline: http://developer.android.com/design/style/iconography.html-->
+    <dimen name="nursing_header_size">132dp</dimen>
 
 </resources>
