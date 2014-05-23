@@ -14,11 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.SpinnerAdapter;
-import android.widget.Toast;
 
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.ActionBarDropDownAdapter;
@@ -51,7 +48,7 @@ public class HomeActivity extends FragmentActivity
      * Used to locate the fragment position
      */
     private static final int POSITION_HOME_FRAGMENT = 0;
-    private static final int POSITION_MILK_FRAGMENT = 1;
+    private static final int POSITION_NURSING_FRAGMENT = 1;
     private static final int POSITION_DIAPER_FRAGMENT = 2;
     private static final int POSITION_SLEEP_FRAGMENT = 3;
     private static final int POSITION_MEASUREMENT_FRAGMENT = 4;
@@ -146,8 +143,6 @@ public class HomeActivity extends FragmentActivity
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         actionBar.setDisplayShowTitleEnabled(false);
         mSpinnerAdapter.setTitle(mTitle);
-        //actionBar.setTitle(mTitle);
-
     }
 
     @Override
@@ -238,7 +233,7 @@ public class HomeActivity extends FragmentActivity
     }
 
     @Override
-    public void onScrollDown() {
+    public void onScrollUp() {
         LinearLayout overlayLayout = (LinearLayout) findViewById(R.id.timeline_quick_button);
         ViewPropertyAnimator animator = overlayLayout.animate();
         animator.cancel();
@@ -246,7 +241,7 @@ public class HomeActivity extends FragmentActivity
     }
 
     @Override
-    public void onScrollUp() {
+    public void onScrollDown() {
         LinearLayout overlayLayout = (LinearLayout) findViewById(R.id.timeline_quick_button);
         ViewPropertyAnimator animator = overlayLayout.animate();
         animator.cancel();
@@ -360,7 +355,7 @@ public class HomeActivity extends FragmentActivity
                 module = TimeLineFragment.getInstance();
                 mTitle = getString(R.string.title_timeline_fragment);
                 break;
-            case POSITION_MILK_FRAGMENT:
+            case POSITION_NURSING_FRAGMENT:
                 module = NursingFragment.getInstance();
                 mTitle = getString(R.string.title_nursing_fragment);
                 break;
@@ -387,12 +382,12 @@ public class HomeActivity extends FragmentActivity
     }
 
     private Bundle createTimeFilter (int position){
-        //        /**
-        //         * as stated here: http://developer.android.com/reference/java/util/Calendar.html
-        //         * 24:00:00 "belongs" to the following day.
-        //         * That is, 23:59 on Dec 31, 1969 < 24:00 on Jan 1, 1970 < 24:01:00 on Jan 1, 1970
-        //         * form a sequence of three consecutive minutes in time.
-        //         */
+        /**
+         * as stated here: http://developer.android.com/reference/java/util/Calendar.html
+         * 24:00:00 "belongs" to the following day.
+         * That is, 23:59 on Dec 31, 1969 < 24:00 on Jan 1, 1970 < 24:01:00 on Jan 1, 1970
+         * form a sequence of three consecutive minutes in time.
+         */
         Calendar cStart = Calendar.getInstance();
         String sEnd = String.valueOf(cStart.getTimeInMillis()); //now, for now
         String sStart;
@@ -401,7 +396,6 @@ public class HomeActivity extends FragmentActivity
         cStart.set(Calendar.MINUTE, 0);
         cStart.set(Calendar.SECOND, 0);
         cStart.set(Calendar.MILLISECOND, 0);
-
 
         switch (position){
             case TIMEFILTER_POSITION_TODAY:

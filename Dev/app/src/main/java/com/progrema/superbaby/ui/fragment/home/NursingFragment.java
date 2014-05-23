@@ -2,6 +2,7 @@ package com.progrema.superbaby.ui.fragment.home;
 
 import android.app.ActionBar;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -10,6 +11,10 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,8 +36,13 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_TODAY_ENTRY = 1;
     private static final int LOADER_LAST_SIDE = 2;
+    private static final int STATE_ONSCREEN = 0;
+    private int iState = STATE_ONSCREEN;
+    private static final int STATE_OFFSCREEN = 1;
+    private static final int STATE_RETURNING = 2;
     private NursingAdapter naAdapter;
     private ObserveableListView olvNursingHistoryList;
+    private TranslateAnimation taAnimation;
     private TextView tvLeftPct;
     private TextView tvRightPct;
     private TextView tvRightToday;
@@ -40,7 +50,14 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
     private TextView tvFormulaToday;
     private ImageView ivLastSide;
     private PieGraph pgLeftRight;
-    private View vHeader;
+    private View vPlaceHolder;
+    private View vQuickReturn;
+    private int iQuickReturnHeight;
+    private int iChacheVerticalRange;
+    private int iScrollY;
+    private int iRawY;
+    private int iMinRawY = 0;
+    private boolean bNoAnimation = false;
 
     public static NursingFragment getInstance() {
         return new NursingFragment();
@@ -50,7 +67,8 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vRoot = inflater.inflate(R.layout.fragment_nursing, container, false);
-        vHeader = inflater.inflate(R.layout.placeholder_nursing, null);
+        vQuickReturn = vRoot.findViewById(R.id.header_nursing);
+        vPlaceHolder = inflater.inflate(R.layout.placeholder_nursing, null);
 
         // set action bar icon and title
         ActionBar abActionBar = getActivity().getActionBar();
@@ -68,7 +86,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
         // set adapter to list view
         olvNursingHistoryList = (ObserveableListView) vRoot.findViewById(R.id.activity_list);
         naAdapter = new NursingAdapter(getActivity(), null, 0);
-        olvNursingHistoryList.addHeaderView(vHeader);
+        olvNursingHistoryList.addHeaderView(vPlaceHolder);
         olvNursingHistoryList.setAdapter(naAdapter);
 
         // prepare loader
@@ -77,6 +95,114 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
         lmLoaderManager.initLoader(LOADER_TODAY_ENTRY, null, this);
         lmLoaderManager.initLoader(LOADER_LAST_SIDE, null, this);
         return vRoot;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        // add global layout listener
+        olvNursingHistoryList.getViewTreeObserver()
+                .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        iQuickReturnHeight = vQuickReturn.getHeight();
+                        olvNursingHistoryList.computeScrollY();
+                        iChacheVerticalRange = olvNursingHistoryList.getListHeight();
+                    }
+                });
+
+        // add scroll listener
+        olvNursingHistoryList.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                // nothing happened here
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem,
+                                 int visibleItemCount, int totalItemCount) {
+                iScrollY = 0;
+                int iTranslationY = 0;
+
+                if (olvNursingHistoryList.scrollYIsComputed()) {
+                    iScrollY = olvNursingHistoryList.getComputedScrollY();
+                }
+
+                iRawY = vPlaceHolder.getTop()
+                        - Math.min(iChacheVerticalRange - olvNursingHistoryList.getHeight(), iScrollY);
+
+                switch (iState) {
+                    case STATE_OFFSCREEN:
+                        if (iRawY <= iMinRawY) {
+                            iMinRawY = iRawY;
+                        } else {
+                            iState = STATE_RETURNING;
+                        }
+                        iTranslationY = iRawY;
+                        break;
+
+                    case STATE_ONSCREEN:
+                        if (iRawY < -iQuickReturnHeight) {
+                            iState = STATE_OFFSCREEN;
+                            iMinRawY = iRawY;
+                        }
+                        iTranslationY = iRawY;
+                        break;
+
+                    case STATE_RETURNING:
+                        if (iTranslationY > 0) {
+                            iTranslationY = 0;
+                            iMinRawY = iRawY - iQuickReturnHeight;
+                        } else if (iRawY > 0) {
+                            iState = STATE_ONSCREEN;
+                            iTranslationY = iRawY;
+                        } else if (iTranslationY < -iQuickReturnHeight) {
+                            iState = STATE_OFFSCREEN;
+                            iMinRawY = iRawY;
+                        } else if (vQuickReturn.getTranslationY() != 0
+                                && !bNoAnimation) {
+                            bNoAnimation = true;
+                            taAnimation = new TranslateAnimation(0, 0,
+                                    -iQuickReturnHeight, 0);
+                            taAnimation.setFillAfter(true);
+                            taAnimation.setDuration(250);
+                            vQuickReturn.startAnimation(taAnimation);
+                            taAnimation.setAnimationListener(new Animation.AnimationListener() {
+
+                                @Override
+                                public void onAnimationStart(Animation animation) {
+                                    // TODO Auto-generated method stub
+
+                                }
+
+                                @Override
+                                public void onAnimationRepeat(Animation animation) {
+                                    // TODO Auto-generated method stub
+
+                                }
+
+                                @Override
+                                public void onAnimationEnd(Animation animation) {
+                                    bNoAnimation = false;
+                                    iMinRawY = iRawY;
+                                }
+                            });
+                        }
+                        break;
+                }
+
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB) {
+                    taAnimation = new TranslateAnimation(0, 0, iTranslationY, iTranslationY);
+                    taAnimation.setFillAfter(true);
+                    taAnimation.setDuration(0);
+                    vQuickReturn.startAnimation(taAnimation);
+                } else {
+                    vQuickReturn.setTranslationY(iTranslationY);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -220,7 +346,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                     if (sType.compareTo(Nursing.NursingType.RIGHT.getTitle()) == 0) {
                         ivLastSide.setImageDrawable(getResources()
                                 .getDrawable(R.drawable.ic_nursing_right));
-                    } else if(sType.compareTo(Nursing.NursingType.LEFT.getTitle()) == 0) {
+                    } else if (sType.compareTo(Nursing.NursingType.LEFT.getTitle()) == 0) {
                         ivLastSide.setImageDrawable(getResources()
                                 .getDrawable(R.drawable.ic_nursing_left));
                     }

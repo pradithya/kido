@@ -4,15 +4,25 @@ import android.content.Context;
 import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ListView;
 
 public class ObserveableListView extends ListView {
-    private final int INVALID_POINTER_ID = MotionEvent.INVALID_POINTER_ID;
-    private int mActivePointerId = INVALID_POINTER_ID;
-    private final int SCROLLING_BUFFER = 3;
-    private Callbacks mCallbacks;
-    private float mLastTouchX, mLastTouchY, mPosX, mPosY;
-    private boolean isScrollUp = true;
+
+    private Callbacks cCallbacks;
+    private boolean bIsScrollUp = true;
+    private boolean bScrollIsComputed = false;
+    private float fLastTouchX;
+    private float fLastTouchY;
+    private float fPositionX;
+    private float fPositionY;
+    private int INVALID_POINTER_ID = MotionEvent.INVALID_POINTER_ID;
+    private int iActivePointerId = INVALID_POINTER_ID;
+    private int SCROLLING_BUFFER = 3;
+    private int iHeight;
+    private int iItemCount;
+    private int iItemOffsetY[];
+
 
     public ObserveableListView(Context context) {
         super(context);
@@ -27,80 +37,114 @@ public class ObserveableListView extends ListView {
     }
 
     public void setCallbacks(Callbacks listener) {
-        mCallbacks = listener;
+        cCallbacks = listener;
+    }
+
+    public int getListHeight() {
+        return iHeight;
+    }
+
+    public void computeScrollY() {
+        iHeight = 0;
+        iItemCount = getAdapter().getCount();
+        iItemOffsetY = null; // Let GC works!!
+        iItemOffsetY = new int[iItemCount];
+        for (int i = 0; i < iItemCount; ++i) {
+            View view = getAdapter().getView(i, null, this);
+            view.measure(
+                    MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
+                    MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+            iItemOffsetY[i] = iHeight;
+            iHeight += view.getMeasuredHeight();
+        }
+        bScrollIsComputed = true;
+    }
+
+    public boolean scrollYIsComputed() {
+        return bScrollIsComputed;
+    }
+
+    public int getComputedScrollY() {
+        int pos, nScrollY, nItemY;
+        View view = null;
+        pos = getFirstVisiblePosition();
+        view = getChildAt(0);
+        nItemY = view.getTop();
+        nScrollY = iItemOffsetY[pos] - nItemY;
+        return nScrollY;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        if (mCallbacks != null) {
+        if (cCallbacks != null) {
             switch (ev.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN: {
-                    final int pointerIndex = MotionEventCompat.getActionIndex(ev);
-                    final float x = MotionEventCompat.getX(ev, pointerIndex);
-                    final float y = MotionEventCompat.getY(ev, pointerIndex);
+                    final int iPointerIndex = MotionEventCompat.getActionIndex(ev);
+                    final float fCoordinateX = MotionEventCompat.getX(ev, iPointerIndex);
+                    final float fCoordinateY = MotionEventCompat.getY(ev, iPointerIndex);
 
                     // Remember where we started (for dragging)
-                    mLastTouchX = x;
-                    mLastTouchY = y;
+                    fLastTouchX = fCoordinateX;
+                    fLastTouchY = fCoordinateY;
                     // Save the ID of this pointer (for dragging)
-                    mActivePointerId = MotionEventCompat.getPointerId(ev, 0);
+                    iActivePointerId = MotionEventCompat.getPointerId(ev, 0);
                     break;
                 }
 
                 case MotionEvent.ACTION_MOVE: {
                     // Find the index of the active pointer and fetch its position
-                    final int pointerIndex = MotionEventCompat.findPointerIndex(ev, mActivePointerId);
-                    final float x = MotionEventCompat.getX(ev, pointerIndex);
-                    final float y = MotionEventCompat.getY(ev, pointerIndex);
+                    final int iPointerIndex = MotionEventCompat.findPointerIndex(ev, iActivePointerId);
+                    final float fCoordinateX = MotionEventCompat.getX(ev, iPointerIndex);
+                    final float fCoordinateY = MotionEventCompat.getY(ev, iPointerIndex);
 
                     // Calculate the distance moved
-                    final float dx = x - mLastTouchX;
-                    final float dy = y - mLastTouchY;
+                    final float fDeltaX = fCoordinateX - fLastTouchX;
+                    final float fDeltaY = fCoordinateY - fLastTouchY;
 
-                    mPosX += dx;
-                    mPosY += dy;
+                    fPositionX += fDeltaX;
+                    fPositionY += fDeltaY;
 
                     invalidate();
 
                     // Remember this touch position for the next move event
-                    mLastTouchX = x;
-                    mLastTouchY = y;
+                    fLastTouchX = fCoordinateX;
+                    fLastTouchY = fCoordinateY;
 
-                    if (dy > SCROLLING_BUFFER) {
-                        if (!isScrollUp) {
-                            mCallbacks.onScrollUp();
-                            isScrollUp = true;
+                    if (fDeltaY > SCROLLING_BUFFER) {
+                        if (!bIsScrollUp) {
+                            cCallbacks.onScrollDown();
+                            bIsScrollUp = true;
                         }
-                    } else if (dy < -SCROLLING_BUFFER) {
-                        if (isScrollUp) {
-                            mCallbacks.onScrollDown();
-                            isScrollUp = false;
+                    } else if (fDeltaY < -SCROLLING_BUFFER) {
+                        if (bIsScrollUp) {
+                            cCallbacks.onScrollUp();
+                            bIsScrollUp = false;
                         }
                     }
                     break;
                 }
 
                 case MotionEvent.ACTION_UP: {
-                    mActivePointerId = INVALID_POINTER_ID;
+                    iActivePointerId = INVALID_POINTER_ID;
                     break;
                 }
 
                 case MotionEvent.ACTION_CANCEL: {
-                    mActivePointerId = INVALID_POINTER_ID;
+                    iActivePointerId = INVALID_POINTER_ID;
                     break;
                 }
 
                 case MotionEvent.ACTION_POINTER_UP: {
-                    final int pointerIndex = MotionEventCompat.getActionIndex(ev);
-                    final int pointerId = MotionEventCompat.getPointerId(ev, pointerIndex);
+                    final int iPointerIndex = MotionEventCompat.getActionIndex(ev);
+                    final int iPointerId = MotionEventCompat.getPointerId(ev, iPointerIndex);
 
-                    if (pointerId == mActivePointerId) {
+                    if (iPointerId == iActivePointerId) {
                         // This was our active pointer going up. Choose a new
                         // active pointer and adjust accordingly.
-                        final int newPointerIndex = pointerIndex == 0 ? 1 : 0;
-                        mLastTouchX = MotionEventCompat.getX(ev, newPointerIndex);
-                        mLastTouchY = MotionEventCompat.getY(ev, newPointerIndex);
-                        mActivePointerId = MotionEventCompat.getPointerId(ev, newPointerIndex);
+                        final int newPointerIndex = iPointerIndex == 0 ? 1 : 0;
+                        fLastTouchX = MotionEventCompat.getX(ev, newPointerIndex);
+                        fLastTouchY = MotionEventCompat.getY(ev, newPointerIndex);
+                        iActivePointerId = MotionEventCompat.getPointerId(ev, newPointerIndex);
                     }
                     break;
                 }
@@ -112,8 +156,8 @@ public class ObserveableListView extends ListView {
     }
 
     public static interface Callbacks {
-        public void onScrollDown();
-
         public void onScrollUp();
+
+        public void onScrollDown();
     }
 }
