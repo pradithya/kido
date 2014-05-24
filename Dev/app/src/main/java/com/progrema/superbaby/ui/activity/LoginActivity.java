@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import com.parse.Parse;
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.ui.fragment.login.BabyInputFragment;
 import com.progrema.superbaby.ui.fragment.login.SplashScreenFragment;
@@ -19,12 +20,15 @@ public class LoginActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Parse.initialize(this, "g5zqCpyPg80t4nqmoXKETbQvO7J7Sh64BB7oCMZ4", "Hwerr3V5jEdVO4UQI2AttWciAIgj6KyGwfWzPKT4");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         // decide whether we skip login or not
         SharedPreferences setting = getSharedPreferences(PREF_LOGIN, 0);
-        boolean isSkipLogin = setting.getBoolean(PREF_SKIP_LOGIN, false);
+        //boolean isSkipLogin = setting.getBoolean(PREF_SKIP_LOGIN, false);
+        boolean isSkipLogin = false;
         boolean newBabyRequest = getIntent().getBooleanExtra(INTENT_NEW_BABY_REQUEST, false);
 
         if (isSkipLogin && !newBabyRequest) {

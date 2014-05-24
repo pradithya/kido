@@ -12,11 +12,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.models.User;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.SecurityUtils;
+
+import com.parse.Parse;
 
 public class LogInFragment extends Fragment implements View.OnClickListener {
     /**
@@ -174,15 +180,31 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
         // user input checking
         userMessage = registerInputCheck(name, password, secQuestion, secAnswer);
         if (userMessage.equals(getResources().getString(R.string.ok_message))) {
+            //TODO remove this
             // get input value and store to DB
-            User user = new User();
-            user.setName(name);
-            user.setPassword(password);
-            user.setSecurityQuestion(secQuestion);
-            user.setSecurityAnswer(secAnswer);
-            user.insert(getActivity());
+//            User user = new User();
+//            user.setName(name);
+//            user.setPassword(password);
+//            user.setSecurityQuestion(secQuestion);
+//            user.setSecurityAnswer(secAnswer);
+//            user.insert(getActivity());
+//
+//            inflateLoginPage();
 
-            inflateLoginPage();
+            ParseUser user = new ParseUser();
+            user.setUsername(name);
+            user.setPassword(password);
+
+            user.signUpInBackground(new SignUpCallback() {
+                public void done(ParseException e) {
+                    if (e == null) {
+                        inflateLoginPage();
+                    } else {
+                        //TODO error message
+                    }
+                }
+            });
+
             return;
         } else if (userMessage.equals(getResources().getString(R.string.username_already_exist_message))) {
             inflateLoginPage();
@@ -208,19 +230,29 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
             return getResources().getString(R.string.input_not_complete_message);
         }
 
-        // user name is not registered
-        cursor = usernameQuery(userName);
-        if (cursor.getCount() == 0) {
-            return getResources().getString(R.string.username_is_not_registered_message);
-        }
+        //TODO remove this
+//        // user name is not registered
+//        cursor = usernameQuery(userName);
+//        if (cursor.getCount() == 0) {
+//            return getResources().getString(R.string.username_is_not_registered_message);
+//        }
+//
+//        // username and password verification
+//        if (!passwordVerification(cursor, password)) {
+//            return getResources().getString(R.string.wrong_username_and_password_message);
+//        }
 
-        // username and password verification
-        if (!passwordVerification(cursor, password)) {
+        // everything is fine
+//        return getResources().getString(R.string.ok_message);
+
+        try {
+            ParseUser.logIn(userName,password);
+            return getResources().getString(R.string.ok_message);
+        } catch (ParseException e) {
             return getResources().getString(R.string.wrong_username_and_password_message);
         }
 
-        // everything is fine
-        return getResources().getString(R.string.ok_message);
+
     }
 
     /**

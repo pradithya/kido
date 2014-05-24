@@ -74,13 +74,17 @@ public class ActiveContext {
      * @param userName active user's name
      */
     public static void setActiveUser(Context context, String userName) {
-        Cursor cursor = userQuery(context, userName);
+        //TODO can we remove this?
+        //Cursor cursor = userQuery(context, userName);
         SharedPreferences setting = context.getSharedPreferences(PREF_CONTEXT, 0);
         SharedPreferences.Editor editor = setting.edit();
 
-        cursor.moveToFirst();
-        editor.putLong(PREF_USER_ID, cursor.getLong(BabyLogContract.User.Query.OFFSET_ID));
-        editor.putString(PREF_USER_NAME, cursor.getString(BabyLogContract.User.Query.OFFSET_NAME));
+        //TODO can we remove this?
+        //cursor.moveToFirst();
+        //editor.putLong(PREF_USER_ID, cursor.getLong(BabyLogContract.User.Query.OFFSET_ID));
+
+        editor.putLong(PREF_USER_ID, 0L);
+        editor.putString(PREF_USER_NAME, userName);
         editor.commit();
     }
 
