@@ -65,13 +65,13 @@ public class ObserveableListView extends ListView {
     }
 
     public int getComputedScrollY() {
-        int pos, nScrollY, nItemY;
+        int iPosition, iScrollY, iItemY;
         View view = null;
-        pos = getFirstVisiblePosition();
+        iPosition = getFirstVisiblePosition();
         view = getChildAt(0);
-        nItemY = view.getTop();
-        nScrollY = iItemOffsetY[pos] - nItemY;
-        return nScrollY;
+        iItemY = view.getTop();
+        iScrollY = iItemOffsetY[iPosition] - iItemY;
+        return iScrollY;
     }
 
     @Override

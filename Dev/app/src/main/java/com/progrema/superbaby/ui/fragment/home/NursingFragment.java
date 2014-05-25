@@ -12,10 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
@@ -52,8 +52,9 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
     private PieGraph pgLeftRight;
     private View vPlaceHolder;
     private View vQuickReturn;
+    private LinearLayout llPlaceHolder;
     private int iQuickReturnHeight;
-    private int iChacheVerticalRange;
+    private int iCacheVerticalRange;
     private int iScrollY;
     private int iRawY;
     private int iMinRawY = 0;
@@ -68,7 +69,9 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                              Bundle savedInstanceState) {
         View vRoot = inflater.inflate(R.layout.fragment_nursing, container, false);
         vQuickReturn = vRoot.findViewById(R.id.header_nursing);
-        vPlaceHolder = inflater.inflate(R.layout.placeholder_nursing, null);
+        View vPlaceholderRoot = inflater.inflate(R.layout.placeholder_nursing, null);
+        vPlaceHolder = vPlaceholderRoot.findViewById(R.id.placeholder_nursing_view);
+        llPlaceHolder =(LinearLayout) vPlaceholderRoot.findViewById(R.id.placeholder_nursing_layout);
 
         // set action bar icon and title
         ActionBar abActionBar = getActivity().getActionBar();
@@ -86,7 +89,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
         // set adapter to list view
         olvNursingHistoryList = (ObserveableListView) vRoot.findViewById(R.id.activity_list);
         naAdapter = new NursingAdapter(getActivity(), null, 0);
-        olvNursingHistoryList.addHeaderView(vPlaceHolder);
+        olvNursingHistoryList.addHeaderView(vPlaceholderRoot);
         olvNursingHistoryList.setAdapter(naAdapter);
 
         // prepare loader
@@ -108,7 +111,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                     public void onGlobalLayout() {
                         iQuickReturnHeight = vQuickReturn.getHeight();
                         olvNursingHistoryList.computeScrollY();
-                        iChacheVerticalRange = olvNursingHistoryList.getListHeight();
+                        iCacheVerticalRange = olvNursingHistoryList.getListHeight();
                     }
                 });
 
@@ -129,8 +132,8 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                     iScrollY = olvNursingHistoryList.getComputedScrollY();
                 }
 
-                iRawY = vPlaceHolder.getTop()
-                        - Math.min(iChacheVerticalRange - olvNursingHistoryList.getHeight(), iScrollY);
+                iRawY = llPlaceHolder.getTop()
+                        - Math.min(iCacheVerticalRange - olvNursingHistoryList.getHeight(), iScrollY);
 
                 switch (iState) {
                     case STATE_OFFSCREEN:
@@ -147,47 +150,25 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                             iState = STATE_OFFSCREEN;
                             iMinRawY = iRawY;
                         }
+                        if (iRawY > llPlaceHolder.getHeight()) {
+                            iRawY = 0;
+                        }
                         iTranslationY = iRawY;
                         break;
 
                     case STATE_RETURNING:
+                        iTranslationY = (iRawY - iMinRawY) - iQuickReturnHeight;
                         if (iTranslationY > 0) {
                             iTranslationY = 0;
                             iMinRawY = iRawY - iQuickReturnHeight;
-                        } else if (iRawY > 0) {
+                        }
+                        if (iRawY > 0) {
                             iState = STATE_ONSCREEN;
                             iTranslationY = iRawY;
-                        } else if (iTranslationY < -iQuickReturnHeight) {
+                        }
+                        if (iTranslationY < -iQuickReturnHeight) {
                             iState = STATE_OFFSCREEN;
                             iMinRawY = iRawY;
-                        } else if (vQuickReturn.getTranslationY() != 0
-                                && !bNoAnimation) {
-                            bNoAnimation = true;
-                            taAnimation = new TranslateAnimation(0, 0,
-                                    -iQuickReturnHeight, 0);
-                            taAnimation.setFillAfter(true);
-                            taAnimation.setDuration(250);
-                            vQuickReturn.startAnimation(taAnimation);
-                            taAnimation.setAnimationListener(new Animation.AnimationListener() {
-
-                                @Override
-                                public void onAnimationStart(Animation animation) {
-                                    // TODO Auto-generated method stub
-
-                                }
-
-                                @Override
-                                public void onAnimationRepeat(Animation animation) {
-                                    // TODO Auto-generated method stub
-
-                                }
-
-                                @Override
-                                public void onAnimationEnd(Animation animation) {
-                                    bNoAnimation = false;
-                                    iMinRawY = iRawY;
-                                }
-                            });
                         }
                         break;
                 }
