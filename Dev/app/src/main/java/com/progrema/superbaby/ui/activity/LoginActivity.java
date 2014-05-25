@@ -27,8 +27,7 @@ public class LoginActivity extends FragmentActivity {
 
         // decide whether we skip login or not
         SharedPreferences setting = getSharedPreferences(PREF_LOGIN, 0);
-        //boolean isSkipLogin = setting.getBoolean(PREF_SKIP_LOGIN, false);
-        boolean isSkipLogin = false;
+        boolean isSkipLogin = setting.getBoolean(PREF_SKIP_LOGIN, false);
         boolean newBabyRequest = getIntent().getBooleanExtra(INTENT_NEW_BABY_REQUEST, false);
 
         if (isSkipLogin && !newBabyRequest) {

@@ -37,9 +37,9 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
     private static final int LOADER_TODAY_ENTRY = 1;
     private static final int LOADER_LAST_SIDE = 2;
     private static final int STATE_ONSCREEN = 0;
-    private int iState = STATE_ONSCREEN;
     private static final int STATE_OFFSCREEN = 1;
     private static final int STATE_RETURNING = 2;
+    private int iState = STATE_ONSCREEN;
     private NursingAdapter naAdapter;
     private ObserveableListView olvNursingHistoryList;
     private TranslateAnimation taAnimation;
@@ -58,7 +58,6 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
     private int iScrollY;
     private int iRawY;
     private int iMinRawY = 0;
-    private boolean bNoAnimation = false;
 
     public static NursingFragment getInstance() {
         return new NursingFragment();
@@ -132,7 +131,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                     iScrollY = olvNursingHistoryList.getComputedScrollY();
                 }
 
-                iRawY = llPlaceHolder.getTop()
+                iRawY = vPlaceHolder.getTop() - llPlaceHolder.getPaddingTop()
                         - Math.min(iCacheVerticalRange - olvNursingHistoryList.getHeight(), iScrollY);
 
                 switch (iState) {
@@ -164,6 +163,9 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                         }
                         if (iRawY > 0) {
                             iState = STATE_ONSCREEN;
+                            if (iRawY > llPlaceHolder.getHeight()) {
+                                iRawY = 0;
+                            }
                             iTranslationY = iRawY;
                         }
                         if (iTranslationY < -iQuickReturnHeight) {
