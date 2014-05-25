@@ -1,0 +1,15 @@
+.idea/.name
+.idea/compiler.xml
+.idea/copyright/profiles_settings.xml
+.idea/encodings.xml
+.idea/libraries/gradle_wrapper.xml
+.idea/libraries/library.xml
+.idea/modules.xml
+.idea/scopes/scope_settings.xml
+.idea/vcs.xml
+.idea/workspace.xml
+Dev/.idea/.name
+Dev/app/src/main/gen/com/progrema/superbaby/BuildConfig.java
+Dev/app/src/main/gen/com/progrema/superbaby/Manifest.java
+Dev/app/src/main/gen/com/progrema/superbaby/R.java
+Dev/app/src/main/main.iml
