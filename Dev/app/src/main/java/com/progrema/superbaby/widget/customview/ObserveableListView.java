@@ -3,6 +3,7 @@ package com.progrema.superbaby.widget.customview;
 import android.content.Context;
 import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ListView;
@@ -22,7 +23,6 @@ public class ObserveableListView extends ListView {
     private int iHeight;
     private int iItemCount;
     private int iItemOffsetY[];
-
 
     public ObserveableListView(Context context) {
         super(context);
@@ -71,6 +71,10 @@ public class ObserveableListView extends ListView {
         view = getChildAt(0);
         iItemY = view.getTop();
         iScrollY = iItemOffsetY[iPosition] - iItemY;
+        Log.i("__DEBUG",
+                "iPosition = " + iPosition +
+                        " height = " + view.getHeight()
+        );
         return iScrollY;
     }
 

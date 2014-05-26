@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,9 +38,9 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
     private static final int LOADER_TODAY_ENTRY = 1;
     private static final int LOADER_LAST_SIDE = 2;
     private static final int STATE_ONSCREEN = 0;
+    private int iState = STATE_ONSCREEN;
     private static final int STATE_OFFSCREEN = 1;
     private static final int STATE_RETURNING = 2;
-    private int iState = STATE_ONSCREEN;
     private NursingAdapter naAdapter;
     private ObserveableListView olvNursingHistoryList;
     private TranslateAnimation taAnimation;
@@ -50,7 +51,6 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
     private TextView tvFormulaToday;
     private ImageView ivLastSide;
     private PieGraph pgLeftRight;
-    private View vPlaceHolder;
     private View vQuickReturn;
     private LinearLayout llPlaceHolder;
     private int iQuickReturnHeight;
@@ -67,10 +67,9 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vRoot = inflater.inflate(R.layout.fragment_nursing, container, false);
-        vQuickReturn = vRoot.findViewById(R.id.header_nursing);
         View vPlaceholderRoot = inflater.inflate(R.layout.placeholder_nursing, null);
-        vPlaceHolder = vPlaceholderRoot.findViewById(R.id.placeholder_nursing_view);
-        llPlaceHolder =(LinearLayout) vPlaceholderRoot.findViewById(R.id.placeholder_nursing_layout);
+        vQuickReturn = vRoot.findViewById(R.id.header_nursing);
+        llPlaceHolder = (LinearLayout) vPlaceholderRoot.findViewById(R.id.placeholder_nursing);
 
         // set action bar icon and title
         ActionBar abActionBar = getActivity().getActionBar();
@@ -131,8 +130,12 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                     iScrollY = olvNursingHistoryList.getComputedScrollY();
                 }
 
-                iRawY = vPlaceHolder.getTop() - llPlaceHolder.getPaddingTop()
-                        - Math.min(iCacheVerticalRange - olvNursingHistoryList.getHeight(), iScrollY);
+                iRawY = -Math.min(iCacheVerticalRange - olvNursingHistoryList.getHeight(), iScrollY);
+
+                Log.i("__DEBUG",
+                        "iRawY = " + String.valueOf(iRawY) +
+                                " iScrollY = " + String.valueOf(iScrollY)
+                );
 
                 switch (iState) {
                     case STATE_OFFSCREEN:
@@ -149,7 +152,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                             iState = STATE_OFFSCREEN;
                             iMinRawY = iRawY;
                         }
-                        if (iRawY > llPlaceHolder.getHeight()) {
+                        if (iRawY >= llPlaceHolder.getHeight()) {
                             iRawY = 0;
                         }
                         iTranslationY = iRawY;
@@ -163,9 +166,6 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                         }
                         if (iRawY > 0) {
                             iState = STATE_ONSCREEN;
-                            if (iRawY > llPlaceHolder.getHeight()) {
-                                iRawY = 0;
-                            }
                             iTranslationY = iRawY;
                         }
                         if (iTranslationY < -iQuickReturnHeight) {
