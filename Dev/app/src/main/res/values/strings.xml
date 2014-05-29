@@ -30,12 +30,11 @@
     <string name="nursing_percentage">{percentage}%</string>
     <string name="nursing_left_percentage_initial">Left ...%</string>
     <string name="nursing_right_percentage_initial">Right ...%</string>
-    <string name="nursing_last_side">Last Side: {side}</string>
+    <string name="nursing_volume">{volume} mL</string>
     <string name="nursing_last_side_initial">Last Side: ...</string>
     <string name="nursing_last_side_title">Last side</string>
-    <string name="nursing_today">{values} {unit}</string>
-    <string name="nursing_left_today_initial">Left ... m</string>
-    <string name="nursing_right_today_initial">Right ... m</string>
+    <string name="nursing_today">{hour} h {minute} m {second} s</string>
+    <string name="nursing_today_initial">... h ... m ... s</string>
     <string name="nursing_formula_today_initial">Formula ... mL</string>
     <string name="nursing_per_day_initial">Type ... ...</string>
 

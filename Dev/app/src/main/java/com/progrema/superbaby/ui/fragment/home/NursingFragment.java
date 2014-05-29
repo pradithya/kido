@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,20 +31,34 @@ import com.progrema.superbaby.widget.customview.ObserveableListView;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
 
 public class NursingFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    /*
+     * Loader Type used for asynchronous cursor loading
+     */
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_HEADER_INFORMATION = 1;
     private static final int LOADER_LAST_SIDE = 2;
+
+    /*
+     * Animation State and calculation variable used for managing the animation
+     */
     private static final int STATE_ONSCREEN = 0;
-    private int iState = STATE_ONSCREEN;
     private static final int STATE_OFFSCREEN = 1;
     private static final int STATE_RETURNING = 2;
-    private NursingAdapter naAdapter;
-    private ObserveableListView olvNursingHistoryList;
+    private int iState = STATE_ONSCREEN;
+    private LinearLayout llPlaceHolder;
+    private int iQuickReturnHeight;
+    private int iCacheVerticalRange;
+    private int iScrollY;
+    private int iRawY;
+    private int iMinRawY = 0;
     private TranslateAnimation taAnimation;
+
+    /*
+     * View Object for header information
+     */
     private TextView tvLeftPct;
     private TextView tvRightPct;
     private TextView tvRightToday;
@@ -54,12 +67,12 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
     private ImageView ivLastSide;
     private PieGraph pgLeftRight;
     private View vQuickReturn;
-    private LinearLayout llPlaceHolder;
-    private int iQuickReturnHeight;
-    private int iCacheVerticalRange;
-    private int iScrollY;
-    private int iRawY;
-    private int iMinRawY = 0;
+
+    /*
+     * List and adapter to manage list view
+     */
+    private NursingAdapter naAdapter;
+    private ObserveableListView olvNursingHistoryList;
 
     public static NursingFragment getInstance() {
         return new NursingFragment();
@@ -133,13 +146,6 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                 }
 
                 iRawY = -Math.min(iCacheVerticalRange - olvNursingHistoryList.getHeight(), iScrollY);
-
-                /*
-                Log.i("__DEBUG",
-                        "iRawY = " + String.valueOf(iRawY) +
-                                " iScrollY = " + String.valueOf(iScrollY)
-                );
-                */
 
                 switch (iState) {
                     case STATE_OFFSCREEN:
@@ -226,11 +232,6 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                 BabyLogContract.Nursing.SIDES
         };
 
-        Log.i("__DEBUG",
-                "sStart = " + sStart +
-                        " sEnd = " + sEnd
-        );
-
         switch (iLoaderId) {
             case LOADER_LIST_VIEW:
                 return new CursorLoader(getActivity(),
@@ -312,10 +313,8 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                     );
 
                     // left side duration information
-                    fResult = TimeUnit.MILLISECONDS.toMinutes(lLeftDuration);
                     tvLeftToday.setText(
-                            FormatUtils.fmtNursingToday(getActivity(),
-                                    String.valueOf(fResult), "m")
+                            FormatUtils.fmtNursingDrt(getActivity(), String.valueOf(lLeftDuration))
                     );
                     PieSlice psLeft = new PieSlice();
                     psLeft.setColor(getResources().getColor(R.color.green));
@@ -323,10 +322,8 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                     pgLeftRight.addSlice(psLeft);
 
                     // right side duration information
-                    fResult = TimeUnit.MILLISECONDS.toMinutes(lRightDuration);
                     tvRightToday.setText(
-                            FormatUtils.fmtNursingToday(getActivity(),
-                                    String.valueOf(fResult), "m")
+                            FormatUtils.fmtNursingDrt(getActivity(), String.valueOf(lRightDuration))
                     );
                     PieSlice psRight = new PieSlice();
                     psRight.setColor(getResources().getColor(R.color.orange));
@@ -335,8 +332,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
 
                     // formula volume information
                     tvFormulaToday.setText(
-                            FormatUtils.fmtNursingToday(getActivity(),
-                                    String.valueOf(lFormulaVolume), "ml")
+                            FormatUtils.fmtVolumeToday(getActivity(), String.valueOf(lFormulaVolume))
                     );
                     break;
 

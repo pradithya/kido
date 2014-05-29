@@ -246,17 +246,41 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String fmtNursingToday(Context context, String values, String unit) {
+    public static String fmtNursingDrt(Context context, String duration) {
+        long lDurationInMilliseconds = Long.parseLong(duration);
+        long lHours = TimeUnit.MILLISECONDS.toHours(lDurationInMilliseconds);
+        long lMinutes;
+        long lSeconds;
+
+        if (lHours != 0) {
+            lMinutes = TimeUnit.MILLISECONDS.toMinutes(
+                    lDurationInMilliseconds % TimeUnit.HOURS.toMillis(lHours));
+        } else {
+            lMinutes = TimeUnit.MILLISECONDS.toMinutes(lDurationInMilliseconds);
+        }
+
+        if ((lMinutes != 0) && (lHours != 0)) {
+            lSeconds = TimeUnit.MILLISECONDS.toSeconds(
+                    (lDurationInMilliseconds % TimeUnit.HOURS.toMillis(lHours))
+                            % TimeUnit.MINUTES.toMillis(lMinutes));
+        } else if ((lMinutes == 0) && (lHours != 0)) {
+            lSeconds = TimeUnit.MILLISECONDS.toSeconds(
+                    lDurationInMilliseconds % TimeUnit.HOURS.toMillis(lHours));
+        } else {
+            lSeconds = TimeUnit.MILLISECONDS.toSeconds(lDurationInMilliseconds);
+        }
+
         CharSequence formatted = Phrase.from(context.getResources().getString(R.string.nursing_today))
-                .put("values", values)
-                .put("unit", unit)
+                .put("hour", String.valueOf(lHours))
+                .put("minute", String.valueOf(lMinutes))
+                .put("second", String.valueOf(lSeconds))
                 .format();
         return String.valueOf(formatted);
     }
 
-    public static String fmtNursingLastSide(Context context, String side) {
-        CharSequence formatted = Phrase.from(context.getResources().getString(R.string.nursing_last_side))
-                .put("side", side)
+    public static String fmtVolumeToday(Context context, String volume) {
+        CharSequence formatted = Phrase.from(context.getResources().getString(R.string.nursing_volume))
+                .put("volume", volume)
                 .format();
         return String.valueOf(formatted);
     }
