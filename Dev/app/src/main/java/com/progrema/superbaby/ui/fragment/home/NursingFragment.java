@@ -25,17 +25,19 @@ import com.progrema.superbaby.holograph.PieGraph;
 import com.progrema.superbaby.holograph.PieSlice;
 import com.progrema.superbaby.models.Nursing;
 import com.progrema.superbaby.provider.BabyLogContract;
+import com.progrema.superbaby.ui.activity.HomeActivity;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.FormatUtils;
 import com.progrema.superbaby.widget.customview.ObserveableListView;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 public class NursingFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int LOADER_LIST_VIEW = 0;
-    private static final int LOADER_TODAY_ENTRY = 1;
+    private static final int LOADER_HEADER_INFORMATION = 1;
     private static final int LOADER_LAST_SIDE = 2;
     private static final int STATE_ONSCREEN = 0;
     private int iState = STATE_ONSCREEN;
@@ -92,9 +94,9 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
 
         // prepare loader
         LoaderManager lmLoaderManager = getLoaderManager();
-        lmLoaderManager.initLoader(LOADER_LIST_VIEW, null, this);
-        lmLoaderManager.initLoader(LOADER_TODAY_ENTRY, null, this);
-        lmLoaderManager.initLoader(LOADER_LAST_SIDE, null, this);
+        lmLoaderManager.initLoader(LOADER_LIST_VIEW, getArguments(), this);
+        lmLoaderManager.initLoader(LOADER_HEADER_INFORMATION, getArguments(), this);
+        lmLoaderManager.initLoader(LOADER_LAST_SIDE, getArguments(), this);
         return vRoot;
     }
 
@@ -132,10 +134,12 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
 
                 iRawY = -Math.min(iCacheVerticalRange - olvNursingHistoryList.getHeight(), iScrollY);
 
+                /*
                 Log.i("__DEBUG",
                         "iRawY = " + String.valueOf(iRawY) +
                                 " iScrollY = " + String.valueOf(iScrollY)
                 );
+                */
 
                 switch (iState) {
                     case STATE_OFFSCREEN:
@@ -191,46 +195,56 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public Loader<Cursor> onCreateLoader(int iLoaderId, Bundle bBundle) {
 
-        /**
-         * as stated here: http://developer.android.com/reference/java/util/Calendar.html
-         * 24:00:00 "belongs" to the following day.
-         * That is, 23:59 on Dec 31, 1969 < 24:00 on Jan 1, 1970 < 24:01:00 on Jan 1, 1970
-         * form a sequence of three consecutive minutes in time.
-         */
-        Calendar cMidnight = Calendar.getInstance();
-        cMidnight.set(Calendar.HOUR_OF_DAY, 0);
-        cMidnight.set(Calendar.MINUTE, 0);
-        cMidnight.set(Calendar.SECOND, 0);
-        cMidnight.set(Calendar.MILLISECOND, 0);
-        String sTimestampReference = String.valueOf(cMidnight.getTimeInMillis());
-
         String[] aArgumentSelectionOne = {
                 String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())
         };
 
+        String sStart;
+        String sEnd;
+
+        if ((bBundle != null) &&
+                !bBundle.getString(HomeActivity.TimeFilter.FILTER_TYPE.getTitle())
+                        .equals(HomeActivity.TimeFilter.FILTER_TODAY.getTitle())) {
+            sStart = bBundle.getString(HomeActivity.TimeFilter.START.getTitle());
+            sEnd = bBundle.getString(HomeActivity.TimeFilter.END.getTitle());
+        } else {
+            Calendar cStart = Calendar.getInstance();
+            sEnd = String.valueOf(cStart.getTimeInMillis()); //now, for now
+            cStart.set(Calendar.HOUR_OF_DAY, 0);
+            cStart.set(Calendar.MINUTE, 0);
+            cStart.set(Calendar.SECOND, 0);
+            cStart.set(Calendar.MILLISECOND, 0);
+            sStart = String.valueOf(cStart.getTimeInMillis());
+        }
+
         String[] aArgumentSelectionTwo = {
                 String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID()),
-                sTimestampReference
+                sStart, sEnd
         };
 
         String[] aLastSideProjection = {
                 BabyLogContract.Nursing.SIDES
         };
 
+        Log.i("__DEBUG",
+                "sStart = " + sStart +
+                        " sEnd = " + sEnd
+        );
+
         switch (iLoaderId) {
             case LOADER_LIST_VIEW:
                 return new CursorLoader(getActivity(),
                         BabyLogContract.Nursing.CONTENT_URI,
                         BabyLogContract.Nursing.Query.PROJECTION,
-                        BabyLogContract.BABY_SELECTION_ARG,
-                        aArgumentSelectionOne,
+                        "baby_id = ? AND timestamp >= ? AND timestamp <= ?",
+                        aArgumentSelectionTwo,
                         BabyLogContract.Nursing.Query.SORT_BY_TIMESTAMP_DESC);
 
-            case LOADER_TODAY_ENTRY:
+            case LOADER_HEADER_INFORMATION:
                 return new CursorLoader(getActivity(),
                         BabyLogContract.Nursing.CONTENT_URI,
                         BabyLogContract.Nursing.Query.PROJECTION,
-                        "baby_id = ? AND timestamp >= ?",
+                        "baby_id = ? AND timestamp >= ? AND timestamp <= ?",
                         aArgumentSelectionTwo,
                         BabyLogContract.Nursing.Query.SORT_BY_TIMESTAMP_DESC);
 
@@ -257,7 +271,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                     naAdapter.swapCursor(cCursor);
                     break;
 
-                case LOADER_TODAY_ENTRY:
+                case LOADER_HEADER_INFORMATION:
 
                     long lDuration;
                     long lTotalDuration = 0;
@@ -281,18 +295,20 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
                         }
                     }
 
+                    DecimalFormat dfForm = new DecimalFormat("0.00");
+
                     // left percentage information
-                    fResult = lLeftDuration / lTotalDuration * 100;
+                    fResult = (float)lLeftDuration / (float)lTotalDuration * 100;
                     tvLeftPct.setText(
                             FormatUtils.fmtNursingPct(getActivity(),
-                                    String.valueOf(fResult))
+                                    String.valueOf(dfForm.format(fResult)))
                     );
 
                     // right percentage information
-                    fResult = lRightDuration / lTotalDuration * 100;
+                    fResult = (float)lRightDuration / (float)lTotalDuration * 100;
                     tvRightPct.setText(
                             FormatUtils.fmtNursingPct(getActivity(),
-                                    String.valueOf(fResult))
+                                    String.valueOf(dfForm.format(fResult)))
                     );
 
                     // left side duration information

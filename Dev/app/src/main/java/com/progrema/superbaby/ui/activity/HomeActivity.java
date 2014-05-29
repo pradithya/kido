@@ -318,9 +318,14 @@ public class HomeActivity extends FragmentActivity
         }
     }
 
-    public enum  TimeFilter{
+    public enum TimeFilter{
         START("start"),
-        END("end");
+        END("end"),
+        FILTER_TYPE("filter_type"),
+        FILTER_TODAY("filter_today"),
+        FILTER_THIS_WEEK("filter_this_week"),
+        FILTER_THIS_MONTH("filter_this_month"),
+        FILTER_ALL("filter_all");
 
         private String title;
 
@@ -382,6 +387,7 @@ public class HomeActivity extends FragmentActivity
     }
 
     private Bundle createTimeFilter (int position){
+
         /**
          * as stated here: http://developer.android.com/reference/java/util/Calendar.html
          * 24:00:00 "belongs" to the following day.
@@ -391,6 +397,7 @@ public class HomeActivity extends FragmentActivity
         Calendar cStart = Calendar.getInstance();
         String sEnd = String.valueOf(cStart.getTimeInMillis()); //now, for now
         String sStart;
+        String sType = null;
 
         cStart.set(Calendar.HOUR_OF_DAY, 0);
         cStart.set(Calendar.MINUTE, 0);
@@ -399,15 +406,19 @@ public class HomeActivity extends FragmentActivity
 
         switch (position){
             case TIMEFILTER_POSITION_TODAY:
+                sType = TimeFilter.FILTER_TODAY.getTitle();
                 break;
             case TIMEFILTER_POSITION_THIS_WEEK:
-                cStart.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+                cStart.set(Calendar.DAY_OF_WEEK, Calendar.getInstance().getFirstDayOfWeek());
+                sType = TimeFilter.FILTER_THIS_WEEK.getTitle();
                 break;
             case TIMEFILTER_POSITION_THIS_MONTH:
                 cStart.set(Calendar.DAY_OF_MONTH, 1);
+                sType = TimeFilter.FILTER_THIS_MONTH.getTitle();
                 break;
             case TIMEFILTER_POSITION_ALL:
                 cStart.set(Calendar.YEAR,1); //year 1?
+                sType = TimeFilter.FILTER_ALL.getTitle();
                 break;
         }
 
@@ -415,6 +426,7 @@ public class HomeActivity extends FragmentActivity
         Bundle bTimeSelection  = new Bundle();
         bTimeSelection.putString(TimeFilter.START.getTitle(),sStart);
         bTimeSelection.putString(TimeFilter.END.getTitle(),sEnd);
+        bTimeSelection.putString(TimeFilter.FILTER_TYPE.getTitle(), sType);
         return bTimeSelection;
     }
 }
