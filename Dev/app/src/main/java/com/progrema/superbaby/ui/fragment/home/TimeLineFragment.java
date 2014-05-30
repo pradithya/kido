@@ -19,7 +19,7 @@ import com.progrema.superbaby.models.Baby;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.FormatUtils;
-import com.progrema.superbaby.widget.customview.ObserveableListView;
+import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 
 public class TimeLineFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 

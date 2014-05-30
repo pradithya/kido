@@ -2,20 +2,14 @@ package com.progrema.superbaby.ui.fragment.home;
 
 import android.app.ActionBar;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.view.animation.TranslateAnimation;
-import android.widget.AbsListView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
@@ -27,12 +21,13 @@ import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.ui.activity.HomeActivity;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.FormatUtils;
-import com.progrema.superbaby.widget.customview.ObserveableListView;
+import com.progrema.superbaby.widget.customfragment.AnimationFragment;
+import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
 
-public class NursingFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class NursingFragment extends AnimationFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     /*
      * Loader Type used for asynchronous cursor loading
@@ -40,21 +35,6 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_HEADER_INFORMATION = 1;
     private static final int LOADER_LAST_SIDE = 2;
-
-    /*
-     * Animation State and calculation variable used for managing the animation
-     */
-    private static final int STATE_ONSCREEN = 0;
-    private static final int STATE_OFFSCREEN = 1;
-    private static final int STATE_RETURNING = 2;
-    private int iState = STATE_ONSCREEN;
-    private LinearLayout llPlaceHolder;
-    private int iQuickReturnHeight;
-    private int iCacheVerticalRange;
-    private int iScrollY;
-    private int iRawY;
-    private int iMinRawY = 0;
-    private TranslateAnimation taAnimation;
 
     /*
      * View Object for header information
@@ -66,7 +46,6 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
     private TextView tvFormulaToday;
     private ImageView ivLastSide;
     private PieGraph pgLeftRight;
-    private View vQuickReturn;
 
     /*
      * List and adapter to manage list view
@@ -81,10 +60,11 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // get layout
         View vRoot = inflater.inflate(R.layout.fragment_nursing, container, false);
         View vPlaceholderRoot = inflater.inflate(R.layout.placeholder_nursing, null);
-        vQuickReturn = vRoot.findViewById(R.id.header_nursing);
-        llPlaceHolder = (LinearLayout) vPlaceholderRoot.findViewById(R.id.placeholder_nursing);
+        super.attachQuickReturnView(vRoot, R.id.header_nursing);
+        super.attachPlaceHolderLayout(vPlaceholderRoot, R.id.placeholder_nursing);
 
         // set action bar icon and title
         ActionBar abActionBar = getActivity().getActionBar();
@@ -104,6 +84,7 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
         naAdapter = new NursingAdapter(getActivity(), null, 0);
         olvNursingHistoryList.addHeaderView(vPlaceholderRoot);
         olvNursingHistoryList.setAdapter(naAdapter);
+        super.attachListView(olvNursingHistoryList);
 
         // prepare loader
         LoaderManager lmLoaderManager = getLoaderManager();
@@ -111,91 +92,6 @@ public class NursingFragment extends Fragment implements LoaderManager.LoaderCal
         lmLoaderManager.initLoader(LOADER_HEADER_INFORMATION, getArguments(), this);
         lmLoaderManager.initLoader(LOADER_LAST_SIDE, getArguments(), this);
         return vRoot;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        // add global layout listener
-        olvNursingHistoryList.getViewTreeObserver()
-                .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        iQuickReturnHeight = vQuickReturn.getHeight();
-                        olvNursingHistoryList.computeScrollY();
-                        iCacheVerticalRange = olvNursingHistoryList.getListHeight();
-                    }
-                });
-
-        // add scroll listener
-        olvNursingHistoryList.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                // nothing happened here
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem,
-                                 int visibleItemCount, int totalItemCount) {
-                iScrollY = 0;
-                int iTranslationY = 0;
-
-                if (olvNursingHistoryList.scrollYIsComputed()) {
-                    iScrollY = olvNursingHistoryList.getComputedScrollY();
-                }
-
-                iRawY = -Math.min(iCacheVerticalRange - olvNursingHistoryList.getHeight(), iScrollY);
-
-                switch (iState) {
-                    case STATE_OFFSCREEN:
-                        if (iRawY <= iMinRawY) {
-                            iMinRawY = iRawY;
-                        } else {
-                            iState = STATE_RETURNING;
-                        }
-                        iTranslationY = iRawY;
-                        break;
-
-                    case STATE_ONSCREEN:
-                        if (iRawY < -iQuickReturnHeight) {
-                            iState = STATE_OFFSCREEN;
-                            iMinRawY = iRawY;
-                        }
-                        if (iRawY >= llPlaceHolder.getHeight()) {
-                            iRawY = 0;
-                        }
-                        iTranslationY = iRawY;
-                        break;
-
-                    case STATE_RETURNING:
-                        iTranslationY = (iRawY - iMinRawY) - iQuickReturnHeight;
-                        if (iTranslationY > 0) {
-                            iTranslationY = 0;
-                            iMinRawY = iRawY - iQuickReturnHeight;
-                        }
-                        if (iRawY > 0) {
-                            iState = STATE_ONSCREEN;
-                            iTranslationY = iRawY;
-                        }
-                        if (iTranslationY < -iQuickReturnHeight) {
-                            iState = STATE_OFFSCREEN;
-                            iMinRawY = iRawY;
-                        }
-                        break;
-                }
-
-                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB) {
-                    taAnimation = new TranslateAnimation(0, 0, iTranslationY, iTranslationY);
-                    taAnimation.setFillAfter(true);
-                    taAnimation.setDuration(0);
-                    vQuickReturn.startAnimation(taAnimation);
-                } else {
-                    vQuickReturn.setTranslationY(iTranslationY);
-                }
-            }
-        });
-
     }
 
     @Override

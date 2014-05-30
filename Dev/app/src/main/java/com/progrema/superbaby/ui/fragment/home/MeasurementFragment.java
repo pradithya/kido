@@ -15,7 +15,7 @@ import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.measurement.MeasurementAdapter;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
-import com.progrema.superbaby.widget.customview.ObserveableListView;
+import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 
 public class MeasurementFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
