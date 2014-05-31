@@ -10,9 +10,13 @@ import android.widget.AbsListView;
 import android.widget.LinearLayout;
 
 import com.progrema.superbaby.R;
+import com.progrema.superbaby.ui.activity.HomeActivity;
+import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 
-public class AnimationFragment extends Fragment {
+import java.util.Calendar;
+
+public class HistoryFragment extends Fragment {
 
     /*
      * Animation State and calculation variable used for managing the animation
@@ -32,11 +36,12 @@ public class AnimationFragment extends Fragment {
     private int iMinRawY = 0;
 
     public void attachQuickReturnView(View vRoot, int iId) {
-        this.vQuickReturn = vRoot.findViewById(R.id.header_nursing);
+        this.vQuickReturn = vRoot.findViewById(R.id.header_container);
     }
 
     public void attachPlaceHolderLayout(View vPlaceholderRoot, int iId) {
-        this.llPlaceHolder = (LinearLayout) vPlaceholderRoot.findViewById(R.id.placeholder_nursing);
+        this.llPlaceHolder = (LinearLayout) vPlaceholderRoot.findViewById(R.id.placeholder_header);
+        this.llPlaceHolder.setMinimumHeight(vQuickReturn.getHeight());
     }
 
     public void attachListView(ObserveableListView olvListView) {
@@ -56,6 +61,7 @@ public class AnimationFragment extends Fragment {
                         iQuickReturnHeight = vQuickReturn.getHeight();
                         olvListView.computeScrollY();
                         iCacheVerticalRange = olvListView.getListHeight();
+                        llPlaceHolder.setMinimumHeight(iQuickReturnHeight);
                     }
                 });
 
@@ -126,5 +132,34 @@ public class AnimationFragment extends Fragment {
                 }
             }
         });
+    }
+
+    public String[] getTimeFilterArg(Bundle bBundle)
+    {
+
+        String sStart;
+        String sEnd;
+
+        if (bBundle != null) {
+            sStart = bBundle.getString(HomeActivity.TimeFilter.START.getTitle());
+            sEnd = bBundle.getString(HomeActivity.TimeFilter.END.getTitle());
+
+        } else {
+            Calendar cStart = Calendar.getInstance();
+            sEnd = String.valueOf(cStart.getTimeInMillis()); //now, for now
+
+            cStart.set(Calendar.HOUR_OF_DAY, 0);
+            cStart.set(Calendar.MINUTE, 0);
+            cStart.set(Calendar.SECOND, 0);
+            cStart.set(Calendar.MILLISECOND, 0);
+            sStart = String.valueOf(cStart.getTimeInMillis());
+        }
+
+        String[] timeFitlerArg = {
+                String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID()),
+                sStart, sEnd
+        };
+
+        return timeFitlerArg;
     }
 }

@@ -1,4 +1,4 @@
-package com.progrema.superbaby.ui.fragment.home;
+package com.progrema.superbaby.ui.fragment.history;
 
 import android.app.ActionBar;
 import android.database.Cursor;
@@ -20,11 +20,12 @@ import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.ui.activity.HomeActivity;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.FormatUtils;
+import com.progrema.superbaby.widget.customfragment.HistoryFragment;
 import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 
 import java.util.Calendar;
 
-public class DiaperFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class DiaperFragment extends HistoryFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_LAST_WET = 1;
@@ -54,10 +55,14 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
 
         // inflate fragment layout
         View vRoot = liInflater.inflate(R.layout.fragment_diaper, vgContainer, false);
+        View vPlaceholderRoot = liInflater.inflate(R.layout.placeholder_header, null);
 
         // set action bar icon and title
         ActionBar abActionBar = getActivity().getActionBar();
         abActionBar.setIcon(getResources().getDrawable(R.drawable.ic_diaper_top));
+
+        super.attachQuickReturnView(vRoot, R.id.header_container);
+        super.attachPlaceHolderLayout(vPlaceholderRoot, R.id.placeholder_header);
 
         // get Header UI object
         tvWetTotalToday = (TextView) vRoot.findViewById(R.id.wet_average);
@@ -71,9 +76,10 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
         // set adapter to list view
         olvDiaperHistoryList = (ObserveableListView) vRoot.findViewById(R.id.activity_list);
         daAdapter = new DiaperAdapter(getActivity(), null, 0);
-        olvDiaperHistoryList.addHeaderView(new View(getActivity()));
+        olvDiaperHistoryList.addHeaderView(vPlaceholderRoot);
         olvDiaperHistoryList.addFooterView(new View(getActivity()));
         olvDiaperHistoryList.setAdapter(daAdapter);
+        super.attachListView(olvDiaperHistoryList);
 
         // prepare loader
         LoaderManager lmLoaderManager = getLoaderManager();
@@ -85,45 +91,25 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
         lmLoaderManager.initLoader(LOADER_TODAY_DRY, getArguments(), this);
         lmLoaderManager.initLoader(LOADER_TODAY_MIXED, getArguments(), this);
 
+
         return vRoot;
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int iLoaderId, Bundle bBundle) {
 
-        String[] aArgumentSelectionOne = {
+        String[] babyIDArg = {
                 String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())
         };
 
-        String sStart;
-        String sEnd;
-
-        if (bBundle != null) {
-            sStart = bBundle.getString(HomeActivity.TimeFilter.START.getTitle());
-            sEnd = bBundle.getString(HomeActivity.TimeFilter.END.getTitle());
-
-        } else {
-            Calendar cStart = Calendar.getInstance();
-            sEnd = String.valueOf(cStart.getTimeInMillis()); //now, for now
-
-            cStart.set(Calendar.HOUR_OF_DAY, 0);
-            cStart.set(Calendar.MINUTE, 0);
-            cStart.set(Calendar.SECOND, 0);
-            cStart.set(Calendar.MILLISECOND, 0);
-            sStart = String.valueOf(cStart.getTimeInMillis());
-        }
-
-        String[] aArgumentSelectionTwo = {
-                String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID()),
-                sStart, sEnd
-        };
+        String[] timeFilterArg = getTimeFilterArg(bBundle);
 
         switch (iLoaderId) {
             case LOADER_LIST_VIEW:
                 return new CursorLoader(getActivity(), BabyLogContract.Diaper.CONTENT_URI,
                         BabyLogContract.Diaper.Query.PROJECTION,
                         "baby_id = ? AND timestamp >= ? AND timestamp <= ?",
-                        aArgumentSelectionTwo,
+                        timeFilterArg,
                         BabyLogContract.Diaper.Query.SORT_BY_TIMESTAMP_DESC);
 
             case LOADER_LAST_WET:
@@ -131,7 +117,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
                         BabyLogContract.Diaper.CONTENT_URI,
                         BabyLogContract.Diaper.Query.PROJECTION,
                         "baby_id = ? AND type = 'WET'",
-                        aArgumentSelectionOne,
+                        babyIDArg,
                         BabyLogContract.Diaper.Query.SORT_BY_TIMESTAMP_DESC);
 
             case LOADER_LAST_DRY:
@@ -139,7 +125,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
                         BabyLogContract.Diaper.CONTENT_URI,
                         BabyLogContract.Diaper.Query.PROJECTION,
                         "baby_id = ? AND type = 'DRY'",
-                        aArgumentSelectionOne,
+                        babyIDArg,
                         BabyLogContract.Diaper.Query.SORT_BY_TIMESTAMP_DESC);
 
             case LOADER_LAST_MIXED:
@@ -147,7 +133,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
                         BabyLogContract.Diaper.CONTENT_URI,
                         BabyLogContract.Diaper.Query.PROJECTION,
                         "baby_id = ? AND type = 'MIXED'",
-                        aArgumentSelectionOne,
+                        babyIDArg,
                         BabyLogContract.Diaper.Query.SORT_BY_TIMESTAMP_DESC);
 
             case LOADER_TODAY_DRY:
@@ -155,7 +141,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
                         BabyLogContract.Diaper.CONTENT_URI,
                         BabyLogContract.Diaper.Query.PROJECTION,
                         "baby_id = ? AND type = 'DRY' AND timestamp >= ? AND timestamp <= ?",
-                        aArgumentSelectionTwo,
+                        timeFilterArg,
                         BabyLogContract.Diaper.Query.SORT_BY_TIMESTAMP_DESC);
 
             case LOADER_TODAY_WET:
@@ -163,7 +149,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
                         BabyLogContract.Diaper.CONTENT_URI,
                         BabyLogContract.Diaper.Query.PROJECTION,
                         "baby_id = ? AND type = 'WET' AND timestamp >= ? AND timestamp <= ?",
-                        aArgumentSelectionTwo,
+                        timeFilterArg,
                         BabyLogContract.Diaper.Query.SORT_BY_TIMESTAMP_DESC);
 
             case LOADER_TODAY_MIXED:
@@ -171,7 +157,7 @@ public class DiaperFragment extends Fragment implements LoaderManager.LoaderCall
                         BabyLogContract.Diaper.CONTENT_URI,
                         BabyLogContract.Diaper.Query.PROJECTION,
                         "baby_id = ? AND type = 'MIXED' AND timestamp >= ? AND timestamp <= ?",
-                        aArgumentSelectionTwo,
+                        timeFilterArg,
                         BabyLogContract.Diaper.Query.SORT_BY_TIMESTAMP_DESC);
 
             default:

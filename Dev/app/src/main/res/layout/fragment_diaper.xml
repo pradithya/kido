@@ -1,150 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:orientation="vertical">
 
-    <LinearLayout
+    <com.progrema.superbaby.widget.customlistview.ObserveableListView
+        android:id="@+id/activity_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:footerDividersEnabled="true"
+        android:headerDividersEnabled="true"
+        android:listSelector="@android:color/transparent"/>
 
-        <LinearLayout
-            android:id="@+id/sleep_header_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="@drawable/header_card_background"
-            android:orientation="horizontal"
-            android:padding="4dp">
 
-            <RelativeLayout
-                android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/header_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:background="@drawable/header_card_background"
+        android:orientation="horizontal"
+        android:padding="4dp">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <com.progrema.superbaby.holograph.PieGraph
+                android:id="@+id/diaper_piegraph"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_marginRight="4dp"
+                app:pieInnerCircleRatio="128"
+                app:pieSlicePadding="0dp"/>
 
-                <com.progrema.superbaby.holograph.PieGraph
-                    android:id="@+id/diaper_piegraph"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="4dp"
-                    app:pieInnerCircleRatio="128"
-                    app:pieSlicePadding="0dp" />
+        </RelativeLayout>
 
-            </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/diaper_header_left_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
-            <RelativeLayout
-                android:id="@+id/diaper_header_left_container"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/wet_icon"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:text="@string/wet_icon"
+                android:textSize="@dimen/text_size_micro"/>
 
-                <TextView
-                    android:id="@+id/wet_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/wet_icon"
-                    android:textSize="@dimen/text_size_micro" />
-
-                <TextView
-                    android:id="@+id/dry_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/wet_icon"
-                    android:text="@string/dry_icon"
-                    android:textSize="@dimen/text_size_micro" />
-
-                <TextView
-                    android:id="@+id/mix_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/dry_icon"
-                    android:text="@string/mix_icon"
-                    android:textSize="@dimen/text_size_micro" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/diaper_header_middle_container"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/dry_icon"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2">
+                android:layout_below="@id/wet_icon"
+                android:text="@string/dry_icon"
+                android:textSize="@dimen/text_size_micro"/>
 
-                <TextView
-                    android:id="@+id/wet_average"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/activity_today_initial"
-                    android:textSize="@dimen/text_size_micro" />
-
-                <TextView
-                    android:id="@+id/dry_average"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/wet_average"
-                    android:text="@string/activity_today_initial"
-                    android:textSize="@dimen/text_size_micro" />
-
-                <TextView
-                    android:id="@+id/mix_average"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/dry_average"
-                    android:text="@string/activity_today_initial"
-                    android:textSize="@dimen/text_size_micro" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/diaper_header_right_container"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/mix_icon"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2">
+                android:layout_below="@id/dry_icon"
+                android:text="@string/mix_icon"
+                android:textSize="@dimen/text_size_micro"/>
 
-                <TextView
-                    android:id="@+id/wet_last"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/activity_last_initial"
-                    android:textSize="@dimen/text_size_micro" />
+        </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/dry_last"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/wet_last"
-                    android:text="@string/activity_last_initial"
-                    android:textSize="@dimen/text_size_micro" />
+        <RelativeLayout
+            android:id="@+id/diaper_header_middle_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
 
-                <TextView
-                    android:id="@+id/mix_last"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/dry_last"
-                    android:text="@string/activity_last_initial"
-                    android:textSize="@dimen/text_size_micro" />
+            <TextView
+                android:id="@+id/wet_average"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_today_initial"
+                android:textSize="@dimen/text_size_micro"/>
 
-            </RelativeLayout>
+            <TextView
+                android:id="@+id/dry_average"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/wet_average"
+                android:text="@string/activity_today_initial"
+                android:textSize="@dimen/text_size_micro"/>
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/mix_average"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dry_average"
+                android:text="@string/activity_today_initial"
+                android:textSize="@dimen/text_size_micro"/>
 
-        <com.progrema.superbaby.widget.customlistview.ObserveableListView
-            android:id="@+id/activity_list"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:cacheColorHint="@android:color/transparent"
-            android:divider="@null"
-            android:dividerHeight="10dp"
-            android:footerDividersEnabled="true"
-            android:headerDividersEnabled="true"
-            android:listSelector="@android:color/transparent"
-            android:padding="4dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/diaper_header_right_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+
+            <TextView
+                android:id="@+id/wet_last"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_last_initial"
+                android:textSize="@dimen/text_size_micro"/>
+
+            <TextView
+                android:id="@+id/dry_last"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/wet_last"
+                android:text="@string/activity_last_initial"
+                android:textSize="@dimen/text_size_micro"/>
+
+            <TextView
+                android:id="@+id/mix_last"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dry_last"
+                android:text="@string/activity_last_initial"
+                android:textSize="@dimen/text_size_micro"/>
+
+        </RelativeLayout>
 
     </LinearLayout>
 
-    <include layout="@layout/layout_quick_button" />
+
+    <include layout="@layout/layout_quick_button"/>
 
 </FrameLayout>

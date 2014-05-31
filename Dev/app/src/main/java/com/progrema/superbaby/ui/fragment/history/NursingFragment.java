@@ -1,4 +1,4 @@
-package com.progrema.superbaby.ui.fragment.home;
+package com.progrema.superbaby.ui.fragment.history;
 
 import android.app.ActionBar;
 import android.database.Cursor;
@@ -21,13 +21,13 @@ import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.ui.activity.HomeActivity;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.FormatUtils;
-import com.progrema.superbaby.widget.customfragment.AnimationFragment;
+import com.progrema.superbaby.widget.customfragment.HistoryFragment;
 import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
 
-public class NursingFragment extends AnimationFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class NursingFragment extends HistoryFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     /*
      * Loader Type used for asynchronous cursor loading
@@ -62,9 +62,9 @@ public class NursingFragment extends AnimationFragment implements LoaderManager.
                              Bundle savedInstanceState) {
         // get layout
         View vRoot = inflater.inflate(R.layout.fragment_nursing, container, false);
-        View vPlaceholderRoot = inflater.inflate(R.layout.placeholder_nursing, null);
-        super.attachQuickReturnView(vRoot, R.id.header_nursing);
-        super.attachPlaceHolderLayout(vPlaceholderRoot, R.id.placeholder_nursing);
+        View vPlaceholderRoot = inflater.inflate(R.layout.placeholder_header, null);
+        super.attachQuickReturnView(vRoot, R.id.header_container);
+        super.attachPlaceHolderLayout(vPlaceholderRoot, R.id.placeholder_header);
 
         // set action bar icon and title
         ActionBar abActionBar = getActivity().getActionBar();
@@ -97,7 +97,7 @@ public class NursingFragment extends AnimationFragment implements LoaderManager.
     @Override
     public Loader<Cursor> onCreateLoader(int iLoaderId, Bundle bBundle) {
 
-        String[] aArgumentSelectionOne = {
+        String[] babyIdArg = {
                 String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())
         };
 
@@ -119,7 +119,7 @@ public class NursingFragment extends AnimationFragment implements LoaderManager.
             sStart = String.valueOf(cStart.getTimeInMillis());
         }
 
-        String[] aArgumentSelectionTwo = {
+        String[] timeFilterArg = {
                 String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID()),
                 sStart, sEnd
         };
@@ -134,7 +134,7 @@ public class NursingFragment extends AnimationFragment implements LoaderManager.
                         BabyLogContract.Nursing.CONTENT_URI,
                         BabyLogContract.Nursing.Query.PROJECTION,
                         "baby_id = ? AND timestamp >= ? AND timestamp <= ?",
-                        aArgumentSelectionTwo,
+                        timeFilterArg,
                         BabyLogContract.Nursing.Query.SORT_BY_TIMESTAMP_DESC);
 
             case LOADER_HEADER_INFORMATION:
@@ -142,7 +142,7 @@ public class NursingFragment extends AnimationFragment implements LoaderManager.
                         BabyLogContract.Nursing.CONTENT_URI,
                         BabyLogContract.Nursing.Query.PROJECTION,
                         "baby_id = ? AND timestamp >= ? AND timestamp <= ?",
-                        aArgumentSelectionTwo,
+                        timeFilterArg,
                         BabyLogContract.Nursing.Query.SORT_BY_TIMESTAMP_DESC);
 
             case LOADER_LAST_SIDE:
@@ -150,7 +150,7 @@ public class NursingFragment extends AnimationFragment implements LoaderManager.
                         BabyLogContract.Nursing.LAST_SIDES,
                         aLastSideProjection,
                         BabyLogContract.BABY_SELECTION_ARG,
-                        aArgumentSelectionOne,
+                        babyIdArg,
                         null);
 
             default:
