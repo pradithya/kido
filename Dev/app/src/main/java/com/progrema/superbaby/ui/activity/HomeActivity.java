@@ -35,6 +35,7 @@ import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 public class HomeActivity extends FragmentActivity
         implements NavigationFragment.NavigationDrawerCallbacks, View.OnClickListener,
@@ -395,9 +396,10 @@ public class HomeActivity extends FragmentActivity
          * form a sequence of three consecutive minutes in time.
          */
         Calendar cStart = Calendar.getInstance();
-        String sEnd = String.valueOf(cStart.getTimeInMillis()); //now, for now
+        String sEnd = String.valueOf(cStart.getTimeInMillis());
         String sStart;
         String sType = null;
+        long lOneWeekDuration = TimeUnit.DAYS.toMillis(7);
 
         cStart.set(Calendar.HOUR_OF_DAY, 0);
         cStart.set(Calendar.MINUTE, 0);
@@ -409,7 +411,7 @@ public class HomeActivity extends FragmentActivity
                 sType = TimeFilter.FILTER_TODAY.getTitle();
                 break;
             case TIMEFILTER_POSITION_THIS_WEEK:
-                cStart.set(Calendar.DAY_OF_WEEK, Calendar.getInstance().getFirstDayOfWeek());
+                cStart.setTimeInMillis(cStart.getTimeInMillis() - lOneWeekDuration);
                 sType = TimeFilter.FILTER_THIS_WEEK.getTitle();
                 break;
             case TIMEFILTER_POSITION_THIS_MONTH:
@@ -421,6 +423,11 @@ public class HomeActivity extends FragmentActivity
                 sType = TimeFilter.FILTER_ALL.getTitle();
                 break;
         }
+
+        /*
+        Log.i("__Debug",
+                " cStart = " + FormatUtils.fmtDate(this, String.valueOf(cStart.getTimeInMillis())));
+        */
 
         sStart = String.valueOf(cStart.getTimeInMillis());
         Bundle bTimeSelection  = new Bundle();

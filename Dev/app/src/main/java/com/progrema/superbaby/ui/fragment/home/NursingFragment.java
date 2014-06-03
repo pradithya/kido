@@ -111,7 +111,7 @@ public class NursingFragment extends AnimationFragment implements LoaderManager.
             sEnd = bBundle.getString(HomeActivity.TimeFilter.END.getTitle());
         } else {
             Calendar cStart = Calendar.getInstance();
-            sEnd = String.valueOf(cStart.getTimeInMillis()); //now, for now
+            sEnd = String.valueOf(cStart.getTimeInMillis());
             cStart.set(Calendar.HOUR_OF_DAY, 0);
             cStart.set(Calendar.MINUTE, 0);
             cStart.set(Calendar.SECOND, 0);
