@@ -1,15 +1,15 @@
 package com.progrema.superbaby.widget.customfragment;
 
-import android.support.v4.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
 
-import com.progrema.superbaby.R;
 import com.progrema.superbaby.ui.activity.HomeActivity;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.widget.customlistview.ObserveableListView;
@@ -21,14 +21,14 @@ public class HistoryFragment extends Fragment {
     /*
      * Animation State and calculation variable used for managing the animation
      */
+    private static final int STATE_ONSCREEN = 0;
+    private static final int STATE_OFFSCREEN = 1;
+    private static final int STATE_RETURNING = 2;
+    private int iState = STATE_ONSCREEN;
+    ObserveableListView olvListView;
     private LinearLayout llPlaceHolder;
     private TranslateAnimation taAnimation;
     private View vQuickReturn;
-    ObserveableListView olvListView;
-    private static final int STATE_ONSCREEN = 0;
-    private int iState = STATE_ONSCREEN;
-    private static final int STATE_OFFSCREEN = 1;
-    private static final int STATE_RETURNING = 2;
     private int iQuickReturnHeight;
     private int iCacheVerticalRange;
     private int iScrollY;
@@ -36,12 +36,12 @@ public class HistoryFragment extends Fragment {
     private int iMinRawY = 0;
 
     public void attachQuickReturnView(View vRoot, int iId) {
-        this.vQuickReturn = vRoot.findViewById(R.id.header_container);
+        this.vQuickReturn = vRoot.findViewById(iId);
     }
 
     public void attachPlaceHolderLayout(View vPlaceholderRoot, int iId) {
-        this.llPlaceHolder = (LinearLayout) vPlaceholderRoot.findViewById(R.id.placeholder_header);
-        this.llPlaceHolder.setMinimumHeight(vQuickReturn.getHeight());
+        this.llPlaceHolder = (LinearLayout) vPlaceholderRoot.findViewById(iId);
+        //this.llPlaceHolder.setMinimumHeight(llPlaceHolder.getHeight() + 2*vQuickReturn.getPaddingTop());
     }
 
     public void attachListView(ObserveableListView olvListView) {
@@ -82,7 +82,7 @@ public class HistoryFragment extends Fragment {
                     iScrollY = olvListView.getComputedScrollY();
                 }
 
-                iRawY = -Math.min(iCacheVerticalRange - olvListView.getHeight(), iScrollY);
+                iRawY = -iScrollY;
 
                 switch (iState) {
                     case STATE_OFFSCREEN:
@@ -134,8 +134,7 @@ public class HistoryFragment extends Fragment {
         });
     }
 
-    public String[] getTimeFilterArg(Bundle bBundle)
-    {
+    public String[] getTimeFilterArg(Bundle bBundle) {
 
         String sStart;
         String sEnd;
@@ -155,11 +154,11 @@ public class HistoryFragment extends Fragment {
             sStart = String.valueOf(cStart.getTimeInMillis());
         }
 
-        String[] timeFitlerArg = {
+        String[] aTimeFilterArg = {
                 String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID()),
                 sStart, sEnd
         };
 
-        return timeFitlerArg;
+        return aTimeFilterArg;
     }
 }
