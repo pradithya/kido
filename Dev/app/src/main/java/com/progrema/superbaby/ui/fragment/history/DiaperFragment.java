@@ -3,7 +3,6 @@ package com.progrema.superbaby.ui.fragment.history;
 import android.app.ActionBar;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -17,13 +16,10 @@ import com.progrema.superbaby.adapter.diaper.DiaperAdapter;
 import com.progrema.superbaby.holograph.PieGraph;
 import com.progrema.superbaby.holograph.PieSlice;
 import com.progrema.superbaby.provider.BabyLogContract;
-import com.progrema.superbaby.ui.activity.HomeActivity;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.FormatUtils;
 import com.progrema.superbaby.widget.customfragment.HistoryFragment;
 import com.progrema.superbaby.widget.customlistview.ObserveableListView;
-
-import java.util.Calendar;
 
 public class DiaperFragment extends HistoryFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
