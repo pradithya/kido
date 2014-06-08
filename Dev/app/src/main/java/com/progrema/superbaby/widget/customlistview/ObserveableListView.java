@@ -3,6 +3,7 @@ package com.progrema.superbaby.widget.customlistview;
 import android.content.Context;
 import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ListView;
@@ -19,9 +20,10 @@ public class ObserveableListView extends ListView {
     private int INVALID_POINTER_ID = MotionEvent.INVALID_POINTER_ID;
     private int iActivePointerId = INVALID_POINTER_ID;
     private int SCROLLING_BUFFER = 3;
-    private int iHeight;
+    private int iTotalHeight;
     private int iItemCount;
     private int iItemOffsetY[];
+    private int iCacheHeight;
 
     public ObserveableListView(Context context) {
         super(context);
@@ -40,23 +42,33 @@ public class ObserveableListView extends ListView {
     }
 
     public int getListHeight() {
-        return iHeight;
+        return iTotalHeight;
     }
 
     public void computeScrollY() {
-        iHeight = 0;
+        iTotalHeight = 0;
         iItemCount = getAdapter().getCount();
         iItemOffsetY = null; // Let GC works!!
         iItemOffsetY = new int[iItemCount];
+
         for (int i = 0; i < iItemCount; ++i) {
-            View view = getAdapter().getView(i, null, this);
-            view.measure(
-                    MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
-                    MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
-            iItemOffsetY[i] = iHeight;
-            iHeight += view.getMeasuredHeight();
+
+            if (i < 2) {
+                View view = getAdapter().getView(i, null, this);
+                view.measure(
+                        MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
+                        MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+                iItemOffsetY[i] = iTotalHeight;
+                iCacheHeight = view.getMeasuredHeight();
+                iTotalHeight += iCacheHeight;
+            } else {
+                iItemOffsetY[i] = iTotalHeight;
+                iTotalHeight += iCacheHeight;
+            }
+
         }
         bScrollIsComputed = true;
+        Log.i("_DB2", " iTot=" + iTotalHeight + " iCount=" + iItemCount);
     }
 
     public boolean scrollYIsComputed() {
@@ -64,18 +76,25 @@ public class ObserveableListView extends ListView {
     }
 
     public int getComputedScrollY() {
-        int iPosition, iScrollY, iItemY;
+        int iPosition;
+        int iScrollY = 0;
+        int iItemY;
+        String sExceptionTrace="no";
         View view = null;
         iPosition = getFirstVisiblePosition();
         view = getChildAt(0);
         iItemY = view.getTop();
-        iScrollY = iItemOffsetY[iPosition] - iItemY;
-        /*
-        Log.i("__DEBUG",
-                "iPosition = " + iPosition +
-                        " height = " + view.getHeight()
-        );
-        */
+        try {
+            iScrollY = iItemOffsetY[iPosition] - iItemY;
+        } catch (Exception e) {
+            // avoid array out of bond exception
+            sExceptionTrace = "yes";
+        }
+
+        Log.i("_DB3", " iScrollY=" + iScrollY +
+                " iPosition=" + iPosition +
+                " sException=" + sExceptionTrace);
+
         return iScrollY;
     }
 
@@ -162,7 +181,6 @@ public class ObserveableListView extends ListView {
 
     public static interface Callbacks {
         public void onScrollUp();
-
         public void onScrollDown();
     }
 }

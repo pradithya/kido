@@ -41,7 +41,6 @@ public class HistoryFragment extends Fragment {
 
     public void attachPlaceHolderLayout(View vPlaceholderRoot, int iId) {
         this.llPlaceHolder = (LinearLayout) vPlaceholderRoot.findViewById(iId);
-        //this.llPlaceHolder.setMinimumHeight(llPlaceHolder.getHeight() + 2*vQuickReturn.getPaddingTop());
     }
 
     public void attachListView(ObserveableListView olvListView) {
@@ -77,50 +76,70 @@ public class HistoryFragment extends Fragment {
                                  int visibleItemCount, int totalItemCount) {
                 iScrollY = 0;
                 int iTranslationY = 0;
+                String iDebugState = "";
 
                 if (olvListView.scrollYIsComputed()) {
                     iScrollY = olvListView.getComputedScrollY();
                 }
 
-                iRawY = -iScrollY;
+                iRawY = - Math.min(iCacheVerticalRange - olvListView.getHeight() , iScrollY);
 
                 switch (iState) {
-                    case STATE_OFFSCREEN:
-                        if (iRawY <= iMinRawY) {
-                            iMinRawY = iRawY;
-                        } else {
-                            iState = STATE_RETURNING;
-                        }
-                        iTranslationY = iRawY;
-                        break;
-
-                    case STATE_ONSCREEN:
+                    case STATE_ONSCREEN: // state 0
+                        iDebugState = "00";
                         if (iRawY < -iQuickReturnHeight) {
                             iState = STATE_OFFSCREEN;
                             iMinRawY = iRawY;
+                            iDebugState = "01";
                         }
                         if (iRawY >= llPlaceHolder.getHeight()) {
                             iRawY = 0;
+                            iDebugState = "02";
                         }
                         iTranslationY = iRawY;
                         break;
 
-                    case STATE_RETURNING:
+                    case STATE_OFFSCREEN: // state 1
+                        iDebugState = "10";
+                        if (iRawY <= iMinRawY) {
+                            iMinRawY = iRawY;
+                            iDebugState = "11";
+                        } else {
+                            iState = STATE_RETURNING;
+                            iDebugState = "12";
+                        }
+                        iTranslationY = iRawY;
+                        break;
+
+                    case STATE_RETURNING: // state 2
                         iTranslationY = (iRawY - iMinRawY) - iQuickReturnHeight;
+                        iDebugState = "20";
                         if (iTranslationY > 0) {
                             iTranslationY = 0;
                             iMinRawY = iRawY - iQuickReturnHeight;
+                            iDebugState = "21";
                         }
                         if (iRawY > 0) {
                             iState = STATE_ONSCREEN;
                             iTranslationY = iRawY;
+                            iDebugState = "22";
                         }
                         if (iTranslationY < -iQuickReturnHeight) {
                             iState = STATE_OFFSCREEN;
                             iMinRawY = iRawY;
+                            iDebugState = "23";
                         }
                         break;
                 }
+
+                Log.i("_DB1", " iScrY=" + iScrollY +
+                        " iRawY=" + iRawY +
+                        " iStte=" + iDebugState +
+                        " iTranY=" + iTranslationY +
+                        " iCache=" + iCacheVerticalRange +
+                        " iHght=" + olvListView.getHeight() +
+                        " iFun=" + (iCacheVerticalRange - olvListView.getHeight()) +
+                        " iQuic=" + iQuickReturnHeight);
 
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB) {
                     taAnimation = new TranslateAnimation(0, 0, iTranslationY, iTranslationY);
