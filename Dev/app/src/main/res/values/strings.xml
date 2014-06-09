@@ -71,8 +71,8 @@
     <string name="mix_icon">Mix</string>
     <string name="activity_today">{value} times today</string>
     <string name="activity_today_initial">0 times today</string>
-    <string name="activity_last">Last {value}</string>
-    <string name="activity_last_initial">Last ...</string>
+    <string name="activity_last">{value}</string>
+    <string name="activity_last_initial">...</string>
 
     <!--warning message-->
     <string name="ok_message">ok</string>
