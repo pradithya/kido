@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:cacheColorHint="@android:color/transparent"
         android:divider="@null"
-        android:dividerHeight="0dp"
+        android:dividerHeight="8dp"
         android:footerDividersEnabled="true"
         android:headerDividersEnabled="true"
         android:listSelector="@android:color/transparent" />
@@ -20,9 +20,7 @@
         android:id="@+id/header_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
-        android:paddingTop="4dp">
+        android:padding="4dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -273,7 +271,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
 
     <include layout="@layout/layout_quick_button" />
 

@@ -10,6 +10,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
 
+import com.progrema.superbaby.R;
 import com.progrema.superbaby.ui.activity.HomeActivity;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.widget.customlistview.ObserveableListView;
@@ -29,6 +30,7 @@ public class HistoryFragment extends Fragment {
     private LinearLayout llPlaceHolder;
     private TranslateAnimation taAnimation;
     private View vQuickReturn;
+    private boolean bShowBackground = false;
     private int iQuickReturnHeight;
     private int iCacheVerticalRange;
     private int iScrollY;
@@ -76,7 +78,7 @@ public class HistoryFragment extends Fragment {
                                  int visibleItemCount, int totalItemCount) {
                 iScrollY = 0;
                 int iTranslationY = 0;
-                String iDebugState = "";
+                String iStateTrace = "";
 
                 if (olvListView.scrollYIsComputed()) {
                     iScrollY = olvListView.getComputedScrollY();
@@ -86,55 +88,70 @@ public class HistoryFragment extends Fragment {
 
                 switch (iState) {
                     case STATE_ONSCREEN: // state 0
-                        iDebugState = "00";
+                        iStateTrace = "00";
                         if (iRawY < -iQuickReturnHeight) {
                             iState = STATE_OFFSCREEN;
                             iMinRawY = iRawY;
-                            iDebugState = "01";
+                            iStateTrace = "01";
                         }
                         if (iRawY >= llPlaceHolder.getHeight()) {
                             iRawY = 0;
-                            iDebugState = "02";
+                            iStateTrace = "02";
                         }
                         iTranslationY = iRawY;
                         break;
 
                     case STATE_OFFSCREEN: // state 1
-                        iDebugState = "10";
+                        iStateTrace = "10";
                         if (iRawY <= iMinRawY) {
                             iMinRawY = iRawY;
-                            iDebugState = "11";
+                            iStateTrace = "11";
                         } else {
                             iState = STATE_RETURNING;
-                            iDebugState = "12";
+                            iStateTrace = "12";
                         }
                         iTranslationY = iRawY;
                         break;
 
                     case STATE_RETURNING: // state 2
                         iTranslationY = (iRawY - iMinRawY) - iQuickReturnHeight;
-                        iDebugState = "20";
+                        iStateTrace = "20";
                         if (iTranslationY > 0) {
                             iTranslationY = 0;
                             iMinRawY = iRawY - iQuickReturnHeight;
-                            iDebugState = "21";
+                            iStateTrace = "21";
+                            if (iRawY < 0 && !bShowBackground) {
+                                setShadowBackground(R.drawable.shadow);
+                                bShowBackground = true;
+                                iStateTrace = "24";
+                            } else if (iRawY >= 0 && bShowBackground){
+                                setShadowBackground(0);
+                                bShowBackground = false;
+                                iStateTrace = "25";
+                            }
                         }
-                        if (iRawY > 0) {
+                        if (iRawY >= 0) {
                             iState = STATE_ONSCREEN;
                             iTranslationY = iRawY;
-                            iDebugState = "22";
+                            iStateTrace = "22";
                         }
                         if (iTranslationY < -iQuickReturnHeight) {
                             iState = STATE_OFFSCREEN;
                             iMinRawY = iRawY;
-                            iDebugState = "23";
+                            iStateTrace = "23";
+                        }
+                        if (iStateTrace.equals("20") && !bShowBackground &&
+                                (-iTranslationY < iQuickReturnHeight) && (iTranslationY != 0)) {
+                            setShadowBackground(R.drawable.shadow);
+                            bShowBackground = true;
+                            iStateTrace = "26";
                         }
                         break;
                 }
 
                 Log.i("_DB1", " iScrY=" + iScrollY +
                         " iRawY=" + iRawY +
-                        " iStte=" + iDebugState +
+                        " iStte=" + iStateTrace +
                         " iTranY=" + iTranslationY +
                         " iCache=" + iCacheVerticalRange +
                         " iHght=" + olvListView.getHeight() +
@@ -151,6 +168,15 @@ public class HistoryFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void setShadowBackground(int iBackgroundId) {
+        int iPaddingLeft = vQuickReturn.getPaddingLeft();
+        int iPaddingTop = vQuickReturn.getPaddingTop();
+        int iPaddingRight = vQuickReturn.getPaddingRight();
+        int iPaddingBottom = vQuickReturn.getPaddingBottom();
+        vQuickReturn.setBackgroundResource(iBackgroundId);
+        vQuickReturn.setPadding(iPaddingLeft, iPaddingTop, iPaddingRight, iPaddingBottom);
     }
 
     public String[] getTimeFilterArg(Bundle bBundle) {

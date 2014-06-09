@@ -52,14 +52,18 @@ public class ObserveableListView extends ListView {
         iItemOffsetY = new int[iItemCount];
 
         for (int i = 0; i < iItemCount; ++i) {
-
+            /**
+             * First iteration is Header, second and the rest are Entry.
+             * We don't measure all the entry's height since it's all the same to
+             * improve the performance.
+             */
             if (i < 2) {
                 View view = getAdapter().getView(i, null, this);
                 view.measure(
                         MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
                         MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
                 iItemOffsetY[i] = iTotalHeight;
-                iCacheHeight = view.getMeasuredHeight();
+                iCacheHeight = view.getMeasuredHeight() + this.getDividerHeight();
                 iTotalHeight += iCacheHeight;
             } else {
                 iItemOffsetY[i] = iTotalHeight;
