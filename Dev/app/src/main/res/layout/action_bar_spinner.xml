@@ -18,4 +18,5 @@
         android:layout_height="wrap_content"
         android:textSize="10sp"
         android:textColor="@color/white_transparent"/>
+
 </LinearLayout>

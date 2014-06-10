@@ -54,6 +54,7 @@ public class ActionBarDropDownAdapter extends ArrayAdapter<String>{
         // Should have some sort of data set to go off of, we'll assume
         // there is a some array called mData.
         holder.mTitle.setText(texts[position]);
+        //holder.mTitle.setTextColor(Color.BLACK);
 
         return convertView;
     }
