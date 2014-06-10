@@ -30,12 +30,12 @@
     <string name="nursing_percentage">{percentage}%</string>
     <string name="nursing_left_percentage_initial">Left ...%</string>
     <string name="nursing_right_percentage_initial">Right ...%</string>
-    <string name="nursing_volume">{volume} mL</string>
+    <string name="nursing_volume">{volume}mL</string>
     <string name="nursing_last_side_initial">Last Side: ...</string>
     <string name="nursing_last_side_title">Last side</string>
-    <string name="nursing_today">{hour} h {minute} m {second} s</string>
-    <string name="nursing_today_initial">... h ... m ... s</string>
-    <string name="nursing_formula_today_initial">Formula ... mL</string>
+    <string name="nursing_today">{hour}h {minute}m {second}s</string>
+    <string name="nursing_today_initial">...h ...m ...s</string>
+    <string name="nursing_formula_today_initial">Formula ...mL</string>
     <string name="nursing_per_day_initial">Type ... ...</string>
 
     <!--sleep fragment string-->
@@ -44,26 +44,26 @@
     <string name="date_simple_format">{date} {month} {year}</string>
     <string name="age_format">{day} days old</string>
     <string name="time_format">{hour}:{minute}</string>
-    <string name="duration_format">{hour} h {minute} m {second} s</string>
-    <string name="duration_in_minute_format">{minute} m</string>
+    <string name="duration_format">{hour}h {minute}m {second}s</string>
+    <string name="duration_in_minute_format">{minute}m</string>
     <string name="time_span_format">{start} - {end}</string>
     <string name="last_activity_format">Last {activity}: {time}</string>
     <string name="night_percentage">Night {percentage}%</string>
     <string name="night_percentage_initial">Night ...%</string>
     <string name="nap_percentage">Nap {percentage}%</string>
     <string name="nap_percentage_initial">Nap ...%</string>
-    <string name="night_duration">Night {hour} h {minute} m {second} s</string>
-    <string name="night_duration_initial">Night ... h ... m ... s</string>
-    <string name="nap_duration">Nap {hour} h {minute} m {second} s</string>
-    <string name="nap_duration_initial">Nap ... h ... m ... s</string>
+    <string name="night_duration">Night {hour}h {minute}m {second}s</string>
+    <string name="night_duration_initial">Night ...h ...m ...s</string>
+    <string name="nap_duration">Nap {hour}h {minute}m {second}s</string>
+    <string name="nap_duration_initial">Nap ...h ...m ...s</string>
     <string name="sleep_percentage">Sleep {percentage}%</string>
     <string name="sleep_percentage_initial">Sleep ...%</string>
     <string name="active_percentage">Active {percentage}%</string>
     <string name="active_percentage_initial">Active ...%</string>
-    <string name="sleep_duration">Sleep {hour} h {minute} m {second} s</string>
-    <string name="sleep_duration_initial">Sleep ... h ... m ... s</string>
-    <string name="active_duration">Active {hour} h {minute} m {second} s</string>
-    <string name="active_duration_initial">Active ... h ... m ... s</string>
+    <string name="sleep_duration">Sleep {hour}h {minute}m {second}s</string>
+    <string name="sleep_duration_initial">Sleep ...h ...m ...s</string>
+    <string name="active_duration">Active {hour}h {minute}m {second}s</string>
+    <string name="active_duration_initial">Active ...h ...m ...s</string>
 
     <!--diaper fragment string-->
     <string name="wet_icon">Wet</string>

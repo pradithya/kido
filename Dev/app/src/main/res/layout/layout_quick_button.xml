@@ -5,120 +5,128 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:background="@color/black"
+    android:background="@drawable/quickbutton_shadow"
     android:gravity="center"
     android:orientation="horizontal">
 
-    <RelativeLayout
-        android:id="@+id/quick_button_sleep"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:padding="8dp">
+        android:background="@color/black">
 
-        <ImageView
-            android:id="@+id/quick_button_sleep_image"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/quick_button_sleep"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_sleep_button" />
+            android:layout_weight="1"
+            android:padding="8dp">
 
-        <TextView
-            android:id="@+id/quick_button_sleep_text"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/quick_button_sleep_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_sleep_button" />
+
+            <TextView
+                android:id="@+id/quick_button_sleep_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/quick_button_sleep_image"
+                android:layout_centerHorizontal="true"
+                android:paddingTop="4dp"
+                android:text="@string/quick_button_title_sleep"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/text_size_small"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/quick_button_nursing"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/quick_button_sleep_image"
-            android:layout_centerHorizontal="true"
-            android:paddingTop="4dp"
-            android:text="@string/quick_button_title_sleep"
-            android:textColor="@color/blue"
-            android:textSize="@dimen/text_size_small"
-            android:textStyle="bold" />
+            android:layout_weight="1"
+            android:padding="8dp">
 
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/quick_button_nursing_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_nursing_button" />
 
-    <RelativeLayout
-        android:id="@+id/quick_button_nursing"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:padding="8dp">
+            <TextView
+                android:id="@+id/quick_button_nursing_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/quick_button_nursing_image"
+                android:layout_centerHorizontal="true"
+                android:paddingTop="4dp"
+                android:text="@string/quick_button_title_nursing"
+                android:textColor="@color/red"
+                android:textSize="@dimen/text_size_small"
+                android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/quick_button_nursing_image"
-            android:layout_width="wrap_content"
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/quick_button_diaper"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_nursing_button" />
+            android:layout_weight="1"
+            android:padding="8dp">
 
-        <TextView
-            android:id="@+id/quick_button_nursing_text"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/quick_button_diaper_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_diaper_button" />
+
+            <TextView
+                android:id="@+id/quick_button_diaper_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/quick_button_diaper_image"
+                android:layout_centerHorizontal="true"
+                android:paddingTop="4dp"
+                android:text="@string/quick_button_title_diaper"
+                android:textColor="@color/green"
+                android:textSize="@dimen/text_size_small"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/quick_button_measurement"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/quick_button_nursing_image"
-            android:layout_centerHorizontal="true"
-            android:paddingTop="4dp"
-            android:text="@string/quick_button_title_nursing"
-            android:textColor="@color/red"
-            android:textSize="@dimen/text_size_small"
-            android:textStyle="bold" />
+            android:layout_weight="1"
+            android:padding="8dp">
 
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/quick_button_measurement_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_measurement_button" />
 
-    <RelativeLayout
-        android:id="@+id/quick_button_diaper"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:padding="8dp">
+            <TextView
+                android:id="@+id/quick_button_measurement_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/quick_button_measurement_image"
+                android:layout_centerHorizontal="true"
+                android:paddingTop="4dp"
+                android:text="@string/quick_button_title_measurement"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/text_size_small"
+                android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/quick_button_diaper_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_diaper_button" />
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/quick_button_diaper_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/quick_button_diaper_image"
-            android:layout_centerHorizontal="true"
-            android:paddingTop="4dp"
-            android:text="@string/quick_button_title_diaper"
-            android:textColor="@color/green"
-            android:textSize="@dimen/text_size_small"
-            android:textStyle="bold" />
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/quick_button_measurement"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:padding="8dp">
-
-        <ImageView
-            android:id="@+id/quick_button_measurement_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_measurement_button" />
-
-        <TextView
-            android:id="@+id/quick_button_measurement_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/quick_button_measurement_image"
-            android:layout_centerHorizontal="true"
-            android:paddingTop="4dp"
-            android:text="@string/quick_button_title_measurement"
-            android:textColor="@color/orange"
-            android:textSize="@dimen/text_size_small"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

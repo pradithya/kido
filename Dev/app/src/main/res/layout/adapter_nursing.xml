@@ -12,7 +12,8 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:textSize="@dimen/text_size_micro" />
+        android:text="10:00"
+        android:textSize="@dimen/text_size_small" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -41,12 +42,14 @@
                 android:id="@+id/history_item_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Sun, 8 Jun 2014"
                 android:textSize="@dimen/text_size_micro" />
 
             <TextView
                 android:id="@+id/history_item_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="0h 0m 4s"
                 android:textSize="@dimen/text_size_micro" />
 
         </LinearLayout>
@@ -57,6 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="4dp"
+            android:text="56ml"
             android:textSize="@dimen/text_size_micro" />
 
         <ImageView

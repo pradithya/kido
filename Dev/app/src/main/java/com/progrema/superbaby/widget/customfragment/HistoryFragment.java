@@ -121,7 +121,7 @@ public class HistoryFragment extends Fragment {
                             iMinRawY = iRawY - iQuickReturnHeight;
                             iStateTrace = "21";
                             if (iRawY < 0 && !bShowBackground) {
-                                setShadowBackground(R.drawable.shadow);
+                                setShadowBackground(R.drawable.header_shadow);
                                 bShowBackground = true;
                                 iStateTrace = "24";
                             } else if (iRawY >= 0 && bShowBackground){
@@ -142,7 +142,7 @@ public class HistoryFragment extends Fragment {
                         }
                         if (iStateTrace.equals("20") && !bShowBackground &&
                                 (-iTranslationY < iQuickReturnHeight) && (iTranslationY != 0)) {
-                            setShadowBackground(R.drawable.shadow);
+                            setShadowBackground(R.drawable.header_shadow);
                             bShowBackground = true;
                             iStateTrace = "26";
                         }
