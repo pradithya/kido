@@ -72,11 +72,11 @@ public class NursingFragment extends HistoryFragment implements LoaderManager.Lo
         abActionBar.setIcon(getResources().getDrawable(R.drawable.ic_nursing_top));
 
         // get ui object
-        tvLeftPct = (TextView) vRoot.findViewById(R.id.percentage_left);
-        tvRightPct = (TextView) vRoot.findViewById(R.id.percentage_right);
-        tvRightToday = (TextView) vRoot.findViewById(R.id.right_today);
-        tvLeftToday = (TextView) vRoot.findViewById(R.id.left_today);
-        tvFormulaToday = (TextView) vRoot.findViewById(R.id.formula_today);
+        tvLeftPct = (TextView) vRoot.findViewById(R.id.percent_left);
+        tvRightPct = (TextView) vRoot.findViewById(R.id.percent_right);
+        tvRightToday = (TextView) vRoot.findViewById(R.id.right_duration);
+        tvLeftToday = (TextView) vRoot.findViewById(R.id.left_duration);
+        tvFormulaToday = (TextView) vRoot.findViewById(R.id.formula_volume);
         tvLastSideTitle = (TextView) vRoot.findViewById(R.id.last_side_title);
         ivLastSide = (ImageView) vRoot.findViewById(R.id.last_side);
         pgLeftRight = (PieGraph) vRoot.findViewById(R.id.nursing_left_right_pie_chart);
@@ -216,7 +216,7 @@ public class NursingFragment extends HistoryFragment implements LoaderManager.Lo
                             FormatUtils.fmtNursingDrt(getActivity(), String.valueOf(lLeftDuration))
                     );
                     PieSlice psLeft = new PieSlice();
-                    psLeft.setColor(getResources().getColor(R.color.green));
+                    psLeft.setColor(getResources().getColor(R.color.orange));
                     psLeft.setValue(lLeftDuration);
                     pgLeftRight.addSlice(psLeft);
 
@@ -225,7 +225,7 @@ public class NursingFragment extends HistoryFragment implements LoaderManager.Lo
                             FormatUtils.fmtNursingDrt(getActivity(), String.valueOf(lRightDuration))
                     );
                     PieSlice psRight = new PieSlice();
-                    psRight.setColor(getResources().getColor(R.color.orange));
+                    psRight.setColor(getResources().getColor(R.color.green));
                     psRight.setValue(lRightDuration);
                     pgLeftRight.addSlice(psRight);
 
