@@ -40,7 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginRight="4dp"
-                    app:pieInnerCircleRatio="160"
+                    app:pieInnerCircleRatio="120"
                     app:pieSlicePadding="0dp" />
 
             </RelativeLayout>
@@ -51,59 +51,40 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-                <ImageView
-                    android:id="@+id/legend_blue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="4dp"
-                    android:src="@drawable/ic_legend_blue" />
-
                 <TextView
-                    android:id="@+id/wet_icon"
+                    android:id="@+id/wet_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/legend_blue"
+                    android:layout_centerHorizontal="true"
                     android:padding="4dp"
                     android:text="@string/wet_icon"
-                    android:textSize="@dimen/text_size_micro" />
-
-                <ImageView
-                    android:id="@+id/legend_orange"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/legend_blue"
-                    android:padding="4dp"
-                    android:src="@drawable/ic_legend_orange" />
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/dry_icon"
+                    android:id="@+id/dry_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/wet_icon"
-                    android:layout_toRightOf="@id/legend_orange"
+                    android:layout_below="@id/wet_title"
+                    android:layout_centerHorizontal="true"
                     android:padding="4dp"
                     android:text="@string/dry_icon"
-                    android:textSize="@dimen/text_size_micro" />
-
-
-                <ImageView
-                    android:id="@+id/legend_purple"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/legend_orange"
-
-                    android:padding="4dp"
-                    android:src="@drawable/ic_legend_purple" />
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/mix_icon"
+                    android:id="@+id/mix_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/dry_icon"
-                    android:layout_toRightOf="@id/legend_purple"
+                    android:layout_below="@id/dry_title"
+                    android:layout_centerHorizontal="true"
                     android:padding="4dp"
                     android:text="@string/mix_icon"
-                    android:textSize="@dimen/text_size_micro" />
+                    android:textColor="@color/purple"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
@@ -111,15 +92,17 @@
                 android:id="@+id/diaper_header_middle_container"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2">
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/wet_average"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="4dp"
-                    android:text="@string/activity_today_initial"
-                    android:textSize="@dimen/text_size_micro" />
+                    android:text="@string/total_activity_number_initial"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/dry_average"
@@ -127,8 +110,10 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/wet_average"
                     android:padding="4dp"
-                    android:text="@string/activity_today_initial"
-                    android:textSize="@dimen/text_size_micro" />
+                    android:text="@string/total_activity_number_initial"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/mix_average"
@@ -136,8 +121,10 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/dry_average"
                     android:padding="4dp"
-                    android:text="@string/activity_today_initial"
-                    android:textSize="@dimen/text_size_micro" />
+                    android:text="@string/total_activity_number_initial"
+                    android:textColor="@color/purple"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
@@ -153,7 +140,9 @@
                     android:layout_height="wrap_content"
                     android:padding="4dp"
                     android:text="@string/activity_last_initial"
-                    android:textSize="@dimen/text_size_micro" />
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/dry_last"
@@ -162,7 +151,9 @@
                     android:layout_below="@id/wet_last"
                     android:padding="4dp"
                     android:text="@string/activity_last_initial"
-                    android:textSize="@dimen/text_size_micro" />
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/mix_last"
@@ -171,7 +162,9 @@
                     android:layout_below="@id/dry_last"
                     android:padding="4dp"
                     android:text="@string/activity_last_initial"
-                    android:textSize="@dimen/text_size_micro" />
+                    android:textColor="@color/purple"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 

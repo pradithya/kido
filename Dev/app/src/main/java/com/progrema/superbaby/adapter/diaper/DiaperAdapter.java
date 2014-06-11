@@ -39,11 +39,19 @@ public class DiaperAdapter extends CursorAdapter {
         tvDate.setText(FormatUtils.fmtDateOnly(context, sTimestamp));
         tvTime.setText(FormatUtils.fmtTime(context, sTimestamp));
 
-        if (sType.equals(Diaper.DiaperType.WET.getTitle()))
+        if (sType.equals(Diaper.DiaperType.WET.getTitle())) {
             ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_wet));
-        else if (sType.equals(Diaper.DiaperType.DRY.getTitle()))
+            tvTime.setTextColor(view.getResources().getColor(R.color.blue));
+            tvDate.setTextColor(view.getResources().getColor(R.color.blue));
+        } else if (sType.equals(Diaper.DiaperType.DRY.getTitle())) {
             ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_dry));
-        if (sType.equals(Diaper.DiaperType.MIXED.getTitle()))
+            tvTime.setTextColor(view.getResources().getColor(R.color.orange));
+            tvDate.setTextColor(view.getResources().getColor(R.color.orange));
+        } else if (sType.equals(Diaper.DiaperType.MIXED.getTitle())) {
             ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_mixed));
+            tvTime.setTextColor(view.getResources().getColor(R.color.purple));
+            tvDate.setTextColor(view.getResources().getColor(R.color.purple));
+        }
+
     }
 }

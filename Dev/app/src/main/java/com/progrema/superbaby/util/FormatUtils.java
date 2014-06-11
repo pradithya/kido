@@ -295,7 +295,7 @@ public class FormatUtils {
 
     public static String fmtDiaperTotalToday(Context context, String values) {
         CharSequence formatted = Phrase.from(context.getResources()
-                .getString(R.string.activity_today))
+                .getString(R.string.total_activity_number))
                 .put("value", values)
                 .format();
         return String.valueOf(formatted);

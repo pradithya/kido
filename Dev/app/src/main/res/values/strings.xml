@@ -69,10 +69,10 @@
     <string name="wet_icon">Wet</string>
     <string name="dry_icon">Dry</string>
     <string name="mix_icon">Mix</string>
-    <string name="activity_today">{value} times today</string>
-    <string name="activity_today_initial">0 times today</string>
+    <string name="total_activity_number">{value} times</string>
+    <string name="total_activity_number_initial">0 times</string>
     <string name="activity_last">{value}</string>
-    <string name="activity_last_initial">...</string>
+    <string name="activity_last_initial">0 minutes ago</string>
 
     <!--warning message-->
     <string name="ok_message">ok</string>
