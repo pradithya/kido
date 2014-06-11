@@ -38,7 +38,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
                     <!-- Upper Left -->
 
@@ -51,83 +52,74 @@
                         app:pieSlicePadding="0dp" />
 
                     <RelativeLayout
-                        android:id="@+id/left_percent_layout"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/nursing_left_right_pie_chart">
+                        android:layout_toRightOf="@id/nursing_left_right_pie_chart"
+                        android:gravity="center">
 
-                        <ImageView
-                            android:id="@+id/legend_orange"
-                            android:layout_width="wrap_content"
+                        <RelativeLayout
+                            android:id="@+id/left_percent_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/percentage_left_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/legend_orange"
+                                android:gravity="center_horizontal"
+                                android:paddingLeft="4dp"
+                                android:paddingTop="8dp"
+                                android:text="Left"
+                                android:textColor="@color/orange"
+                                android:textSize="@dimen/text_size_small" />
+
+                            <TextView
+                                android:id="@+id/percentage_left"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_toRightOf="@id/percentage_left_title"
+                                android:gravity="right|center_horizontal"
+                                android:paddingRight="8dp"
+                                android:paddingTop="8dp"
+                                android:text="23 %"
+                                android:textColor="@color/orange"
+                                android:textSize="@dimen/text_size_small" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/right_percent_layout"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="4dp"
-                            android:src="@drawable/ic_legend_orange" />
+                            android:layout_below="@id/left_percent_layout">
 
-                        <TextView
-                            android:id="@+id/percentage_left_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toRightOf="@id/legend_orange"
-                            android:gravity="center_horizontal"
-                            android:padding="4dp"
-                            android:text="Left"
-                            android:textColor="@color/orange"
-                            android:textSize="@dimen/text_size_micro" />
+                            <TextView
+                                android:id="@+id/percentage_right_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:paddingLeft="4dp"
+                                android:text="Right"
+                                android:textColor="@color/green"
+                                android:textSize="@dimen/text_size_small" />
 
-                        <TextView
-                            android:id="@+id/percentage_left"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_toRightOf="@id/percentage_left_title"
-                            android:gravity="right|center_horizontal"
-                            android:paddingBottom="4dp"
-                            android:paddingRight="4dp"
-                            android:paddingTop="4dp"
-                            android:text="23 %"
-                            android:textColor="@color/orange"
-                            android:textSize="@dimen/text_size_micro" />
+                            <TextView
+                                android:id="@+id/percentage_right"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_toRightOf="@id/percentage_right_title"
+                                android:gravity="right|center_horizontal"
+                                android:paddingBottom="4dp"
+                                android:paddingRight="8dp"
+                                android:text="77 %"
+                                android:textColor="@color/green"
+                                android:textSize="@dimen/text_size_small" />
 
-                    </RelativeLayout>
+                        </RelativeLayout>
 
-                    <RelativeLayout
-                        android:id="@+id/right_percent_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/left_percent_layout"
-                        android:layout_toRightOf="@id/nursing_left_right_pie_chart">
-
-                        <ImageView
-                            android:id="@+id/legend_green"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="4dp"
-                            android:src="@drawable/ic_legend_green" />
-
-                        <TextView
-                            android:id="@+id/percentage_right_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toRightOf="@id/legend_green"
-                            android:gravity="center_horizontal"
-                            android:padding="4dp"
-                            android:text="Right"
-                            android:textColor="@color/green"
-                            android:textSize="@dimen/text_size_micro" />
-
-                        <TextView
-                            android:id="@+id/percentage_right"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_toRightOf="@id/percentage_right_title"
-                            android:gravity="right|center_horizontal"
-                            android:paddingBottom="4dp"
-                            android:paddingRight="4dp"
-                            android:paddingTop="4dp"
-                            android:text="77 %"
-                            android:textColor="@color/green"
-                            android:textSize="@dimen/text_size_micro" />
 
                     </RelativeLayout>
 
@@ -143,27 +135,28 @@
                     <RelativeLayout
                         android:id="@+id/right_information_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:background="@drawable/header_information_background_orange"
-                        android:padding="4dp">
+                        android:layout_height="wrap_content">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
+                            android:paddingTop="8dp"
+                            android:paddingLeft="12dp"
                             android:text="Left"
-                            android:textColor="@color/white_transparent"
-                            android:textSize="@dimen/text_size_micro" />
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/text_size_small" />
 
                         <TextView
                             android:id="@+id/left_today"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:text="26 m"
-                            android:textColor="@color/white_transparent"
-                            android:textSize="@dimen/text_size_micro" />
+                            android:paddingTop="8dp"
+                            android:paddingRight="8dp"
+                            android:text="0h 26m 50s"
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/text_size_small" />
 
                     </RelativeLayout>
 
@@ -171,27 +164,26 @@
                         android:id="@+id/left_information_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/right_information_layout"
-                        android:layout_margin="4dp"
-                        android:background="@drawable/header_information_background_green"
-                        android:padding="4dp">
+                        android:layout_below="@id/right_information_layout">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
+                            android:paddingLeft="12dp"
                             android:text="Right"
-                            android:textColor="@color/white_transparent"
-                            android:textSize="@dimen/text_size_micro" />
+                            android:textColor="@color/green"
+                            android:textSize="@dimen/text_size_small" />
 
                         <TextView
                             android:id="@+id/right_today"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:text="35 m"
-                            android:textColor="@color/white_transparent"
-                            android:textSize="@dimen/text_size_micro" />
+                            android:paddingRight="8dp"
+                            android:text="0h 35m 10s"
+                            android:textColor="@color/green"
+                            android:textSize="@dimen/text_size_small" />
 
                     </RelativeLayout>
 
@@ -216,17 +208,19 @@
                         android:id="@+id/last_side_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
                         android:text="@string/nursing_last_side_title"
-                        android:textSize="@dimen/text_size_micro" />
+                        android:textColor="@color/green"
+                        android:paddingLeft="8dp"
+                        android:paddingTop="8dp"
+                        android:textSize="@dimen/text_size_small" />
 
                     <ImageView
                         android:id="@+id/last_side"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/last_side_title"
-                        android:layout_centerHorizontal="true"
-                        android:padding="8dp"
+                        android:layout_alignParentRight="true"
+                        android:paddingTop="4dp"
+                        android:paddingRight="12dp"
                         android:src="@drawable/ic_nursing_right" />
 
                 </RelativeLayout>
@@ -241,27 +235,28 @@
                     <RelativeLayout
                         android:id="@+id/formula_information_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:background="@drawable/header_information_background_red"
-                        android:padding="4dp">
+                        android:layout_height="wrap_content">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
+                            android:paddingLeft="8dp"
+                            android:paddingTop="8dp"
                             android:text="Formula"
-                            android:textColor="@color/white_transparent"
-                            android:textSize="@dimen/text_size_micro" />
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/text_size_small" />
 
                         <TextView
                             android:id="@+id/formula_today"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:text="5 ml"
-                            android:textColor="@color/white_transparent"
-                            android:textSize="@dimen/text_size_micro" />
+                            android:paddingRight="12dp"
+                            android:paddingTop="8dp"
+                            android:text="5ml"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/text_size_small" />
 
                     </RelativeLayout>
 

@@ -45,11 +45,18 @@ public class NursingAdapter extends CursorAdapter {
 
         if (sType.compareTo(Nursing.NursingType.FORMULA.getTitle()) == 0) {
             tvVolume.setVisibility(View.VISIBLE);
-            tvVolume.setText(sVolume + " mL");
+            tvVolume.setText(sVolume + "mL");
+            tvVolume.setTextColor(view.getResources().getColor(R.color.red));
+            tvTime.setTextColor(view.getResources().getColor(R.color.red));
+            tvDuration.setTextColor(view.getResources().getColor(R.color.red));
             ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_formula));
         } else if (sType.compareTo(Nursing.NursingType.RIGHT.getTitle()) == 0) {
+            tvDuration.setTextColor(view.getResources().getColor(R.color.green));
+            tvTime.setTextColor(view.getResources().getColor(R.color.green));
             ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_right));
         } else if(sType.compareTo(Nursing.NursingType.LEFT.getTitle()) == 0) {
+            tvDuration.setTextColor(view.getResources().getColor(R.color.orange));
+            tvTime.setTextColor(view.getResources().getColor(R.color.orange));
             ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_left));
         }
     }

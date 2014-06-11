@@ -44,6 +44,7 @@ public class NursingFragment extends HistoryFragment implements LoaderManager.Lo
     private TextView tvRightToday;
     private TextView tvLeftToday;
     private TextView tvFormulaToday;
+    private TextView tvLastSideTitle;
     private ImageView ivLastSide;
     private PieGraph pgLeftRight;
 
@@ -76,8 +77,10 @@ public class NursingFragment extends HistoryFragment implements LoaderManager.Lo
         tvRightToday = (TextView) vRoot.findViewById(R.id.right_today);
         tvLeftToday = (TextView) vRoot.findViewById(R.id.left_today);
         tvFormulaToday = (TextView) vRoot.findViewById(R.id.formula_today);
+        tvLastSideTitle = (TextView) vRoot.findViewById(R.id.last_side_title);
         ivLastSide = (ImageView) vRoot.findViewById(R.id.last_side);
         pgLeftRight = (PieGraph) vRoot.findViewById(R.id.nursing_left_right_pie_chart);
+
 
         // set adapter to list view
         olvNursingHistoryList = (ObserveableListView) vRoot.findViewById(R.id.activity_list);
@@ -235,9 +238,11 @@ public class NursingFragment extends HistoryFragment implements LoaderManager.Lo
                 case LOADER_LAST_SIDE:
                     String sType = cCursor.getString(0);
                     if (sType.compareTo(Nursing.NursingType.RIGHT.getTitle()) == 0) {
+                        tvLastSideTitle.setTextColor(getResources().getColor(R.color.green));
                         ivLastSide.setImageDrawable(getResources()
                                 .getDrawable(R.drawable.ic_nursing_right));
                     } else if (sType.compareTo(Nursing.NursingType.LEFT.getTitle()) == 0) {
+                        tvLastSideTitle.setTextColor(getResources().getColor(R.color.orange));
                         ivLastSide.setImageDrawable(getResources()
                                 .getDrawable(R.drawable.ic_nursing_left));
                     }
