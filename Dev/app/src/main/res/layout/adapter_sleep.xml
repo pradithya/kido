@@ -11,7 +11,8 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:textSize="@dimen/text_size_micro" />
+        android:text="10:00"
+        android:textSize="@dimen/text_size_small" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -31,34 +32,29 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
+            android:gravity="center|left"
             android:padding="4dp">
 
             <TextView
                 android:id="@+id/history_item_timestamp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Sun, 8 Jun 2014"
                 android:textSize="@dimen/text_size_micro" />
 
             <TextView
-                android:id="@+id/history_item_time_boundary"
+                android:id="@+id/history_item_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="0h 0m 0s"
                 android:textSize="@dimen/text_size_micro" />
 
         </LinearLayout>
 
-        <!--TextView
-            android:id="@+id/history_item_duration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="4dp"
-            android:textSize="@dimen/text_size_medium" /-->
-
-        <ImageView
+        <ImageButton
             android:id="@+id/button_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,7 +62,7 @@
             android:padding="4dp"
             android:src="@drawable/ic_action_edit" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/button_remove"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
