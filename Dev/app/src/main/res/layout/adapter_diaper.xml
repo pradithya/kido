@@ -55,22 +55,11 @@
 
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/button_edit"
+        <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="4dp"
-            android:src="@drawable/ic_action_edit_button" />
-
-        <ImageButton
-            android:id="@+id/button_remove"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="4dp"
-            android:src="@drawable/ic_action_remove_button"
-            android:clickable="true"/>
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_action_overflow"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 

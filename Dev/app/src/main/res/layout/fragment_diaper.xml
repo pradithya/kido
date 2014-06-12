@@ -27,146 +27,177 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/header_card_background"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="4dp">
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1.5">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <com.progrema.superbaby.holograph.PieGraph
-                    android:id="@+id/diaper_piegraph"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center"
+                    android:padding="4dp"
+                    android:text="Activity Summary"
+                    android:textColor="@color/default_font"
+                    android:textSize="@dimen/text_size_small" />
+
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
-                    app:pieInnerCircleRatio="120"
-                    app:pieSlicePadding="0dp" />
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/card_shadow" />
 
-            </RelativeLayout>
+            </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/diaper_header_left_container"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/wet_title"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/section_graph"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5">
+
+                    <com.progrema.superbaby.holograph.PieGraph
+                        android:id="@+id/diaper_piegraph"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="4dp"
+                        app:pieInnerCircleRatio="160"
+                        app:pieSlicePadding="0dp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/section_left_container"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:padding="4dp"
-                    android:text="@string/wet_icon"
-                    android:textColor="@color/blue"
-                    android:textSize="@dimen/text_size_small"
-                    android:textStyle="bold" />
+                    android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/dry_title"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/wet_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:padding="4dp"
+                        android:text="@string/wet_icon"
+                        android:textColor="@color/blue"
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/dry_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/wet_title"
+                        android:layout_centerHorizontal="true"
+                        android:padding="4dp"
+                        android:text="@string/dry_icon"
+                        android:textColor="@color/orange"
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/mix_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/dry_title"
+                        android:layout_centerHorizontal="true"
+                        android:padding="4dp"
+                        android:text="@string/mix_icon"
+                        android:textColor="@color/purple"
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/section_middle_container"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/wet_title"
-                    android:layout_centerHorizontal="true"
-                    android:padding="4dp"
-                    android:text="@string/dry_icon"
-                    android:textColor="@color/orange"
-                    android:textSize="@dimen/text_size_small"
-                    android:textStyle="bold" />
+                    android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/mix_title"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/wet_average"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:text="@string/total_activity_number_initial"
+                        android:textColor="@color/blue"
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/dry_average"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/wet_average"
+                        android:padding="4dp"
+                        android:text="@string/total_activity_number_initial"
+                        android:textColor="@color/orange"
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/mix_average"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/dry_average"
+                        android:padding="4dp"
+                        android:text="@string/total_activity_number_initial"
+                        android:textColor="@color/purple"
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/section_right_container"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/dry_title"
-                    android:layout_centerHorizontal="true"
-                    android:padding="4dp"
-                    android:text="@string/mix_icon"
-                    android:textColor="@color/purple"
-                    android:textSize="@dimen/text_size_small"
-                    android:textStyle="bold" />
+                    android:layout_weight="2">
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/wet_last"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:text="@string/activity_last_initial"
+                        android:textColor="@color/blue"
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
 
-            <RelativeLayout
-                android:id="@+id/diaper_header_middle_container"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/dry_last"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/wet_last"
+                        android:padding="4dp"
+                        android:text="@string/activity_last_initial"
+                        android:textColor="@color/orange"
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/wet_average"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="4dp"
-                    android:text="@string/total_activity_number_initial"
-                    android:textColor="@color/blue"
-                    android:textSize="@dimen/text_size_small"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/mix_last"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/dry_last"
+                        android:padding="4dp"
+                        android:text="@string/activity_last_initial"
+                        android:textColor="@color/purple"
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/dry_average"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/wet_average"
-                    android:padding="4dp"
-                    android:text="@string/total_activity_number_initial"
-                    android:textColor="@color/orange"
-                    android:textSize="@dimen/text_size_small"
-                    android:textStyle="bold" />
+                </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/mix_average"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/dry_average"
-                    android:padding="4dp"
-                    android:text="@string/total_activity_number_initial"
-                    android:textColor="@color/purple"
-                    android:textSize="@dimen/text_size_small"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/diaper_header_right_container"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2">
-
-                <TextView
-                    android:id="@+id/wet_last"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="4dp"
-                    android:text="@string/activity_last_initial"
-                    android:textColor="@color/blue"
-                    android:textSize="@dimen/text_size_small"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/dry_last"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/wet_last"
-                    android:padding="4dp"
-                    android:text="@string/activity_last_initial"
-                    android:textColor="@color/orange"
-                    android:textSize="@dimen/text_size_small"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/mix_last"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/dry_last"
-                    android:padding="4dp"
-                    android:text="@string/activity_last_initial"
-                    android:textColor="@color/purple"
-                    android:textSize="@dimen/text_size_small"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
+            </LinearLayout>
 
         </LinearLayout>
 
