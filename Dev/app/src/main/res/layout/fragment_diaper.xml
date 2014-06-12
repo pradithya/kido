@@ -40,29 +40,30 @@
                     android:layout_height="wrap_content"
                     android:gravity="left|center"
                     android:padding="4dp"
-                    android:text="Activity Summary"
+                    android:text="Safiya's Activities Summary"
                     android:textColor="@color/default_font"
                     android:textSize="@dimen/text_size_small" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
-                    android:layout_marginBottom="8dp"
                     android:background="@color/card_shadow" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <RelativeLayout
                     android:id="@+id/section_graph"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.5">
+                    android:layout_weight="1">
 
                     <com.progrema.superbaby.holograph.PieGraph
                         android:id="@+id/diaper_piegraph"
@@ -75,16 +76,14 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/section_left_container"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="3">
 
                     <TextView
                         android:id="@+id/wet_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
                         android:padding="4dp"
                         android:text="@string/wet_icon"
                         android:textColor="@color/blue"
@@ -96,7 +95,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/wet_title"
-                        android:layout_centerHorizontal="true"
                         android:padding="4dp"
                         android:text="@string/dry_icon"
                         android:textColor="@color/orange"
@@ -108,26 +106,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/dry_title"
-                        android:layout_centerHorizontal="true"
                         android:padding="4dp"
                         android:text="@string/mix_icon"
                         android:textColor="@color/purple"
                         android:textSize="@dimen/text_size_small"
                         android:textStyle="bold" />
 
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/section_middle_container"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
 
                     <TextView
                         android:id="@+id/wet_average"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="4dp"
+                        android:layout_toRightOf="@id/wet_title"
                         android:text="@string/total_activity_number_initial"
                         android:textColor="@color/blue"
                         android:textSize="@dimen/text_size_small"
@@ -138,7 +129,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/wet_average"
-                        android:padding="4dp"
+                        android:layout_toRightOf="@id/dry_title"
+                        android:paddingTop="4dp"
+                        android:paddingRight="4dp"
+                        android:paddingBottom="4dp"
+                        android:paddingLeft="7dp"
                         android:text="@string/total_activity_number_initial"
                         android:textColor="@color/orange"
                         android:textSize="@dimen/text_size_small"
@@ -149,19 +144,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/dry_average"
-                        android:padding="4dp"
+                        android:layout_toRightOf="@id/mix_title"
+                        android:paddingTop="4dp"
+                        android:paddingRight="4dp"
+                        android:paddingBottom="4dp"
+                        android:paddingLeft="7dp"
                         android:text="@string/total_activity_number_initial"
                         android:textColor="@color/purple"
                         android:textSize="@dimen/text_size_small"
                         android:textStyle="bold" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/section_right_container"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2">
 
                     <TextView
                         android:id="@+id/wet_last"
@@ -169,6 +160,7 @@
                         android:layout_height="wrap_content"
                         android:padding="4dp"
                         android:text="@string/activity_last_initial"
+                        android:layout_toRightOf="@id/wet_average"
                         android:textColor="@color/blue"
                         android:textSize="@dimen/text_size_small"
                         android:textStyle="bold" />
@@ -178,6 +170,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/wet_last"
+                        android:layout_toRightOf="@id/dry_average"
                         android:padding="4dp"
                         android:text="@string/activity_last_initial"
                         android:textColor="@color/orange"
@@ -189,6 +182,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/dry_last"
+                        android:layout_toRightOf="@id/mix_average"
                         android:padding="4dp"
                         android:text="@string/activity_last_initial"
                         android:textColor="@color/purple"
