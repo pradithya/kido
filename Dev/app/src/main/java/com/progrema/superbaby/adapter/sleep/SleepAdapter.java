@@ -31,21 +31,25 @@ public class SleepAdapter extends CursorAdapter {
 
         TextView tvTimestamp = (TextView) view.findViewById(R.id.history_item_timestamp);
         TextView tvDuration = (TextView) view.findViewById(R.id.history_item_duration);
+        TextView tvTimeBoundary = (TextView) view.findViewById(R.id.history_item_time_boundary);
         TextView tvTime = (TextView) view.findViewById(R.id.history_item_time);
         ImageView ivType = (ImageView) view.findViewById(R.id.icon_type);
 
         tvTimestamp.setText(FormatUtils.fmtDate(context, sTimestamp));
         tvDuration.setText(FormatUtils.fmtDuration(context, sDuration));
+        tvTimeBoundary.setText(FormatUtils.fmtTimeBoundary(context, sTimestamp, sDuration));
         tvTime.setText(FormatUtils.fmtTime(context, sTimestamp));
 
         if (FormatUtils.isNight(Long.parseLong(sTimestamp))) {
             ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_sleep_night));
             tvDuration.setTextColor(view.getResources().getColor(R.color.blue));
             tvTime.setTextColor(view.getResources().getColor(R.color.blue));
+            tvTimeBoundary.setTextColor(view.getResources().getColor(R.color.blue));
         } else {
             ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_sleep_nap));
             tvDuration.setTextColor(view.getResources().getColor(R.color.orange));
             tvTime.setTextColor(view.getResources().getColor(R.color.orange));
+            tvTimeBoundary.setTextColor(view.getResources().getColor(R.color.orange));
         }
 
     }

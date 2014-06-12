@@ -42,33 +42,34 @@
                 android:id="@+id/history_item_timestamp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sun, 8 Jun 2014"
+                android:text="Thur, 8 Jun 2014"
                 android:textSize="@dimen/text_size_micro" />
 
+
             <TextView
-                android:id="@+id/history_item_duration"
+                android:id="@+id/history_item_time_boundary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0h 0m 0s"
+                android:text="08.00 - 19.00"
                 android:textSize="@dimen/text_size_micro" />
 
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/button_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+        <TextView
+            android:id="@+id/history_item_duration"
+            android:layout_width="0dp"
+            android:layout_weight="0.9"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="0h 0m 0s"
             android:padding="4dp"
-            android:src="@drawable/ic_action_edit" />
+            android:textSize="@dimen/text_size_small" />
 
-        <ImageButton
-            android:id="@+id/button_remove"
+        <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="4dp"
-            android:src="@drawable/ic_action_remove" />
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_action_overflow"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 
