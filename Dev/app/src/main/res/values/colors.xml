@@ -2,6 +2,7 @@
 <resources>
     <!-- Color of object-->
     <color name="transparent_actionbar">#AA000000</color>
+    <color name="default_font">#CC333333</color>
     <color name="card_shadow">#CABBBBBB</color>
     <color name="fragment_background">#ECF0F1</color>
 

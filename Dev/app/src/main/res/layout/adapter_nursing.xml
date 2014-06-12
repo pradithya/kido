@@ -56,28 +56,38 @@
 
         <TextView
             android:id="@+id/history_item_volume"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:gravity="center"
             android:padding="4dp"
             android:text="56ml"
-            android:textSize="@dimen/text_size_micro" />
+            android:textSize="@dimen/text_size_medium" />
 
-        <ImageButton
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_action_overflow"
+            android:layout_gravity="center"/>
+
+        <!--ImageButton
             android:id="@+id/button_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="4dp"
-            android:src="@drawable/ic_action_edit" />
+            android:visibility="invisible"
+            android:src="@drawable/ic_action_edit" /-->
 
-        <ImageButton
+        <!--ImageButton
             android:id="@+id/button_remove"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="4dp"
-            android:src="@drawable/ic_action_remove" />
+            android:visibility="invisible"
+            android:src="@drawable/ic_action_remove" /-->
 
     </LinearLayout>
 
