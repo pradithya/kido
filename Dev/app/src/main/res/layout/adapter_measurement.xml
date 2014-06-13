@@ -2,7 +2,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="horizontal">
 
     <TextView
@@ -11,6 +11,8 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
+        android:text="10.00"
+        android:textColor="@color/orange"
         android:textSize="@dimen/text_size_micro" />
 
     <LinearLayout
@@ -31,8 +33,9 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center|left"
             android:orientation="vertical"
             android:padding="4dp">
 
@@ -40,39 +43,37 @@
                 android:id="@+id/history_item_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Thur, 12 Jun 2014"
+                android:textColor="@color/default_font"
                 android:textSize="@dimen/text_size_micro" />
 
             <TextView
                 android:id="@+id/history_item_height"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="50.0cm"
+                android:textColor="@color/orange"
                 android:textSize="@dimen/text_size_micro" />
 
         </LinearLayout>
 
         <TextView
             android:id="@+id/history_item_weight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
             android:padding="4dp"
-            android:textSize="@dimen/text_size_medium" />
+            android:text="7.9kG"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/text_size_small" />
 
         <ImageView
-            android:id="@+id/button_edit"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:padding="4dp"
-            android:src="@drawable/ic_action_edit" />
-
-        <ImageView
-            android:id="@+id/button_remove"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="4dp"
-            android:src="@drawable/ic_action_remove" />
+            android:src="@drawable/ic_action_overflow" />
 
     </LinearLayout>
 

@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fragment_background"
     android:orientation="vertical">
 
     <com.progrema.superbaby.widget.customlistview.ObserveableListView
@@ -56,11 +57,10 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
                 <RelativeLayout
-                    android:id="@+id/section_graph"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
@@ -85,6 +85,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="4dp"
+                        android:layout_alignParentLeft="true"
                         android:text="@string/wet_icon"
                         android:textColor="@color/blue"
                         android:textSize="@dimen/text_size_small"
@@ -117,8 +118,8 @@
                         android:id="@+id/wet_average"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="4dp"
                         android:layout_toRightOf="@id/wet_title"
+                        android:padding="4dp"
                         android:text="@string/total_activity_number_initial"
                         android:textColor="@color/blue"
                         android:textSize="@dimen/text_size_small"
@@ -130,10 +131,10 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/wet_average"
                         android:layout_toRightOf="@id/dry_title"
-                        android:paddingTop="4dp"
-                        android:paddingRight="4dp"
                         android:paddingBottom="4dp"
                         android:paddingLeft="7dp"
+                        android:paddingRight="4dp"
+                        android:paddingTop="4dp"
                         android:text="@string/total_activity_number_initial"
                         android:textColor="@color/orange"
                         android:textSize="@dimen/text_size_small"
@@ -145,10 +146,10 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/dry_average"
                         android:layout_toRightOf="@id/mix_title"
-                        android:paddingTop="4dp"
-                        android:paddingRight="4dp"
                         android:paddingBottom="4dp"
                         android:paddingLeft="7dp"
+                        android:paddingRight="4dp"
+                        android:paddingTop="4dp"
                         android:text="@string/total_activity_number_initial"
                         android:textColor="@color/purple"
                         android:textSize="@dimen/text_size_small"
@@ -158,9 +159,9 @@
                         android:id="@+id/wet_last"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/wet_average"
                         android:padding="4dp"
                         android:text="@string/activity_last_initial"
-                        android:layout_toRightOf="@id/wet_average"
                         android:textColor="@color/blue"
                         android:textSize="@dimen/text_size_small"
                         android:textStyle="bold" />

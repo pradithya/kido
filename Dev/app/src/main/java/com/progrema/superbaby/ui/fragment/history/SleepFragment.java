@@ -3,7 +3,6 @@ package com.progrema.superbaby.ui.fragment.history;
 import android.app.ActionBar;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -19,28 +18,25 @@ import com.progrema.superbaby.holograph.PieSlice;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.FormatUtils;
+import com.progrema.superbaby.widget.customfragment.HistoryFragment;
 import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
 
-public class SleepFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class SleepFragment extends HistoryFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_TODAY_ENTRY = 1;
     private ObserveableListView olvSleepHistoryList;
     private SleepAdapter saAdapter;
-    private TextView tvNightPct;
-    private TextView tvNapPct;
-    private TextView tvTodayNightDrt;
-    private TextView tvTodayNapDrt;
-    private TextView tvSleepPct;
-    private TextView tvActivePct;
-    private TextView tvTodaySleepDrt;
-    private TextView tvTodayActiveDrt;
+    private TextView tvNightPercent;
+    private TextView tvNapPercent;
+    private TextView tvNightDuration;
+    private TextView tvNapDuration;
+    private TextView tvTotalDuration;
     private Calendar cMidnight;
     private PieGraph pgNapNight;
-    private PieGraph pgActiveSleep;
 
     public static SleepFragment getInstance() {
         return new SleepFragment();
@@ -51,29 +47,28 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
                              Bundle bSavedInstanceState) {
         // inflate fragment layout
         View vRoot = liInflater.inflate(R.layout.fragment_sleep, vgContainer, false);
+        View vPlaceholderRoot = liInflater.inflate(R.layout.placeholder_header, null);
+        super.attachQuickReturnView(vRoot, R.id.header_container);
+        super.attachPlaceHolderLayout(vPlaceholderRoot, R.id.placeholder_header);
 
         // set action bar icon and title
         ActionBar abActionBar = getActivity().getActionBar();
         abActionBar.setIcon(getResources().getDrawable(R.drawable.ic_sleep_top));
 
         // get Header UI object
-        tvNightPct = (TextView) vRoot.findViewById(R.id.night_percentage);
-        tvNapPct = (TextView) vRoot.findViewById(R.id.nap_percentage);
-        tvTodayNightDrt = (TextView) vRoot.findViewById(R.id.today_night_duration);
-        tvTodayNapDrt = (TextView) vRoot.findViewById(R.id.today_nap_duration);
-        tvSleepPct = (TextView) vRoot.findViewById(R.id.sleep_percentage);
-        tvActivePct = (TextView) vRoot.findViewById(R.id.active_percentage);
-        tvTodaySleepDrt = (TextView) vRoot.findViewById(R.id.today_sleep_duration);
-        tvTodayActiveDrt = (TextView) vRoot.findViewById(R.id.today_active_duration);
+        tvNightPercent = (TextView) vRoot.findViewById(R.id.percent_night);
+        tvNapPercent = (TextView) vRoot.findViewById(R.id.percent_nap);
+        tvNightDuration = (TextView) vRoot.findViewById(R.id.duration_night);
+        tvNapDuration = (TextView) vRoot.findViewById(R.id.duration_nap);
+        tvTotalDuration = (TextView) vRoot.findViewById(R.id.duration_total);
         pgNapNight = (PieGraph) vRoot.findViewById(R.id.sleep_nap_night_pie_chart);
-        pgActiveSleep = (PieGraph) vRoot.findViewById(R.id.sleep_active_sleep_pie_chart);
 
         // set adapter to list view
         olvSleepHistoryList = (ObserveableListView) vRoot.findViewById(R.id.activity_list);
         saAdapter = new SleepAdapter(getActivity(), null, 0);
-        olvSleepHistoryList.addHeaderView(new View(getActivity()));
-        olvSleepHistoryList.addFooterView(new View(getActivity()));
+        olvSleepHistoryList.addHeaderView(vPlaceholderRoot);
         olvSleepHistoryList.setAdapter(saAdapter);
+        super.attachListView(olvSleepHistoryList);
 
         // prepare loader
         LoaderManager lmLoaderManager = getLoaderManager();
@@ -142,13 +137,10 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
 
                 case LOADER_TODAY_ENTRY:
 
-                    float fTotalSleepPercentage;
-                    float fTotalActivePercentage;
                     float fNightPercentage;
                     float fNapPercentage;
                     long lTotalOneDay = 24 * 60 * 60;
                     long lTotalSleepDuration = 0;
-                    long lTotalActiveDuration;
                     long lDuration;
                     long lNightDuration = 0;
                     long lNapDuration = 0;
@@ -167,30 +159,24 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
                         }
                     }
 
-                    lTotalActiveDuration
-                            = (Calendar.getInstance().getTimeInMillis()
-                            - cMidnight.getTimeInMillis()) - lTotalSleepDuration;
-                    fTotalSleepPercentage = ((float) lTotalSleepDuration / (float) lTotalOneDay) * 100;
-                    fTotalActivePercentage = 100 - fTotalSleepPercentage;
-                    fNightPercentage = lNightDuration / lTotalSleepDuration * 100;
-                    fNapPercentage = lNapDuration / lTotalSleepDuration * 100;
-
+                    fNightPercentage = (float)lNightDuration / (float)lTotalSleepDuration * 100;
+                    fNapPercentage = (float)lNapDuration / (float)lTotalSleepDuration * 100;
                     DecimalFormat dfForm = new DecimalFormat("0.00");
 
                     // today nap percentage information
-                    tvNapPct.setText(
+                    tvNapPercent.setText(
                             FormatUtils.fmtSleepNapPct(getActivity(),
                                     String.valueOf(dfForm.format(fNapPercentage)))
                     );
 
                     // today night sleep percentage information
-                    tvNightPct.setText(
+                    tvNightPercent.setText(
                             FormatUtils.fmtSleepNightPct(getActivity(),
                                     String.valueOf(dfForm.format(fNightPercentage)))
                     );
 
                     // today nap duration information
-                    tvTodayNapDrt.setText(
+                    tvNapDuration.setText(
                             FormatUtils.fmtSleepNapDrt(getActivity(),
                                     String.valueOf(lNapDuration))
                     );
@@ -200,7 +186,7 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
                     pgNapNight.addSlice(psNap);
 
                     // today night duration information
-                    tvTodayNightDrt.setText(
+                    tvNightDuration.setText(
                             FormatUtils.fmtSleepNightDrt(getActivity(),
                                     String.valueOf(lNightDuration))
                     );
@@ -209,37 +195,11 @@ public class SleepFragment extends Fragment implements LoaderManager.LoaderCallb
                     psNight.setValue(lNightDuration);
                     pgNapNight.addSlice(psNight);
 
-                    // today sleep percentage information
-                    tvSleepPct.setText(
-                            FormatUtils.fmtSleepPct(getActivity(),
-                                    String.valueOf(dfForm.format(fTotalSleepPercentage)))
-                    );
-
-                    // today active percentage information
-                    tvActivePct.setText(
-                            FormatUtils.fmtActivePct(getActivity(),
-                                    String.valueOf(dfForm.format(fTotalActivePercentage)))
-                    );
-
                     // today sleep duration information
-                    tvTodaySleepDrt.setText(
+                    tvTotalDuration.setText(
                             FormatUtils.fmtSleepDrt(getActivity(),
                                     String.valueOf(lTotalSleepDuration))
                     );
-                    PieSlice psSleep = new PieSlice();
-                    psSleep.setColor(getResources().getColor(R.color.black));
-                    psSleep.setValue(lTotalSleepDuration);
-                    pgActiveSleep.addSlice(psSleep);
-
-                    // today active duration information
-                    tvTodayActiveDrt.setText(
-                            FormatUtils.fmtActiveDrt(getActivity(),
-                                    String.valueOf(lTotalActiveDuration))
-                    );
-                    PieSlice ps_active = new PieSlice();
-                    ps_active.setColor(getResources().getColor(R.color.red));
-                    ps_active.setValue(lTotalActiveDuration);
-                    pgActiveSleep.addSlice(ps_active);
 
                     break;
             }

@@ -91,7 +91,6 @@ public class FormatUtils {
     }
 
     public static String fmtSleepNapPct(Context context, String values) {
-
         CharSequence formatted = Phrase.from(context.getResources()
                 .getString(R.string.nap_percentage))
                 .put("percentage", values)
