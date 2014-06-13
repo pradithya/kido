@@ -84,7 +84,7 @@ public class HistoryFragment extends Fragment {
                     iScrollY = olvListView.getComputedScrollY();
                 }
 
-                iRawY = - Math.min(iCacheVerticalRange - olvListView.getHeight() , iScrollY);
+                iRawY = - iScrollY;
 
                 switch (iState) {
                     case STATE_ONSCREEN: // state 0
