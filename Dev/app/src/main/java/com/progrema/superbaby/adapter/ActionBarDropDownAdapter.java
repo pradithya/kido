@@ -14,8 +14,6 @@ import com.progrema.superbaby.R;
  */
 public class ActionBarDropDownAdapter extends ArrayAdapter<String>{
 
-
-    // CUSTOM SPINNER ADAPTER
     private Context mContext;
     private String[] texts;
     private int viewId;

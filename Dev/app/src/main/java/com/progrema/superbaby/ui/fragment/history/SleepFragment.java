@@ -139,7 +139,6 @@ public class SleepFragment extends HistoryFragment implements LoaderManager.Load
 
                     float fNightPercentage;
                     float fNapPercentage;
-                    long lTotalOneDay = 24 * 60 * 60;
                     long lTotalSleepDuration = 0;
                     long lDuration;
                     long lNightDuration = 0;

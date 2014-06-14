@@ -1,12 +1,17 @@
 package com.progrema.superbaby.adapter.nursing;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
@@ -14,7 +19,8 @@ import com.progrema.superbaby.models.Nursing;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
-public class NursingAdapter extends CursorAdapter {
+public class NursingAdapter extends CursorAdapter{
+
     public NursingAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
@@ -26,7 +32,7 @@ public class NursingAdapter extends CursorAdapter {
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(View view, final Context context, Cursor cursor) {
         String sTimestamp = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_TIMESTAMP);
         String sType = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_SIDES);
         String sDuration = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_DURATION);
@@ -37,6 +43,34 @@ public class NursingAdapter extends CursorAdapter {
         TextView tvDuration = (TextView) view.findViewById(R.id.history_item_duration);
         TextView tvVolume = (TextView) view.findViewById(R.id.history_item_volume);
         ImageView ivType = (ImageView) view.findViewById(R.id.icon_type);
+
+        ImageView ivMenuButton = (ImageView) view.findViewById(R.id.menu_button);
+        ivMenuButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ImageView ivMenuButton = (ImageView) v.findViewById(R.id.menu_button);
+
+                        PopupMenu popup = new PopupMenu(context, ivMenuButton);
+                        popup.setOnMenuItemClickListener(
+                                new PopupMenu.OnMenuItemClickListener() {
+                                    @Override
+                                    public boolean onMenuItemClick(MenuItem item) {
+                                        if (item.getTitle().equals("Edit")){
+                                            handleEdit();
+                                        } else if (item.getTitle().equals("Delete")){
+                                            handleDelete();
+                                        }
+                                        return false;
+                                    }
+                                }
+                        );
+                        MenuInflater miInflater = ((Activity) context).getMenuInflater();
+                        miInflater.inflate(R.menu.entry, popup.getMenu());
+                        popup.show();
+                    }
+                }
+        );
 
         tvVolume.setVisibility(View.GONE);
         tvDate.setText(FormatUtils.fmtDate(context, sTimestamp));
@@ -54,10 +88,22 @@ public class NursingAdapter extends CursorAdapter {
             tvDuration.setTextColor(view.getResources().getColor(R.color.green));
             tvTime.setTextColor(view.getResources().getColor(R.color.green));
             ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_right));
-        } else if(sType.compareTo(Nursing.NursingType.LEFT.getTitle()) == 0) {
+        } else if (sType.compareTo(Nursing.NursingType.LEFT.getTitle()) == 0) {
             tvDuration.setTextColor(view.getResources().getColor(R.color.orange));
             tvTime.setTextColor(view.getResources().getColor(R.color.orange));
             ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_left));
         }
+    }
+
+    private void handleDelete(){
+        //TODO: how to identified the selected cursor?
+        Log.i("_DBG_MENU", " position = " +
+                getCursor().getString(BabyLogContract.Nursing.Query.OFFSET_SIDES));
+    }
+
+    private void handleEdit() {
+        //TODO: how to identified the selected cursor?
+        Log.i("_DBG_MENU", " position = " +
+                getCursor().getString(BabyLogContract.Nursing.Query.OFFSET_SIDES));
     }
 }
