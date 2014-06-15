@@ -1,4 +1,4 @@
-package com.progrema.superbaby.adapter;
+package com.progrema.superbaby.adapter.actionbar;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -33,6 +33,7 @@ public class NursingAdapter extends CursorAdapter{
 
     @Override
     public void bindView(View view, final Context context, Cursor cursor) {
+
         String sTimestamp = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_TIMESTAMP);
         String sType = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_SIDES);
         String sDuration = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_DURATION);
@@ -45,12 +46,12 @@ public class NursingAdapter extends CursorAdapter{
         ImageView ivType = (ImageView) view.findViewById(R.id.icon_type);
 
         ImageView ivMenuButton = (ImageView) view.findViewById(R.id.menu_button);
+        ivMenuButton.setTag(cursor.getString(BabyLogContract.Nursing.Query.OFFSET_ID));
         ivMenuButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         ImageView ivMenuButton = (ImageView) v.findViewById(R.id.menu_button);
-
                         PopupMenu popup = new PopupMenu(context, ivMenuButton);
                         popup.setOnMenuItemClickListener(
                                 new PopupMenu.OnMenuItemClickListener() {
@@ -68,6 +69,7 @@ public class NursingAdapter extends CursorAdapter{
                         MenuInflater miInflater = ((Activity) context).getMenuInflater();
                         miInflater.inflate(R.menu.entry, popup.getMenu());
                         popup.show();
+                        Log.i("_DBG_MENU", " Tag = " + ivMenuButton.getTag());
                     }
                 }
         );
