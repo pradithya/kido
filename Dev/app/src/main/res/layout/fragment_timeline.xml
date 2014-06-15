@@ -1,92 +1,281 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fragment_background"
     android:orientation="vertical">
 
-    <LinearLayout
+    <com.progrema.superbaby.widget.customlistview.ObserveableListView
+        android:id="@+id/activity_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@null"
+        android:dividerHeight="8dp"
+        android:footerDividersEnabled="true"
+        android:headerDividersEnabled="true"
+        android:listSelector="@android:color/transparent" />
+
+    <LinearLayout
+        android:id="@+id/header_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp">
 
         <LinearLayout
-            android:id="@+id/timeline_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_margin="15dp"
             android:background="@drawable/header_card_background"
             android:orientation="vertical"
-            android:padding="15dp">
+            android:padding="4dp">
 
-            <TextView
-                android:id="@+id/baby_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Safiya Salsabila"
-                android:textColor="@color/black" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/baby_birthday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="13 April 2013"
-                android:textColor="@color/black" />
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/box_frame"
+                    android:gravity="center">
 
-            <TextView
-                android:id="@+id/baby_age"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1 year, 3 month, 12 day"
-                android:textColor="@color/black" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_baby_girl" />
 
-            <TextView
-                android:id="@+id/baby_sex"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Female"
-                android:textColor="@color/black" />
+                </RelativeLayout>
 
-            <TextView
-                android:id="@+id/last_nursing"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black" />
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3">
 
-            <TextView
-                android:id="@+id/last_sleep"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black" />
+                    <TextView
+                        android:id="@+id/name_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:text="Name"
+                        android:textSize="@dimen/text_size_small"
+                        android:textColor="@color/red"/>
 
-            <TextView
-                android:id="@+id/last_diaper"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black" />
+                    <TextView
+                        android:id="@+id/name_content"
+                        android:layout_toRightOf="@id/name_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:text="Safiya Salsabila"
+                        android:textSize="@dimen/text_size_small"
+                        android:textColor="@color/default_font"/>
 
-            <TextView
-                android:id="@+id/last_measurement"
-                android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/birthday_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/name_title"
+                        android:padding="4dp"
+                        android:text="Date of Birth"
+                        android:textSize="@dimen/text_size_small"
+                        android:textColor="@color/red" />
+
+                    <TextView
+                        android:id="@+id/birthday_content"
+                        android:layout_toRightOf="@id/birthday_title"
+                        android:layout_below="@id/name_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:text="Sat, 13 April 2013"
+                        android:textSize="@dimen/text_size_small"
+                        android:textColor="@color/default_font"/>
+
+                    <TextView
+                        android:id="@+id/age_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/birthday_title"
+                        android:padding="4dp"
+                        android:text="Age"
+                        android:textSize="@dimen/text_size_small"
+                        android:textColor="@color/red" />
+
+                    <TextView
+                        android:id="@+id/age_content"
+                        android:layout_toRightOf="@id/birthday_title"
+                        android:layout_below="@id/birthday_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:text="12 months 2 days"
+                        android:textSize="@dimen/text_size_small"
+                        android:textColor="@color/default_font"/>
+
+                    <TextView
+                        android:id="@+id/sex_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/age_title"
+                        android:padding="4dp"
+                        android:text="Sex"
+                        android:textSize="@dimen/text_size_small"
+                        android:textColor="@color/red" />
+
+                    <TextView
+                        android:id="@+id/sex_content"
+                        android:layout_toRightOf="@id/birthday_title"
+                        android:layout_below="@id/age_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:text="Female"
+                        android:textSize="@dimen/text_size_small"
+                        android:textColor="@color/default_font"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black" />
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/nursing_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nursing"
+                        android:padding="4dp"
+                        android:textSize="@dimen/text_size_small"
+                        android:textColor="@color/orange"/>
+
+                    <TextView
+                        android:id="@+id/nursing_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="35 minutes ago"
+                        android:layout_toRightOf="@id/nursing_title"
+                        android:textColor="@color/orange"
+                        android:padding="4dp"/>
+
+                    <TextView
+                        android:id="@+id/sleep_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/nursing_title"
+                        android:text="Sleep"
+                        android:padding="4dp"
+                        android:textSize="@dimen/text_size_small"
+                        android:textColor="@color/blue"/>
+
+                    <TextView
+                        android:id="@+id/sleep_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/nursing_content"
+                        android:text="35 minutes ago"
+                        android:layout_toRightOf="@id/nursing_title"
+                        android:textColor="@color/blue"
+                        android:padding="4dp"/>
+
+                    <TextView
+                        android:id="@+id/diaper_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/sleep_title"
+                        android:text="Diaper"
+                        android:padding="4dp"
+                        android:textSize="@dimen/text_size_small"
+                        android:textColor="@color/green"/>
+
+                    <TextView
+                        android:id="@+id/diaper_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/sleep_content"
+                        android:text="35 minutes ago"
+                        android:layout_toRightOf="@id/nursing_title"
+                        android:textColor="@color/green"
+                        android:padding="4dp"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/measurement_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Measure"
+                        android:padding="4dp"
+                        android:textSize="@dimen/text_size_small"
+                        android:textColor="@color/orange"/>
+
+                    <TextView
+                        android:id="@+id/measurement_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="35 minutes ago"
+                        android:layout_toRightOf="@id/measurement_title"
+                        android:textColor="@color/orange"
+                        android:padding="4dp"/>
+
+                    <TextView
+                        android:id="@+id/height_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/measurement_title"
+                        android:text="Height"
+                        android:padding="4dp"
+                        android:textSize="@dimen/text_size_small"
+                        android:textColor="@color/blue"/>
+
+                    <TextView
+                        android:id="@+id/height_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/measurement_content"
+                        android:text="70 cm"
+                        android:layout_toRightOf="@id/measurement_title"
+                        android:textColor="@color/blue"
+                        android:padding="4dp"/>
+
+                    <TextView
+                        android:id="@+id/weight_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/height_title"
+                        android:text="Diaper"
+                        android:padding="4dp"
+                        android:textSize="@dimen/text_size_small"
+                        android:textColor="@color/green"/>
+
+                    <TextView
+                        android:id="@+id/weight_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/height_content"
+                        android:text="7 kg"
+                        android:layout_toRightOf="@id/measurement_title"
+                        android:textColor="@color/green"
+                        android:padding="4dp"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
-
-        <com.progrema.superbaby.widget.customlistview.ObserveableListView
-            android:id="@+id/activity_list"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:cacheColorHint="@android:color/transparent"
-            android:divider="@null"
-            android:dividerHeight="10dp"
-            android:footerDividersEnabled="true"
-            android:headerDividersEnabled="true"
-            android:listSelector="@android:color/transparent"
-            android:paddingLeft="40dp"
-            android:paddingRight="15dp" />
 
     </LinearLayout>
 

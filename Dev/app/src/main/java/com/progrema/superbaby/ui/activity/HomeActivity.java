@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.adapter.ActionBarDropDownAdapter;
+import com.progrema.superbaby.adapter.actionbar.ActionBarDropDownAdapter;
 import com.progrema.superbaby.models.Diaper;
 import com.progrema.superbaby.models.Measurement;
 import com.progrema.superbaby.ui.fragment.dialog.DiaperDialog;
@@ -30,7 +30,7 @@ import com.progrema.superbaby.ui.fragment.history.NavigationFragment;
 import com.progrema.superbaby.ui.fragment.history.NursingFragment;
 import com.progrema.superbaby.ui.fragment.history.SleepFragment;
 import com.progrema.superbaby.ui.fragment.history.StopwatchFragment;
-import com.progrema.superbaby.ui.fragment.history.TimeLineFragment;
+import com.progrema.superbaby.ui.fragment.history.TimelineFragment;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 
@@ -279,7 +279,7 @@ public class HomeActivity extends FragmentActivity
             diaper.insert(this);
 
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.home_activity_container, TimeLineFragment.getInstance());
+            fragmentTransaction.replace(R.id.home_activity_container, TimelineFragment.getInstance());
             fragmentTransaction.commit();
         }
     }
@@ -298,7 +298,7 @@ public class HomeActivity extends FragmentActivity
             measurement.insert(this);
 
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.home_activity_container, TimeLineFragment.getInstance());
+            fragmentTransaction.replace(R.id.home_activity_container, TimelineFragment.getInstance());
             fragmentTransaction.commit();
         }
     }
@@ -358,7 +358,7 @@ public class HomeActivity extends FragmentActivity
         Fragment module = null;
         switch (iFragment) {
             case POSITION_HOME_FRAGMENT:
-                module = TimeLineFragment.getInstance();
+                module = TimelineFragment.getInstance();
                 mTitle = getString(R.string.title_timeline_fragment);
                 break;
             case POSITION_NURSING_FRAGMENT:

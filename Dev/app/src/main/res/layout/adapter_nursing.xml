@@ -6,7 +6,7 @@
     android:paddingRight="4dp">
 
     <TextView
-        android:id="@+id/history_item_time"
+        android:id="@+id/information_time"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"

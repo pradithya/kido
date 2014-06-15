@@ -1,45 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/selector_header_card_background"
-    android:descendantFocusability="afterDescendants"
-    android:orientation="vertical"
-    android:paddingBottom="15dp"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
-    android:paddingTop="15dp">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingRight="4dp">
 
     <TextView
-        android:id="@+id/history_item_day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:id="@+id/information_time"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="10:00"
+        android:textSize="@dimen/text_size_small" />
 
-    <TextView
-        android:id="@+id/history_item_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:background="@drawable/body_card_background"
+        android:descendantFocusability="afterDescendants"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/history_item_act_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/icon_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="8dp"
+            android:src="@drawable/ic_nursing_right" />
 
-    <TextView
-        android:id="@+id/history_item_extra0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:orientation="vertical"
+            android:padding="4dp">
 
-    <TextView
-        android:id="@+id/history_item_extra1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/information_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/default_font"
+                android:textSize="@dimen/text_size_micro" />
 
-    <TextView
-        android:id="@+id/history_item_extra2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/information_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_micro" />
 
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/information_three"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="4dp"
+            android:textSize="@dimen/text_size_small" />
+
+        <ImageView
+            android:id="@+id/menu_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_action_overflow" />
+
+    </LinearLayout>
 
 </LinearLayout>

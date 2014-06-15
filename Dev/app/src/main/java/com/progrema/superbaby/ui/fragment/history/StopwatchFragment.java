@@ -47,8 +47,6 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
-
         Bundle args = getArguments();
         if (args != null && args.containsKey(HomeActivity.ACTIVITY_TRIGGER_KEY)) {
             sourceTrigger = args.getString(HomeActivity.ACTIVITY_TRIGGER_KEY);
@@ -207,7 +205,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
         actionBar.setDisplayShowTitleEnabled(false);
 
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.home_activity_container, TimeLineFragment.getInstance());
+        fragmentTransaction.replace(R.id.home_activity_container, TimelineFragment.getInstance());
         fragmentTransaction.commit();
     }
 

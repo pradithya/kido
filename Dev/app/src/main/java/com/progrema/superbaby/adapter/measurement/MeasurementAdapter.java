@@ -30,7 +30,7 @@ public class MeasurementAdapter extends CursorAdapter {
         String sWeight = cCursor.getString(BabyLogContract.Measurement.Query.OFFSET_WEIGHT);
 
         TextView tvDate = (TextView) vView.findViewById(R.id.history_item_day);
-        TextView tvTime = (TextView) vView.findViewById(R.id.history_item_time);
+        TextView tvTime = (TextView) vView.findViewById(R.id.information_time);
         TextView tvHeight = (TextView) vView.findViewById(R.id.history_item_height);
         TextView tvWeight = (TextView) vView.findViewById(R.id.history_item_weight);
 

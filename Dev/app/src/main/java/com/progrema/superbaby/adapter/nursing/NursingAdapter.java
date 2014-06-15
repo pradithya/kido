@@ -40,7 +40,7 @@ public class NursingAdapter extends CursorAdapter{
         String sVolume = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_VOLUME);
 
         TextView tvDate = (TextView) view.findViewById(R.id.history_item_day);
-        TextView tvTime = (TextView) view.findViewById(R.id.history_item_time);
+        TextView tvTime = (TextView) view.findViewById(R.id.information_time);
         TextView tvDuration = (TextView) view.findViewById(R.id.history_item_duration);
         TextView tvVolume = (TextView) view.findViewById(R.id.history_item_volume);
         ImageView ivType = (ImageView) view.findViewById(R.id.icon_type);

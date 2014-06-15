@@ -32,7 +32,7 @@ public class DiaperAdapter extends CursorAdapter {
 
         TextView tvDay = (TextView) view.findViewById(R.id.history_item_day);
         TextView tvDate = (TextView) view.findViewById(R.id.history_item_date);
-        TextView tvTime = (TextView) view.findViewById(R.id.history_item_time);
+        TextView tvTime = (TextView) view.findViewById(R.id.information_time);
         ImageView ivType = (ImageView) view.findViewById(R.id.icon_type);
 
         tvDay.setText(FormatUtils.fmtDayOnly(context, sTimestamp));

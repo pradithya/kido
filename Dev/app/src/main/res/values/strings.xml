@@ -47,7 +47,7 @@
     <string name="duration_format">{hour}h {minute}m {second}s</string>
     <string name="duration_in_minute_format">{minute}m</string>
     <string name="time_span_format">{start} - {end}</string>
-    <string name="last_activity_format">Last {activity}: {time}</string>
+    <string name="last_activity_format">{time}</string>
     <string name="night_percentage">{percentage}%</string>
     <string name="night_percentage_initial">Night ...%</string>
     <string name="nap_percentage">{percentage}%</string>

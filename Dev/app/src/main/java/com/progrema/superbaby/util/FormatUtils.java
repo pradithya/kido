@@ -321,9 +321,9 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String fmtLastActivity(Context context, String activity, String time) {
-        CharSequence formatted = Phrase.from(context.getResources().getString(R.string.last_activity_format))
-                .put("activity", activity)
+    public static String fmtLastActivity(Context context, String time) {
+        CharSequence formatted = Phrase.from(context.getResources()
+                .getString(R.string.last_activity_format))
                 .put("time", time)
                 .format();
         return String.valueOf(formatted);

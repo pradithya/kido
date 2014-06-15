@@ -169,8 +169,9 @@ public class BabyLogContract {
                             Sleep.DURATION,
                             Nursing.SIDES,
                             Nursing.DURATION,
-                            Nursing.VOLUME
-
+                            Nursing.VOLUME,
+                            Measurement.HEIGHT,
+                            Measurement.WEIGHT
                     };
             final int OFFSET_ID = 0;
             final int OFFSET_BABY_ID = 1;
@@ -181,6 +182,8 @@ public class BabyLogContract {
             final int OFFSET_NURSING_SIDES = 6;
             final int OFFSET_NURSING_DURATION = 7;
             final int OFFSET_NURSING_VOLUME = 8;
+            final int OFFSET_MEASUREMENT_HEIGHT = 9;
+            final int OFFSET_MEASUREMENT_WEIGHT = 10;
             final String SORT_BY_TIMESTAMP_ASC = ActivityColumns.TIMESTAMP + " ASC ";
             final String SORT_BY_TIMESTAMP_DESC = ActivityColumns.TIMESTAMP + " DESC ";
         }
