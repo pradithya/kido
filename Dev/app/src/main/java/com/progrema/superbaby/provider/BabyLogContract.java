@@ -214,7 +214,6 @@ public class BabyLogContract {
                             Nursing.SIDES,
                             Nursing.DURATION,
                             Nursing.VOLUME
-
                     };
             final int OFFSET_ID = 0;
             final int OFFSET_ACTIVITY_ID = 1;

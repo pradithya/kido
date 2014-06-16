@@ -49,12 +49,16 @@ public class TimelineAdapter extends CursorAdapter {
         // Time is always show in every type
         tvInformationTime.setText(FormatUtils.fmtTime(context, sTimeStamp));
 
+        // Hide information three by default
+        tvInformationThree.setVisibility(View.GONE);
+
         if (sActivityType.equals(BabyLogContract.Activity.TYPE_SLEEP)) {
             /**
              * Sleep type handler
              */
             tvInformationOne.setText(FormatUtils.fmtDate(context, sTimeStamp));
             tvInformationTwo.setText(FormatUtils.fmtTimeBoundary(context, sTimeStamp, sSleepDuration));
+            tvInformationThree.setVisibility(View.VISIBLE);
             tvInformationThree.setText(FormatUtils.fmtDuration(context, sSleepDuration));
             if (FormatUtils.isNight(Long.parseLong(sTimeStamp))) {
                 ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_sleep_night));
@@ -93,6 +97,7 @@ public class TimelineAdapter extends CursorAdapter {
             tvInformationOne.setText(FormatUtils.fmtDate(context, sTimeStamp));
             tvInformationTwo.setText(FormatUtils.fmtDuration(context, sNursingDuration));
             if (sNursingSides.compareTo(Nursing.NursingType.FORMULA.getTitle()) == 0) {
+                tvInformationThree.setVisibility(View.VISIBLE);
                 tvInformationThree.setText(sNursingVolume + "mL");
                 tvInformationThree.setTextColor(view.getResources().getColor(R.color.red));
                 tvInformationTime.setTextColor(view.getResources().getColor(R.color.red));
@@ -115,6 +120,7 @@ public class TimelineAdapter extends CursorAdapter {
             tvInformationOne.setText(FormatUtils.fmtDate(context, sTimeStamp));
             tvInformationTwo.setText(sMeasurementHeight + " cm");
             tvInformationTwo.setTextColor(view.getResources().getColor(R.color.orange));
+            tvInformationThree.setVisibility(View.VISIBLE);
             tvInformationThree.setText(sMeasurementWeight + " kg");
             tvInformationThree.setTextColor(view.getResources().getColor(R.color.orange));
             tvInformationTime.setTextColor(view.getResources().getColor(R.color.orange));

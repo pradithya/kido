@@ -23,6 +23,9 @@ import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 
 public class DiaperFragment extends HistoryFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    /*
+     * Loader Type used for asynchronous cursor loading
+     */
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_LAST_WET = 1;
     private static final int LOADER_LAST_DRY = 2;
@@ -30,8 +33,10 @@ public class DiaperFragment extends HistoryFragment implements LoaderManager.Loa
     private static final int LOADER_TODAY_WET = 4;
     private static final int LOADER_TODAY_DRY = 5;
     private static final int LOADER_TODAY_MIXED = 6;
-    private ObserveableListView olvDiaperHistoryList;
-    private DiaperAdapter daAdapter;
+
+    /*
+     * View Object for header information
+     */
     private TextView tvWetTotalToday;
     private TextView tvWetLast;
     private TextView tvDryTotalToday;
@@ -39,6 +44,12 @@ public class DiaperFragment extends HistoryFragment implements LoaderManager.Loa
     private TextView tvMixedTotalToday;
     private TextView tvMixedLast;
     private PieGraph pgHeader;
+
+    /*
+     * List and adapter to manage list view
+     */
+    private ObserveableListView olvDiaperHistoryList;
+    private DiaperAdapter daAdapter;
 
     public static DiaperFragment getInstance() {
         return new DiaperFragment();
@@ -86,7 +97,6 @@ public class DiaperFragment extends HistoryFragment implements LoaderManager.Loa
         lmLoaderManager.initLoader(LOADER_TODAY_WET, getArguments(), this);
         lmLoaderManager.initLoader(LOADER_TODAY_DRY, getArguments(), this);
         lmLoaderManager.initLoader(LOADER_TODAY_MIXED, getArguments(), this);
-
 
         return vRoot;
     }

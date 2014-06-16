@@ -18,14 +18,12 @@ import com.progrema.superbaby.holograph.PieGraph;
 import com.progrema.superbaby.holograph.PieSlice;
 import com.progrema.superbaby.models.Nursing;
 import com.progrema.superbaby.provider.BabyLogContract;
-import com.progrema.superbaby.ui.activity.HomeActivity;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.FormatUtils;
 import com.progrema.superbaby.widget.customfragment.HistoryFragment;
 import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 
 import java.text.DecimalFormat;
-import java.util.Calendar;
 
 public class NursingFragment extends HistoryFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -103,32 +101,11 @@ public class NursingFragment extends HistoryFragment implements LoaderManager.Lo
                 String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())
         };
 
-        String sStart;
-        String sEnd;
-
-        if ((bBundle != null) &&
-                !bBundle.getString(HomeActivity.TimeFilter.FILTER_TYPE.getTitle())
-                        .equals(HomeActivity.TimeFilter.FILTER_TODAY.getTitle())) {
-            sStart = bBundle.getString(HomeActivity.TimeFilter.START.getTitle());
-            sEnd = bBundle.getString(HomeActivity.TimeFilter.END.getTitle());
-        } else {
-            Calendar cStart = Calendar.getInstance();
-            sEnd = String.valueOf(cStart.getTimeInMillis());
-            cStart.set(Calendar.HOUR_OF_DAY, 0);
-            cStart.set(Calendar.MINUTE, 0);
-            cStart.set(Calendar.SECOND, 0);
-            cStart.set(Calendar.MILLISECOND, 0);
-            sStart = String.valueOf(cStart.getTimeInMillis());
-        }
-
-        String[] timeFilterArg = {
-                String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID()),
-                sStart, sEnd
-        };
-
         String[] aLastSideProjection = {
                 BabyLogContract.Nursing.SIDES
         };
+
+        String[] timeFilterArg = getTimeFilterArg(bBundle);
 
         switch (iLoaderId) {
             case LOADER_LIST_VIEW:

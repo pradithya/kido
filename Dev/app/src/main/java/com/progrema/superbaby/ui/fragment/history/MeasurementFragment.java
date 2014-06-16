@@ -14,8 +14,11 @@ import android.view.ViewGroup;
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.measurement.MeasurementAdapter;
 import com.progrema.superbaby.provider.BabyLogContract;
+import com.progrema.superbaby.ui.activity.HomeActivity;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.widget.customlistview.ObserveableListView;
+
+import java.util.Calendar;
 
 public class MeasurementFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -28,7 +31,8 @@ public class MeasurementFragment extends Fragment implements LoaderManager.Loade
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         // inflate fragment layout
         View vRoot = inflater.inflate(R.layout.fragment_measurement, container, false);
 
@@ -43,31 +47,50 @@ public class MeasurementFragment extends Fragment implements LoaderManager.Loade
 
         // prepare loader
         LoaderManager lmLoaderManager = getLoaderManager();
-        lmLoaderManager.initLoader(LOADER_LIST_VIEW, null, this);
+        lmLoaderManager.initLoader(LOADER_LIST_VIEW, getArguments(), this);
         return vRoot;
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String[] saSelectionArgument = {
-                String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())
+    public Loader<Cursor> onCreateLoader(int id, Bundle bBundle) {
+
+        String sStart;
+        String sEnd;
+
+        if (bBundle != null) {
+            sStart = bBundle.getString(HomeActivity.TimeFilter.START.getTitle());
+            sEnd = bBundle.getString(HomeActivity.TimeFilter.END.getTitle());
+
+        } else {
+            Calendar cStart = Calendar.getInstance();
+            sEnd = String.valueOf(cStart.getTimeInMillis()); //now, for now
+
+            cStart.set(Calendar.HOUR_OF_DAY, 0);
+            cStart.set(Calendar.MINUTE, 0);
+            cStart.set(Calendar.SECOND, 0);
+            cStart.set(Calendar.MILLISECOND, 0);
+            sStart = String.valueOf(cStart.getTimeInMillis());
+        }
+
+        String[] aTimeFilterArg = {
+                String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID()),
+                sStart,
+                sEnd
         };
+
         return new CursorLoader(getActivity(), BabyLogContract.Measurement.CONTENT_URI,
                 BabyLogContract.Measurement.Query.PROJECTION,
-                BabyLogContract.BABY_SELECTION_ARG,
-                saSelectionArgument,
+                "baby_id = ? AND timestamp >= ? AND timestamp <= ?",
+                aTimeFilterArg,
                 BabyLogContract.Measurement.Query.SORT_BY_TIMESTAMP_DESC);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         if (cursor.getCount() > 0) {
-            // show last inserted row
             cursor.moveToFirst();
             maAdapter.swapCursor(cursor);
-        } else {
-            maAdapter.swapCursor(null);
-        }
+        } 
     }
 
     @Override

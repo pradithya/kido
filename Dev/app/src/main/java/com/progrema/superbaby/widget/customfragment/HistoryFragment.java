@@ -201,7 +201,8 @@ public class HistoryFragment extends Fragment {
 
         String[] aTimeFilterArg = {
                 String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID()),
-                sStart, sEnd
+                sStart,
+                sEnd
         };
 
         return aTimeFilterArg;

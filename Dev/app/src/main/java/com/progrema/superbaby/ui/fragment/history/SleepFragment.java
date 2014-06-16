@@ -16,27 +16,35 @@ import com.progrema.superbaby.adapter.sleep.SleepAdapter;
 import com.progrema.superbaby.holograph.PieGraph;
 import com.progrema.superbaby.holograph.PieSlice;
 import com.progrema.superbaby.provider.BabyLogContract;
-import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.FormatUtils;
 import com.progrema.superbaby.widget.customfragment.HistoryFragment;
 import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 
 import java.text.DecimalFormat;
-import java.util.Calendar;
 
 public class SleepFragment extends HistoryFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    /*
+     * Loader Type used for asynchronous cursor loading
+     */
     private static final int LOADER_LIST_VIEW = 0;
-    private static final int LOADER_TODAY_ENTRY = 1;
-    private ObserveableListView olvSleepHistoryList;
-    private SleepAdapter saAdapter;
+    private static final int LOADER_HEADER_INFORMATION = 1;
+
+    /*
+     * View Object for header information
+     */
     private TextView tvNightPercent;
     private TextView tvNapPercent;
     private TextView tvNightDuration;
     private TextView tvNapDuration;
     private TextView tvTotalDuration;
-    private Calendar cMidnight;
     private PieGraph pgNapNight;
+
+    /*
+     * List and adapter to manage list view
+     */
+    private ObserveableListView olvSleepHistoryList;
+    private SleepAdapter saAdapter;
 
     public static SleepFragment getInstance() {
         return new SleepFragment();
@@ -72,8 +80,8 @@ public class SleepFragment extends HistoryFragment implements LoaderManager.Load
 
         // prepare loader
         LoaderManager lmLoaderManager = getLoaderManager();
-        lmLoaderManager.initLoader(LOADER_LIST_VIEW, null, this);
-        lmLoaderManager.initLoader(LOADER_TODAY_ENTRY, null, this);
+        lmLoaderManager.initLoader(LOADER_LIST_VIEW, getArguments(), this);
+        lmLoaderManager.initLoader(LOADER_HEADER_INFORMATION, getArguments(), this);
 
         return vRoot;
     }
@@ -82,43 +90,23 @@ public class SleepFragment extends HistoryFragment implements LoaderManager.Load
     @Override
     public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle) {
 
-        /**
-         * as stated here: http://developer.android.com/reference/java/util/Calendar.html
-         * 24:00:00 "belongs" to the following day.
-         * That is, 23:59 on Dec 31, 1969 < 24:00 on Jan 1, 1970 < 24:01:00 on Jan 1, 1970
-         * form a sequence of three consecutive minutes in time.
-         */
-        cMidnight = Calendar.getInstance();
-        cMidnight.set(Calendar.HOUR_OF_DAY, 0);
-        cMidnight.set(Calendar.MINUTE, 0);
-        cMidnight.set(Calendar.SECOND, 0);
-        cMidnight.set(Calendar.MILLISECOND, 0);
-        String sTimestampReference = String.valueOf(cMidnight.getTimeInMillis());
-
-        String[] saArgumentSelectionOne = {
-                String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())
-        };
-
-        String[] saArgumentSelectionTwo = {
-                String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID()),
-                sTimestampReference
-        };
+        String[] timeFilterArg = getTimeFilterArg(bundle);
 
         switch (loaderId) {
             case LOADER_LIST_VIEW:
                 return new CursorLoader(getActivity(),
                         BabyLogContract.Sleep.CONTENT_URI,
                         BabyLogContract.Sleep.Query.PROJECTION,
-                        BabyLogContract.BABY_SELECTION_ARG,
-                        saArgumentSelectionOne,
+                        "baby_id = ? AND timestamp >= ? AND timestamp <= ?",
+                        timeFilterArg,
                         BabyLogContract.Sleep.Query.SORT_BY_TIMESTAMP_DESC);
 
-            case LOADER_TODAY_ENTRY:
+            case LOADER_HEADER_INFORMATION:
                 return new CursorLoader(getActivity(),
                         BabyLogContract.Sleep.CONTENT_URI,
                         BabyLogContract.Sleep.Query.PROJECTION,
-                        "baby_id = ? AND timestamp >= ?",
-                        saArgumentSelectionTwo,
+                        "baby_id = ? AND timestamp >= ? AND timestamp <= ?",
+                        timeFilterArg,
                         BabyLogContract.Sleep.Query.SORT_BY_TIMESTAMP_DESC);
 
             default:
@@ -135,7 +123,7 @@ public class SleepFragment extends HistoryFragment implements LoaderManager.Load
                     saAdapter.swapCursor(cCursor);
                     break;
 
-                case LOADER_TODAY_ENTRY:
+                case LOADER_HEADER_INFORMATION:
 
                     float fNightPercentage;
                     float fNapPercentage;
