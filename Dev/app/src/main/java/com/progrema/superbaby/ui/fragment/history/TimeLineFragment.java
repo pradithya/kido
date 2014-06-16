@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import com.progrema.superbaby.adapter.timeline.TimelineAdapter;
 import com.progrema.superbaby.models.Baby;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
-import com.progrema.superbaby.util.FormatUtils;
 import com.progrema.superbaby.widget.customfragment.HistoryFragment;
 import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 
@@ -27,10 +25,6 @@ public class TimelineFragment extends HistoryFragment implements LoaderManager.L
      * Loader type used for asynchronous cursor loading
      */
     private static final int LOADER_LIST_VIEW = 0;
-    private static final int LOADER_LAST_NURSING = 1;
-    private static final int LOADER_LAST_SLEEP = 2;
-    private static final int LOADER_LAST_DIAPER = 3;
-    private static final int LOADER_LAST_MEASUREMENT = 4;
 
     /*
      * View object for header information
@@ -39,10 +33,6 @@ public class TimelineFragment extends HistoryFragment implements LoaderManager.L
     private TextView tvBirthday;
     private TextView tvAge;
     private TextView tvSex;
-    private TextView tvNursing;
-    private TextView tvSleep;
-    private TextView tvDiaper;
-    private TextView tvMeasurement;
 
     /*
      * List and adapter to manage list view
@@ -72,10 +62,6 @@ public class TimelineFragment extends HistoryFragment implements LoaderManager.L
         tvBirthday = (TextView) vRoot.findViewById(R.id.birthday_content);
         tvAge = (TextView) vRoot.findViewById(R.id.age_content);
         tvSex = (TextView) vRoot.findViewById(R.id.sex_content);
-        tvNursing = (TextView) vRoot.findViewById(R.id.nursing_content);
-        tvSleep = (TextView) vRoot.findViewById(R.id.sleep_content);
-        tvDiaper = (TextView) vRoot.findViewById(R.id.diaper_content);
-        tvMeasurement = (TextView) vRoot.findViewById(R.id.measurement_content);
 
         // prepare adapter
         olvTimelineList = (ObserveableListView) vRoot.findViewById(R.id.activity_list);
@@ -87,10 +73,6 @@ public class TimelineFragment extends HistoryFragment implements LoaderManager.L
         // prepare loader
         LoaderManager lm = getLoaderManager();
         lm.initLoader(LOADER_LIST_VIEW, null, this);
-        lm.initLoader(LOADER_LAST_NURSING, null, this);
-        lm.initLoader(LOADER_LAST_SLEEP, null, this);
-        lm.initLoader(LOADER_LAST_DIAPER, null, this);
-        lm.initLoader(LOADER_LAST_MEASUREMENT, null, this);
 
         return vRoot;
     }
@@ -109,11 +91,6 @@ public class TimelineFragment extends HistoryFragment implements LoaderManager.L
     public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle) {
 
         String[] aBabyIdArg = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
-        String[] aProjectionNursing = {BabyLogContract.Nursing.TIMESTAMP};
-        String[] aProjectionSleep = {BabyLogContract.Sleep.TIMESTAMP};
-        String[] aProjectionDiaper = {BabyLogContract.Diaper.TIMESTAMP};
-        String[] aProjectionMeasurement = {BabyLogContract.Measurement.TIMESTAMP};
-
         switch (loaderId) {
             case LOADER_LIST_VIEW:
                 return new CursorLoader(getActivity(),
@@ -122,42 +99,8 @@ public class TimelineFragment extends HistoryFragment implements LoaderManager.L
                         BabyLogContract.BABY_SELECTION_ARG,
                         aBabyIdArg,
                         BabyLogContract.Activity.Query.SORT_BY_TIMESTAMP_DESC);
-
-            case LOADER_LAST_NURSING:
-                return new CursorLoader(getActivity(),
-                        BabyLogContract.Nursing.MAX_TIMESTAMP,
-                        aProjectionNursing,
-                        BabyLogContract.BABY_SELECTION_ARG,
-                        aBabyIdArg,
-                        null);
-
-            case LOADER_LAST_SLEEP:
-                return new CursorLoader(getActivity(),
-                        BabyLogContract.Sleep.MAX_TIMESTAMP,
-                        aProjectionSleep,
-                        BabyLogContract.BABY_SELECTION_ARG,
-                        aBabyIdArg,
-                        null);
-
-            case LOADER_LAST_DIAPER:
-                return new CursorLoader(getActivity(),
-                        BabyLogContract.Diaper.MAX_TIMESTAMP,
-                        aProjectionDiaper,
-                        BabyLogContract.BABY_SELECTION_ARG,
-                        aBabyIdArg,
-                        null);
-
-            case LOADER_LAST_MEASUREMENT:
-                return new CursorLoader(getActivity(),
-                        BabyLogContract.Measurement.MAX_TIMESTAMP,
-                        aProjectionMeasurement,
-                        BabyLogContract.BABY_SELECTION_ARG,
-                        aBabyIdArg,
-                        null);
-
             default:
                 return null;
-
         }
     }
 
@@ -165,46 +108,9 @@ public class TimelineFragment extends HistoryFragment implements LoaderManager.L
     public void onLoadFinished(Loader<Cursor> cl, Cursor cursor) {
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
-            String timestamp = cursor.getString(0);
             switch (cl.getId()) {
                 case LOADER_LIST_VIEW:
                     taAdapter.swapCursor(cursor);
-                    break;
-
-                case LOADER_LAST_NURSING:
-                    if (timestamp != null) {
-                        String time = DateUtils.
-                                getRelativeTimeSpanString(Long.parseLong(timestamp)).toString();
-                        tvNursing.setText(FormatUtils.fmtLastActivity(getActivity(), time)
-                        );
-                    }
-                    break;
-
-                case LOADER_LAST_SLEEP:
-                    if (timestamp != null) {
-                        String time = DateUtils.
-                                getRelativeTimeSpanString(Long.parseLong(timestamp)).toString();
-                        tvSleep.setText(FormatUtils.fmtLastActivity(getActivity(), time)
-                        );
-                    }
-                    break;
-
-                case LOADER_LAST_DIAPER:
-                    if (timestamp != null) {
-                        String time = DateUtils.
-                                getRelativeTimeSpanString(Long.parseLong(timestamp)).toString();
-                        tvDiaper.setText(FormatUtils.fmtLastActivity(getActivity(), time)
-                        );
-                    }
-                    break;
-
-                case LOADER_LAST_MEASUREMENT:
-                    if (timestamp != null) {
-                        String time = DateUtils.
-                                getRelativeTimeSpanString(Long.parseLong(timestamp)).toString();
-                        tvMeasurement.setText(FormatUtils.fmtLastActivity(getActivity(), time)
-                        );
-                    }
                     break;
             }
         }
