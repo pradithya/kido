@@ -57,6 +57,7 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/menu_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/ic_action_overflow"

@@ -1,12 +1,17 @@
 package com.progrema.superbaby.adapter.timeline;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
@@ -28,7 +33,7 @@ public class TimelineAdapter extends CursorAdapter {
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(View view, final Context context, Cursor cursor) {
 
         String sTimeStamp = cursor.getString(BabyLogContract.Activity.Query.OFFSET_TIMESTAMP);
         String sActivityType = cursor.getString(BabyLogContract.Activity.Query.OFFSET_ACTIVITY_TYPE);
@@ -45,6 +50,35 @@ public class TimelineAdapter extends CursorAdapter {
         TextView tvInformationTwo = (TextView) view.findViewById(R.id.information_two);
         TextView tvInformationThree = (TextView) view.findViewById(R.id.information_three);
         ImageView ivType = (ImageView) view.findViewById(R.id.icon_type);
+
+        ImageView ivMenuButton = (ImageView) view.findViewById(R.id.menu_button);
+        ivMenuButton.setTag(cursor.getString(BabyLogContract.Activity.Query.OFFSET_ID));
+        ivMenuButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final ImageView ivMenuButton = (ImageView) v.findViewById(R.id.menu_button);
+                        PopupMenu popup = new PopupMenu(context, ivMenuButton);
+                        popup.setOnMenuItemClickListener(
+                                new PopupMenu.OnMenuItemClickListener() {
+                                    @Override
+                                    public boolean onMenuItemClick(MenuItem item) {
+                                        if (item.getTitle().equals("Edit")) {
+                                            handleEdit(context, ivMenuButton);
+                                        } else if (item.getTitle().equals("Delete")) {
+                                            handleDelete(context, ivMenuButton);
+                                        }
+                                        return false;
+                                    }
+                                }
+                        );
+                        MenuInflater miInflater = ((Activity) context).getMenuInflater();
+                        miInflater.inflate(R.menu.entry, popup.getMenu());
+                        popup.show();
+                        Log.i("_DBG_MENU", " Tag = " + ivMenuButton.getTag());
+                    }
+                }
+        );
 
         // Time is always show in every type
         tvInformationTime.setText(FormatUtils.fmtTime(context, sTimeStamp));
@@ -125,5 +159,11 @@ public class TimelineAdapter extends CursorAdapter {
             tvInformationThree.setTextColor(view.getResources().getColor(R.color.orange));
             tvInformationTime.setTextColor(view.getResources().getColor(R.color.orange));
         }
+    }
+
+    private void handleDelete(Context context, View vEntry) {
+    }
+
+    private void handleEdit(Context context, View vEntry) {
     }
 }
