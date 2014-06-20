@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Parcel;
 
 import com.progrema.superbaby.provider.BabyLogContract;
+import com.progrema.superbaby.util.ActiveContext;
 
 public class Nursing extends BaseActivity {
     public final static String NURSING_TYPE_KEY = "type";
@@ -79,20 +80,14 @@ public class Nursing extends BaseActivity {
 
     @Override
     public void delete(Context context) {
-    /*
         String [] selectionArgs = {
                 String.valueOf(ActiveContext.getActiveBaby(context).getID()),
                 String.valueOf(getID())};
-
-        Log.i("_DBG_Delete",
-                " baby_id = " + String.valueOf(ActiveContext.getActiveBaby(context).getID()) +
-                " _id = " + String.valueOf(getID()));
 
         context.getContentResolver().delete(
                 BabyLogContract.Nursing.CONTENT_URI,
                 "baby_id = ? AND _id = ?",
                 selectionArgs);
-    */
     }
 
     public enum NursingType {

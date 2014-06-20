@@ -27,7 +27,7 @@ public class BabyLogProvider extends ContentProvider {
     private static final int MEASUREMENT_MAX_TIMESTAMP = 701;
     private static final int PHOTO = 800;
     private static final int ACTIVITY = 900;
-    private BabyLogDatabase mOpenHelper;
+    private BabyLogDatabase dbOpenHelper;
 
     private static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -53,13 +53,13 @@ public class BabyLogProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        mOpenHelper = new BabyLogDatabase(getContext());
+        dbOpenHelper = new BabyLogDatabase(getContext());
         return true;
     }
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+        final SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
         final int match = sUriMatcher.match(uri);
 
         switch (match) {
@@ -90,7 +90,7 @@ public class BabyLogProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues contentValues) {
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
 
         switch (match) {
@@ -206,6 +206,11 @@ public class BabyLogProvider extends ContentProvider {
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
 
+        int iRetVal;
+        SQLiteDatabase dbTable;
+        SelectionBuilder sbBuilder;
+
+        // Delete whole table
         if (uri == BabyLogContract.BASE_CONTENT_URI)
         {
             // Handle whole database deletes (e.g. when signing out)
@@ -213,17 +218,26 @@ public class BabyLogProvider extends ContentProvider {
             notifyChange(uri);
             return 1;
         }
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-        final SelectionBuilder builder = buildSelection(uri,  sUriMatcher.match(uri));
-        int retVal = builder.where(selection, selectionArgs).delete(db);
+
+        // Delete specified data from user
+        dbTable = dbOpenHelper.getWritableDatabase();
+        sbBuilder = buildSelection(uri,  sUriMatcher.match(uri));
+        iRetVal = sbBuilder.where(selection, selectionArgs).delete(dbTable);
+
+        // Delete corresponding data on activity table
+        dbTable = dbOpenHelper.getWritableDatabase();
+        sbBuilder = buildSelection(BabyLogContract.Activity.CONTENT_URI,
+                sUriMatcher.match(BabyLogContract.Activity.CONTENT_URI));
+        iRetVal = sbBuilder.where(selection, selectionArgs).delete(dbTable);
+
         notifyChange(uri);
-        return retVal;
+        return iRetVal;
     }
 
     private void deleteDataBase() {
-        mOpenHelper.close();
+        dbOpenHelper.close();
         BabyLogDatabase.deleteDataBase(getContext());
-        mOpenHelper = new BabyLogDatabase(getContext());
+        dbOpenHelper = new BabyLogDatabase(getContext());
     }
 
     @Override
@@ -259,6 +273,9 @@ public class BabyLogProvider extends ContentProvider {
 
             case MEASUREMENT:
                 return builder.table(BabyLogDatabase.Tables.MEASUREMENT);
+
+            case ACTIVITY:
+                return builder.table(BabyLogDatabase.Tables.ACTIVITY);
 
             default:
                 return null;
