@@ -90,7 +90,7 @@ public class MeasurementFragment extends Fragment implements LoaderManager.Loade
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             maAdapter.swapCursor(cursor);
-        } 
+        }
     }
 
     @Override

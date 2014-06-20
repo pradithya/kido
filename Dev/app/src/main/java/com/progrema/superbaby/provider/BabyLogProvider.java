@@ -77,7 +77,7 @@ public class BabyLogProvider extends ContentProvider {
             case MEASUREMENT_MAX_TIMESTAMP:
                 return db.rawQuery("SELECT MAX(timestamp) FROM measurement WHERE baby_id = ?", selectionArgs);
             default: {
-                final SelectionBuilder builder = buildExpandableSelection(uri, match);
+                final SelectionBuilder builder = buildSelection(uri, match);
                 return builder.where(selection, selectionArgs).query(db, projection, sortOrder);
             }
         }
@@ -204,9 +204,20 @@ public class BabyLogProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(Uri uri, String s, String[] strings) {
-        deleteDataBase();
-        return 0;
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+
+        if (uri == BabyLogContract.BASE_CONTENT_URI)
+        {
+            // Handle whole database deletes (e.g. when signing out)
+            deleteDataBase();
+            notifyChange(uri);
+            return 1;
+        }
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final SelectionBuilder builder = buildSelection(uri,  sUriMatcher.match(uri));
+        int retVal = builder.where(selection, selectionArgs).delete(db);
+        notifyChange(uri);
+        return retVal;
     }
 
     private void deleteDataBase() {
@@ -225,33 +236,32 @@ public class BabyLogProvider extends ContentProvider {
         context.getContentResolver().notifyChange(uri, null);
     }
 
-    private SelectionBuilder buildExpandableSelection(Uri uri, int match) {
+    private SelectionBuilder buildSelection(Uri uri, int match) {
         final SelectionBuilder builder = new SelectionBuilder();
         switch (match) {
-            case USER: {
+            case USER:
                 return builder.table(BabyLogDatabase.Tables.USER);
-            }
-            case BABY: {
+
+            case BABY:
                 return builder.table(BabyLogDatabase.Tables.BABY);
-            }
-            case USER_BABY_MAP: {
+
+            case USER_BABY_MAP:
                 return builder.table(BabyLogDatabase.Tables.USER_BABY_MAP);
-            }
-            case SLEEP: {
+
+            case SLEEP:
                 return builder.table(BabyLogDatabase.Tables.SLEEP);
-            }
-            case DIAPER: {
+
+            case DIAPER:
                 return builder.table(BabyLogDatabase.Tables.DIAPER);
-            }
-            case NURSING: {
+
+            case NURSING:
                 return builder.table(BabyLogDatabase.Tables.NURSING);
-            }
-            case MEASUREMENT: {
+
+            case MEASUREMENT:
                 return builder.table(BabyLogDatabase.Tables.MEASUREMENT);
-            }
-            default: {
+
+            default:
                 return null;
-            }
         }
     }
 }

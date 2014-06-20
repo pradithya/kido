@@ -19,7 +19,7 @@ import com.progrema.superbaby.models.Nursing;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
-public class NursingAdapter extends CursorAdapter{
+public class NursingAdapter extends CursorAdapter {
 
     public NursingAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
@@ -51,16 +51,16 @@ public class NursingAdapter extends CursorAdapter{
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ImageView ivMenuButton = (ImageView) v.findViewById(R.id.menu_button);
+                        final ImageView ivMenuButton = (ImageView) v.findViewById(R.id.menu_button);
                         PopupMenu popup = new PopupMenu(context, ivMenuButton);
                         popup.setOnMenuItemClickListener(
                                 new PopupMenu.OnMenuItemClickListener() {
                                     @Override
                                     public boolean onMenuItemClick(MenuItem item) {
-                                        if (item.getTitle().equals("Edit")){
-                                            handleEdit();
-                                        } else if (item.getTitle().equals("Delete")){
-                                            handleDelete();
+                                        if (item.getTitle().equals("Edit")) {
+                                            handleEdit(context, ivMenuButton);
+                                        } else if (item.getTitle().equals("Delete")) {
+                                            handleDelete(context, ivMenuButton);
                                         }
                                         return false;
                                     }
@@ -97,15 +97,12 @@ public class NursingAdapter extends CursorAdapter{
         }
     }
 
-    private void handleDelete(){
-        //TODO: how to identified the selected cursor?
-        Log.i("_DBG_MENU", " position = " +
-                getCursor().getString(BabyLogContract.Nursing.Query.OFFSET_SIDES));
+    private void handleDelete(Context context, View vEntry) {
+        Nursing nNursing = new Nursing();
+        nNursing.setID(Long.valueOf((String)vEntry.getTag()));
+        nNursing.delete(context);
     }
 
-    private void handleEdit() {
-        //TODO: how to identified the selected cursor?
-        Log.i("_DBG_MENU", " position = " +
-                getCursor().getString(BabyLogContract.Nursing.Query.OFFSET_SIDES));
+    private void handleEdit(Context context, View vEntry) {
     }
 }

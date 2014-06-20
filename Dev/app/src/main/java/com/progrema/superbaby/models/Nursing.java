@@ -79,6 +79,20 @@ public class Nursing extends BaseActivity {
 
     @Override
     public void delete(Context context) {
+    /*
+        String [] selectionArgs = {
+                String.valueOf(ActiveContext.getActiveBaby(context).getID()),
+                String.valueOf(getID())};
+
+        Log.i("_DBG_Delete",
+                " baby_id = " + String.valueOf(ActiveContext.getActiveBaby(context).getID()) +
+                " _id = " + String.valueOf(getID()));
+
+        context.getContentResolver().delete(
+                BabyLogContract.Nursing.CONTENT_URI,
+                "baby_id = ? AND _id = ?",
+                selectionArgs);
+    */
     }
 
     public enum NursingType {
