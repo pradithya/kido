@@ -22,6 +22,7 @@ import com.progrema.superbaby.provider.BabyLogContract.UserBabyMapColumns;
 import com.progrema.superbaby.provider.BabyLogContract.UserColumns;
 
 public class BabyLogDatabase extends SQLiteOpenHelper {
+
     public final static String JOIN_ALL = ("SELECT "
             + Tables.ACTIVITY + "." + BaseColumns._ID
             + " , " + Tables.ACTIVITY + "." + ActivityColumns.BABY_ID
@@ -41,6 +42,7 @@ public class BabyLogDatabase extends SQLiteOpenHelper {
             + " LEFT JOIN " + Tables.MEASUREMENT + " ON " + Tables.ACTIVITY + "." + BaseColumns._ID + " = " + Tables.MEASUREMENT + "." + MeasurementColumns.ACTIVITY_ID
             + " WHERE " + Tables.ACTIVITY + "." + ActivityColumns.BABY_ID + " = ? "
             + " ORDER BY " + Tables.ACTIVITY + "." + BabyLogContract.Activity.Query.SORT_BY_TIMESTAMP_DESC + " ;");
+
     private static final String DATABASE_NAME = "babylog.db";
     /**
      * NOTE:

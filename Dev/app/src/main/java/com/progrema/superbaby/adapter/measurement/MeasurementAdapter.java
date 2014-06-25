@@ -15,6 +15,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
+import com.progrema.superbaby.models.Measurement;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
@@ -76,6 +77,9 @@ public class MeasurementAdapter extends CursorAdapter {
     }
 
     private void handleDelete(Context context, View vEntry) {
+        Measurement mMeasurement = new Measurement();
+        mMeasurement.setID(Long.valueOf((String) vEntry.getTag()));
+        mMeasurement.delete(context);
     }
 
     private void handleEdit(Context context, View vEntry) {
