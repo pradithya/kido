@@ -3,13 +3,12 @@ package com.progrema.superbaby.adapter.nursing;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
+import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -69,7 +68,6 @@ public class NursingAdapter extends CursorAdapter {
                         MenuInflater miInflater = ((Activity) context).getMenuInflater();
                         miInflater.inflate(R.menu.entry, popup.getMenu());
                         popup.show();
-                        Log.i("_DBG_MENU", " Tag = " + ivMenuButton.getTag());
                     }
                 }
         );
@@ -99,7 +97,7 @@ public class NursingAdapter extends CursorAdapter {
 
     private void handleDelete(Context context, View vEntry) {
         Nursing nNursing = new Nursing();
-        nNursing.setID(Long.valueOf((String)vEntry.getTag()));
+        nNursing.setID(Long.valueOf((String) vEntry.getTag()));
         nNursing.delete(context);
     }
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -229,6 +230,7 @@ public class NursingFragment extends HistoryFragment implements LoaderManager.Lo
 
     @Override
     public void onLoaderReset(Loader<Cursor> cl) {
+        Log.i("_DBG_LOADER", " onLoaderReset is called");
         naAdapter.swapCursor(null);
     }
 }

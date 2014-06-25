@@ -184,7 +184,9 @@ public class HistoryFragment extends Fragment {
         String sStart;
         String sEnd;
 
-        if (bBundle != null) {
+        if ((bBundle != null) &&
+                !bBundle.getString(HomeActivity.TimeFilter.FILTER_TYPE.getTitle())
+                        .equals(HomeActivity.TimeFilter.FILTER_TODAY.getTitle())) {
             sStart = bBundle.getString(HomeActivity.TimeFilter.START.getTitle());
             sEnd = bBundle.getString(HomeActivity.TimeFilter.END.getTitle());
 

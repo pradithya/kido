@@ -230,7 +230,10 @@ public class BabyLogProvider extends ContentProvider {
                 sUriMatcher.match(BabyLogContract.Activity.CONTENT_URI));
         iRetVal = sbBuilder.where(selection, selectionArgs).delete(dbTable);
 
+        // Notify user specified table and activity table
         notifyChange(uri);
+        notifyChange(BabyLogContract.Activity.CONTENT_URI);
+
         return iRetVal;
     }
 
