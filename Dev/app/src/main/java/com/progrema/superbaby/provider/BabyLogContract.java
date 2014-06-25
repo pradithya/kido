@@ -269,8 +269,6 @@ public class BabyLogContract {
      * Diaper table contract class
      */
     public static class Diaper implements DiaperColumns, BaseColumns {
-        public static final Uri MAX_TIMESTAMP =
-                BASE_CONTENT_URI.buildUpon().appendPath("diaper_max_timestamp").build();
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_DIAPER).build();
 

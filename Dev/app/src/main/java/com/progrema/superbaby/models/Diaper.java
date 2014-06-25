@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Parcel;
 
 import com.progrema.superbaby.provider.BabyLogContract;
+import com.progrema.superbaby.util.ActiveContext;
 
 public class Diaper extends BaseActivity {
     public final static String DIAPER_TYPE_KEY = "diaper_type";
@@ -51,6 +52,14 @@ public class Diaper extends BaseActivity {
 
     @Override
     public void delete(Context context) {
+        String [] selectionArgs = {
+                String.valueOf(ActiveContext.getActiveBaby(context).getID()),
+                String.valueOf(getID())};
+
+        context.getContentResolver().delete(
+                BabyLogContract.Diaper.CONTENT_URI,
+                "baby_id = ? AND _id = ?",
+                selectionArgs);
     }
 
     /**

@@ -89,6 +89,9 @@ public class DiaperAdapter extends CursorAdapter {
     }
 
     private void handleDelete(Context context, View vEntry) {
+        Diaper dDiaper = new Diaper();
+        dDiaper.setID(Long.valueOf((String) vEntry.getTag()));
+        dDiaper.delete(context);
     }
 
     private void handleEdit(Context context, View vEntry) {
