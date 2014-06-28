@@ -26,74 +26,73 @@ public class DiaperAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        return inflater.inflate(R.layout.adapter_diaper, parent, false);
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        return layoutInflater.inflate(R.layout.adapter_diaper, parent, false);
     }
 
     @Override
     public void bindView(View view, final Context context, Cursor cursor) {
-        String sTimestamp = cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP);
-        String sType = cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TYPE);
+        String timestamp = cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP);
+        String type = cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TYPE);
 
-        TextView tvDay = (TextView) view.findViewById(R.id.history_item_day);
-        TextView tvDate = (TextView) view.findViewById(R.id.history_item_date);
-        TextView tvTime = (TextView) view.findViewById(R.id.information_time);
-        ImageView ivType = (ImageView) view.findViewById(R.id.icon_type);
+        TextView dayHandler = (TextView) view.findViewById(R.id.history_item_day);
+        TextView dateHandler = (TextView) view.findViewById(R.id.history_item_date);
+        TextView timeHandler = (TextView) view.findViewById(R.id.widget_time);
+        ImageView typeHandler = (ImageView) view.findViewById(R.id.icon_type);
+        ImageView menuHandler = (ImageView) view.findViewById(R.id.menu_button);
 
-        ImageView ivMenuButton = (ImageView) view.findViewById(R.id.menu_button);
-        ivMenuButton.setTag(cursor.getString(BabyLogContract.Diaper.Query.OFFSET_ID));
-        ivMenuButton.setOnClickListener(
+        dayHandler.setText(FormatUtils.fmtDayOnly(context, timestamp));
+        dateHandler.setText(FormatUtils.fmtDateOnly(context, timestamp));
+        timeHandler.setText(FormatUtils.fmtTime(context, timestamp));
+        menuHandler.setTag(cursor.getString(BabyLogContract.Diaper.Query.OFFSET_ID));
+        menuHandler.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
-                        final ImageView ivMenuButton = (ImageView) v.findViewById(R.id.menu_button);
-                        PopupMenu popup = new PopupMenu(context, ivMenuButton);
-                        popup.setOnMenuItemClickListener(
+                    public void onClick(View view) {
+                        final ImageView menuHandler = (ImageView) view.findViewById(R.id.menu_button);
+                        PopupMenu popupMenu = new PopupMenu(context, menuHandler);
+                        popupMenu.setOnMenuItemClickListener(
                                 new PopupMenu.OnMenuItemClickListener() {
                                     @Override
                                     public boolean onMenuItemClick(MenuItem item) {
                                         if (item.getTitle().equals("Edit")) {
-                                            handleEdit(context, ivMenuButton);
+                                            entryEdit(context, menuHandler);
                                         } else if (item.getTitle().equals("Delete")) {
-                                            handleDelete(context, ivMenuButton);
+                                            entryDelete(context, menuHandler);
                                         }
                                         return false;
                                     }
                                 }
                         );
-                        MenuInflater miInflater = ((Activity) context).getMenuInflater();
-                        miInflater.inflate(R.menu.entry, popup.getMenu());
-                        popup.show();
-                        Log.i("_DBG_MENU", " Tag = " + ivMenuButton.getTag());
+                        MenuInflater menuInflater = ((Activity) context).getMenuInflater();
+                        menuInflater.inflate(R.menu.entry, popupMenu.getMenu());
+                        popupMenu.show();
+                        Log.i("_DBG_MENU", " Tag = " + menuHandler.getTag());
                     }
                 }
         );
 
-        tvDay.setText(FormatUtils.fmtDayOnly(context, sTimestamp));
-        tvDate.setText(FormatUtils.fmtDateOnly(context, sTimestamp));
-        tvTime.setText(FormatUtils.fmtTime(context, sTimestamp));
-
-        if (sType.equals(Diaper.DiaperType.WET.getTitle())) {
-            ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_wet));
-            tvTime.setTextColor(view.getResources().getColor(R.color.blue));
-            tvDate.setTextColor(view.getResources().getColor(R.color.blue));
-        } else if (sType.equals(Diaper.DiaperType.DRY.getTitle())) {
-            ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_dry));
-            tvTime.setTextColor(view.getResources().getColor(R.color.orange));
-            tvDate.setTextColor(view.getResources().getColor(R.color.orange));
-        } else if (sType.equals(Diaper.DiaperType.MIXED.getTitle())) {
-            ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_mixed));
-            tvTime.setTextColor(view.getResources().getColor(R.color.purple));
-            tvDate.setTextColor(view.getResources().getColor(R.color.purple));
+        if (type.equals(Diaper.DiaperType.WET.getTitle())) {
+            typeHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_wet));
+            timeHandler.setTextColor(view.getResources().getColor(R.color.blue));
+            dateHandler.setTextColor(view.getResources().getColor(R.color.blue));
+        } else if (type.equals(Diaper.DiaperType.DRY.getTitle())) {
+            typeHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_dry));
+            timeHandler.setTextColor(view.getResources().getColor(R.color.orange));
+            dateHandler.setTextColor(view.getResources().getColor(R.color.orange));
+        } else if (type.equals(Diaper.DiaperType.MIXED.getTitle())) {
+            typeHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_mixed));
+            timeHandler.setTextColor(view.getResources().getColor(R.color.purple));
+            dateHandler.setTextColor(view.getResources().getColor(R.color.purple));
         }
     }
 
-    private void handleDelete(Context context, View vEntry) {
-        Diaper dDiaper = new Diaper();
-        dDiaper.setID(Long.valueOf((String) vEntry.getTag()));
-        dDiaper.delete(context);
+    private void entryDelete(Context context, View entry) {
+        Diaper diaper = new Diaper();
+        diaper.setID(Long.valueOf((String) entry.getTag()));
+        diaper.delete(context);
     }
 
-    private void handleEdit(Context context, View vEntry) {
+    private void entryEdit(Context context, View entry) {
     }
 }

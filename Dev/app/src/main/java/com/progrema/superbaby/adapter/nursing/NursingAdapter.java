@@ -26,81 +26,80 @@ public class NursingAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        return inflater.inflate(R.layout.adapter_nursing, parent, false);
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        return layoutInflater.inflate(R.layout.adapter_nursing, parent, false);
     }
 
     @Override
     public void bindView(View view, final Context context, Cursor cursor) {
 
-        String sTimestamp = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_TIMESTAMP);
-        String sType = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_SIDES);
-        String sDuration = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_DURATION);
-        String sVolume = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_VOLUME);
+        String timestamp = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_TIMESTAMP);
+        String type = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_SIDES);
+        String duration = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_DURATION);
+        String volume = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_VOLUME);
 
-        TextView tvDate = (TextView) view.findViewById(R.id.history_item_day);
-        TextView tvTime = (TextView) view.findViewById(R.id.information_time);
-        TextView tvDuration = (TextView) view.findViewById(R.id.history_item_duration);
-        TextView tvVolume = (TextView) view.findViewById(R.id.history_item_volume);
-        ImageView ivType = (ImageView) view.findViewById(R.id.icon_type);
+        TextView dateHandler = (TextView) view.findViewById(R.id.history_item_day);
+        TextView timeHandler = (TextView) view.findViewById(R.id.widget_time);
+        TextView durationHandler = (TextView) view.findViewById(R.id.history_item_duration);
+        TextView volumeHandler = (TextView) view.findViewById(R.id.history_item_volume);
+        ImageView typeHandler = (ImageView) view.findViewById(R.id.icon_type);
+        ImageView menuHandler = (ImageView) view.findViewById(R.id.menu_button);
 
-        ImageView ivMenuButton = (ImageView) view.findViewById(R.id.menu_button);
-        ivMenuButton.setTag(cursor.getString(BabyLogContract.Nursing.Query.OFFSET_ID));
-        ivMenuButton.setOnClickListener(
+        volumeHandler.setVisibility(View.GONE);
+        dateHandler.setText(FormatUtils.fmtDate(context, timestamp));
+        timeHandler.setText(FormatUtils.fmtTime(context, timestamp));
+        durationHandler.setText(FormatUtils.fmtDuration(context, duration));
+        menuHandler.setTag(cursor.getString(BabyLogContract.Nursing.Query.OFFSET_ID));
+        menuHandler.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final ImageView ivMenuButton = (ImageView) v.findViewById(R.id.menu_button);
-                        PopupMenu popup = new PopupMenu(context, ivMenuButton);
+                        final ImageView menuHandler = (ImageView) v.findViewById(R.id.menu_button);
+                        PopupMenu popup = new PopupMenu(context, menuHandler);
                         popup.setOnMenuItemClickListener(
                                 new PopupMenu.OnMenuItemClickListener() {
                                     @Override
                                     public boolean onMenuItemClick(MenuItem item) {
                                         if (item.getTitle().equals("Edit")) {
-                                            handleEdit(context, ivMenuButton);
+                                            editEntry(context, menuHandler);
                                         } else if (item.getTitle().equals("Delete")) {
-                                            handleDelete(context, ivMenuButton);
+                                            deleteEntry(context, menuHandler);
                                         }
                                         return false;
                                     }
                                 }
                         );
-                        MenuInflater miInflater = ((Activity) context).getMenuInflater();
-                        miInflater.inflate(R.menu.entry, popup.getMenu());
+                        MenuInflater menuInflater = ((Activity) context).getMenuInflater();
+                        menuInflater.inflate(R.menu.entry, popup.getMenu());
                         popup.show();
                     }
                 }
         );
 
-        tvVolume.setVisibility(View.GONE);
-        tvDate.setText(FormatUtils.fmtDate(context, sTimestamp));
-        tvTime.setText(FormatUtils.fmtTime(context, sTimestamp));
-        tvDuration.setText(FormatUtils.fmtDuration(context, sDuration));
-
-        if (sType.compareTo(Nursing.NursingType.FORMULA.getTitle()) == 0) {
-            tvVolume.setVisibility(View.VISIBLE);
-            tvVolume.setText(sVolume + "mL");
-            tvVolume.setTextColor(view.getResources().getColor(R.color.red));
-            tvTime.setTextColor(view.getResources().getColor(R.color.red));
-            tvDuration.setTextColor(view.getResources().getColor(R.color.red));
-            ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_formula));
-        } else if (sType.compareTo(Nursing.NursingType.RIGHT.getTitle()) == 0) {
-            tvDuration.setTextColor(view.getResources().getColor(R.color.green));
-            tvTime.setTextColor(view.getResources().getColor(R.color.green));
-            ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_right));
-        } else if (sType.compareTo(Nursing.NursingType.LEFT.getTitle()) == 0) {
-            tvDuration.setTextColor(view.getResources().getColor(R.color.orange));
-            tvTime.setTextColor(view.getResources().getColor(R.color.orange));
-            ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_left));
+        if (type.compareTo(Nursing.NursingType.FORMULA.getTitle()) == 0) {
+            volumeHandler.setVisibility(View.VISIBLE);
+            volumeHandler.setText(volume + "mL");
+            volumeHandler.setTextColor(view.getResources().getColor(R.color.red));
+            timeHandler.setTextColor(view.getResources().getColor(R.color.red));
+            durationHandler.setTextColor(view.getResources().getColor(R.color.red));
+            typeHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_formula));
+        } else if (type.compareTo(Nursing.NursingType.RIGHT.getTitle()) == 0) {
+            durationHandler.setTextColor(view.getResources().getColor(R.color.green));
+            timeHandler.setTextColor(view.getResources().getColor(R.color.green));
+            typeHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_right));
+        } else if (type.compareTo(Nursing.NursingType.LEFT.getTitle()) == 0) {
+            durationHandler.setTextColor(view.getResources().getColor(R.color.orange));
+            timeHandler.setTextColor(view.getResources().getColor(R.color.orange));
+            typeHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_left));
         }
     }
 
-    private void handleDelete(Context context, View vEntry) {
-        Nursing nNursing = new Nursing();
-        nNursing.setID(Long.valueOf((String) vEntry.getTag()));
-        nNursing.delete(context);
+    private void deleteEntry(Context context, View entry) {
+        Nursing nursing = new Nursing();
+        nursing.setID(Long.valueOf((String) entry.getTag()));
+        nursing.delete(context);
     }
 
-    private void handleEdit(Context context, View vEntry) {
+    private void editEntry(Context context, View vEntry) {
     }
 }

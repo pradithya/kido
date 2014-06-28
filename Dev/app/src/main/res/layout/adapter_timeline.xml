@@ -6,7 +6,7 @@
     android:paddingRight="4dp">
 
     <TextView
-        android:id="@+id/information_time"
+        android:id="@+id/widget_time"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -39,14 +39,14 @@
             android:padding="4dp">
 
             <TextView
-                android:id="@+id/information_one"
+                android:id="@+id/widget_first"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/default_font"
                 android:textSize="@dimen/text_size_micro" />
 
             <TextView
-                android:id="@+id/information_two"
+                android:id="@+id/widget_second"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_micro" />
@@ -54,7 +54,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/information_three"
+            android:id="@+id/widget_third"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"

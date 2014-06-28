@@ -28,142 +28,138 @@ public class TimelineAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        LayoutInflater liInflater = LayoutInflater.from(context);
-        return liInflater.inflate(R.layout.adapter_timeline, parent, false);
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        return layoutInflater.inflate(R.layout.adapter_timeline, parent, false);
     }
 
     @Override
     public void bindView(View view, final Context context, Cursor cursor) {
 
-        String sTimeStamp = cursor.getString(BabyLogContract.Activity.Query.OFFSET_TIMESTAMP);
-        String sActivityType = cursor.getString(BabyLogContract.Activity.Query.OFFSET_ACTIVITY_TYPE);
-        String sSleepDuration = cursor.getString(BabyLogContract.Activity.Query.OFFSET_SLEEP_DURATION);
-        String sDiaperType = cursor.getString(BabyLogContract.Activity.Query.OFFSET_DIAPER_TYPE);
-        String sNursingSides = cursor.getString(BabyLogContract.Activity.Query.OFFSET_NURSING_SIDES);
-        String sNursingDuration = cursor.getString(BabyLogContract.Activity.Query.OFFSET_NURSING_DURATION);
-        String sNursingVolume = cursor.getString(BabyLogContract.Activity.Query.OFFSET_NURSING_VOLUME);
-        String sMeasurementHeight = cursor.getString(BabyLogContract.Activity.Query.OFFSET_MEASUREMENT_HEIGHT);
-        String sMeasurementWeight = cursor.getString(BabyLogContract.Activity.Query.OFFSET_MEASUREMENT_WEIGHT);
+        String timestamp = cursor.getString(BabyLogContract.Activity.Query.OFFSET_TIMESTAMP);
+        String activityType = cursor.getString(BabyLogContract.Activity.Query.OFFSET_ACTIVITY_TYPE);
+        String sleepDuration = cursor.getString(BabyLogContract.Activity.Query.OFFSET_SLEEP_DURATION);
+        String diaperType = cursor.getString(BabyLogContract.Activity.Query.OFFSET_DIAPER_TYPE);
+        String nursingSide = cursor.getString(BabyLogContract.Activity.Query.OFFSET_NURSING_SIDES);
+        String nursingDuration = cursor.getString(BabyLogContract.Activity.Query.OFFSET_NURSING_DURATION);
+        String nursingVolume = cursor.getString(BabyLogContract.Activity.Query.OFFSET_NURSING_VOLUME);
+        String heightMeasurement = cursor.getString(BabyLogContract.Activity.Query.OFFSET_MEASUREMENT_HEIGHT);
+        String weightMeasurement = cursor.getString(BabyLogContract.Activity.Query.OFFSET_MEASUREMENT_WEIGHT);
 
-        TextView tvInformationTime = (TextView) view.findViewById(R.id.information_time);
-        TextView tvInformationOne = (TextView) view.findViewById(R.id.information_one);
-        TextView tvInformationTwo = (TextView) view.findViewById(R.id.information_two);
-        TextView tvInformationThree = (TextView) view.findViewById(R.id.information_three);
-        ImageView ivType = (ImageView) view.findViewById(R.id.icon_type);
+        TextView timeHandler = (TextView) view.findViewById(R.id.widget_time);
+        TextView firstHandler = (TextView) view.findViewById(R.id.widget_first);
+        TextView secondHandler = (TextView) view.findViewById(R.id.widget_second);
+        TextView thirdHandler = (TextView) view.findViewById(R.id.widget_third);
+        ImageView iconHandler = (ImageView) view.findViewById(R.id.icon_type);
+        ImageView menuHandler = (ImageView) view.findViewById(R.id.menu_button);
 
-        ImageView ivMenuButton = (ImageView) view.findViewById(R.id.menu_button);
-        ivMenuButton.setTag(cursor.getString(BabyLogContract.Activity.Query.OFFSET_ID));
-        ivMenuButton.setOnClickListener(
+        timeHandler.setText(FormatUtils.fmtTime(context, timestamp));
+        thirdHandler.setVisibility(View.GONE);
+        menuHandler.setTag(cursor.getString(BabyLogContract.Activity.Query.OFFSET_ID));
+        menuHandler.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final ImageView ivMenuButton = (ImageView) v.findViewById(R.id.menu_button);
-                        PopupMenu popup = new PopupMenu(context, ivMenuButton);
+                        final ImageView menuHandler = (ImageView) v.findViewById(R.id.menu_button);
+                        PopupMenu popup = new PopupMenu(context, menuHandler);
                         popup.setOnMenuItemClickListener(
                                 new PopupMenu.OnMenuItemClickListener() {
                                     @Override
                                     public boolean onMenuItemClick(MenuItem item) {
                                         if (item.getTitle().equals("Edit")) {
-                                            handleEdit(context, ivMenuButton);
+                                            entryEdit(context, menuHandler);
                                         } else if (item.getTitle().equals("Delete")) {
-                                            handleDelete(context, ivMenuButton);
+                                            entryDelete(context, menuHandler);
                                         }
                                         return false;
                                     }
                                 }
                         );
-                        MenuInflater miInflater = ((Activity) context).getMenuInflater();
-                        miInflater.inflate(R.menu.entry, popup.getMenu());
+                        MenuInflater menuInflater = ((Activity) context).getMenuInflater();
+                        menuInflater.inflate(R.menu.entry, popup.getMenu());
                         popup.show();
-                        Log.i("_DBG_MENU", " Tag = " + ivMenuButton.getTag());
+                        Log.i("_DBG_MENU", " Tag = " + menuHandler.getTag());
                     }
                 }
         );
 
-        // Time is always show in every type
-        tvInformationTime.setText(FormatUtils.fmtTime(context, sTimeStamp));
-
-        // Hide information three by default
-        tvInformationThree.setVisibility(View.GONE);
-
-        if (sActivityType.equals(BabyLogContract.Activity.TYPE_SLEEP)) {
+        if (activityType.equals(BabyLogContract.Activity.TYPE_SLEEP)) {
             /**
-             * Sleep type handler
+             * Sleep activity handler
              */
-            tvInformationOne.setText(FormatUtils.fmtDate(context, sTimeStamp));
-            tvInformationTwo.setText(FormatUtils.fmtTimeBoundary(context, sTimeStamp, sSleepDuration));
-            tvInformationThree.setVisibility(View.VISIBLE);
-            tvInformationThree.setText(FormatUtils.fmtDuration(context, sSleepDuration));
-            if (FormatUtils.isNight(Long.parseLong(sTimeStamp))) {
-                ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_sleep_night));
-                tvInformationTime.setTextColor(view.getResources().getColor(R.color.blue));
-                tvInformationTwo.setTextColor(view.getResources().getColor(R.color.blue));
-                tvInformationThree.setTextColor(view.getResources().getColor(R.color.blue));
+            firstHandler.setText(FormatUtils.fmtDate(context, timestamp));
+            secondHandler.setText(FormatUtils.fmtTimeBoundary(context, timestamp, sleepDuration));
+            thirdHandler.setVisibility(View.VISIBLE);
+            thirdHandler.setText(FormatUtils.fmtDuration(context, sleepDuration));
+            if (FormatUtils.isNight(Long.parseLong(timestamp))) {
+                iconHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_sleep_night));
+                timeHandler.setTextColor(view.getResources().getColor(R.color.blue));
+                secondHandler.setTextColor(view.getResources().getColor(R.color.blue));
+                thirdHandler.setTextColor(view.getResources().getColor(R.color.blue));
             } else {
-                ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_sleep_nap));
-                tvInformationTime.setTextColor(view.getResources().getColor(R.color.orange));
-                tvInformationTwo.setTextColor(view.getResources().getColor(R.color.orange));
-                tvInformationThree.setTextColor(view.getResources().getColor(R.color.orange));}
+                iconHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_sleep_nap));
+                timeHandler.setTextColor(view.getResources().getColor(R.color.orange));
+                secondHandler.setTextColor(view.getResources().getColor(R.color.orange));
+                thirdHandler.setTextColor(view.getResources().getColor(R.color.orange));}
 
-        } else if (sActivityType.equals(BabyLogContract.Activity.TYPE_DIAPER)) {
+        } else if (activityType.equals(BabyLogContract.Activity.TYPE_DIAPER)) {
             /**
-             * Diaper type handler
+             * Diaper activity handler
              */
-            tvInformationOne.setText(FormatUtils.fmtDayOnly(context, sTimeStamp));
-            tvInformationTwo.setText(FormatUtils.fmtDateOnly(context, sTimeStamp));
-            if (sDiaperType.equals(Diaper.DiaperType.WET.getTitle())) {
-                ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_wet));
-                tvInformationTwo.setTextColor(view.getResources().getColor(R.color.blue));
-                tvInformationTime.setTextColor(view.getResources().getColor(R.color.blue));
-            } else if (sDiaperType.equals(Diaper.DiaperType.DRY.getTitle())) {
-                ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_dry));
-                tvInformationTwo.setTextColor(view.getResources().getColor(R.color.orange));
-                tvInformationTime.setTextColor(view.getResources().getColor(R.color.orange));
-            } else if (sDiaperType.equals(Diaper.DiaperType.MIXED.getTitle())) {
-                ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_mixed));
-                tvInformationTwo.setTextColor(view.getResources().getColor(R.color.purple));
-                tvInformationTime.setTextColor(view.getResources().getColor(R.color.purple));}
+            firstHandler.setText(FormatUtils.fmtDayOnly(context, timestamp));
+            secondHandler.setText(FormatUtils.fmtDateOnly(context, timestamp));
+            if (diaperType.equals(Diaper.DiaperType.WET.getTitle())) {
+                iconHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_wet));
+                secondHandler.setTextColor(view.getResources().getColor(R.color.blue));
+                timeHandler.setTextColor(view.getResources().getColor(R.color.blue));
+            } else if (diaperType.equals(Diaper.DiaperType.DRY.getTitle())) {
+                iconHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_dry));
+                secondHandler.setTextColor(view.getResources().getColor(R.color.orange));
+                timeHandler.setTextColor(view.getResources().getColor(R.color.orange));
+            } else if (diaperType.equals(Diaper.DiaperType.MIXED.getTitle())) {
+                iconHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_mixed));
+                secondHandler.setTextColor(view.getResources().getColor(R.color.purple));
+                timeHandler.setTextColor(view.getResources().getColor(R.color.purple));}
 
-        } else if (sActivityType.equals(BabyLogContract.Activity.TYPE_NURSING)) {
+        } else if (activityType.equals(BabyLogContract.Activity.TYPE_NURSING)) {
             /**
-             * Nursing type handler
+             * Nursing activity handler
              */
-            tvInformationOne.setText(FormatUtils.fmtDate(context, sTimeStamp));
-            tvInformationTwo.setText(FormatUtils.fmtDuration(context, sNursingDuration));
-            if (sNursingSides.compareTo(Nursing.NursingType.FORMULA.getTitle()) == 0) {
-                tvInformationThree.setVisibility(View.VISIBLE);
-                tvInformationThree.setText(sNursingVolume + "mL");
-                tvInformationThree.setTextColor(view.getResources().getColor(R.color.red));
-                tvInformationTime.setTextColor(view.getResources().getColor(R.color.red));
-                tvInformationTwo.setTextColor(view.getResources().getColor(R.color.red));
-                ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_formula));
-            } else if (sNursingSides.compareTo(Nursing.NursingType.RIGHT.getTitle()) == 0) {
-                tvInformationTwo.setTextColor(view.getResources().getColor(R.color.green));
-                tvInformationTime.setTextColor(view.getResources().getColor(R.color.green));
-                ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_right));
-            } else if (sNursingSides.compareTo(Nursing.NursingType.LEFT.getTitle()) == 0) {
-                tvInformationTwo.setTextColor(view.getResources().getColor(R.color.orange));
-                tvInformationTime.setTextColor(view.getResources().getColor(R.color.orange));
-                ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_left));}
+            firstHandler.setText(FormatUtils.fmtDate(context, timestamp));
+            secondHandler.setText(FormatUtils.fmtDuration(context, nursingDuration));
+            if (nursingSide.compareTo(Nursing.NursingType.FORMULA.getTitle()) == 0) {
+                thirdHandler.setVisibility(View.VISIBLE);
+                thirdHandler.setText(nursingVolume + "mL");
+                thirdHandler.setTextColor(view.getResources().getColor(R.color.red));
+                timeHandler.setTextColor(view.getResources().getColor(R.color.red));
+                secondHandler.setTextColor(view.getResources().getColor(R.color.red));
+                iconHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_formula));
+            } else if (nursingSide.compareTo(Nursing.NursingType.RIGHT.getTitle()) == 0) {
+                secondHandler.setTextColor(view.getResources().getColor(R.color.green));
+                timeHandler.setTextColor(view.getResources().getColor(R.color.green));
+                iconHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_right));
+            } else if (nursingSide.compareTo(Nursing.NursingType.LEFT.getTitle()) == 0) {
+                secondHandler.setTextColor(view.getResources().getColor(R.color.orange));
+                timeHandler.setTextColor(view.getResources().getColor(R.color.orange));
+                iconHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_left));}
 
-        } else if (sActivityType.equals(BabyLogContract.Activity.TYPE_MEASUREMENT)) {
+        } else if (activityType.equals(BabyLogContract.Activity.TYPE_MEASUREMENT)) {
             /**
-             * Measurement type handler
+             * Measurement activity handler
              */
-            ivType.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_measurement_entry));
-            tvInformationOne.setText(FormatUtils.fmtDate(context, sTimeStamp));
-            tvInformationTwo.setText(sMeasurementHeight + " cm");
-            tvInformationTwo.setTextColor(view.getResources().getColor(R.color.orange));
-            tvInformationThree.setVisibility(View.VISIBLE);
-            tvInformationThree.setText(sMeasurementWeight + " kg");
-            tvInformationThree.setTextColor(view.getResources().getColor(R.color.orange));
-            tvInformationTime.setTextColor(view.getResources().getColor(R.color.orange));
+            iconHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_measurement_entry));
+            firstHandler.setText(FormatUtils.fmtDate(context, timestamp));
+            secondHandler.setText(heightMeasurement + " cm");
+            secondHandler.setTextColor(view.getResources().getColor(R.color.orange));
+            thirdHandler.setVisibility(View.VISIBLE);
+            thirdHandler.setText(weightMeasurement + " kg");
+            thirdHandler.setTextColor(view.getResources().getColor(R.color.orange));
+            timeHandler.setTextColor(view.getResources().getColor(R.color.orange));
         }
     }
 
-    private void handleDelete(Context context, View vEntry) {
+    private void entryDelete(Context context, View entry) {
     }
 
-    private void handleEdit(Context context, View vEntry) {
+    private void entryEdit(Context context, View entry) {
     }
 }

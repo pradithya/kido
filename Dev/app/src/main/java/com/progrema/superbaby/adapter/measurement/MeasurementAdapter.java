@@ -26,62 +26,61 @@ public class MeasurementAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        LayoutInflater liInflater = LayoutInflater.from(context);
-        return liInflater.inflate(R.layout.adapter_measurement, parent, false);
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        return layoutInflater.inflate(R.layout.adapter_measurement, parent, false);
     }
 
     @Override
-    public void bindView(View vView, final Context cContext, Cursor cCursor) {
-        String sTimestamp = cCursor.getString(BabyLogContract.Measurement.Query.OFFSET_TIMESTAMP);
-        String sHeight = cCursor.getString(BabyLogContract.Measurement.Query.OFFSET_HEIGHT);
-        String sWeight = cCursor.getString(BabyLogContract.Measurement.Query.OFFSET_WEIGHT);
+    public void bindView(View vView, final Context context, Cursor cCursor) {
+        String timestamp = cCursor.getString(BabyLogContract.Measurement.Query.OFFSET_TIMESTAMP);
+        String height = cCursor.getString(BabyLogContract.Measurement.Query.OFFSET_HEIGHT);
+        String weight = cCursor.getString(BabyLogContract.Measurement.Query.OFFSET_WEIGHT);
 
-        TextView tvDate = (TextView) vView.findViewById(R.id.history_item_day);
-        TextView tvTime = (TextView) vView.findViewById(R.id.information_time);
-        TextView tvHeight = (TextView) vView.findViewById(R.id.history_item_height);
-        TextView tvWeight = (TextView) vView.findViewById(R.id.history_item_weight);
+        TextView dateHandler = (TextView) vView.findViewById(R.id.history_item_day);
+        TextView timeHandler = (TextView) vView.findViewById(R.id.widget_time);
+        TextView heightHandler = (TextView) vView.findViewById(R.id.history_item_height);
+        TextView weightHandler = (TextView) vView.findViewById(R.id.history_item_weight);
+        ImageView menuHandler = (ImageView) vView.findViewById(R.id.menu_button);
 
-        ImageView ivMenuButton = (ImageView) vView.findViewById(R.id.menu_button);
-        ivMenuButton.setTag(cCursor.getString(BabyLogContract.Measurement.Query.OFFSET_ID));
-        ivMenuButton.setOnClickListener(
+        dateHandler.setText(FormatUtils.fmtDate(context, timestamp));
+        timeHandler.setText(FormatUtils.fmtTime(context, timestamp));
+        heightHandler.setText(height + " cm");
+        weightHandler.setText(weight + " kg");
+        menuHandler.setTag(cCursor.getString(BabyLogContract.Measurement.Query.OFFSET_ID));
+        menuHandler.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final ImageView ivMenuButton = (ImageView) v.findViewById(R.id.menu_button);
-                        PopupMenu popup = new PopupMenu(cContext, ivMenuButton);
-                        popup.setOnMenuItemClickListener(
+                        final ImageView menuHandler = (ImageView) v.findViewById(R.id.menu_button);
+                        PopupMenu popupMenu = new PopupMenu(context, menuHandler);
+                        popupMenu.setOnMenuItemClickListener(
                                 new PopupMenu.OnMenuItemClickListener() {
                                     @Override
                                     public boolean onMenuItemClick(MenuItem item) {
                                         if (item.getTitle().equals("Edit")) {
-                                            handleEdit(cContext, ivMenuButton);
+                                            entryEdit(context, menuHandler);
                                         } else if (item.getTitle().equals("Delete")) {
-                                            handleDelete(cContext, ivMenuButton);
+                                            entryDelete(context, menuHandler);
                                         }
                                         return false;
                                     }
                                 }
                         );
-                        MenuInflater miInflater = ((Activity) cContext).getMenuInflater();
-                        miInflater.inflate(R.menu.entry, popup.getMenu());
-                        popup.show();
-                        Log.i("_DBG_MENU", " Tag = " + ivMenuButton.getTag());
+                        MenuInflater menuInflater = ((Activity) context).getMenuInflater();
+                        menuInflater.inflate(R.menu.entry, popupMenu.getMenu());
+                        popupMenu.show();
+                        Log.i("_DBG_MENU", " Tag = " + menuHandler.getTag());
                     }
                 }
         );
-
-        tvDate.setText(FormatUtils.fmtDate(cContext, sTimestamp));
-        tvTime.setText(FormatUtils.fmtTime(cContext, sTimestamp));
-        tvHeight.setText(sHeight + " cm");
-        tvWeight.setText(sWeight + " kg");
     }
 
-    private void handleDelete(Context context, View vEntry) {
-        Measurement mMeasurement = new Measurement();
-        mMeasurement.setID(Long.valueOf((String) vEntry.getTag()));
-        mMeasurement.delete(context);
+    private void entryDelete(Context context, View entry) {
+        Measurement measurement = new Measurement();
+        measurement.setID(Long.valueOf((String) entry.getTag()));
+        measurement.delete(context);
     }
 
-    private void handleEdit(Context context, View vEntry) {
+    private void entryEdit(Context context, View entry) {
     }
 }
