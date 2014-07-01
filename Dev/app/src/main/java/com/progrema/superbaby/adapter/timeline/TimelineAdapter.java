@@ -53,14 +53,14 @@ public class TimelineAdapter extends CursorAdapter {
     public void bindView(View view, final Context context, Cursor cursor) {
         storeCursorData(cursor);
         prepareWidgetHandler(context, view);
-        if (isActivityType(BabyLogContract.Activity.TYPE_SLEEP)) {
-            inflateSleepActivityLayout(context, view);
-        } else if (isActivityType(BabyLogContract.Activity.TYPE_DIAPER)) {
-            inflateDiaperActivityLayout(context, view);
-        } else if (isActivityType(BabyLogContract.Activity.TYPE_NURSING)) {
-            inflateNursingActivityLayout(context, view);
-        } else if (isActivityType(BabyLogContract.Activity.TYPE_MEASUREMENT)) {
-            inflateMeasurementActivityLayout(context, view);
+        if (isEntryType(BabyLogContract.Activity.TYPE_SLEEP)) {
+            inflateSleepEntryLayout(context, view);
+        } else if (isEntryType(BabyLogContract.Activity.TYPE_DIAPER)) {
+            inflateDiaperEntryLayout(context, view);
+        } else if (isEntryType(BabyLogContract.Activity.TYPE_NURSING)) {
+            inflateNursingEntryLayout(context, view);
+        } else if (isEntryType(BabyLogContract.Activity.TYPE_MEASUREMENT)) {
+            inflateMeasurementEntryLayout(context, view);
         }
     }
 
@@ -115,11 +115,11 @@ public class TimelineAdapter extends CursorAdapter {
         );
     }
 
-    private boolean isActivityType(String type) {
+    private boolean isEntryType(String type) {
         return activityType.equals(type);
     }
 
-    private void inflateSleepActivityLayout(Context context, View view) {
+    private void inflateSleepEntryLayout(Context context, View view) {
         firstHandler.setText(FormatUtils.fmtDate(context, timestamp));
         secondHandler.setText(FormatUtils.fmtTimeBoundary(context, timestamp, sleepDuration));
         thirdHandler.setVisibility(View.VISIBLE);
@@ -137,7 +137,7 @@ public class TimelineAdapter extends CursorAdapter {
         }
     }
 
-    private void inflateDiaperActivityLayout(Context context, View view) {
+    private void inflateDiaperEntryLayout(Context context, View view) {
         firstHandler.setText(FormatUtils.fmtDayOnly(context, timestamp));
         secondHandler.setText(FormatUtils.fmtDateOnly(context, timestamp));
         if (diaperType.equals(Diaper.DiaperType.WET.getTitle())) {
@@ -155,7 +155,7 @@ public class TimelineAdapter extends CursorAdapter {
         }
     }
 
-    private void inflateNursingActivityLayout(Context context, View view) {
+    private void inflateNursingEntryLayout(Context context, View view) {
         firstHandler.setText(FormatUtils.fmtDate(context, timestamp));
         secondHandler.setText(FormatUtils.fmtDuration(context, nursingDuration));
         if (nursingSide.compareTo(Nursing.NursingType.FORMULA.getTitle()) == 0) {
@@ -176,7 +176,7 @@ public class TimelineAdapter extends CursorAdapter {
         }
     }
 
-    private void inflateMeasurementActivityLayout(Context context, View view) {
+    private void inflateMeasurementEntryLayout(Context context, View view) {
         iconHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_measurement_entry));
         firstHandler.setText(FormatUtils.fmtDate(context, timestamp));
         secondHandler.setText(heightMeasurement + " cm");
