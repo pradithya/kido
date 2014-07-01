@@ -139,7 +139,7 @@ public class SleepFragment extends HistoryFragment implements LoaderManager.Load
                         lTimestamp = Long.valueOf(
                                 cCursor.getString(BabyLogContract.Sleep.Query.OFFSET_TIMESTAMP));
                         lTotalSleepDuration += lDuration;
-                        if (FormatUtils.isNight(lTimestamp)) {
+                        if (FormatUtils.isNightTime(lTimestamp)) {
                             lNightDuration += lDuration;
                         } else {
                             lNapDuration += lDuration;

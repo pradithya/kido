@@ -15,12 +15,13 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
+import com.progrema.superbaby.adapter.EntryAdapter;
 import com.progrema.superbaby.models.Diaper;
 import com.progrema.superbaby.models.Nursing;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
-public class TimelineAdapter extends CursorAdapter {
+public class TimelineAdapter extends CursorAdapter implements EntryAdapter{
 
     private String timestamp;
     private String activityType;
@@ -52,7 +53,7 @@ public class TimelineAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, final Context context, Cursor cursor) {
         storeCursorData(cursor);
-        prepareWidgetHandler(context, view);
+        prepareHandler(context, view);
         if (isEntryType(BabyLogContract.Activity.TYPE_SLEEP)) {
             inflateSleepEntryLayout(context, view);
         } else if (isEntryType(BabyLogContract.Activity.TYPE_DIAPER)) {
@@ -64,7 +65,8 @@ public class TimelineAdapter extends CursorAdapter {
         }
     }
 
-    private void storeCursorData(Cursor cursor) {
+    @Override
+    public void storeCursorData(Cursor cursor) {
         timestamp = cursor.getString(BabyLogContract.Activity.Query.OFFSET_TIMESTAMP);
         activityType = cursor.getString(BabyLogContract.Activity.Query.OFFSET_ACTIVITY_TYPE);
         sleepDuration = cursor.getString(BabyLogContract.Activity.Query.OFFSET_SLEEP_DURATION);
@@ -77,7 +79,8 @@ public class TimelineAdapter extends CursorAdapter {
         entryTag = cursor.getString(BabyLogContract.Activity.Query.OFFSET_ID);
     }
 
-    private void prepareWidgetHandler(final Context context, View view) {
+    @Override
+    public void prepareHandler(final Context context, View view) {
         timeHandler = (TextView) view.findViewById(R.id.widget_time);
         firstHandler = (TextView) view.findViewById(R.id.widget_first);
         secondHandler = (TextView) view.findViewById(R.id.widget_second);
@@ -98,9 +101,9 @@ public class TimelineAdapter extends CursorAdapter {
                                     @Override
                                     public boolean onMenuItemClick(MenuItem item) {
                                         if (item.getTitle().equals("Edit")) {
-                                            entryEdit(context, menuHandler);
+                                            deleteEntry(context, menuHandler);
                                         } else if (item.getTitle().equals("Delete")) {
-                                            entryDelete(context, menuHandler);
+                                            editEntry(context, menuHandler);
                                         }
                                         return false;
                                     }
@@ -115,7 +118,17 @@ public class TimelineAdapter extends CursorAdapter {
         );
     }
 
-    private boolean isEntryType(String type) {
+    @Override
+    public void deleteEntry(Context context, View entry) {
+
+    }
+
+    @Override
+    public void editEntry(Context context, View entry) {
+
+    }
+
+    public boolean isEntryType(String type) {
         return activityType.equals(type);
     }
 
@@ -124,7 +137,7 @@ public class TimelineAdapter extends CursorAdapter {
         secondHandler.setText(FormatUtils.fmtTimeBoundary(context, timestamp, sleepDuration));
         thirdHandler.setVisibility(View.VISIBLE);
         thirdHandler.setText(FormatUtils.fmtDuration(context, sleepDuration));
-        if (FormatUtils.isNight(Long.parseLong(timestamp))) {
+        if (FormatUtils.isNightTime(Long.parseLong(timestamp))) {
             iconHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_sleep_night));
             timeHandler.setTextColor(view.getResources().getColor(R.color.blue));
             secondHandler.setTextColor(view.getResources().getColor(R.color.blue));
@@ -187,9 +200,4 @@ public class TimelineAdapter extends CursorAdapter {
         timeHandler.setTextColor(view.getResources().getColor(R.color.orange));
     }
 
-    private void entryDelete(Context context, View entry) {
-    }
-
-    private void entryEdit(Context context, View entry) {
-    }
 }

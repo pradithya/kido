@@ -389,7 +389,7 @@ public class FormatUtils {
         return true;
     }
 
-    public static boolean isNight(Long timeStamp) {
+    public static boolean isNightTime(Long timeStamp) {
         Calendar object = Calendar.getInstance();
         object.setTimeInMillis(timeStamp);
         int hour = object.get(Calendar.HOUR_OF_DAY);

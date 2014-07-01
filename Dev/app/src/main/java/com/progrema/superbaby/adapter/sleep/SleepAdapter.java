@@ -15,11 +15,23 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
+import com.progrema.superbaby.adapter.EntryAdapter;
 import com.progrema.superbaby.models.Sleep;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
-public class SleepAdapter extends CursorAdapter {
+public class SleepAdapter extends CursorAdapter implements EntryAdapter {
+
+    private String timestamp;
+    private String duration;
+    private String entryTag;
+    private TextView timestampHandler;
+    private TextView durationHandler;
+    private TextView timeBoundaryHandler;
+    private TextView timeHandler;
+    private ImageView typeHandler;
+    private ImageView menuHandler;
+
     public SleepAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
@@ -32,21 +44,36 @@ public class SleepAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, final Context context, Cursor cursor) {
-        String timestamp = cursor.getString(BabyLogContract.Sleep.Query.OFFSET_TIMESTAMP);
-        String duration = cursor.getString(BabyLogContract.Sleep.Query.OFFSET_DURATION);
+        storeCursorData(cursor);
+        prepareHandler(context, view);
+        if (FormatUtils.isNightTime(Long.parseLong(timestamp))) {
+            inflateNightSleepEntryLayout(view);
+        } else {
+            inflateNapEntryLayout(view);
+        }
+    }
 
-        TextView timestampHandler = (TextView) view.findViewById(R.id.history_item_timestamp);
-        TextView durationHandler = (TextView) view.findViewById(R.id.history_item_duration);
-        TextView timeBoundaryHandler = (TextView) view.findViewById(R.id.history_item_time_boundary);
-        TextView timeHandler = (TextView) view.findViewById(R.id.widget_time);
-        ImageView typeHandler = (ImageView) view.findViewById(R.id.icon_type);
-        ImageView menuHandler = (ImageView) view.findViewById(R.id.menu_button);
+    @Override
+    public void storeCursorData(Cursor cursor) {
+        timestamp = cursor.getString(BabyLogContract.Sleep.Query.OFFSET_TIMESTAMP);
+        duration = cursor.getString(BabyLogContract.Sleep.Query.OFFSET_DURATION);
+        entryTag = cursor.getString(BabyLogContract.Sleep.Query.OFFSET_ID);
+    }
+
+    @Override
+    public void prepareHandler(final Context context, View view) {
+        timestampHandler = (TextView) view.findViewById(R.id.history_item_timestamp);
+        durationHandler = (TextView) view.findViewById(R.id.history_item_duration);
+        timeBoundaryHandler = (TextView) view.findViewById(R.id.history_item_time_boundary);
+        timeHandler = (TextView) view.findViewById(R.id.widget_time);
+        typeHandler = (ImageView) view.findViewById(R.id.icon_type);
+        menuHandler = (ImageView) view.findViewById(R.id.menu_button);
 
         timestampHandler.setText(FormatUtils.fmtDate(context, timestamp));
         durationHandler.setText(FormatUtils.fmtDuration(context, duration));
         timeBoundaryHandler.setText(FormatUtils.fmtTimeBoundary(context, timestamp, duration));
         timeHandler.setText(FormatUtils.fmtTime(context, timestamp));
-        menuHandler.setTag(cursor.getString(BabyLogContract.Sleep.Query.OFFSET_ID));
+        menuHandler.setTag(entryTag);
         menuHandler.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -73,26 +100,32 @@ public class SleepAdapter extends CursorAdapter {
                     }
                 }
         );
-
-        if (FormatUtils.isNight(Long.parseLong(timestamp))) {
-            typeHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_sleep_night));
-            durationHandler.setTextColor(view.getResources().getColor(R.color.blue));
-            timeHandler.setTextColor(view.getResources().getColor(R.color.blue));
-            timeBoundaryHandler.setTextColor(view.getResources().getColor(R.color.blue));
-        } else {
-            typeHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_sleep_nap));
-            durationHandler.setTextColor(view.getResources().getColor(R.color.orange));
-            timeHandler.setTextColor(view.getResources().getColor(R.color.orange));
-            timeBoundaryHandler.setTextColor(view.getResources().getColor(R.color.orange));
-        }
     }
 
-    private void deleteEntry(Context context, View vEntry) {
+    @Override
+    public void deleteEntry(Context context, View entry) {
         Sleep sleep = new Sleep();
-        sleep.setID(Long.valueOf((String) vEntry.getTag()));
+        sleep.setID(Long.valueOf((String) entry.getTag()));
         sleep.delete(context);
     }
 
-    private void editEntry(Context context, View vEntry) {
+    @Override
+    public void editEntry(Context context, View entry) {
+
     }
+
+    private void inflateNightSleepEntryLayout(View view) {
+        typeHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_sleep_night));
+        durationHandler.setTextColor(view.getResources().getColor(R.color.blue));
+        timeHandler.setTextColor(view.getResources().getColor(R.color.blue));
+        timeBoundaryHandler.setTextColor(view.getResources().getColor(R.color.blue));
+    }
+
+    private void inflateNapEntryLayout(View view) {
+        typeHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_sleep_nap));
+        durationHandler.setTextColor(view.getResources().getColor(R.color.orange));
+        timeHandler.setTextColor(view.getResources().getColor(R.color.orange));
+        timeBoundaryHandler.setTextColor(view.getResources().getColor(R.color.orange));
+    }
+
 }
