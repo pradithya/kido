@@ -15,11 +15,23 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
+import com.progrema.superbaby.adapter.EntryAdapter;
 import com.progrema.superbaby.models.Measurement;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
-public class MeasurementAdapter extends CursorAdapter {
+public class MeasurementAdapter extends CursorAdapter implements EntryAdapter {
+
+    private String timestamp;
+    private String height;
+    private String weight;
+    private String entryTag;
+    private TextView dateHandler;
+    private TextView timeHandler;
+    private TextView heightHandler;
+    private TextView weightHandler;
+    private ImageView menuHandler;
+
     public MeasurementAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
@@ -31,22 +43,32 @@ public class MeasurementAdapter extends CursorAdapter {
     }
 
     @Override
-    public void bindView(View vView, final Context context, Cursor cCursor) {
-        String timestamp = cCursor.getString(BabyLogContract.Measurement.Query.OFFSET_TIMESTAMP);
-        String height = cCursor.getString(BabyLogContract.Measurement.Query.OFFSET_HEIGHT);
-        String weight = cCursor.getString(BabyLogContract.Measurement.Query.OFFSET_WEIGHT);
+    public void bindView(View view, final Context context, Cursor cursor) {
+        storeCursorData(cursor);
+        prepareHandler(context, view);
+    }
 
-        TextView dateHandler = (TextView) vView.findViewById(R.id.history_item_day);
-        TextView timeHandler = (TextView) vView.findViewById(R.id.widget_time);
-        TextView heightHandler = (TextView) vView.findViewById(R.id.history_item_height);
-        TextView weightHandler = (TextView) vView.findViewById(R.id.history_item_weight);
-        ImageView menuHandler = (ImageView) vView.findViewById(R.id.menu_button);
+    @Override
+    public void storeCursorData(Cursor cursor) {
+        timestamp = cursor.getString(BabyLogContract.Measurement.Query.OFFSET_TIMESTAMP);
+        height = cursor.getString(BabyLogContract.Measurement.Query.OFFSET_HEIGHT);
+        weight = cursor.getString(BabyLogContract.Measurement.Query.OFFSET_WEIGHT);
+        entryTag = cursor.getString(BabyLogContract.Measurement.Query.OFFSET_ID);
+    }
+
+    @Override
+    public void prepareHandler(final Context context, View view) {
+        dateHandler = (TextView) view.findViewById(R.id.history_item_day);
+        timeHandler = (TextView) view.findViewById(R.id.widget_time);
+        heightHandler = (TextView) view.findViewById(R.id.history_item_height);
+        weightHandler = (TextView) view.findViewById(R.id.history_item_weight);
+        menuHandler = (ImageView) view.findViewById(R.id.menu_button);
 
         dateHandler.setText(FormatUtils.fmtDate(context, timestamp));
         timeHandler.setText(FormatUtils.fmtTime(context, timestamp));
         heightHandler.setText(height + " cm");
         weightHandler.setText(weight + " kg");
-        menuHandler.setTag(cCursor.getString(BabyLogContract.Measurement.Query.OFFSET_ID));
+        menuHandler.setTag(entryTag);
         menuHandler.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -58,9 +80,9 @@ public class MeasurementAdapter extends CursorAdapter {
                                     @Override
                                     public boolean onMenuItemClick(MenuItem item) {
                                         if (item.getTitle().equals("Edit")) {
-                                            entryEdit(context, menuHandler);
+                                            editEntry(context, menuHandler);
                                         } else if (item.getTitle().equals("Delete")) {
-                                            entryDelete(context, menuHandler);
+                                            deleteEntry(context, menuHandler);
                                         }
                                         return false;
                                     }
@@ -75,12 +97,16 @@ public class MeasurementAdapter extends CursorAdapter {
         );
     }
 
-    private void entryDelete(Context context, View entry) {
+    @Override
+    public void deleteEntry(Context context, View entry) {
         Measurement measurement = new Measurement();
         measurement.setID(Long.valueOf((String) entry.getTag()));
         measurement.delete(context);
     }
 
-    private void entryEdit(Context context, View entry) {
+    @Override
+    public void editEntry(Context context, View entry) {
+
     }
+
 }

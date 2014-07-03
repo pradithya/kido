@@ -15,11 +15,22 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
+import com.progrema.superbaby.adapter.EntryAdapter;
 import com.progrema.superbaby.models.Diaper;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
-public class DiaperAdapter extends CursorAdapter {
+public class DiaperAdapter extends CursorAdapter implements EntryAdapter {
+
+    private String timestamp;
+    private String type;
+    private String entryTag;
+    private TextView dayHandler;
+    private TextView dateHandler;
+    private TextView timeHandler;
+    private ImageView typeHandler;
+    private ImageView menuHandler;
+
     public DiaperAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
@@ -32,19 +43,36 @@ public class DiaperAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, final Context context, Cursor cursor) {
-        String timestamp = cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP);
-        String type = cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TYPE);
+        storeCursorData(cursor);
+        prepareHandler(context, view);
+        if (isEntryType(Diaper.DiaperType.WET.getTitle())) {
+            inflateWetEntryLayout(view);
+        } else if (isEntryType(Diaper.DiaperType.DRY.getTitle())) {
+            inflateDryEntryLayout(view);
+        } else if (isEntryType(Diaper.DiaperType.MIXED.getTitle())) {
+            inflateMixedEntryLayout(view);
+        }
+    }
 
-        TextView dayHandler = (TextView) view.findViewById(R.id.history_item_day);
-        TextView dateHandler = (TextView) view.findViewById(R.id.history_item_date);
-        TextView timeHandler = (TextView) view.findViewById(R.id.widget_time);
-        ImageView typeHandler = (ImageView) view.findViewById(R.id.icon_type);
-        ImageView menuHandler = (ImageView) view.findViewById(R.id.menu_button);
+    @Override
+    public void storeCursorData(Cursor cursor) {
+        timestamp = cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP);
+        type = cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TYPE);
+        entryTag = cursor.getString(BabyLogContract.Diaper.Query.OFFSET_ID);
+    }
+
+    @Override
+    public void prepareHandler(final Context context, View view) {
+        dayHandler = (TextView) view.findViewById(R.id.history_item_day);
+        dateHandler = (TextView) view.findViewById(R.id.history_item_date);
+        timeHandler = (TextView) view.findViewById(R.id.widget_time);
+        typeHandler = (ImageView) view.findViewById(R.id.icon_type);
+        menuHandler = (ImageView) view.findViewById(R.id.menu_button);
 
         dayHandler.setText(FormatUtils.fmtDayOnly(context, timestamp));
         dateHandler.setText(FormatUtils.fmtDateOnly(context, timestamp));
         timeHandler.setText(FormatUtils.fmtTime(context, timestamp));
-        menuHandler.setTag(cursor.getString(BabyLogContract.Diaper.Query.OFFSET_ID));
+        menuHandler.setTag(entryTag);
         menuHandler.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -56,9 +84,9 @@ public class DiaperAdapter extends CursorAdapter {
                                     @Override
                                     public boolean onMenuItemClick(MenuItem item) {
                                         if (item.getTitle().equals("Edit")) {
-                                            entryEdit(context, menuHandler);
+                                            editEntry(context, menuHandler);
                                         } else if (item.getTitle().equals("Delete")) {
-                                            entryDelete(context, menuHandler);
+                                            deleteEntry(context, menuHandler);
                                         }
                                         return false;
                                     }
@@ -71,28 +99,40 @@ public class DiaperAdapter extends CursorAdapter {
                     }
                 }
         );
-
-        if (type.equals(Diaper.DiaperType.WET.getTitle())) {
-            typeHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_wet));
-            timeHandler.setTextColor(view.getResources().getColor(R.color.blue));
-            dateHandler.setTextColor(view.getResources().getColor(R.color.blue));
-        } else if (type.equals(Diaper.DiaperType.DRY.getTitle())) {
-            typeHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_dry));
-            timeHandler.setTextColor(view.getResources().getColor(R.color.orange));
-            dateHandler.setTextColor(view.getResources().getColor(R.color.orange));
-        } else if (type.equals(Diaper.DiaperType.MIXED.getTitle())) {
-            typeHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_mixed));
-            timeHandler.setTextColor(view.getResources().getColor(R.color.purple));
-            dateHandler.setTextColor(view.getResources().getColor(R.color.purple));
-        }
     }
 
-    private void entryDelete(Context context, View entry) {
+    @Override
+    public void deleteEntry(Context context, View entry) {
         Diaper diaper = new Diaper();
         diaper.setID(Long.valueOf((String) entry.getTag()));
         diaper.delete(context);
     }
 
-    private void entryEdit(Context context, View entry) {
+    @Override
+    public void editEntry(Context context, View entry) {
+
     }
+
+    private boolean isEntryType(String type) {
+        return this.type.equals(type);
+    }
+
+    private void inflateWetEntryLayout(View view) {
+        typeHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_wet));
+        timeHandler.setTextColor(view.getResources().getColor(R.color.blue));
+        dateHandler.setTextColor(view.getResources().getColor(R.color.blue));
+    }
+
+    private void inflateDryEntryLayout(View view) {
+        typeHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_dry));
+        timeHandler.setTextColor(view.getResources().getColor(R.color.orange));
+        dateHandler.setTextColor(view.getResources().getColor(R.color.orange));
+    }
+
+    private void inflateMixedEntryLayout(View view) {
+        typeHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_mixed));
+        timeHandler.setTextColor(view.getResources().getColor(R.color.purple));
+        dateHandler.setTextColor(view.getResources().getColor(R.color.purple));
+    }
+
 }
