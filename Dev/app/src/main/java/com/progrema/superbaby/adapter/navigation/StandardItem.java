@@ -18,18 +18,27 @@ public class StandardItem extends Item {
 
     @Override
     public View inflate(Context context, View view, ViewGroup viewGroup) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(getLayout(), viewGroup, false);
-
-        TextView tvAction;
-        tvAction = (TextView) view.findViewById(R.id.text_title);
-        tvAction.setText(getText());
-        tvAction.setTextColor(getTextColor());
-
-        ImageView ivThumbnail;
-        ivThumbnail = (ImageView) view.findViewById(R.id.thumbnail_section);
-        ivThumbnail.setImageDrawable(getThumbnail());
-
+        LayoutInflater layoutInflater = getLayoutInflater(context);
+        view = layoutInflater.inflate(getLayout(), viewGroup, false);
+        inflateName(view);
+        inflateThumbnail(view);
         return view;
+    }
+
+    private LayoutInflater getLayoutInflater(Context context) {
+        return (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    private void inflateName(View view) {
+        TextView itemName;
+        itemName = (TextView) view.findViewById(R.id.text_title);
+        itemName.setText(getText());
+        itemName.setTextColor(getTextColor());
+    }
+
+    private void inflateThumbnail(View view) {
+        ImageView thumbnail;
+        thumbnail = (ImageView) view.findViewById(R.id.thumbnail_section);
+        thumbnail.setImageDrawable(getThumbnail());
     }
 }

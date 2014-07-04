@@ -20,26 +20,37 @@ public class Baby extends Item {
 
     @Override
     public View inflate(Context context, View view, ViewGroup viewGroup) {
-        LayoutInflater inflater = (LayoutInflater) context.
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(getLayout(), viewGroup, false);
-
-        TextView baby;
-        baby = (TextView) view.findViewById(R.id.baby_name_type_view);
-        baby.setText(getText());
-
-        ImageView ivThumbnail;
-        ivThumbnail = (ImageView) view.findViewById(R.id.thumbnail_section);
-        ivThumbnail.setImageDrawable(getThumbnail());
-
-        RadioButton activeFlag;
-        activeFlag = (RadioButton) view.findViewById(R.id.active_baby_flag);
-        if (ActiveContext.getActiveBaby(context).getName().equals(getText())) {
-            activeFlag.setChecked(true);
-        } else {
-            activeFlag.setChecked(false);
-        }
-
+        LayoutInflater layoutInflater = getLayoutInflater(context);
+        view = layoutInflater.inflate(getLayout(), viewGroup, false);
+        inflateName(view);
+        inflateThumbnail(view);
+        inflateStatusFlag(context, view);
         return view;
+    }
+
+    private void inflateName(View view) {
+        TextView name;
+        name = (TextView) view.findViewById(R.id.baby_name_type_view);
+        name.setText(getText());
+    }
+
+    private void inflateThumbnail(View view) {
+        ImageView thumbnail;
+        thumbnail = (ImageView) view.findViewById(R.id.thumbnail_section);
+        thumbnail.setImageDrawable(getThumbnail());
+    }
+
+    private void inflateStatusFlag(Context context, View view) {
+        RadioButton statusFlag;
+        statusFlag = (RadioButton) view.findViewById(R.id.active_baby_flag);
+        if (ActiveContext.getActiveBaby(context).getName().equals(getText())) {
+            statusFlag.setChecked(true);
+        } else {
+            statusFlag.setChecked(false);
+        }
+    }
+
+    private LayoutInflater getLayoutInflater(Context context) {
+        return (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 }

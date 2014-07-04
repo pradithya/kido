@@ -9,51 +9,36 @@ import android.widget.TextView;
 
 import com.progrema.superbaby.R;
 
-/**
- * Created by aria on 17/5/14.
- */
-public class ActionBarDropDownAdapter extends ArrayAdapter<String>{
+public class ActionBarDropDownAdapter extends ArrayAdapter<String> {
 
-    private Context mContext;
+    private Context context;
     private String[] texts;
-    private int viewId;
     private String title;
-    public ActionBarDropDownAdapter(Context context, int textViewResourceId,
-                            String[] objects, String title) {
-        super(context, textViewResourceId, objects);
+    private int viewId;
 
-        mContext = context;
-        texts = objects;
-        viewId = textViewResourceId;
+    public ActionBarDropDownAdapter(Context context,
+                                    int textViewResourceId, String[] objects, String title) {
+        super(context, textViewResourceId, objects);
+        this.context = context;
+        this.texts = objects;
+        this.viewId = textViewResourceId;
         this.title = title;
     }
 
     @Override
-    public View getDropDownView(int position, View convertView, ViewGroup parent)
-    {
+    public View getDropDownView(int position, View convertView, ViewGroup parent) {
         DropDownViewHolder holder = null;
-
-        if (convertView == null)
-        {
+        if (convertView == null) {
             LayoutInflater inflater =
-                    ( LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(android.R.layout.simple_spinner_dropdown_item, parent, false);
-
             holder = new DropDownViewHolder();
-            holder.mTitle = (TextView) convertView.findViewById(android.R.id.text1);
-
+            holder.title = (TextView) convertView.findViewById(android.R.id.text1);
             convertView.setTag(holder);
-        }
-        else
-        {
+        } else {
             holder = (DropDownViewHolder) convertView.getTag();
         }
-
-        // Should have some sort of data set to go off of, we'll assume
-        // there is a some array called mData.
-        holder.mTitle.setText(texts[position]);
-        //holder.mTitle.setTextColor(Color.BLACK);
-
+        holder.title.setText(texts[position]);
         return convertView;
     }
 
@@ -62,49 +47,35 @@ public class ActionBarDropDownAdapter extends ArrayAdapter<String>{
         return getCustomView(position, convertView, parent);
     }
 
-    public View getCustomView(int position, View convertView,ViewGroup parent) {
-        // TODO Auto-generated method stub
-        // return super.getView(position, convertView, parent);
-
-
-        LayoutInflater inflater =
-                ( LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-
-        ViewHolder holder;
+    private View getCustomView(int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder;
+        LayoutInflater layoutInflater =
+                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
-            convertView = inflater.inflate(viewId, null);
-            holder = new ViewHolder();
-            holder.txt01 = (TextView) convertView.findViewById(R.id.title);
-            holder.txt02 = (TextView) convertView.findViewById(R.id.subtitle);
-
-            convertView.setTag(holder);
-
+            convertView = layoutInflater.inflate(viewId, null);
+            viewHolder = new ViewHolder();
+            viewHolder.title = (TextView) convertView.findViewById(R.id.title);
+            viewHolder.subtitle = (TextView) convertView.findViewById(R.id.subtitle);
+            convertView.setTag(viewHolder);
         } else {
-
-            holder = (ViewHolder) convertView.getTag();
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-
-        holder.txt01.setText(title);
-        holder.txt02.setText(texts[position].toUpperCase());
-
+        viewHolder.title.setText(title);
+        viewHolder.subtitle.setText(texts[position].toUpperCase());
         return convertView;
     }
 
-    public void setTitle(String title)
-    {
+    public void setTitleAndNotify(String title) {
         this.title = title;
         this.notifyDataSetChanged();
     }
 
-    class ViewHolder {
-        TextView txt01;
-        TextView txt02;
+    private class ViewHolder {
+        private TextView title;
+        private TextView subtitle;
     }
 
     public class DropDownViewHolder {
-        TextView mTitle;
+        private TextView title;
     }
-
-
 }

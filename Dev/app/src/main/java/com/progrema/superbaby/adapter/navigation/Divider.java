@@ -17,15 +17,20 @@ public class Divider extends Item {
 
     @Override
     public View inflate(Context context, View view, ViewGroup viewGroup) {
-        LayoutInflater inflater = (LayoutInflater) context.
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(getLayout(), viewGroup, false);
+        LayoutInflater layoutInflater = getLayoutInflater(context);
+        view = layoutInflater.inflate(getLayout(), viewGroup, false);
+        inflateText(view);
+        return view;
+    }
 
+    private void inflateText(View view) {
         TextView actionTextView;
         actionTextView = (TextView) view.findViewById(R.id.text_title);
         actionTextView.setText(getText());
         actionTextView.setEnabled(false);
+    }
 
-        return view;
+    private LayoutInflater getLayoutInflater(Context context) {
+        return (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 }

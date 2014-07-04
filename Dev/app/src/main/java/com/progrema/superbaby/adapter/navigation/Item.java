@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 public abstract class Item {
 
     protected int layout;
-    protected int cTextColor;
-    protected Drawable dThumbnail;
+    protected int textColor;
+    protected Drawable thumbnail;
     private String text;
 
     public String getText() {
@@ -29,19 +29,19 @@ public abstract class Item {
     }
 
     public Drawable getThumbnail() {
-        return dThumbnail;
+        return thumbnail;
     }
 
     public void setThumbnail(Drawable dThumbnail) {
-        this.dThumbnail = dThumbnail;
+        this.thumbnail = dThumbnail;
     }
 
     public int getTextColor() {
-        return cTextColor;
+        return textColor;
     }
 
     public void setTextColor(int cTextColor) {
-        this.cTextColor = cTextColor;
+        this.textColor = cTextColor;
     }
 
     public abstract View inflate(Context context, View view, ViewGroup viewGroup);

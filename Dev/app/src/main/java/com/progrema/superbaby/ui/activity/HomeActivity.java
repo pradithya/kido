@@ -143,7 +143,7 @@ public class HomeActivity extends FragmentActivity
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         actionBar.setDisplayShowTitleEnabled(false);
-        mSpinnerAdapter.setTitle(mTitle);
+        mSpinnerAdapter.setTitleAndNotify(mTitle);
     }
 
     @Override
