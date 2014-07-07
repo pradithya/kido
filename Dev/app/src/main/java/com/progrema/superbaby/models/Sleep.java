@@ -58,7 +58,7 @@ public class Sleep extends BaseActivity {
                 String.valueOf(getActivityId())};
         context.getContentResolver().delete(
                 BabyLogContract.Sleep.CONTENT_URI,
-                "baby_id = ? AND _id = ?",
+                "baby_id = ? AND activity_id = ?",
                 selectionArgs);
     }
 }

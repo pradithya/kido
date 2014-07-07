@@ -219,16 +219,17 @@ public class BabyLogProvider extends ContentProvider {
             return 1;
         }
 
+        // Delete specified data from user
+        dbTable = dbOpenHelper.getWritableDatabase();
+        sbBuilder = buildSelection(uri,  sUriMatcher.match(uri));
+        sbBuilder.where(selection, selectionArgs).delete(dbTable);
+
         // Delete corresponding data on activity table
+        selection = "baby_id = ? AND _id = ?";
         dbTable = dbOpenHelper.getWritableDatabase();
         sbBuilder = buildSelection(BabyLogContract.Activity.CONTENT_URI,
                 sUriMatcher.match(BabyLogContract.Activity.CONTENT_URI));
         iRetVal = sbBuilder.where(selection, selectionArgs).delete(dbTable);
-
-        // Delete specified data from user
-        dbTable = dbOpenHelper.getWritableDatabase();
-        sbBuilder = buildSelection(uri,  sUriMatcher.match(uri));
-        iRetVal =  sbBuilder.where(selection, selectionArgs).delete(dbTable);
 
         // Notify user specified table and activity table
         notifyChange(uri);

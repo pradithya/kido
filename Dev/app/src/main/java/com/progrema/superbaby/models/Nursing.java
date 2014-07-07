@@ -86,7 +86,7 @@ public class Nursing extends BaseActivity {
                 String.valueOf(getActivityId())};
         context.getContentResolver().delete(
                 BabyLogContract.Nursing.CONTENT_URI,
-                "baby_id = ? AND _id = ?",
+                "baby_id = ? AND activity_id = ?",
                 selectionArgs);
     }
 

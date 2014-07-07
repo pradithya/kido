@@ -53,7 +53,7 @@ public class Diaper extends BaseActivity {
                 String.valueOf(getActivityId())};
         context.getContentResolver().delete(
                 BabyLogContract.Diaper.CONTENT_URI,
-                "baby_id = ? AND _id = ?",
+                "baby_id = ? AND activity_id = ?",
                 selectionArgs);
     }
 
