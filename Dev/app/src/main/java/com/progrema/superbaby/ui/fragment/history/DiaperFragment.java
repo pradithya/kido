@@ -105,7 +105,7 @@ public class DiaperFragment extends HistoryFragment implements LoaderManager.Loa
     public Loader<Cursor> onCreateLoader(int iLoaderId, Bundle bBundle) {
 
         String[] babyIDArg = {
-                String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())
+                String.valueOf(ActiveContext.getActiveBaby(getActivity()).getActivityId())
         };
 
         String[] timeFilterArg = getTimeFilterArg(bBundle);

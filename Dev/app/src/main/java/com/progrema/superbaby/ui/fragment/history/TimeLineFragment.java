@@ -90,7 +90,7 @@ public class TimelineFragment extends HistoryFragment implements LoaderManager.L
     @Override
     public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle) {
 
-        String[] aBabyIdArg = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())};
+        String[] aBabyIdArg = {String.valueOf(ActiveContext.getActiveBaby(getActivity()).getActivityId())};
         switch (loaderId) {
             case LOADER_LIST_VIEW:
                 return new CursorLoader(getActivity(),

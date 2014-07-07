@@ -8,6 +8,7 @@ import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 
 public class Diaper extends BaseActivity {
+
     public final static String DIAPER_TYPE_KEY = "diaper_type";
     private DiaperType type;
 
@@ -30,11 +31,6 @@ public class Diaper extends BaseActivity {
         parcel.writeString(type.getTitle());
     }
 
-    /**
-     * Called from constructor to create this object from parcel
-     *
-     * @param parcel parcel from which to re-create object
-     */
     @Override
     public void readFromParcel(Parcel parcel) {
         super.readFromParcel(parcel);
@@ -53,9 +49,8 @@ public class Diaper extends BaseActivity {
     @Override
     public void delete(Context context) {
         String [] selectionArgs = {
-                String.valueOf(ActiveContext.getActiveBaby(context).getID()),
-                String.valueOf(getID())};
-
+                String.valueOf(ActiveContext.getActiveBaby(context).getActivityId()),
+                String.valueOf(getActivityId())};
         context.getContentResolver().delete(
                 BabyLogContract.Diaper.CONTENT_URI,
                 "baby_id = ? AND _id = ?",
@@ -72,13 +67,10 @@ public class Diaper extends BaseActivity {
         DRY("DRY"),
         WET("WET"),
         MIXED("MIXED");
-
         private String title;
-
         DiaperType(String title) {
             this.title = title;
         }
-
         public String getTitle() {
             return this.title;
         }

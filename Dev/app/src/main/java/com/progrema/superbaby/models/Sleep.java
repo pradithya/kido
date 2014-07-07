@@ -8,11 +8,9 @@ import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 
 public class Sleep extends BaseActivity {
+
     private long duration;
 
-    /**
-     * Empty Constructor
-     */
     public Sleep() {
     }
 
@@ -56,9 +54,8 @@ public class Sleep extends BaseActivity {
     @Override
     public void delete(Context context) {
         String [] selectionArgs = {
-                String.valueOf(ActiveContext.getActiveBaby(context).getID()),
-                String.valueOf(getID())};
-
+                String.valueOf(ActiveContext.getActiveBaby(context).getActivityId()),
+                String.valueOf(getActivityId())};
         context.getContentResolver().delete(
                 BabyLogContract.Sleep.CONTENT_URI,
                 "baby_id = ? AND _id = ?",

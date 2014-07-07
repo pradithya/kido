@@ -58,7 +58,7 @@ public class DiaperAdapter extends CursorAdapter implements EntryAdapter {
     public void storeCursorData(Cursor cursor) {
         timestamp = cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP);
         type = cursor.getString(BabyLogContract.Diaper.Query.OFFSET_TYPE);
-        entryTag = cursor.getString(BabyLogContract.Diaper.Query.OFFSET_ID);
+        entryTag = cursor.getString(BabyLogContract.Diaper.Query.OFFSET_ACTIVITY_ID);
     }
 
     @Override
@@ -104,7 +104,7 @@ public class DiaperAdapter extends CursorAdapter implements EntryAdapter {
     @Override
     public void deleteEntry(Context context, View entry) {
         Diaper diaper = new Diaper();
-        diaper.setID(Long.valueOf((String) entry.getTag()));
+        diaper.setActivityId(Long.valueOf((String) entry.getTag()));
         diaper.delete(context);
     }
 

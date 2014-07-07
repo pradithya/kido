@@ -53,7 +53,7 @@ public class MeasurementAdapter extends CursorAdapter implements EntryAdapter {
         timestamp = cursor.getString(BabyLogContract.Measurement.Query.OFFSET_TIMESTAMP);
         height = cursor.getString(BabyLogContract.Measurement.Query.OFFSET_HEIGHT);
         weight = cursor.getString(BabyLogContract.Measurement.Query.OFFSET_WEIGHT);
-        entryTag = cursor.getString(BabyLogContract.Measurement.Query.OFFSET_ID);
+        entryTag = cursor.getString(BabyLogContract.Measurement.Query.OFFSET_ACTIVITY_ID);
     }
 
     @Override
@@ -100,7 +100,7 @@ public class MeasurementAdapter extends CursorAdapter implements EntryAdapter {
     @Override
     public void deleteEntry(Context context, View entry) {
         Measurement measurement = new Measurement();
-        measurement.setID(Long.valueOf((String) entry.getTag()));
+        measurement.setActivityId(Long.valueOf((String) entry.getTag()));
         measurement.delete(context);
     }
 

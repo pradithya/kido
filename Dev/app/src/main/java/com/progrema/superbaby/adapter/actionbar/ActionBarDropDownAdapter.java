@@ -29,8 +29,7 @@ public class ActionBarDropDownAdapter extends ArrayAdapter<String> {
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
         DropDownViewHolder holder = null;
         if (convertView == null) {
-            LayoutInflater inflater =
-                    (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = getLayoutInflater(context);
             convertView = inflater.inflate(android.R.layout.simple_spinner_dropdown_item, parent, false);
             holder = new DropDownViewHolder();
             holder.title = (TextView) convertView.findViewById(android.R.id.text1);
@@ -49,8 +48,7 @@ public class ActionBarDropDownAdapter extends ArrayAdapter<String> {
 
     private View getCustomView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
-        LayoutInflater layoutInflater =
-                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = getLayoutInflater(context);
         if (convertView == null) {
             convertView = layoutInflater.inflate(viewId, null);
             viewHolder = new ViewHolder();
@@ -77,5 +75,9 @@ public class ActionBarDropDownAdapter extends ArrayAdapter<String> {
 
     public class DropDownViewHolder {
         private TextView title;
+    }
+
+    private LayoutInflater getLayoutInflater(Context context) {
+        return (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 }

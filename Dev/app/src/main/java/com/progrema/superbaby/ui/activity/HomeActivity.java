@@ -55,10 +55,10 @@ public class HomeActivity extends FragmentActivity
     private static final int POSITION_MEASUREMENT_FRAGMENT = 4;
     private int currentFragment;
 
-    private static final int TIMEFILTER_POSITION_TODAY = 0;
-    private static final int TIMEFILTER_POSITION_THIS_WEEK = 1;
-    private static final int TIMEFILTER_POSITION_THIS_MONTH = 2;
-    private static final int TIMEFILTER_POSITION_ALL = 3;
+    private static final int TIME_FILTER_POSITION_TODAY = 0;
+    private static final int TIME_FILTER_POSITION_THIS_WEEK = 1;
+    private static final int TIME_FILTER_POSITION_THIS_MONTH = 2;
+    private static final int TIME_FILTER_POSITION_ALL = 3;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -68,34 +68,27 @@ public class HomeActivity extends FragmentActivity
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
-    private String mTitle;
-    private RelativeLayout rlSleepButton;
-    private RelativeLayout rlDiaperButton;
-    private RelativeLayout rlNursingButton;
-    private RelativeLayout rlMeasurementButton;
+    private String title;
+    private RelativeLayout sleepQuickButton;
+    private RelativeLayout diaperQuickButton;
+    private RelativeLayout nursingQuickButton;
+    private RelativeLayout measurementQuickButton;
     private ObserveableListView historyList;
-    private ActionBarDropDownAdapter mSpinnerAdapter;
+    private ActionBarDropDownAdapter spinnerAdapter;
     private Bundle previousQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         mNavigationFragment = (NavigationFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle().toString();
-
-        // Set up the drawer.
+        title = getTitle().toString();
         mNavigationFragment.setUp(R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-
         String[] items = getResources().getStringArray(R.array.time_selection);
-        mSpinnerAdapter = new ActionBarDropDownAdapter(this, R.layout.action_bar_spinner,
-                                                                  items,"");
-
-        getActionBar().setListNavigationCallbacks(mSpinnerAdapter, this);
-
+        spinnerAdapter = new ActionBarDropDownAdapter(this, R.layout.action_bar_spinner, items,"");
+        getActionBar().setListNavigationCallbacks(spinnerAdapter, this);
     }
 
     @Override
@@ -113,20 +106,18 @@ public class HomeActivity extends FragmentActivity
 
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
-        // find quick action button in new inflated view
-        rlSleepButton = (RelativeLayout) findViewById(R.id.quick_button_sleep);
-        rlNursingButton = (RelativeLayout) findViewById(R.id.quick_button_nursing);
-        rlDiaperButton = (RelativeLayout) findViewById(R.id.quick_button_diaper);
-        rlMeasurementButton = (RelativeLayout) findViewById(R.id.quick_button_measurement);
+        sleepQuickButton = (RelativeLayout) findViewById(R.id.quick_button_sleep);
+        nursingQuickButton = (RelativeLayout) findViewById(R.id.quick_button_nursing);
+        diaperQuickButton = (RelativeLayout) findViewById(R.id.quick_button_diaper);
+        measurementQuickButton = (RelativeLayout) findViewById(R.id.quick_button_measurement);
         historyList = (ObserveableListView) findViewById(R.id.activity_list);
-
-        if (rlDiaperButton != null && rlNursingButton != null
-                && rlSleepButton != null && historyList != null) {
+        if (diaperQuickButton != null && nursingQuickButton != null
+                && sleepQuickButton != null && historyList != null) {
             // if it's not there don't attach any callback
-            rlSleepButton.setOnClickListener(this);
-            rlNursingButton.setOnClickListener(this);
-            rlDiaperButton.setOnClickListener(this);
-            rlMeasurementButton.setOnClickListener(this);
+            sleepQuickButton.setOnClickListener(this);
+            nursingQuickButton.setOnClickListener(this);
+            diaperQuickButton.setOnClickListener(this);
+            measurementQuickButton.setOnClickListener(this);
             historyList.setCallbacks(this);
         }
         return super.onCreateView(name, context, attrs);
@@ -134,7 +125,6 @@ public class HomeActivity extends FragmentActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position, int calibration) {
-
         currentFragment = position - calibration;
         switchFragment(currentFragment,previousQuery);
     }
@@ -143,7 +133,7 @@ public class HomeActivity extends FragmentActivity
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         actionBar.setDisplayShowTitleEnabled(false);
-        mSpinnerAdapter.setTitleAndNotify(mTitle);
+        spinnerAdapter.setTitleAndNotify(title);
     }
 
     @Override
@@ -154,7 +144,6 @@ public class HomeActivity extends FragmentActivity
         switch (item.getItemId()) {
             case R.id.action_settings:
                 return true;
-
             case R.id.action_new_baby:
                 handleNewBaby();
                 return true;
@@ -168,15 +157,12 @@ public class HomeActivity extends FragmentActivity
             case R.id.quick_button_sleep:
                 handleQuickSleep();
                 break;
-
             case R.id.quick_button_nursing:
                 handleQuickNursing();
                 break;
-
             case R.id.quick_button_diaper:
                 handleQuickDiaper();
                 break;
-
             case R.id.quick_button_measurement:
                 handleQuickMeasurement();
                 break;
@@ -201,13 +187,11 @@ public class HomeActivity extends FragmentActivity
 
     private void handleQuickSleep() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
         // Inform the stopwatch to start counting for sleep
         Bundle bundle = new Bundle();
         bundle.putString(ACTIVITY_TRIGGER_KEY, Trigger.SLEEP.getTitle());
         StopwatchFragment frStopWatch = StopwatchFragment.getInstance();
         frStopWatch.setArguments(bundle);
-
         fragmentTransaction.replace(R.id.home_activity_container, frStopWatch);
         fragmentTransaction.commit();
     }
@@ -252,15 +236,12 @@ public class HomeActivity extends FragmentActivity
     @Override
     public void onNursingChoiceSelected(int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            // get input data passed from dialog
             Bundle bundle = data.getExtras();
-            // add extra key to notify stopwatch which activity triggers it
             bundle.putString(HomeActivity.ACTIVITY_TRIGGER_KEY, HomeActivity.Trigger.NURSING.getTitle());
-            StopwatchFragment frStopWatch = StopwatchFragment.getInstance();
-            frStopWatch.setArguments(bundle);
-
+            StopwatchFragment stopwatchFragment = StopwatchFragment.getInstance();
+            stopwatchFragment.setArguments(bundle);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.home_activity_container, frStopWatch);
+            fragmentTransaction.replace(R.id.home_activity_container, stopwatchFragment);
             fragmentTransaction.commit();
         }
     }
@@ -269,15 +250,13 @@ public class HomeActivity extends FragmentActivity
     public void onDiaperChoiceSelected(int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             Calendar currentTime = Calendar.getInstance();
-            Bundle recData = data.getExtras();
-            String diaperType = (String) recData.get(Diaper.DIAPER_TYPE_KEY);
-
+            Bundle recordData = data.getExtras();
+            String diaperType = (String) recordData.get(Diaper.DIAPER_TYPE_KEY);
             Diaper diaper = new Diaper();
-            diaper.setBabyID(ActiveContext.getActiveBaby(this).getID());
+            diaper.setBabyID(ActiveContext.getActiveBaby(this).getActivityId());
             diaper.setTimeStamp(String.valueOf(currentTime.getTimeInMillis()));
             diaper.setType(Diaper.DiaperType.valueOf(diaperType));
             diaper.insert(this);
-
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.home_activity_container, TimelineFragment.getInstance());
             fragmentTransaction.commit();
@@ -288,15 +267,13 @@ public class HomeActivity extends FragmentActivity
     public void onMeasurementChoiceSelected(int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             Calendar currentTime = Calendar.getInstance();
-            Bundle recData = data.getExtras();
-
+            Bundle recordData = data.getExtras();
             Measurement measurement = new Measurement();
-            measurement.setBabyID(ActiveContext.getActiveBaby(this).getID());
+            measurement.setBabyID(ActiveContext.getActiveBaby(this).getActivityId());
             measurement.setTimeStamp(String.valueOf(currentTime.getTimeInMillis()));
-            measurement.setHeight(Float.valueOf(recData.getString(Measurement.HEIGHT_KEY)));
-            measurement.setWeight(Float.valueOf(recData.getString(Measurement.WEIGHT_KEY)));
+            measurement.setHeight(Float.valueOf(recordData.getString(Measurement.HEIGHT_KEY)));
+            measurement.setWeight(Float.valueOf(recordData.getString(Measurement.WEIGHT_KEY)));
             measurement.insert(this);
-
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.home_activity_container, TimelineFragment.getInstance());
             fragmentTransaction.commit();
@@ -307,13 +284,10 @@ public class HomeActivity extends FragmentActivity
         SLEEP("Sleep"),
         NURSING("Nursing"),
         DIAPER("Diaper");
-
         private String title;
-
         Trigger(String title) {
             this.title = title;
         }
-
         public String getTitle() {
             return this.title;
         }
@@ -327,13 +301,10 @@ public class HomeActivity extends FragmentActivity
         FILTER_THIS_WEEK("filter_this_week"),
         FILTER_THIS_MONTH("filter_this_month"),
         FILTER_ALL("filter_all");
-
         private String title;
-
         TimeFilter(String title) {
             this.title = title;
         }
-
         public String getTitle() {
             return this.title;
         }
@@ -343,97 +314,83 @@ public class HomeActivity extends FragmentActivity
     @Override
     public boolean onNavigationItemSelected(int position, long itemId){
         //TODO: change query of active fragment
-        Bundle bTimeSelection = createTimeFilter(position);
-        previousQuery = bTimeSelection;
-        switchFragment(currentFragment,bTimeSelection);
-
+        Bundle timeFilterBundler = createTimeFilter(position);
+        previousQuery = timeFilterBundler;
+        switchFragment(currentFragment, timeFilterBundler);
         return true;
     }
 
-    private void switchFragment(int iFragment, Bundle arg){
-        // update the main content by replacing fragments
+    private void switchFragment(int fragmentPosition, Bundle argument){
         FragmentManager fragmentManager = getSupportFragmentManager();
-
-        // fragment module
-        Fragment module = null;
-        switch (iFragment) {
+        Fragment fragment = null;
+        switch (fragmentPosition) {
             case POSITION_HOME_FRAGMENT:
-                module = TimelineFragment.getInstance();
-                mTitle = getString(R.string.title_timeline_fragment);
+                fragment = TimelineFragment.getInstance();
+                title = getString(R.string.title_timeline_fragment);
                 break;
             case POSITION_NURSING_FRAGMENT:
-                module = NursingFragment.getInstance();
-                mTitle = getString(R.string.title_nursing_fragment);
+                fragment = NursingFragment.getInstance();
+                title = getString(R.string.title_nursing_fragment);
                 break;
             case POSITION_DIAPER_FRAGMENT:
-                module = DiaperFragment.getInstance();
-                mTitle = getString(R.string.title_diaper_fragment);
+                fragment = DiaperFragment.getInstance();
+                title = getString(R.string.title_diaper_fragment);
                 break;
             case POSITION_SLEEP_FRAGMENT:
-                module = SleepFragment.getInstance();
-                mTitle = getString(R.string.title_sleep_fragment);
+                fragment = SleepFragment.getInstance();
+                title = getString(R.string.title_sleep_fragment);
                 break;
             case POSITION_MEASUREMENT_FRAGMENT:
-                module = MeasurementFragment.getInstance();
-                mTitle = getString(R.string.title_measure_fragment);
+                fragment = MeasurementFragment.getInstance();
+                title = getString(R.string.title_measure_fragment);
         }
-
-        if (module != null) {
-            module.setArguments(arg);
+        if (fragment != null) {
+            fragment.setArguments(argument);
             fragmentManager.beginTransaction()
-                    .replace(R.id.home_activity_container, module)
+                    .replace(R.id.home_activity_container, fragment)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     .commit();
         }
     }
 
     private Bundle createTimeFilter (int position){
-
         /**
          * as stated here: http://developer.android.com/reference/java/util/Calendar.html
          * 24:00:00 "belongs" to the following day.
          * That is, 23:59 on Dec 31, 1969 < 24:00 on Jan 1, 1970 < 24:01:00 on Jan 1, 1970
          * form a sequence of three consecutive minutes in time.
          */
-        Calendar cStart = Calendar.getInstance();
-        String sEnd = String.valueOf(cStart.getTimeInMillis());
-        String sStart;
-        String sType = null;
-        long lOneWeekDuration = TimeUnit.DAYS.toMillis(7);
-
-        cStart.set(Calendar.HOUR_OF_DAY, 0);
-        cStart.set(Calendar.MINUTE, 0);
-        cStart.set(Calendar.SECOND, 0);
-        cStart.set(Calendar.MILLISECOND, 0);
-
+        Calendar startCalendar = Calendar.getInstance();
+        String endTime = String.valueOf(startCalendar.getTimeInMillis());
+        String startTime;
+        String timeFilterType = null;
+        long oneWeekDuration = TimeUnit.DAYS.toMillis(7);
+        startCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        startCalendar.set(Calendar.MINUTE, 0);
+        startCalendar.set(Calendar.SECOND, 0);
+        startCalendar.set(Calendar.MILLISECOND, 0);
         switch (position){
-            case TIMEFILTER_POSITION_TODAY:
-                sType = TimeFilter.FILTER_TODAY.getTitle();
+            case TIME_FILTER_POSITION_TODAY:
+                timeFilterType = TimeFilter.FILTER_TODAY.getTitle();
                 break;
-            case TIMEFILTER_POSITION_THIS_WEEK:
-                cStart.setTimeInMillis(cStart.getTimeInMillis() - lOneWeekDuration);
-                sType = TimeFilter.FILTER_THIS_WEEK.getTitle();
+            case TIME_FILTER_POSITION_THIS_WEEK:
+                startCalendar.setTimeInMillis(startCalendar.getTimeInMillis() - oneWeekDuration);
+                timeFilterType = TimeFilter.FILTER_THIS_WEEK.getTitle();
                 break;
-            case TIMEFILTER_POSITION_THIS_MONTH:
-                cStart.set(Calendar.DAY_OF_MONTH, 1);
-                sType = TimeFilter.FILTER_THIS_MONTH.getTitle();
+            case TIME_FILTER_POSITION_THIS_MONTH:
+                startCalendar.set(Calendar.DAY_OF_MONTH, 1);
+                timeFilterType = TimeFilter.FILTER_THIS_MONTH.getTitle();
                 break;
-            case TIMEFILTER_POSITION_ALL:
-                cStart.set(Calendar.YEAR,1); //year 1?
-                sType = TimeFilter.FILTER_ALL.getTitle();
+            case TIME_FILTER_POSITION_ALL:
+                startCalendar.set(Calendar.YEAR, 1); //year 1?
+                timeFilterType = TimeFilter.FILTER_ALL.getTitle();
                 break;
         }
-
-        /*
-        Log.i("__Debug",
-                " cStart = " + FormatUtils.fmtDate(this, String.valueOf(cStart.getTimeInMillis())));
-        */
-
-        sStart = String.valueOf(cStart.getTimeInMillis());
-        Bundle bTimeSelection  = new Bundle();
-        bTimeSelection.putString(TimeFilter.START.getTitle(),sStart);
-        bTimeSelection.putString(TimeFilter.END.getTitle(),sEnd);
-        bTimeSelection.putString(TimeFilter.FILTER_TYPE.getTitle(), sType);
-        return bTimeSelection;
+        startTime = String.valueOf(startCalendar.getTimeInMillis());
+        Bundle timeFilterBundle  = new Bundle();
+        timeFilterBundle.putString(TimeFilter.START.getTitle(), startTime);
+        timeFilterBundle.putString(TimeFilter.END.getTitle(), endTime);
+        timeFilterBundle.putString(TimeFilter.FILTER_TYPE.getTitle(), timeFilterType);
+        return timeFilterBundle;
     }
 }

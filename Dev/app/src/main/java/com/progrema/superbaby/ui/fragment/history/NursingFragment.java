@@ -99,7 +99,7 @@ public class NursingFragment extends HistoryFragment implements LoaderManager.Lo
     public Loader<Cursor> onCreateLoader(int iLoaderId, Bundle bBundle) {
 
         String[] babyIdArg = {
-                String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID())
+                String.valueOf(ActiveContext.getActiveBaby(getActivity()).getActivityId())
         };
 
         String[] aLastSideProjection = {

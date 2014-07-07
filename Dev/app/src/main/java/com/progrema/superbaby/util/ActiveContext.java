@@ -56,7 +56,7 @@ public class ActiveContext {
         SharedPreferences setting = context.getSharedPreferences(PREF_CONTEXT, 0);
         Baby baby = new Baby();
 
-        baby.setID(setting.getLong(PREF_BABY_ID, 0));
+        baby.setActivityId(setting.getLong(PREF_BABY_ID, 0));
         baby.setName(setting.getString(PREF_BABY_NAME, ""));
         baby.setBirthday(setting.getString(PREF_BABY_BIRTHDAY, ""));
         if (setting.getString(PREF_BABY_SEX, "").equals(BaseActor.Sex.MALE.getTitle())) {
@@ -98,7 +98,7 @@ public class ActiveContext {
         SharedPreferences setting = context.getSharedPreferences(PREF_CONTEXT, 0);
         User user = new User();
 
-        user.setID(setting.getLong(PREF_USER_ID, 0));
+        user.setActivityId(setting.getLong(PREF_USER_ID, 0));
         user.setName(setting.getString(PREF_USER_NAME, ""));
         return user;
     }

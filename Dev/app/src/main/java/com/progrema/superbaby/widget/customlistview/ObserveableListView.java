@@ -114,7 +114,7 @@ public class ObserveableListView extends ListView {
                     // Remember where we started (for dragging)
                     fLastTouchX = fCoordinateX;
                     fLastTouchY = fCoordinateY;
-                    // Save the ID of this pointer (for dragging)
+                    // Save the activityId of this pointer (for dragging)
                     iActivePointerId = MotionEventCompat.getPointerId(ev, 0);
                     break;
                 }

@@ -7,6 +7,7 @@ import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 
 public class Measurement extends BaseActivity {
+
     public final static String HEIGHT_KEY = "height";
     public final static String WEIGHT_KEY = "weight";
     private float height;
@@ -41,9 +42,8 @@ public class Measurement extends BaseActivity {
     @Override
     public void delete(Context context) {
         String [] selectionArgs = {
-                String.valueOf(ActiveContext.getActiveBaby(context).getID()),
-                String.valueOf(getID())};
-
+                String.valueOf(ActiveContext.getActiveBaby(context).getActivityId()),
+                String.valueOf(getActivityId())};
         context.getContentResolver().delete(
                 BabyLogContract.Measurement.CONTENT_URI,
                 "baby_id = ? AND _id = ?",

@@ -202,7 +202,7 @@ public class HistoryFragment extends Fragment {
         }
 
         String[] aTimeFilterArg = {
-                String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID()),
+                String.valueOf(ActiveContext.getActiveBaby(getActivity()).getActivityId()),
                 sStart,
                 sEnd
         };

@@ -5,7 +5,8 @@ import android.os.Parcel;
 import java.util.Calendar;
 
 abstract public class BaseActivity extends BaseModel {
-    protected long babyID; //owner of the activity
+
+    protected long babyID;
     protected String timeStamp;
 
     public BaseActivity() {

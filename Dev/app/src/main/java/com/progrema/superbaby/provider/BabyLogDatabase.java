@@ -26,7 +26,7 @@ public class BabyLogDatabase extends SQLiteOpenHelper {
     public final static String JOIN_ALL = ("SELECT "
             + Tables.ACTIVITY + "." + BaseColumns._ID
             + " , " + Tables.ACTIVITY + "." + ActivityColumns.BABY_ID
-            + " , " + ActivityColumns.ACTIVITY_TYPE
+            + " , " + Tables.ACTIVITY + "." + ActivityColumns.ACTIVITY_TYPE
             + " , " + Tables.ACTIVITY + "." + ActivityColumns.TIMESTAMP
             + " , " + Tables.DIAPER + "." + Diaper.TYPE
             + " , " + Tables.SLEEP + "." + Sleep.DURATION
@@ -49,7 +49,6 @@ public class BabyLogDatabase extends SQLiteOpenHelper {
      * carefully update onUpgrade() when bumping database versions to make
      * sure user data is saved.
      */
-
     private static final int VER_2014_01 = 100; // 1.0
     private static final int DATABASE_VERSION = VER_2014_01;
     private final Context mContext;

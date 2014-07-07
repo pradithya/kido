@@ -57,7 +57,7 @@ public class SleepAdapter extends CursorAdapter implements EntryAdapter {
     public void storeCursorData(Cursor cursor) {
         timestamp = cursor.getString(BabyLogContract.Sleep.Query.OFFSET_TIMESTAMP);
         duration = cursor.getString(BabyLogContract.Sleep.Query.OFFSET_DURATION);
-        entryTag = cursor.getString(BabyLogContract.Sleep.Query.OFFSET_ID);
+        entryTag = cursor.getString(BabyLogContract.Sleep.Query.OFFSET_ACTIVITY_ID);
     }
 
     @Override
@@ -105,7 +105,7 @@ public class SleepAdapter extends CursorAdapter implements EntryAdapter {
     @Override
     public void deleteEntry(Context context, View entry) {
         Sleep sleep = new Sleep();
-        sleep.setID(Long.valueOf((String) entry.getTag()));
+        sleep.setActivityId(Long.valueOf((String) entry.getTag()));
         sleep.delete(context);
     }
 

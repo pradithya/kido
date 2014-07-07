@@ -18,45 +18,22 @@ public class Baby extends BaseActor {
         public Baby createFromParcel(Parcel parcel) {
             return new Baby(parcel);
         }
-
         @Override
         public Baby[] newArray(int size) {
             return new Baby[size];
         }
     };
 
-    /**
-     * Baby privates data
-     */
     private Calendar birthday;
 
-    /**
-     * Standard basic constructor for non-parcel
-     * object creation
-     */
     public Baby() {
-        /** empty constructor */
     }
 
-    /**
-     * Constructor to use when re-constructing object
-     * from a parcel
-     *
-     * @param parcel parcel instance
-     */
     public Baby(Parcel parcel) {
         readFromParcel(parcel);
     }
 
-    /**
-     * Called from constructor to create this object from parcel
-     *
-     * @param parcel parcel from which to re-create object
-     */
     public void readFromParcel(Parcel parcel) {
-
-        // read each field parcel the order that it
-        // was written to the parcel
         super.readFromParcel(parcel);
         birthday = Calendar.getInstance();
         birthday.setTimeInMillis(Long.valueOf(parcel.readString()));
@@ -69,16 +46,10 @@ public class Baby extends BaseActor {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        // write each field into the parcel
         super.writeToParcel(parcel, i);
-        parcel.writeString(String.valueOf(birthday.getTimeInMillis())); //in timeinmillis format
+        parcel.writeString(String.valueOf(birthday.getTimeInMillis()));
     }
 
-    /**
-     * Get baby birthday in string format
-     *
-     * @return baby birthday in string format
-     */
     public String getBirthdayInString() {
         return String.valueOf(birthday.getTimeInMillis());
     }
@@ -92,30 +63,15 @@ public class Baby extends BaseActor {
         return FormatUtils.fmtDate(context, getBirthdayInString());
     }
 
-    /**
-     * Get calendar object describing baby birthday
-     *
-     * @return calendar object
-     */
     public Calendar getBirthdayInCalendar() {
         return birthday;
     }
 
-    /**
-     * set baby birthday in string format
-     *
-     * @param birthday baby birthday
-     */
     public void setBirthday(String birthday) {
         this.birthday = Calendar.getInstance();
         this.birthday.setTimeInMillis(Long.valueOf(birthday));
     }
 
-    /**
-     * set baby birthday in Date object
-     *
-     * @param dateOfBirth Date object of baby birthday
-     */
     public void setBirthday(Date dateOfBirth) {
         birthday.setTime(dateOfBirth);
     }
@@ -127,8 +83,7 @@ public class Baby extends BaseActor {
         values.put(BabyLogContract.Baby.NAME, getName());
         values.put(BabyLogContract.Baby.BIRTHDAY, getBirthdayInString());
         values.put(BabyLogContract.Baby.SEX, getSex().getTitle());
-        values.put(BabyLogContract.UserBabyMap.USER_ID, user.getID());
-
+        values.put(BabyLogContract.UserBabyMap.USER_ID, user.getActivityId());
         context.getContentResolver().insert(BabyLogContract.Baby.CONTENT_URI, values);
     }
 

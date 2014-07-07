@@ -173,13 +173,13 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
         if (sourceTrigger.compareTo(HomeActivity.Trigger.SLEEP.getTitle()) == 0) {
             Sleep sleep = new Sleep();
             sleep.setTimeStamp(String.valueOf(startTime.getTimeInMillis()));
-            sleep.setBabyID(ActiveContext.getActiveBaby(getActivity()).getID());
+            sleep.setBabyID(ActiveContext.getActiveBaby(getActivity()).getActivityId());
             sleep.setDuration(TimeUnit.SECONDS.toMillis(duration));
             sleep.insert(getActivity());
         } else if (sourceTrigger.compareTo(HomeActivity.Trigger.NURSING.getTitle()) == 0) {
             Nursing nursing = new Nursing();
             nursing.setTimeStamp(String.valueOf(startTime.getTimeInMillis()));
-            nursing.setBabyID(ActiveContext.getActiveBaby(getActivity()).getID());
+            nursing.setBabyID(ActiveContext.getActiveBaby(getActivity()).getActivityId());
             if (isTwoStopWatch) {
                 if (duration != 0) {
                     nursing.setDuration(TimeUnit.SECONDS.toMillis(duration));

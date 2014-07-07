@@ -62,7 +62,7 @@ public class NursingAdapter extends CursorAdapter implements EntryAdapter {
         type = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_SIDES);
         duration = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_DURATION);
         volume = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_VOLUME);
-        entryTag = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_ID);
+        entryTag = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_ACTIVITY_ID);
     }
 
     @Override
@@ -109,7 +109,7 @@ public class NursingAdapter extends CursorAdapter implements EntryAdapter {
     @Override
     public void deleteEntry(Context context, View entry) {
         Nursing nursing = new Nursing();
-        nursing.setID(Long.valueOf((String) entry.getTag()));
+        nursing.setActivityId(Long.valueOf((String) entry.getTag()));
         nursing.delete(context);
     }
 

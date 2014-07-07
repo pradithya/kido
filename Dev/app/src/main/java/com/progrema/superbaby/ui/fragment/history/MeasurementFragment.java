@@ -73,7 +73,7 @@ public class MeasurementFragment extends Fragment implements LoaderManager.Loade
         }
 
         String[] aTimeFilterArg = {
-                String.valueOf(ActiveContext.getActiveBaby(getActivity()).getID()),
+                String.valueOf(ActiveContext.getActiveBaby(getActivity()).getActivityId()),
                 sStart,
                 sEnd
         };
