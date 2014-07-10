@@ -17,7 +17,9 @@ import android.widget.TextView;
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.EntryAdapter;
 import com.progrema.superbaby.models.Diaper;
+import com.progrema.superbaby.models.Measurement;
 import com.progrema.superbaby.models.Nursing;
+import com.progrema.superbaby.models.Sleep;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
@@ -32,7 +34,7 @@ public class TimelineAdapter extends CursorAdapter implements EntryAdapter{
     private String nursingVolume;
     private String heightMeasurement;
     private String weightMeasurement;
-    private String entryTag;
+    private Cursor entryTag;
     private TextView timeHandler;
     private TextView firstHandler;
     private TextView secondHandler;
@@ -76,7 +78,7 @@ public class TimelineAdapter extends CursorAdapter implements EntryAdapter{
         nursingVolume = cursor.getString(BabyLogContract.Activity.Query.OFFSET_NURSING_VOLUME);
         heightMeasurement = cursor.getString(BabyLogContract.Activity.Query.OFFSET_MEASUREMENT_HEIGHT);
         weightMeasurement = cursor.getString(BabyLogContract.Activity.Query.OFFSET_MEASUREMENT_WEIGHT);
-        entryTag = cursor.getString(BabyLogContract.Activity.Query.OFFSET_ID);
+        entryTag = cursor;
     }
 
     @Override
@@ -101,9 +103,9 @@ public class TimelineAdapter extends CursorAdapter implements EntryAdapter{
                                     @Override
                                     public boolean onMenuItemClick(MenuItem item) {
                                         if (item.getTitle().equals("Edit")) {
-                                            deleteEntry(context, menuHandler);
-                                        } else if (item.getTitle().equals("Delete")) {
                                             editEntry(context, menuHandler);
+                                        } else if (item.getTitle().equals("Delete")) {
+                                            deleteEntry(context, menuHandler);
                                         }
                                         return false;
                                     }
@@ -120,7 +122,42 @@ public class TimelineAdapter extends CursorAdapter implements EntryAdapter{
 
     @Override
     public void deleteEntry(Context context, View entry) {
+        Cursor cursor = (Cursor) entry.getTag();
+        String id = cursor.getString(BabyLogContract.Activity.Query.OFFSET_ID);
+        String type = cursor.getString(BabyLogContract.Activity.Query.OFFSET_ACTIVITY_TYPE);
+        if (type.equals(BabyLogContract.Activity.TYPE_SLEEP)) {
+            deleteSleepEntry(context, id);
+        } else if (type.equals(BabyLogContract.Activity.TYPE_DIAPER)) {
+            deleteDiaperEntry(context, id);
+        } else if (type.equals(BabyLogContract.Activity.TYPE_NURSING)) {
+            deleteNursingEntry(context, id);
+        } else if (type.equals(BabyLogContract.Activity.TYPE_MEASUREMENT)) {
+            deleteMeasurementEntry(context, id);
+        }
+    }
 
+    private void deleteSleepEntry(Context context, String id) {
+        Sleep sleep = new Sleep();
+        sleep.setActivityId(Long.valueOf(id));
+        sleep.delete(context);
+    }
+
+    private void deleteDiaperEntry(Context context, String id) {
+        Diaper diaper = new Diaper();
+        diaper.setActivityId(Long.valueOf(id));
+        diaper.delete(context);
+    }
+
+    private void deleteNursingEntry(Context context, String id) {
+        Nursing nursing = new Nursing();
+        nursing.setActivityId(Long.valueOf(id));
+        nursing.delete(context);
+    }
+
+    private void deleteMeasurementEntry(Context context, String id) {
+        Measurement measurement = new Measurement();
+        measurement.setActivityId(Long.valueOf(id));
+        measurement.delete(context);
     }
 
     @Override
