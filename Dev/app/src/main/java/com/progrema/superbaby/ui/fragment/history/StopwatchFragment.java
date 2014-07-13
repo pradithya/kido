@@ -22,8 +22,8 @@ import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 public class StopwatchFragment extends Fragment implements View.OnClickListener {
-    private Stopwatch stopwatch;
-    private Stopwatch stopwatch2;
+    private Stopwatch firstStopwatch;
+    private Stopwatch secondStopwatch;
     private Stopwatch activeStopWatch;
     private Stopwatch inActiveStopWatch;
     private TextView titleView;
@@ -89,25 +89,25 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
         doneButton.setOnClickListener(this);
         switchButton.setOnClickListener(this);
 
-        // get stopwatch & start
-        stopwatch = (Stopwatch) rootView.findViewById(R.id.chronometer_widget_a);
-        stopwatch2 = (Stopwatch) rootView.findViewById(R.id.chronometer_widget_b);
+        // get firstStopwatch & start
+        firstStopwatch = (Stopwatch) rootView.findViewById(R.id.chronometer_widget_a);
+        secondStopwatch = (Stopwatch) rootView.findViewById(R.id.chronometer_widget_b);
 
         if (isTwoStopWatch) {
             containerStopWatch2.setVisibility(View.VISIBLE);
             switchButton.setVisibility(View.VISIBLE);
 
             if (nursingType.equals(Nursing.NursingType.LEFT.getTitle())) {
-                activeStopWatch = stopwatch;
-                inActiveStopWatch = stopwatch2;
+                activeStopWatch = firstStopwatch;
+                inActiveStopWatch = secondStopwatch;
             } else {
-                activeStopWatch = stopwatch2;
-                inActiveStopWatch = stopwatch;
+                activeStopWatch = secondStopwatch;
+                inActiveStopWatch = firstStopwatch;
             }
         } else {
             containerStopWatch2.setVisibility(View.GONE);
             switchButton.setVisibility(View.GONE);
-            activeStopWatch = stopwatch;
+            activeStopWatch = firstStopwatch;
         }
 
         startTime = Calendar.getInstance();
@@ -161,52 +161,67 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
     }
 
     private void handleResetButton() {
-        stopwatch.reset();
-        stopwatch2.reset();
+        firstStopwatch.reset();
+        secondStopwatch.reset();
     }
 
     private void handleDoneButton() {
+
         activeStopWatch.stop();
-        long duration = stopwatch.getDuration();
-        long duration2 = stopwatch2.getDuration();
+        long firstDuration = firstStopwatch.getDuration();
+        long secondDuration = secondStopwatch.getDuration();
 
         if (sourceTrigger.compareTo(HomeActivity.Trigger.SLEEP.getTitle()) == 0) {
             Sleep sleep = new Sleep();
             sleep.setTimeStamp(String.valueOf(startTime.getTimeInMillis()));
             sleep.setBabyID(ActiveContext.getActiveBaby(getActivity()).getActivityId());
-            sleep.setDuration(TimeUnit.SECONDS.toMillis(duration));
+            sleep.setDuration(TimeUnit.SECONDS.toMillis(firstDuration));
             sleep.insert(getActivity());
+
+            // Go back to timeLine fragment
+            ActionBar actionBar = getActivity().getActionBar();
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+            actionBar.setDisplayShowTitleEnabled(false);
+
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.home_activity_container, SleepFragment.getInstance());
+            fragmentTransaction.commit();
+
         } else if (sourceTrigger.compareTo(HomeActivity.Trigger.NURSING.getTitle()) == 0) {
             Nursing nursing = new Nursing();
             nursing.setTimeStamp(String.valueOf(startTime.getTimeInMillis()));
             nursing.setBabyID(ActiveContext.getActiveBaby(getActivity()).getActivityId());
             if (isTwoStopWatch) {
-                if (duration != 0) {
-                    nursing.setDuration(TimeUnit.SECONDS.toMillis(duration));
+                if (firstDuration != 0) {
+                    nursing.setDuration(TimeUnit.SECONDS.toMillis(firstDuration));
                     nursing.setType(Nursing.NursingType.LEFT);
                     nursing.insert(getActivity());
                 }
-                if (duration2 != 0) {
-                    nursing.setDuration(TimeUnit.SECONDS.toMillis(duration2));
+                if (secondDuration != 0) {
+                    nursing.setDuration(TimeUnit.SECONDS.toMillis(secondDuration));
                     nursing.setType(Nursing.NursingType.RIGHT);
                     nursing.insert(getActivity());
                 }
             } else {
                 // formula
-                nursing.setDuration(TimeUnit.SECONDS.toMillis(duration));
+                nursing.setDuration(TimeUnit.SECONDS.toMillis(firstDuration));
                 nursing.setType(Nursing.NursingType.valueOf(nursingType));
                 nursing.setVolume(Long.parseLong(formulaVolume, 10));
                 nursing.insert(getActivity());
             }
-        }
-        // Go back to timeLine fragment
-        ActionBar actionBar = getActivity().getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-        actionBar.setDisplayShowTitleEnabled(false);
 
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.home_activity_container, TimelineFragment.getInstance());
-        fragmentTransaction.commit();
+            // Go back to timeLine fragment
+            ActionBar actionBar = getActivity().getActionBar();
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+            actionBar.setDisplayShowTitleEnabled(false);
+
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.home_activity_container, NursingFragment.getInstance());
+            fragmentTransaction.commit();
+
+        }
+
+
     }
 
 }

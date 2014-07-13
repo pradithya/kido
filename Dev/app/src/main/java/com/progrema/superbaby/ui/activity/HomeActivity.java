@@ -258,7 +258,7 @@ public class HomeActivity extends FragmentActivity
             diaper.setType(Diaper.DiaperType.valueOf(diaperType));
             diaper.insert(this);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.home_activity_container, TimelineFragment.getInstance());
+            fragmentTransaction.replace(R.id.home_activity_container, DiaperFragment.getInstance());
             fragmentTransaction.commit();
         }
     }
@@ -275,7 +275,7 @@ public class HomeActivity extends FragmentActivity
             measurement.setWeight(Float.valueOf(recordData.getString(Measurement.WEIGHT_KEY)));
             measurement.insert(this);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.home_activity_container, TimelineFragment.getInstance());
+            fragmentTransaction.replace(R.id.home_activity_container, MeasurementFragment.getInstance());
             fragmentTransaction.commit();
         }
     }
