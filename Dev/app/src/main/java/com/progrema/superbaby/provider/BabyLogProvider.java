@@ -59,26 +59,42 @@ public class BabyLogProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+
+        Cursor cursor;
         final SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
         final int match = sUriMatcher.match(uri);
 
         switch (match) {
             //TODO: improve the ugly code by not using rawQuery!!
             case ACTIVITY:
-                return db.rawQuery(BabyLogDatabase.JOIN_ALL, selectionArgs);
+                cursor = db.rawQuery(BabyLogDatabase.JOIN_ALL, selectionArgs);
+                cursor.setNotificationUri(getContext().getContentResolver(), uri);
+                return cursor;
             case NURSING_MAX_TIMESTAMP:
-                return db.rawQuery("SELECT MAX(timestamp) FROM nursing WHERE baby_id = ?", selectionArgs);
+                cursor = db.rawQuery("SELECT MAX(timestamp) FROM nursing WHERE baby_id = ?", selectionArgs);
+                cursor.setNotificationUri(getContext().getContentResolver(), uri);
+                return cursor;
             case NURSING_LAST_SIDE:
-                return db.rawQuery("SELECT sides FROM nursing WHERE baby_id = ? AND timestamp = (SELECT MAX(timestamp) FROM nursing)", selectionArgs);
+                cursor =  db.rawQuery("SELECT sides FROM nursing WHERE baby_id = ? AND timestamp = (SELECT MAX(timestamp) FROM nursing)", selectionArgs);
+                cursor.setNotificationUri(getContext().getContentResolver(), uri);
+                return cursor;
             case SLEEP_MAX_TIMESTAMP:
-                return db.rawQuery("SELECT MAX(timestamp) FROM sleep WHERE baby_id = ?", selectionArgs);
+                cursor = db.rawQuery("SELECT MAX(timestamp) FROM sleep WHERE baby_id = ?", selectionArgs);
+                cursor.setNotificationUri(getContext().getContentResolver(), uri);
+                return cursor;
             case DIAPER_MAX_TIMESTAMP:
-                return db.rawQuery("SELECT MAX(timestamp) FROM diaper WHERE baby_id = ?", selectionArgs);
+                cursor = db.rawQuery("SELECT MAX(timestamp) FROM diaper WHERE baby_id = ?", selectionArgs);
+                cursor.setNotificationUri(getContext().getContentResolver(), uri);
+                return cursor;
             case MEASUREMENT_MAX_TIMESTAMP:
-                return db.rawQuery("SELECT MAX(timestamp) FROM measurement WHERE baby_id = ?", selectionArgs);
+                cursor = db.rawQuery("SELECT MAX(timestamp) FROM measurement WHERE baby_id = ?", selectionArgs);
+                cursor.setNotificationUri(getContext().getContentResolver(), uri);
+                return cursor;
             default: {
                 final SelectionBuilder builder = buildSelection(uri, match);
-                return builder.where(selection, selectionArgs).query(db, projection, sortOrder);
+                cursor = builder.where(selection, selectionArgs).query(db, projection, sortOrder);
+                cursor.setNotificationUri(getContext().getContentResolver(), uri);
+                return cursor;
             }
         }
     }
