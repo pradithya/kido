@@ -2,6 +2,7 @@ package com.progrema.superbaby.ui.fragment.history;
 
 import android.app.ActionBar;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -23,9 +24,7 @@ import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 
 public class DiaperFragment extends HistoryFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    /*
-     * Loader Type used for asynchronous cursor loading
-     */
+    // Loader Type used for asynchronous cursor loading
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_LAST_WET = 1;
     private static final int LOADER_LAST_DRY = 2;
@@ -34,9 +33,7 @@ public class DiaperFragment extends HistoryFragment implements LoaderManager.Loa
     private static final int LOADER_TODAY_DRY = 5;
     private static final int LOADER_TODAY_MIXED = 6;
 
-    /*
-     * View Object for header information
-     */
+    //View Object for header information
     private TextView tvWetTotalToday;
     private TextView tvWetLast;
     private TextView tvDryTotalToday;
@@ -45,9 +42,7 @@ public class DiaperFragment extends HistoryFragment implements LoaderManager.Loa
     private TextView tvMixedLast;
     private PieGraph pgHeader;
 
-    /*
-     * List and adapter to manage list view
-     */
+    //List and adapter to manage list view
     private ObserveableListView olvDiaperHistoryList;
     private DiaperAdapter daAdapter;
 
@@ -173,7 +168,7 @@ public class DiaperFragment extends HistoryFragment implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<Cursor> lCursorLoader, Cursor cCursor) {
-        if (cCursor.getCount() > 0) {
+        if (cCursor.getCount() >= 0) {
             cCursor.moveToFirst();
             switch (lCursorLoader.getId()) {
                 case LOADER_LIST_VIEW:
@@ -181,45 +176,48 @@ public class DiaperFragment extends HistoryFragment implements LoaderManager.Loa
                     break;
 
                 case LOADER_LAST_WET:
-                    tvWetLast.setText(FormatUtils.fmtDiaperLastActivity(getActivity(),
-                            cCursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP)));
+                    try {
+                        tvWetLast.setText(FormatUtils.fmtDiaperLastActivity(getActivity(),
+                                cCursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP)));
+                    } catch (CursorIndexOutOfBoundsException exception) {
+                        tvWetLast.setText(getResources().getString(R.string.activity_last_initial));
+                    }
                     break;
 
                 case LOADER_LAST_DRY:
-                    tvDryLast.setText(FormatUtils.fmtDiaperLastActivity(getActivity(),
-                            cCursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP)));
+                    try {
+                        tvDryLast.setText(FormatUtils.fmtDiaperLastActivity(getActivity(),
+                                cCursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP)));
+                    } catch (CursorIndexOutOfBoundsException exception) {
+                        tvDryLast.setText(getResources().getString(R.string.activity_last_initial));
+                    }
                     break;
 
                 case LOADER_LAST_MIXED:
-                    tvMixedLast.setText(FormatUtils.fmtDiaperLastActivity(getActivity(),
-                            cCursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP)));
+                    try {
+                        tvMixedLast.setText(FormatUtils.fmtDiaperLastActivity(getActivity(),
+                                cCursor.getString(BabyLogContract.Diaper.Query.OFFSET_TIMESTAMP)));
+                    } catch (CursorIndexOutOfBoundsException exception) {
+                        tvMixedLast.setText(getResources().getString(R.string.activity_last_initial));
+                    }
                     break;
 
                 case LOADER_TODAY_WET:
                     tvWetTotalToday.setText(FormatUtils.fmtDiaperTotalToday(getActivity(),
                             String.valueOf(cCursor.getCount())));
-                    PieSlice WetPieSlice = new PieSlice();
-                    WetPieSlice.setColor(getResources().getColor(R.color.blue));
-                    WetPieSlice.setValue(cCursor.getCount());
-                    pgHeader.addSlice(WetPieSlice);
+                    drawPieChart();
                     break;
 
                 case LOADER_TODAY_DRY:
                     tvDryTotalToday.setText(FormatUtils.fmtDiaperTotalToday(getActivity(),
                             String.valueOf(cCursor.getCount())));
-                    PieSlice DryPieSlice = new PieSlice();
-                    DryPieSlice.setColor(getResources().getColor(R.color.orange));
-                    DryPieSlice.setValue(cCursor.getCount());
-                    pgHeader.addSlice(DryPieSlice);
+                    drawPieChart();
                     break;
 
                 case LOADER_TODAY_MIXED:
                     tvMixedTotalToday.setText(FormatUtils.fmtDiaperTotalToday(getActivity(),
                             String.valueOf(cCursor.getCount())));
-                    PieSlice MixedPieSlice = new PieSlice();
-                    MixedPieSlice.setColor(getResources().getColor(R.color.purple));
-                    MixedPieSlice.setValue(cCursor.getCount());
-                    pgHeader.addSlice(MixedPieSlice);
+                    drawPieChart();
                     break;
             }
         }
@@ -228,6 +226,37 @@ public class DiaperFragment extends HistoryFragment implements LoaderManager.Loa
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
         daAdapter.swapCursor(null);
+        drawPieChart();
+    }
+
+    private void drawPieChart() {
+
+        String wetString = tvWetTotalToday.getText().toString().replace(" times", "");
+        int wetNumber = Integer.parseInt(wetString);
+
+        String dryString = tvDryTotalToday.getText().toString().replace(" times", "");
+        int dryNumber = Integer.parseInt(dryString);
+
+        String mixString = tvMixedTotalToday.getText().toString().replace(" times", "");
+        int mixNumber = Integer.parseInt(mixString);
+
+        pgHeader.removeSlices();
+
+        PieSlice WetPieSlice = new PieSlice();
+        WetPieSlice.setColor(getResources().getColor(R.color.blue));
+        WetPieSlice.setValue(wetNumber);
+        pgHeader.addSlice(WetPieSlice);
+
+        PieSlice DryPieSlice = new PieSlice();
+        DryPieSlice.setColor(getResources().getColor(R.color.orange));
+        DryPieSlice.setValue(dryNumber);
+        pgHeader.addSlice(DryPieSlice);
+
+        PieSlice MixedPieSlice = new PieSlice();
+        MixedPieSlice.setColor(getResources().getColor(R.color.purple));
+        MixedPieSlice.setValue(mixNumber);
+        pgHeader.addSlice(MixedPieSlice);
+
     }
 
 }

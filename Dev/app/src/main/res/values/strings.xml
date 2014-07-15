@@ -72,7 +72,7 @@
     <string name="total_activity_number">{value} times</string>
     <string name="total_activity_number_initial">0 times</string>
     <string name="activity_last">{value}</string>
-    <string name="activity_last_initial">0 minutes ago</string>
+    <string name="activity_last_initial">No data</string>
 
     <!--warning message-->
     <string name="ok_message">ok</string>
