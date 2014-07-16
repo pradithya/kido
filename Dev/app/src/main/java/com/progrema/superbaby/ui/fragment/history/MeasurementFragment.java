@@ -23,78 +23,86 @@ import java.util.Calendar;
 public class MeasurementFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int LOADER_LIST_VIEW = 0;
-    private ObserveableListView olvMeasurementHistoryList;
-    private MeasurementAdapter maAdapter;
+    private ObserveableListView measurementHistoryList;
+    private MeasurementAdapter adapter;
+    private String timeFilterStart;
+    private String timeFilterEnd;
 
     public static MeasurementFragment getInstance() {
         return new MeasurementFragment();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // inflate fragment layout
-        View vRoot = inflater.inflate(R.layout.fragment_measurement, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View root = prepareFragment(inflater, container);
+        prepareListView(root);
+        prepareLoaderManager();
+        return root;
+    }
 
-        // set action bar icon and title
-        ActionBar abActionBar = getActivity().getActionBar();
-        abActionBar.setIcon(getResources().getDrawable(R.drawable.ic_measurement_top));
+    private View prepareFragment(LayoutInflater inflater, ViewGroup container) {
+        View root = inflater.inflate(R.layout.fragment_measurement, container, false);
+        ActionBar actionBar = getActivity().getActionBar();
+        actionBar.setIcon(getResources().getDrawable(R.drawable.ic_measurement_top));
+        return root;
+    }
 
-        // set adapter to list view
-        olvMeasurementHistoryList = (ObserveableListView) vRoot.findViewById(R.id.activity_list);
-        maAdapter = new MeasurementAdapter(getActivity(), null, 0);
-        olvMeasurementHistoryList.setAdapter(maAdapter);
+    private void prepareListView(View root) {
+        measurementHistoryList = (ObserveableListView) root.findViewById(R.id.activity_list);
+        adapter = new MeasurementAdapter(getActivity(), null, 0);
+        measurementHistoryList.setAdapter(adapter);
+    }
 
-        // prepare loader
-        LoaderManager lmLoaderManager = getLoaderManager();
-        lmLoaderManager.initLoader(LOADER_LIST_VIEW, getArguments(), this);
-        return vRoot;
+    private void prepareLoaderManager() {
+        LoaderManager loaderManager = getLoaderManager();
+        loaderManager.initLoader(LOADER_LIST_VIEW, getArguments(), this);
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle bBundle) {
-
-        String sStart;
-        String sEnd;
-
-        if (bBundle != null) {
-            sStart = bBundle.getString(HomeActivity.TimeFilter.START.getTitle());
-            sEnd = bBundle.getString(HomeActivity.TimeFilter.END.getTitle());
-
-        } else {
-            Calendar cStart = Calendar.getInstance();
-            sEnd = String.valueOf(cStart.getTimeInMillis()); //now, for now
-
-            cStart.set(Calendar.HOUR_OF_DAY, 0);
-            cStart.set(Calendar.MINUTE, 0);
-            cStart.set(Calendar.SECOND, 0);
-            cStart.set(Calendar.MILLISECOND, 0);
-            sStart = String.valueOf(cStart.getTimeInMillis());
-        }
-
-        String[] aTimeFilterArg = {
-                String.valueOf(ActiveContext.getActiveBaby(getActivity()).getActivityId()),
-                sStart,
-                sEnd
-        };
-
+    public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
+        String[] timeFilter;
+        calculateFilterPeriod(bundle);
+        timeFilter = buildTimeFilter();
         return new CursorLoader(getActivity(), BabyLogContract.Measurement.CONTENT_URI,
                 BabyLogContract.Measurement.Query.PROJECTION,
                 "baby_id = ? AND timestamp >= ? AND timestamp <= ?",
-                aTimeFilterArg,
+                timeFilter,
                 BabyLogContract.Measurement.Query.SORT_BY_TIMESTAMP_DESC);
+    }
+
+    private void calculateFilterPeriod(Bundle bundle) {
+        if (bundle != null) {
+            timeFilterStart = bundle.getString(HomeActivity.TimeFilter.START.getTitle());
+            timeFilterEnd = bundle.getString(HomeActivity.TimeFilter.END.getTitle());
+        } else {
+            Calendar calendarStart = Calendar.getInstance();
+            timeFilterEnd = String.valueOf(calendarStart.getTimeInMillis());
+            calendarStart.set(Calendar.HOUR_OF_DAY, 0);
+            calendarStart.set(Calendar.MINUTE, 0);
+            calendarStart.set(Calendar.SECOND, 0);
+            calendarStart.set(Calendar.MILLISECOND, 0);
+            timeFilterStart = String.valueOf(calendarStart.getTimeInMillis());
+        }
+    }
+
+    private String[] buildTimeFilter() {
+        String[] timeFilter = {
+                String.valueOf(ActiveContext.getActiveBaby(getActivity()).getActivityId()),
+                timeFilterStart, timeFilterEnd
+        };
+        return timeFilter;
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
-            maAdapter.swapCursor(cursor);
+            adapter.swapCursor(cursor);
         }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        maAdapter.swapCursor(null);
+        adapter.swapCursor(null);
     }
 }

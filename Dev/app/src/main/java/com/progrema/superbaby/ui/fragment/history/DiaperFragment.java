@@ -24,7 +24,7 @@ import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 
 public class DiaperFragment extends HistoryFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    // Loader Type used for asynchronous cursor loading
+    // Asynchronous cursor loader type
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_LAST_WET = 1;
     private static final int LOADER_LAST_DRY = 2;
@@ -33,7 +33,7 @@ public class DiaperFragment extends HistoryFragment implements LoaderManager.Loa
     private static final int LOADER_TOTAL_DRY = 5;
     private static final int LOADER_TOTAL_MIXED = 6;
 
-    //View Object for header information
+    // Information handler
     private TextView wetTotalHandler;
     private TextView WetLastHandler;
     private TextView dryTotalHandler;
@@ -42,7 +42,7 @@ public class DiaperFragment extends HistoryFragment implements LoaderManager.Loa
     private TextView mixedLastHandler;
     private PieGraph headerGraph;
 
-    //List and adapter to manage list view
+    // List view operation
     private ObserveableListView diaperHistoryList;
     private DiaperAdapter adapter;
     private View root;
