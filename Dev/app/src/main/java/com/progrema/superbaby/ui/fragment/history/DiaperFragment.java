@@ -217,13 +217,13 @@ public class DiaperFragment extends HistoryFragment
     }
 
     private void drawPieChart() {
-        resetGraph();
+        removeSlices();
         drawWetSlice();
         drawDrySlice();
         drawMixSlice();
     }
 
-    private void resetGraph() {
+    private void removeSlices() {
         headerGraph.removeSlices();
     }
 
@@ -249,6 +249,11 @@ public class DiaperFragment extends HistoryFragment
     }
 
     private int calculateEntryNumber(TextView entryHandler) {
+        /**
+         * We have to get the the number of entry for deletion process because cursor only
+         * contain newly created entry. We can't get the current number of all entry from cursor
+         * to draw the pie chart.
+         */
         String entryHandlerText = entryHandler.getText().toString().replace(" times", "");
         return Integer.parseInt(entryHandlerText);
     }

@@ -164,40 +164,43 @@ public class NursingFragment extends HistoryFragment
     }
 
     private void inflateGeneralEntry(Cursor cursor) {
-        NursingFragmentEntries data = new NursingFragmentEntries();
-        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-            data.calculateEntries(cursor);
-        }
-        inflateLeftPercentageEntry(data);
-        inflateRightPercentageEntry(data);
-        inflateLeftDurationEntry(data);
-        inflateRightDurationEntry(data);
-        inflateFormulaVolumeEntry(data);
-
+        NursingFragmentEntries entries = new NursingFragmentEntries();
+        entries.prepareEntries(cursor);
+        inflateLeftPercentageEntry(entries);
+        inflateRightPercentageEntry(entries);
+        inflateLeftDurationEntry(entries);
+        inflateRightDurationEntry(entries);
+        inflateFormulaVolumeEntry(entries);
+        inflatePieChart(entries);
     }
 
     private void inflateLastSideEntry(Cursor cursor) {
-        String type = cursor.getString(0);
-        if (type.compareTo(Nursing.NursingType.RIGHT.getTitle()) == 0) {
+        if (isLeftSideLast(cursor)) {
             lastSideHandler.setTextColor(getResources().getColor(R.color.green));
-            lastSideImage.setImageDrawable(getResources()
-                    .getDrawable(R.drawable.ic_nursing_right));
-        } else if (type.compareTo(Nursing.NursingType.LEFT.getTitle()) == 0) {
+            lastSideImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_nursing_right));
+        } else if (isRightSideLast(cursor)) {
             lastSideHandler.setTextColor(getResources().getColor(R.color.orange));
-            lastSideImage.setImageDrawable(getResources()
-                    .getDrawable(R.drawable.ic_nursing_left));
+            lastSideImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_nursing_left));
         }
+    }
+
+    private boolean isLeftSideLast(Cursor cursor) {
+        return (cursor.getString(0).compareTo(Nursing.NursingType.RIGHT.getTitle()) == 0);
+    }
+
+    private boolean isRightSideLast(Cursor cursor) {
+        return (cursor.getString(0).compareTo(Nursing.NursingType.LEFT.getTitle()) == 0);
     }
 
     private void inflateLeftPercentageEntry(NursingFragmentEntries data) {
         leftPercentHandler.setText(
-                FormatUtils.fmtNursingPct(getActivity(), data.calculateLeftPercentage())
+                FormatUtils.fmtNursingPct(getActivity(), data.getLeftPercentage())
         );
     }
 
     private void inflateRightPercentageEntry(NursingFragmentEntries data) {
         rightPercentHandler.setText(
-                FormatUtils.fmtNursingPct(getActivity(),data.calculateRightPercentage())
+                FormatUtils.fmtNursingPct(getActivity(), data.getRightPercentage())
         );
     }
 
@@ -205,16 +208,32 @@ public class NursingFragment extends HistoryFragment
         leftDurationHandler.setText(
                 FormatUtils.fmtNursingDrt(getActivity(), String.valueOf(data.getLeftDuration()))
         );
-        PieSlice leftSlice = new PieSlice();
-        leftSlice.setColor(getResources().getColor(R.color.orange));
-        leftSlice.setValue(data.getLeftDuration());
-        leftRightGraph.addSlice(leftSlice);
     }
 
     private void inflateRightDurationEntry(NursingFragmentEntries data) {
         rightDurationHandler.setText(
                 FormatUtils.fmtNursingDrt(getActivity(), String.valueOf(data.getRightDuration()))
         );
+    }
+
+    private void inflatePieChart(NursingFragmentEntries data) {
+        removeSlices();
+        drawLeftSlice(data);
+        drawRightSlice(data);
+    }
+
+    private void removeSlices() {
+        leftRightGraph.removeSlices();
+    }
+
+    private void drawLeftSlice(NursingFragmentEntries data) {
+        PieSlice leftSlice = new PieSlice();
+        leftSlice.setColor(getResources().getColor(R.color.orange));
+        leftSlice.setValue(data.getLeftDuration());
+        leftRightGraph.addSlice(leftSlice);
+    }
+
+    private void drawRightSlice(NursingFragmentEntries data) {
         PieSlice rightSlice = new PieSlice();
         rightSlice.setColor(getResources().getColor(R.color.green));
         rightSlice.setValue(data.getRightDuration());
@@ -229,6 +248,7 @@ public class NursingFragment extends HistoryFragment
 
     private class NursingFragmentEntries {
 
+        DecimalFormat decimalConverter = new DecimalFormat("0.00");
         private long duration;
         private long totalDuration;
         private long leftDuration;
@@ -236,27 +256,27 @@ public class NursingFragment extends HistoryFragment
         private long formulaVolume;
         private String side;
 
-        DecimalFormat decimalConverter = new DecimalFormat("0.00");
-
-        public void calculateEntries(Cursor cursor) {
-            side = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_SIDES);
-            duration = Long.valueOf(cursor.getString(BabyLogContract.Nursing.Query.OFFSET_DURATION));
-            totalDuration += duration;
-            if (isSideLeft()) {
-                leftDuration += duration;
-            } else if (side.equals(Nursing.NursingType.RIGHT.getTitle())) {
-                rightDuration += duration;
-            } else if (side.equals(Nursing.NursingType.FORMULA.getTitle())) {
-                formulaVolume += Float.valueOf(cursor.getString(BabyLogContract.Nursing.Query.OFFSET_VOLUME));
+        public void prepareEntries(Cursor cursor) {
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                side = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_SIDES);
+                duration = Long.valueOf(cursor.getString(BabyLogContract.Nursing.Query.OFFSET_DURATION));
+                totalDuration += duration;
+                if (isSideLeft()) {
+                    leftDuration += duration;
+                } else if (side.equals(Nursing.NursingType.RIGHT.getTitle())) {
+                    rightDuration += duration;
+                } else if (side.equals(Nursing.NursingType.FORMULA.getTitle())) {
+                    formulaVolume += Float.valueOf(cursor.getString(BabyLogContract.Nursing.Query.OFFSET_VOLUME));
+                }
             }
         }
 
-        public String calculateLeftPercentage() {
-            return decimalConverter.format((float)leftDuration / (float)totalDuration * 100);
+        public String getLeftPercentage() {
+            return decimalConverter.format((float) leftDuration / (float) totalDuration * 100);
         }
 
-        public String calculateRightPercentage() {
-            return decimalConverter.format((float)rightDuration / (float)totalDuration * 100);
+        public String getRightPercentage() {
+            return decimalConverter.format((float) rightDuration / (float) totalDuration * 100);
         }
 
         public long getLeftDuration() {
