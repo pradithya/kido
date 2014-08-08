@@ -15,12 +15,12 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.adapter.EntryAdapter;
+import com.progrema.superbaby.adapter.EntryAdapterServices;
 import com.progrema.superbaby.models.Sleep;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
-public class SleepAdapter extends CursorAdapter implements EntryAdapter {
+public class SleepAdapter extends CursorAdapter implements EntryAdapterServices {
 
     private String timestamp;
     private String duration;

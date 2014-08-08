@@ -61,7 +61,7 @@ public class MeasurementFragment extends Fragment implements LoaderManager.Loade
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
         String[] timeFilter;
-        calculateFilterPeriod(bundle);
+        calculateTimeFilter(bundle);
         timeFilter = buildTimeFilter();
         return new CursorLoader(getActivity(), BabyLogContract.Measurement.CONTENT_URI,
                 BabyLogContract.Measurement.Query.PROJECTION,
@@ -70,8 +70,8 @@ public class MeasurementFragment extends Fragment implements LoaderManager.Loade
                 BabyLogContract.Measurement.Query.SORT_BY_TIMESTAMP_DESC);
     }
 
-    private void calculateFilterPeriod(Bundle bundle) {
-        if (bundle != null) {
+    private void calculateTimeFilter(Bundle bundle) {
+        if (isNotNull(bundle)) {
             timeFilterStart = bundle.getString(HomeActivity.TimeFilter.START.getTitle());
             timeFilterEnd = bundle.getString(HomeActivity.TimeFilter.END.getTitle());
         } else {
@@ -85,6 +85,10 @@ public class MeasurementFragment extends Fragment implements LoaderManager.Loade
         }
     }
 
+    private boolean isNotNull(Object object) {
+        return object != null;
+    }
+
     private String[] buildTimeFilter() {
         String[] timeFilter = {
                 String.valueOf(ActiveContext.getActiveBaby(getActivity()).getActivityId()),
@@ -95,7 +99,7 @@ public class MeasurementFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        if (cursor.getCount() > 0) {
+        if (cursor.getCount() >= 0) {
             cursor.moveToFirst();
             adapter.swapCursor(cursor);
         }

@@ -22,7 +22,8 @@ import com.progrema.superbaby.util.FormatUtils;
 import com.progrema.superbaby.widget.customfragment.HistoryFragment;
 import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 
-public class DiaperFragment extends HistoryFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class DiaperFragment extends HistoryFragment
+        implements LoaderManager.LoaderCallbacks<Cursor>, HistoryFragmentServices {
 
     // Asynchronous cursor loader type
     private static final int LOADER_LIST_VIEW = 0;
@@ -62,7 +63,8 @@ public class DiaperFragment extends HistoryFragment implements LoaderManager.Loa
         return root;
     }
 
-    private void prepareFragment(LayoutInflater inflater, ViewGroup container) {
+    @Override
+    public void prepareFragment(LayoutInflater inflater, ViewGroup container) {
         root = inflater.inflate(R.layout.fragment_diaper, container, false);
         placeholder = inflater.inflate(R.layout.placeholder_header, null);
         ActionBar actionBar = getActivity().getActionBar();
@@ -71,7 +73,8 @@ public class DiaperFragment extends HistoryFragment implements LoaderManager.Loa
         actionBar.setIcon(getResources().getDrawable(R.drawable.ic_diaper_top));
     }
 
-    private void prepareHandler() {
+    @Override
+    public void prepareHandler() {
         wetTotalHandler = (TextView) root.findViewById(R.id.wet_average);
         dryTotalHandler = (TextView) root.findViewById(R.id.dry_average);
         mixedTotalHandler = (TextView) root.findViewById(R.id.mix_average);
@@ -81,7 +84,8 @@ public class DiaperFragment extends HistoryFragment implements LoaderManager.Loa
         headerGraph = (PieGraph) root.findViewById(R.id.diaper_piegraph);
     }
 
-    private void prepareListView() {
+    @Override
+    public void prepareListView() {
         diaperHistoryList = (ObserveableListView) root.findViewById(R.id.activity_list);
         adapter = new DiaperAdapter(getActivity(), null, 0);
         diaperHistoryList.addHeaderView(placeholder);
@@ -90,7 +94,8 @@ public class DiaperFragment extends HistoryFragment implements LoaderManager.Loa
         super.attachListView(diaperHistoryList);
     }
 
-    private void prepareLoaderManager() {
+    @Override
+    public void prepareLoaderManager() {
         LoaderManager loaderManager = getLoaderManager();
         loaderManager.initLoader(LOADER_LIST_VIEW, getArguments(), this);
         loaderManager.initLoader(LOADER_LAST_WET, getArguments(), this);

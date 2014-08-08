@@ -3,8 +3,6 @@ package com.progrema.superbaby.adapter.diaper;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -17,13 +15,12 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.adapter.EntryAdapter;
+import com.progrema.superbaby.adapter.EntryAdapterServices;
 import com.progrema.superbaby.models.Diaper;
 import com.progrema.superbaby.provider.BabyLogContract;
-import com.progrema.superbaby.ui.fragment.history.MeasurementFragment;
 import com.progrema.superbaby.util.FormatUtils;
 
-public class DiaperAdapter extends CursorAdapter implements EntryAdapter {
+public class DiaperAdapter extends CursorAdapter implements EntryAdapterServices {
 
     private String timestamp;
     private String type;
