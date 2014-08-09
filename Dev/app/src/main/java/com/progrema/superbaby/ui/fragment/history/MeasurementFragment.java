@@ -22,11 +22,17 @@ import java.util.Calendar;
 
 public class MeasurementFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    //TODO: how can I improve this fragment? What information should the header contains?
+
+    // Asynchronous cursor loader type
     private static final int LOADER_LIST_VIEW = 0;
+
+    // List view operation
     private ObserveableListView measurementHistoryList;
     private MeasurementAdapter adapter;
     private String timeFilterStart;
     private String timeFilterEnd;
+    private View root;
 
     public static MeasurementFragment getInstance() {
         return new MeasurementFragment();
@@ -34,20 +40,19 @@ public class MeasurementFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = prepareFragment(inflater, container);
-        prepareListView(root);
+        prepareFragment(inflater, container);
+        prepareListView();
         prepareLoaderManager();
         return root;
     }
 
-    private View prepareFragment(LayoutInflater inflater, ViewGroup container) {
-        View root = inflater.inflate(R.layout.fragment_measurement, container, false);
+    private void prepareFragment(LayoutInflater inflater, ViewGroup container) {
+        root = inflater.inflate(R.layout.fragment_measurement, container, false);
         ActionBar actionBar = getActivity().getActionBar();
         actionBar.setIcon(getResources().getDrawable(R.drawable.ic_measurement_top));
-        return root;
     }
 
-    private void prepareListView(View root) {
+    private void prepareListView() {
         measurementHistoryList = (ObserveableListView) root.findViewById(R.id.activity_list);
         adapter = new MeasurementAdapter(getActivity(), null, 0);
         measurementHistoryList.setAdapter(adapter);

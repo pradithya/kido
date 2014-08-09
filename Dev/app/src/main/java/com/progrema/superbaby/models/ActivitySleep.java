@@ -7,14 +7,14 @@ import android.os.Parcel;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 
-public class Sleep extends BaseActivity {
+public class ActivitySleep extends BaseActivity {
 
     private long duration;
 
-    public Sleep() {
+    public ActivitySleep() {
     }
 
-    public Sleep(Parcel parcel) {
+    public ActivitySleep(Parcel parcel) {
         readFromParcel(parcel);
     }
 

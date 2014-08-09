@@ -16,7 +16,7 @@ import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.nursing.NursingAdapter;
 import com.progrema.superbaby.holograph.PieGraph;
 import com.progrema.superbaby.holograph.PieSlice;
-import com.progrema.superbaby.models.Nursing;
+import com.progrema.superbaby.models.ActivityNursing;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.FormatUtils;
@@ -183,11 +183,11 @@ public class NursingFragment extends HistoryFragment
     }
 
     private boolean isLeftSideLast(Cursor cursor) {
-        return (cursor.getString(0).compareTo(Nursing.NursingType.RIGHT.getTitle()) == 0);
+        return (cursor.getString(0).compareTo(ActivityNursing.NursingType.RIGHT.getTitle()) == 0);
     }
 
     private boolean isRightSideLast(Cursor cursor) {
-        return (cursor.getString(0).compareTo(Nursing.NursingType.LEFT.getTitle()) == 0);
+        return (cursor.getString(0).compareTo(ActivityNursing.NursingType.LEFT.getTitle()) == 0);
     }
 
     private void inflateLeftPercentageEntry(NursingFragmentEntry data) {
@@ -256,9 +256,9 @@ public class NursingFragment extends HistoryFragment
                 totalDuration += duration;
                 if (isSideLeft()) {
                     leftDuration += duration;
-                } else if (side.equals(Nursing.NursingType.RIGHT.getTitle())) {
+                } else if (side.equals(ActivityNursing.NursingType.RIGHT.getTitle())) {
                     rightDuration += duration;
-                } else if (side.equals(Nursing.NursingType.FORMULA.getTitle())) {
+                } else if (side.equals(ActivityNursing.NursingType.FORMULA.getTitle())) {
                     formulaVolume += Float.valueOf(cursor.getString(BabyLogContract.Nursing.Query.OFFSET_VOLUME));
                 }
             }
@@ -285,7 +285,7 @@ public class NursingFragment extends HistoryFragment
         }
 
         private boolean isSideLeft() {
-            return this.side.equals(Nursing.NursingType.LEFT.getTitle());
+            return this.side.equals(ActivityNursing.NursingType.LEFT.getTitle());
         }
     }
 

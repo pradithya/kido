@@ -6,7 +6,7 @@ import android.content.Context;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 
-public class Measurement extends BaseActivity {
+public class ActivityMeasurement extends BaseActivity {
 
     public final static String HEIGHT_KEY = "height";
     public final static String WEIGHT_KEY = "weight";

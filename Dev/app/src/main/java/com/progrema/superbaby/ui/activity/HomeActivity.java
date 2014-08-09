@@ -19,8 +19,8 @@ import android.widget.RelativeLayout;
 
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.actionbar.ActionBarDropDownAdapter;
-import com.progrema.superbaby.models.Diaper;
-import com.progrema.superbaby.models.Measurement;
+import com.progrema.superbaby.models.ActivityDiaper;
+import com.progrema.superbaby.models.ActivityMeasurement;
 import com.progrema.superbaby.ui.fragment.dialog.DiaperDialog;
 import com.progrema.superbaby.ui.fragment.dialog.MeasurementDialog;
 import com.progrema.superbaby.ui.fragment.dialog.NursingDialog;
@@ -251,12 +251,12 @@ public class HomeActivity extends FragmentActivity
         if (resultCode == RESULT_OK) {
             Calendar currentTime = Calendar.getInstance();
             Bundle recordData = data.getExtras();
-            String diaperType = (String) recordData.get(Diaper.DIAPER_TYPE_KEY);
-            Diaper diaper = new Diaper();
-            diaper.setBabyID(ActiveContext.getActiveBaby(this).getActivityId());
-            diaper.setTimeStamp(String.valueOf(currentTime.getTimeInMillis()));
-            diaper.setType(Diaper.DiaperType.valueOf(diaperType));
-            diaper.insert(this);
+            String diaperType = (String) recordData.get(ActivityDiaper.DIAPER_TYPE_KEY);
+            ActivityDiaper activityDiaper = new ActivityDiaper();
+            activityDiaper.setBabyID(ActiveContext.getActiveBaby(this).getActivityId());
+            activityDiaper.setTimeStamp(String.valueOf(currentTime.getTimeInMillis()));
+            activityDiaper.setType(ActivityDiaper.DiaperType.valueOf(diaperType));
+            activityDiaper.insert(this);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.home_activity_container, DiaperFragment.getInstance());
             fragmentTransaction.commit();
@@ -268,12 +268,12 @@ public class HomeActivity extends FragmentActivity
         if (resultCode == RESULT_OK) {
             Calendar currentTime = Calendar.getInstance();
             Bundle recordData = data.getExtras();
-            Measurement measurement = new Measurement();
-            measurement.setBabyID(ActiveContext.getActiveBaby(this).getActivityId());
-            measurement.setTimeStamp(String.valueOf(currentTime.getTimeInMillis()));
-            measurement.setHeight(Float.valueOf(recordData.getString(Measurement.HEIGHT_KEY)));
-            measurement.setWeight(Float.valueOf(recordData.getString(Measurement.WEIGHT_KEY)));
-            measurement.insert(this);
+            ActivityMeasurement activityMeasurement = new ActivityMeasurement();
+            activityMeasurement.setBabyID(ActiveContext.getActiveBaby(this).getActivityId());
+            activityMeasurement.setTimeStamp(String.valueOf(currentTime.getTimeInMillis()));
+            activityMeasurement.setHeight(Float.valueOf(recordData.getString(ActivityMeasurement.HEIGHT_KEY)));
+            activityMeasurement.setWeight(Float.valueOf(recordData.getString(ActivityMeasurement.WEIGHT_KEY)));
+            activityMeasurement.insert(this);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.home_activity_container, MeasurementFragment.getInstance());
             fragmentTransaction.commit();
@@ -281,9 +281,9 @@ public class HomeActivity extends FragmentActivity
     }
 
     public enum Trigger {
-        SLEEP("Sleep"),
-        NURSING("Nursing"),
-        DIAPER("Diaper");
+        SLEEP("ActivitySleep"),
+        NURSING("ActivityNursing"),
+        DIAPER("ActivityDiaper");
         private String title;
         Trigger(String title) {
             this.title = title;

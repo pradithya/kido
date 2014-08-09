@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.EntryAdapterServices;
-import com.progrema.superbaby.models.Diaper;
+import com.progrema.superbaby.models.ActivityDiaper;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
@@ -45,11 +45,11 @@ public class DiaperAdapter extends CursorAdapter implements EntryAdapterServices
     public void bindView(View view, final Context context, Cursor cursor) {
         storeCursorData(cursor);
         prepareHandler(context, view);
-        if (isEntryType(Diaper.DiaperType.WET.getTitle())) {
+        if (isEntryType(ActivityDiaper.DiaperType.WET.getTitle())) {
             inflateWetEntryLayout(view);
-        } else if (isEntryType(Diaper.DiaperType.DRY.getTitle())) {
+        } else if (isEntryType(ActivityDiaper.DiaperType.DRY.getTitle())) {
             inflateDryEntryLayout(view);
-        } else if (isEntryType(Diaper.DiaperType.MIXED.getTitle())) {
+        } else if (isEntryType(ActivityDiaper.DiaperType.MIXED.getTitle())) {
             inflateMixedEntryLayout(view);
         }
     }
@@ -103,9 +103,9 @@ public class DiaperAdapter extends CursorAdapter implements EntryAdapterServices
 
     @Override
     public void deleteEntry(Context context, View entry) {
-        Diaper diaper = new Diaper();
-        diaper.setActivityId(Long.valueOf((String) entry.getTag()));
-        diaper.delete(context);
+        ActivityDiaper activityDiaper = new ActivityDiaper();
+        activityDiaper.setActivityId(Long.valueOf((String) entry.getTag()));
+        activityDiaper.delete(context);
     }
 
     @Override

@@ -7,7 +7,7 @@ import android.os.Parcel;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 
-public class Diaper extends BaseActivity {
+public class ActivityDiaper extends BaseActivity {
 
     public final static String DIAPER_TYPE_KEY = "diaper_type";
     private DiaperType type;
@@ -56,6 +56,8 @@ public class Diaper extends BaseActivity {
                 "baby_id = ? AND activity_id = ?",
                 selectionArgs);
     }
+
+
 
     /**
      * enumeration for diaper type

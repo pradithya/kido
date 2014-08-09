@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.models.Diaper;
+import com.progrema.superbaby.models.ActivityDiaper;
 
 public class DiaperDialog extends DialogFragment {
     private Callbacks mCallbacks;
@@ -30,7 +30,7 @@ public class DiaperDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 Intent result = new Intent();
-                result.putExtra(Diaper.DIAPER_TYPE_KEY, Diaper.DiaperType.DRY.getTitle());
+                result.putExtra(ActivityDiaper.DIAPER_TYPE_KEY, ActivityDiaper.DiaperType.DRY.getTitle());
                 DiaperDialog.this.mCallbacks.onDiaperChoiceSelected(0, result);
                 getDialog().dismiss();
             }
@@ -40,7 +40,7 @@ public class DiaperDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 Intent result = new Intent();
-                result.putExtra(Diaper.DIAPER_TYPE_KEY, Diaper.DiaperType.WET.getTitle());
+                result.putExtra(ActivityDiaper.DIAPER_TYPE_KEY, ActivityDiaper.DiaperType.WET.getTitle());
                 DiaperDialog.this.mCallbacks.onDiaperChoiceSelected(0, result);
                 getDialog().dismiss();
             }
@@ -50,7 +50,7 @@ public class DiaperDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 Intent result = new Intent();
-                result.putExtra(Diaper.DIAPER_TYPE_KEY, Diaper.DiaperType.MIXED.getTitle());
+                result.putExtra(ActivityDiaper.DIAPER_TYPE_KEY, ActivityDiaper.DiaperType.MIXED.getTitle());
                 DiaperDialog.this.mCallbacks.onDiaperChoiceSelected(0, result);
                 getDialog().dismiss();
             }

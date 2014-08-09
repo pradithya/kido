@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.EntryAdapterServices;
-import com.progrema.superbaby.models.Sleep;
+import com.progrema.superbaby.models.ActivitySleep;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
@@ -104,9 +104,9 @@ public class SleepAdapter extends CursorAdapter implements EntryAdapterServices 
 
     @Override
     public void deleteEntry(Context context, View entry) {
-        Sleep sleep = new Sleep();
-        sleep.setActivityId(Long.valueOf((String) entry.getTag()));
-        sleep.delete(context);
+        ActivitySleep activitySleep = new ActivitySleep();
+        activitySleep.setActivityId(Long.valueOf((String) entry.getTag()));
+        activitySleep.delete(context);
     }
 
     @Override

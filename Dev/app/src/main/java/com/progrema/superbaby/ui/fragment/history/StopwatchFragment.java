@@ -12,8 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.models.Nursing;
-import com.progrema.superbaby.models.Sleep;
+import com.progrema.superbaby.models.ActivityNursing;
+import com.progrema.superbaby.models.ActivitySleep;
 import com.progrema.superbaby.ui.activity.HomeActivity;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.widget.stopwatch.Stopwatch;
@@ -52,13 +52,13 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
             sourceTrigger = args.getString(HomeActivity.ACTIVITY_TRIGGER_KEY);
         }
 
-        if (args.containsKey(Nursing.NURSING_TYPE_KEY)) {
-            nursingType = args.getString(Nursing.NURSING_TYPE_KEY);
+        if (args.containsKey(ActivityNursing.NURSING_TYPE_KEY)) {
+            nursingType = args.getString(ActivityNursing.NURSING_TYPE_KEY);
             isTwoStopWatch = true;
         }
 
-        if (args.containsKey(Nursing.FORMULA_VOLUME_KEY)) {
-            formulaVolume = args.getString(Nursing.FORMULA_VOLUME_KEY);
+        if (args.containsKey(ActivityNursing.FORMULA_VOLUME_KEY)) {
+            formulaVolume = args.getString(ActivityNursing.FORMULA_VOLUME_KEY);
             isTwoStopWatch = false;
         }
 
@@ -97,7 +97,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
             containerStopWatch2.setVisibility(View.VISIBLE);
             switchButton.setVisibility(View.VISIBLE);
 
-            if (nursingType.equals(Nursing.NursingType.LEFT.getTitle())) {
+            if (nursingType.equals(ActivityNursing.NursingType.LEFT.getTitle())) {
                 activeStopWatch = firstStopwatch;
                 inActiveStopWatch = secondStopwatch;
             } else {
@@ -172,11 +172,11 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
         long secondDuration = secondStopwatch.getDuration();
 
         if (sourceTrigger.compareTo(HomeActivity.Trigger.SLEEP.getTitle()) == 0) {
-            Sleep sleep = new Sleep();
-            sleep.setTimeStamp(String.valueOf(startTime.getTimeInMillis()));
-            sleep.setBabyID(ActiveContext.getActiveBaby(getActivity()).getActivityId());
-            sleep.setDuration(TimeUnit.SECONDS.toMillis(firstDuration));
-            sleep.insert(getActivity());
+            ActivitySleep activitySleep = new ActivitySleep();
+            activitySleep.setTimeStamp(String.valueOf(startTime.getTimeInMillis()));
+            activitySleep.setBabyID(ActiveContext.getActiveBaby(getActivity()).getActivityId());
+            activitySleep.setDuration(TimeUnit.SECONDS.toMillis(firstDuration));
+            activitySleep.insert(getActivity());
 
             // Go back to timeLine fragment
             ActionBar actionBar = getActivity().getActionBar();
@@ -188,26 +188,26 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
             fragmentTransaction.commit();
 
         } else if (sourceTrigger.compareTo(HomeActivity.Trigger.NURSING.getTitle()) == 0) {
-            Nursing nursing = new Nursing();
-            nursing.setTimeStamp(String.valueOf(startTime.getTimeInMillis()));
-            nursing.setBabyID(ActiveContext.getActiveBaby(getActivity()).getActivityId());
+            ActivityNursing activityNursing = new ActivityNursing();
+            activityNursing.setTimeStamp(String.valueOf(startTime.getTimeInMillis()));
+            activityNursing.setBabyID(ActiveContext.getActiveBaby(getActivity()).getActivityId());
             if (isTwoStopWatch) {
                 if (firstDuration != 0) {
-                    nursing.setDuration(TimeUnit.SECONDS.toMillis(firstDuration));
-                    nursing.setType(Nursing.NursingType.LEFT);
-                    nursing.insert(getActivity());
+                    activityNursing.setDuration(TimeUnit.SECONDS.toMillis(firstDuration));
+                    activityNursing.setType(ActivityNursing.NursingType.LEFT);
+                    activityNursing.insert(getActivity());
                 }
                 if (secondDuration != 0) {
-                    nursing.setDuration(TimeUnit.SECONDS.toMillis(secondDuration));
-                    nursing.setType(Nursing.NursingType.RIGHT);
-                    nursing.insert(getActivity());
+                    activityNursing.setDuration(TimeUnit.SECONDS.toMillis(secondDuration));
+                    activityNursing.setType(ActivityNursing.NursingType.RIGHT);
+                    activityNursing.insert(getActivity());
                 }
             } else {
                 // formula
-                nursing.setDuration(TimeUnit.SECONDS.toMillis(firstDuration));
-                nursing.setType(Nursing.NursingType.valueOf(nursingType));
-                nursing.setVolume(Long.parseLong(formulaVolume, 10));
-                nursing.insert(getActivity());
+                activityNursing.setDuration(TimeUnit.SECONDS.toMillis(firstDuration));
+                activityNursing.setType(ActivityNursing.NursingType.valueOf(nursingType));
+                activityNursing.setVolume(Long.parseLong(formulaVolume, 10));
+                activityNursing.insert(getActivity());
             }
 
             // Go back to timeLine fragment

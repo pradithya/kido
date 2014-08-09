@@ -26,7 +26,7 @@
     <string name="quick_button_title_diaper">Diaper</string>
     <string name="quick_button_title_measurement">Growth</string>
 
-    <!--nursing fragment string-->
+    <!--activityNursing fragment string-->
     <string name="nursing_percentage">{percentage}%</string>
     <string name="nursing_left_percentage_initial">Left ...%</string>
     <string name="nursing_right_percentage_initial">Right ...%</string>
@@ -38,7 +38,7 @@
     <string name="nursing_formula_today_initial">Formula ...mL</string>
     <string name="nursing_per_day_initial">Type ... ...</string>
 
-    <!--sleep fragment string-->
+    <!--activitySleep fragment string-->
     <string name="date_complete_format">{day}, {date} {month} {year}</string>
     <string name="day_only_format">{day}</string>
     <string name="date_simple_format">{date} {month} {year}</string>
@@ -65,7 +65,7 @@
     <string name="active_duration">Active {hour}h {minute}m {second}s</string>
     <string name="active_duration_initial">Active ...h ...m ...s</string>
 
-    <!--diaper fragment string-->
+    <!--activityDiaper fragment string-->
     <string name="wet_icon">Wet</string>
     <string name="dry_icon">Dry</string>
     <string name="mix_icon">Mix</string>

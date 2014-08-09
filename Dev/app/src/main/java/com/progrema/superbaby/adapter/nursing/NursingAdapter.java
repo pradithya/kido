@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.EntryAdapterServices;
-import com.progrema.superbaby.models.Nursing;
+import com.progrema.superbaby.models.ActivityNursing;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
@@ -47,11 +47,11 @@ public class NursingAdapter extends CursorAdapter implements EntryAdapterService
     public void bindView(View view, final Context context, Cursor cursor) {
         storeCursorData(cursor);
         prepareHandler(context, view);
-        if (isEntryType(Nursing.NursingType.FORMULA.getTitle())) {
+        if (isEntryType(ActivityNursing.NursingType.FORMULA.getTitle())) {
             inflateFormulaEntryLayout(view);
-        } else if (isEntryType(Nursing.NursingType.RIGHT.getTitle())) {
+        } else if (isEntryType(ActivityNursing.NursingType.RIGHT.getTitle())) {
             inflateRightEntryLayout(view);
-        } else if (isEntryType(Nursing.NursingType.LEFT.getTitle())) {
+        } else if (isEntryType(ActivityNursing.NursingType.LEFT.getTitle())) {
             inflateLeftEntryLayout(view);
         }
     }
@@ -108,9 +108,9 @@ public class NursingAdapter extends CursorAdapter implements EntryAdapterService
 
     @Override
     public void deleteEntry(Context context, View entry) {
-        Nursing nursing = new Nursing();
-        nursing.setActivityId(Long.valueOf((String) entry.getTag()));
-        nursing.delete(context);
+        ActivityNursing activityNursing = new ActivityNursing();
+        activityNursing.setActivityId(Long.valueOf((String) entry.getTag()));
+        activityNursing.delete(context);
     }
 
     @Override

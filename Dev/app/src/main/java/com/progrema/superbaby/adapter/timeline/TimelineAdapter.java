@@ -16,10 +16,10 @@ import android.widget.TextView;
 
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.EntryAdapterServices;
-import com.progrema.superbaby.models.Diaper;
-import com.progrema.superbaby.models.Measurement;
-import com.progrema.superbaby.models.Nursing;
-import com.progrema.superbaby.models.Sleep;
+import com.progrema.superbaby.models.ActivityDiaper;
+import com.progrema.superbaby.models.ActivityMeasurement;
+import com.progrema.superbaby.models.ActivityNursing;
+import com.progrema.superbaby.models.ActivitySleep;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
@@ -137,27 +137,27 @@ public class TimelineAdapter extends CursorAdapter implements EntryAdapterServic
     }
 
     private void deleteSleepEntry(Context context, String id) {
-        Sleep sleep = new Sleep();
-        sleep.setActivityId(Long.valueOf(id));
-        sleep.delete(context);
+        ActivitySleep activitySleep = new ActivitySleep();
+        activitySleep.setActivityId(Long.valueOf(id));
+        activitySleep.delete(context);
     }
 
     private void deleteDiaperEntry(Context context, String id) {
-        Diaper diaper = new Diaper();
-        diaper.setActivityId(Long.valueOf(id));
-        diaper.delete(context);
+        ActivityDiaper activityDiaper = new ActivityDiaper();
+        activityDiaper.setActivityId(Long.valueOf(id));
+        activityDiaper.delete(context);
     }
 
     private void deleteNursingEntry(Context context, String id) {
-        Nursing nursing = new Nursing();
-        nursing.setActivityId(Long.valueOf(id));
-        nursing.delete(context);
+        ActivityNursing activityNursing = new ActivityNursing();
+        activityNursing.setActivityId(Long.valueOf(id));
+        activityNursing.delete(context);
     }
 
     private void deleteMeasurementEntry(Context context, String id) {
-        Measurement measurement = new Measurement();
-        measurement.setActivityId(Long.valueOf(id));
-        measurement.delete(context);
+        ActivityMeasurement activityMeasurement = new ActivityMeasurement();
+        activityMeasurement.setActivityId(Long.valueOf(id));
+        activityMeasurement.delete(context);
     }
 
     @Override
@@ -190,15 +190,15 @@ public class TimelineAdapter extends CursorAdapter implements EntryAdapterServic
     private void inflateDiaperEntryLayout(Context context, View view) {
         firstHandler.setText(FormatUtils.fmtDayOnly(context, timestamp));
         secondHandler.setText(FormatUtils.fmtDateOnly(context, timestamp));
-        if (diaperType.equals(Diaper.DiaperType.WET.getTitle())) {
+        if (diaperType.equals(ActivityDiaper.DiaperType.WET.getTitle())) {
             iconHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_wet));
             secondHandler.setTextColor(view.getResources().getColor(R.color.blue));
             timeHandler.setTextColor(view.getResources().getColor(R.color.blue));
-        } else if (diaperType.equals(Diaper.DiaperType.DRY.getTitle())) {
+        } else if (diaperType.equals(ActivityDiaper.DiaperType.DRY.getTitle())) {
             iconHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_dry));
             secondHandler.setTextColor(view.getResources().getColor(R.color.orange));
             timeHandler.setTextColor(view.getResources().getColor(R.color.orange));
-        } else if (diaperType.equals(Diaper.DiaperType.MIXED.getTitle())) {
+        } else if (diaperType.equals(ActivityDiaper.DiaperType.MIXED.getTitle())) {
             iconHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_mixed));
             secondHandler.setTextColor(view.getResources().getColor(R.color.purple));
             timeHandler.setTextColor(view.getResources().getColor(R.color.purple));
@@ -208,18 +208,18 @@ public class TimelineAdapter extends CursorAdapter implements EntryAdapterServic
     private void inflateNursingEntryLayout(Context context, View view) {
         firstHandler.setText(FormatUtils.fmtDate(context, timestamp));
         secondHandler.setText(FormatUtils.fmtDuration(context, nursingDuration));
-        if (nursingSide.compareTo(Nursing.NursingType.FORMULA.getTitle()) == 0) {
+        if (nursingSide.compareTo(ActivityNursing.NursingType.FORMULA.getTitle()) == 0) {
             thirdHandler.setVisibility(View.VISIBLE);
             thirdHandler.setText(nursingVolume + "mL");
             thirdHandler.setTextColor(view.getResources().getColor(R.color.red));
             timeHandler.setTextColor(view.getResources().getColor(R.color.red));
             secondHandler.setTextColor(view.getResources().getColor(R.color.red));
             iconHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_formula));
-        } else if (nursingSide.compareTo(Nursing.NursingType.RIGHT.getTitle()) == 0) {
+        } else if (nursingSide.compareTo(ActivityNursing.NursingType.RIGHT.getTitle()) == 0) {
             secondHandler.setTextColor(view.getResources().getColor(R.color.green));
             timeHandler.setTextColor(view.getResources().getColor(R.color.green));
             iconHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_right));
-        } else if (nursingSide.compareTo(Nursing.NursingType.LEFT.getTitle()) == 0) {
+        } else if (nursingSide.compareTo(ActivityNursing.NursingType.LEFT.getTitle()) == 0) {
             secondHandler.setTextColor(view.getResources().getColor(R.color.orange));
             timeHandler.setTextColor(view.getResources().getColor(R.color.orange));
             iconHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_left));

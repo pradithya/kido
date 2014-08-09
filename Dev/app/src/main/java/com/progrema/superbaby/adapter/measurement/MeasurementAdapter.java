@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.EntryAdapterServices;
-import com.progrema.superbaby.models.Measurement;
+import com.progrema.superbaby.models.ActivityMeasurement;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
@@ -99,9 +99,9 @@ public class MeasurementAdapter extends CursorAdapter implements EntryAdapterSer
 
     @Override
     public void deleteEntry(Context context, View entry) {
-        Measurement measurement = new Measurement();
-        measurement.setActivityId(Long.valueOf((String) entry.getTag()));
-        measurement.delete(context);
+        ActivityMeasurement activityMeasurement = new ActivityMeasurement();
+        activityMeasurement.setActivityId(Long.valueOf((String) entry.getTag()));
+        activityMeasurement.delete(context);
     }
 
     @Override

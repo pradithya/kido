@@ -190,7 +190,7 @@ public class BabyLogContract {
     }
 
     /**
-     * Nursing table contract class
+     * ActivityNursing table contract class
      */
     public static class Nursing implements NursingColumns, BaseColumns {
         public static final Uri CONTENT_URI =
@@ -231,7 +231,7 @@ public class BabyLogContract {
     }
 
     /**
-     * Sleep table contract class
+     * ActivitySleep table contract class
      */
     public static class Sleep implements SleepColumns, BaseColumns {
         public static final Uri MAX_TIMESTAMP =
@@ -266,7 +266,7 @@ public class BabyLogContract {
     }
 
     /**
-     * Diaper table contract class
+     * ActivityDiaper table contract class
      */
     public static class Diaper implements DiaperColumns, BaseColumns {
         public static final Uri CONTENT_URI =
@@ -300,7 +300,7 @@ public class BabyLogContract {
     }
 
     /**
-     * Measurement table contract class
+     * ActivityMeasurement table contract class
      */
     public static class Measurement implements MeasurementColumns, BaseColumns {
         public static final Uri CONTENT_URI =

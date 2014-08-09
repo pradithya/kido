@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.models.Nursing;
+import com.progrema.superbaby.models.ActivityNursing;
 import com.progrema.superbaby.util.FormatUtils;
 
 public class NursingDialog extends DialogFragment {
@@ -34,7 +34,7 @@ public class NursingDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 Intent result = new Intent();
-                result.putExtra(Nursing.NURSING_TYPE_KEY, Nursing.NursingType.LEFT.getTitle());
+                result.putExtra(ActivityNursing.NURSING_TYPE_KEY, ActivityNursing.NursingType.LEFT.getTitle());
                 NursingDialog.this.mCallbacks.onNursingChoiceSelected(0, result);
                 getDialog().dismiss();
             }
@@ -44,7 +44,7 @@ public class NursingDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 Intent result = new Intent();
-                result.putExtra(Nursing.NURSING_TYPE_KEY, Nursing.NursingType.RIGHT.getTitle());
+                result.putExtra(ActivityNursing.NURSING_TYPE_KEY, ActivityNursing.NursingType.RIGHT.getTitle());
                 NursingDialog.this.mCallbacks.onNursingChoiceSelected(0, result);
                 getDialog().dismiss();
             }
@@ -72,8 +72,8 @@ public class NursingDialog extends DialogFragment {
                     return; //invalid volume
                 }
                 Intent result = new Intent();
-                result.putExtra(Nursing.NURSING_TYPE_KEY, Nursing.NursingType.FORMULA.getTitle());
-                result.putExtra(Nursing.FORMULA_VOLUME_KEY, volume);
+                result.putExtra(ActivityNursing.NURSING_TYPE_KEY, ActivityNursing.NursingType.FORMULA.getTitle());
+                result.putExtra(ActivityNursing.FORMULA_VOLUME_KEY, volume);
                 NursingDialog.this.mCallbacks.onNursingChoiceSelected(0, result);
                 getDialog().dismiss();
             }
