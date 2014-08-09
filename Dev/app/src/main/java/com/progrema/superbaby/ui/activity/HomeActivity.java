@@ -106,10 +106,10 @@ public class HomeActivity extends FragmentActivity
 
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
-        sleepQuickButton = (RelativeLayout) findViewById(R.id.quick_button_sleep);
-        nursingQuickButton = (RelativeLayout) findViewById(R.id.quick_button_nursing);
-        diaperQuickButton = (RelativeLayout) findViewById(R.id.quick_button_diaper);
-        measurementQuickButton = (RelativeLayout) findViewById(R.id.quick_button_measurement);
+        sleepQuickButton = (RelativeLayout) findViewById(R.id.button_sleep);
+        nursingQuickButton = (RelativeLayout) findViewById(R.id.button_nursing);
+        diaperQuickButton = (RelativeLayout) findViewById(R.id.button_diaper);
+        measurementQuickButton = (RelativeLayout) findViewById(R.id.button_measurement);
         historyList = (ObserveableListView) findViewById(R.id.activity_list);
         if (diaperQuickButton != null && nursingQuickButton != null
                 && sleepQuickButton != null && historyList != null) {
@@ -154,17 +154,17 @@ public class HomeActivity extends FragmentActivity
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.quick_button_sleep:
-                handleQuickSleep();
+            case R.id.button_sleep:
+                handleButtonSleep();
                 break;
-            case R.id.quick_button_nursing:
-                handleQuickNursing();
+            case R.id.button_nursing:
+                handleButtonNursing();
                 break;
-            case R.id.quick_button_diaper:
-                handleQuickDiaper();
+            case R.id.button_diaper:
+                handleButtonDiaper();
                 break;
-            case R.id.quick_button_measurement:
-                handleQuickMeasurement();
+            case R.id.button_measurement:
+                handleButtonMeasurement();
                 break;
         }
     }
@@ -185,7 +185,7 @@ public class HomeActivity extends FragmentActivity
         finish();
     }
 
-    private void handleQuickSleep() {
+    private void handleButtonSleep() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         // Inform the stopwatch to start counting for sleep
         Bundle bundle = new Bundle();
@@ -196,21 +196,21 @@ public class HomeActivity extends FragmentActivity
         fragmentTransaction.commit();
     }
 
-    private void handleQuickDiaper() {
+    private void handleButtonDiaper() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         DiaperDialog diaperChoiceBox = DiaperDialog.getInstance();
         diaperChoiceBox.setCallbacks(this);
         diaperChoiceBox.show(fragmentTransaction, "diaper_dialog");
     }
 
-    private void handleQuickNursing() {
+    private void handleButtonNursing() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         NursingDialog nursingChoiceBox = NursingDialog.getInstance();
         nursingChoiceBox.setCallbacks(this);
         nursingChoiceBox.show(fragmentTransaction, "nursing_dialog");
     }
 
-    private void handleQuickMeasurement() {
+    private void handleButtonMeasurement() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         MeasurementDialog measurementChoiceBox = MeasurementDialog.getInstance();
         measurementChoiceBox.setCallbacks(this);

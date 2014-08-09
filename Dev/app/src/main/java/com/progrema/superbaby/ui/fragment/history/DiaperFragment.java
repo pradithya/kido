@@ -1,9 +1,11 @@
 package com.progrema.superbaby.ui.fragment.history;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -16,14 +18,17 @@ import com.progrema.superbaby.R;
 import com.progrema.superbaby.adapter.diaper.DiaperAdapter;
 import com.progrema.superbaby.holograph.PieGraph;
 import com.progrema.superbaby.holograph.PieSlice;
+import com.progrema.superbaby.models.ActivityDiaper;
 import com.progrema.superbaby.provider.BabyLogContract;
+import com.progrema.superbaby.ui.fragment.dialog.DiaperDialog;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.FormatUtils;
 import com.progrema.superbaby.widget.customfragment.HistoryFragment;
 import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 
 public class DiaperFragment extends HistoryFragment
-        implements LoaderManager.LoaderCallbacks<Cursor>, HistoryFragmentServices {
+        implements LoaderManager.LoaderCallbacks<Cursor>,
+        HistoryFragmentServices, DiaperAdapter.Callbacks, DiaperDialog.Callbacks {
 
     // Asynchronous cursor loader type
     private static final int LOADER_LIST_VIEW = 0;
@@ -33,6 +38,7 @@ public class DiaperFragment extends HistoryFragment
     private static final int LOADER_TOTAL_WET = 4;
     private static final int LOADER_TOTAL_DRY = 5;
     private static final int LOADER_TOTAL_MIXED = 6;
+    private final static int RESULT_OK = 0;
 
     // Entry handler
     private TextView wetTotalHandler;
@@ -48,6 +54,7 @@ public class DiaperFragment extends HistoryFragment
     private DiaperAdapter adapter;
     private View root;
     private View placeholder;
+    private String currentEntryTag;
 
     public static DiaperFragment getInstance() {
         return new DiaperFragment();
@@ -88,10 +95,32 @@ public class DiaperFragment extends HistoryFragment
     public void prepareListView() {
         diaperHistoryList = (ObserveableListView) root.findViewById(R.id.activity_list);
         adapter = new DiaperAdapter(getActivity(), null, 0);
+        adapter.setCallbacks(this);
         diaperHistoryList.addHeaderView(placeholder);
         diaperHistoryList.addFooterView(new View(getActivity()));//TODO: do I need this API?
         diaperHistoryList.setAdapter(adapter);
         super.attachListView(diaperHistoryList);
+    }
+
+    @Override
+    public void onDiaperEntryEditSelected(View entry) {
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        currentEntryTag = entry.getTag().toString();
+        DiaperDialog diaperChoiceBox = DiaperDialog.getInstance();
+        diaperChoiceBox.setCallbacks(this);
+        diaperChoiceBox.show(fragmentTransaction, "diaper_dialog");
+    }
+
+    @Override
+    public void onDiaperChoiceSelected(int result, Intent data) {
+        if (result == RESULT_OK) {
+            Bundle recordData = data.getExtras();
+            String diaperType = (String) recordData.get(ActivityDiaper.DIAPER_TYPE_KEY);
+            ActivityDiaper activityDiaper = new ActivityDiaper();
+            activityDiaper.setActivityId(Long.valueOf(currentEntryTag));
+            activityDiaper.setType(ActivityDiaper.DiaperType.valueOf(diaperType));
+            activityDiaper.edit(getActivity());
+        }
     }
 
     @Override

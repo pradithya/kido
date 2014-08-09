@@ -91,7 +91,7 @@ public class ActivityNursing extends BaseActivity {
     }
 
     @Override
-    public void update(Context context) {
+    public void edit(Context context) {
 
     }
 

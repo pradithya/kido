@@ -28,6 +28,6 @@
 
     </LinearLayout>
 
-    <include layout="@layout/layout_quick_button" />
+    <include layout="@layout/layout_button" />
 
 </FrameLayout>

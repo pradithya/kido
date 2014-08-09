@@ -91,7 +91,7 @@ public class BabyLogProvider extends ContentProvider {
                 cursor.setNotificationUri(getContext().getContentResolver(), uri);
                 return cursor;
             default: {
-                final SelectionBuilder builder = buildSelection(uri, match);
+                final SelectionBuilder builder = buildSelection(match);
                 cursor = builder.where(selection, selectionArgs).query(db, projection, sortOrder);
                 cursor.setNotificationUri(getContext().getContentResolver(), uri);
                 return cursor;
@@ -237,14 +237,13 @@ public class BabyLogProvider extends ContentProvider {
 
         // Delete specified data from user
         dbTable = dbOpenHelper.getWritableDatabase();
-        sbBuilder = buildSelection(uri,  sUriMatcher.match(uri));
+        sbBuilder = buildSelection(sUriMatcher.match(uri));
         sbBuilder.where(selection, selectionArgs).delete(dbTable);
 
         // Delete corresponding data on activity table
         selection = "baby_id = ? AND _id = ?";
         dbTable = dbOpenHelper.getWritableDatabase();
-        sbBuilder = buildSelection(BabyLogContract.Activity.CONTENT_URI,
-                sUriMatcher.match(BabyLogContract.Activity.CONTENT_URI));
+        sbBuilder = buildSelection(sUriMatcher.match(BabyLogContract.Activity.CONTENT_URI));
         iRetVal = sbBuilder.where(selection, selectionArgs).delete(dbTable);
 
         // Notify user specified table and activity table
@@ -261,8 +260,12 @@ public class BabyLogProvider extends ContentProvider {
     }
 
     @Override
-    public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
-        return 0;
+    public int update(Uri uri, ContentValues contentValues, String selection, String[] selectionArgs) {
+        final SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
+        final SelectionBuilder builder = buildSelection(sUriMatcher.match(uri));
+        int retVal = builder.where(selection, selectionArgs).update(db, contentValues);
+        notifyChange(uri);
+        return retVal;
     }
 
     private void notifyChange(Uri uri) {
@@ -270,7 +273,7 @@ public class BabyLogProvider extends ContentProvider {
         context.getContentResolver().notifyChange(uri, null);
     }
 
-    private SelectionBuilder buildSelection(Uri uri, int match) {
+    private SelectionBuilder buildSelection(int match) {
         final SelectionBuilder builder = new SelectionBuilder();
         switch (match) {
             case USER:

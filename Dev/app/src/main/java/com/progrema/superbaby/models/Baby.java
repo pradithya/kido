@@ -92,7 +92,7 @@ public class Baby extends BaseActor {
     }
 
     @Override
-    public void update(Context context) {
+    public void edit(Context context) {
 
     }
 }

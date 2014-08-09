@@ -63,7 +63,7 @@ public class ActivitySleep extends BaseActivity {
     }
 
     @Override
-    public void update(Context context) {
+    public void edit(Context context) {
 
     }
 }

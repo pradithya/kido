@@ -5,5 +5,5 @@ import android.content.Context;
 public interface ProviderServices {
     public void insert(Context context);
     public void delete(Context context);
-    public void update(Context context);
+    public void edit(Context context);
 }

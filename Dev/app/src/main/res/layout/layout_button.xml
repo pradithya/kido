@@ -15,7 +15,7 @@
         android:background="@color/white">
 
         <RelativeLayout
-            android:id="@+id/quick_button_sleep"
+            android:id="@+id/button_sleep"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -43,7 +43,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/quick_button_nursing"
+            android:id="@+id/button_nursing"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -71,7 +71,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/quick_button_diaper"
+            android:id="@+id/button_diaper"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -99,7 +99,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/quick_button_measurement"
+            android:id="@+id/button_measurement"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

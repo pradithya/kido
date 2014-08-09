@@ -20,7 +20,7 @@ import com.progrema.superbaby.models.ActivityDiaper;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
-public class DiaperAdapter extends CursorAdapter implements EntryAdapterServices {
+public class DiaperAdapter extends CursorAdapter implements EntryAdapterServices{
 
     private String timestamp;
     private String type;
@@ -30,9 +30,14 @@ public class DiaperAdapter extends CursorAdapter implements EntryAdapterServices
     private TextView timeHandler;
     private ImageView typeHandler;
     private ImageView menuHandler;
+    private Callbacks callbacks;
 
     public DiaperAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
+    }
+
+    public void setCallbacks(Callbacks listener) {
+        callbacks = listener;
     }
 
     @Override
@@ -85,8 +90,8 @@ public class DiaperAdapter extends CursorAdapter implements EntryAdapterServices
                                     public boolean onMenuItemClick(MenuItem item) {
                                         if (item.getTitle()
                                                 .equals(context.getResources()
-                                                        .getString(R.string.menu_update))) {
-                                            updateEntry(context, menuHandler);
+                                                        .getString(R.string.menu_edit))) {
+                                            editEntry(context, menuHandler);
                                         } else if (item.getTitle()
                                                 .equals(context.getResources()
                                                         .getString(R.string.menu_delete))) {
@@ -113,8 +118,8 @@ public class DiaperAdapter extends CursorAdapter implements EntryAdapterServices
     }
 
     @Override
-    public void updateEntry(Context context, View entry) {
-
+    public void editEntry(Context context, View entry) {
+        callbacks.onDiaperEntryEditSelected(entry);
     }
 
     private boolean isEntryType(String type) {
@@ -137,6 +142,10 @@ public class DiaperAdapter extends CursorAdapter implements EntryAdapterServices
         typeHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_diaper_mixed));
         timeHandler.setTextColor(view.getResources().getColor(R.color.purple));
         dateHandler.setTextColor(view.getResources().getColor(R.color.purple));
+    }
+
+    public static interface Callbacks {
+        public void onDiaperEntryEditSelected(View Entry);
     }
 
 }

@@ -46,7 +46,7 @@ public class BabyLogDatabase extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "babylog.db";
     /**
      * NOTE:
-     * carefully update onUpgrade() when bumping database versions to make
+     * carefully edit onUpgrade() when bumping database versions to make
      * sure user data is saved.
      */
     private static final int VER_2014_01 = 100; // 1.0

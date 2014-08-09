@@ -91,7 +91,7 @@ public class User extends BaseActor {
     }
 
     @Override
-    public void update(Context context) {
+    public void edit(Context context) {
 
     }
 }

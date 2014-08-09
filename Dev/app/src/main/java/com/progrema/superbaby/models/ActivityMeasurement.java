@@ -51,7 +51,7 @@ public class ActivityMeasurement extends BaseActivity {
     }
 
     @Override
-    public void update(Context context) {
+    public void edit(Context context) {
 
     }
 }
