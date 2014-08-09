@@ -34,14 +34,14 @@ public class DiaperFragment extends HistoryFragment
     private static final int LOADER_TOTAL_DRY = 5;
     private static final int LOADER_TOTAL_MIXED = 6;
 
-    // Information handler
+    // Entry handler
     private TextView wetTotalHandler;
     private TextView WetLastHandler;
     private TextView dryTotalHandler;
     private TextView dryLastHandler;
     private TextView mixedTotalHandler;
     private TextView mixedLastHandler;
-    private PieGraph headerGraph;
+    private PieGraph pieGraphHandler;
 
     // List view operation
     private ObserveableListView diaperHistoryList;
@@ -67,9 +67,9 @@ public class DiaperFragment extends HistoryFragment
     public void prepareFragment(LayoutInflater inflater, ViewGroup container) {
         root = inflater.inflate(R.layout.fragment_diaper, container, false);
         placeholder = inflater.inflate(R.layout.placeholder_header, null);
-        ActionBar actionBar = getActivity().getActionBar();
         super.attachQuickReturnView(root, R.id.header_container);
         super.attachPlaceHolderLayout(placeholder, R.id.placeholder_header);
+        ActionBar actionBar = getActivity().getActionBar();
         actionBar.setIcon(getResources().getDrawable(R.drawable.ic_diaper_top));
     }
 
@@ -81,7 +81,7 @@ public class DiaperFragment extends HistoryFragment
         WetLastHandler = (TextView) root.findViewById(R.id.wet_last);
         dryLastHandler = (TextView) root.findViewById(R.id.dry_last);
         mixedLastHandler = (TextView) root.findViewById(R.id.mix_last);
-        headerGraph = (PieGraph) root.findViewById(R.id.diaper_piegraph);
+        pieGraphHandler = (PieGraph) root.findViewById(R.id.diaper_piegraph);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class DiaperFragment extends HistoryFragment
         diaperHistoryList = (ObserveableListView) root.findViewById(R.id.activity_list);
         adapter = new DiaperAdapter(getActivity(), null, 0);
         diaperHistoryList.addHeaderView(placeholder);
-        diaperHistoryList.addFooterView(new View(getActivity()));
+        diaperHistoryList.addFooterView(new View(getActivity()));//TODO: do I need this API?
         diaperHistoryList.setAdapter(adapter);
         super.attachListView(diaperHistoryList);
     }
@@ -114,7 +114,8 @@ public class DiaperFragment extends HistoryFragment
         };
         switch (loaderId) {
             case LOADER_LIST_VIEW:
-                return new CursorLoader(getActivity(), BabyLogContract.Diaper.CONTENT_URI,
+                return new CursorLoader(getActivity(),
+                        BabyLogContract.Diaper.CONTENT_URI,
                         BabyLogContract.Diaper.Query.PROJECTION,
                         "baby_id = ? AND timestamp >= ? AND timestamp <= ?",
                         timeFilterArg,
@@ -224,28 +225,28 @@ public class DiaperFragment extends HistoryFragment
     }
 
     private void removeSlices() {
-        headerGraph.removeSlices();
+        pieGraphHandler.removeSlices();
     }
 
     private void drawWetSlice() {
         PieSlice WetPieSlice = new PieSlice();
         WetPieSlice.setColor(getResources().getColor(R.color.blue));
         WetPieSlice.setValue(calculateEntryNumber(wetTotalHandler));
-        headerGraph.addSlice(WetPieSlice);
+        pieGraphHandler.addSlice(WetPieSlice);
     }
 
     private void drawDrySlice() {
         PieSlice DryPieSlice = new PieSlice();
         DryPieSlice.setColor(getResources().getColor(R.color.orange));
         DryPieSlice.setValue(calculateEntryNumber(dryTotalHandler));
-        headerGraph.addSlice(DryPieSlice);
+        pieGraphHandler.addSlice(DryPieSlice);
     }
 
     private void drawMixSlice() {
         PieSlice MixedPieSlice = new PieSlice();
         MixedPieSlice.setColor(getResources().getColor(R.color.purple));
         MixedPieSlice.setValue(calculateEntryNumber(mixedTotalHandler));
-        headerGraph.addSlice(MixedPieSlice);
+        pieGraphHandler.addSlice(MixedPieSlice);
     }
 
     private int calculateEntryNumber(TextView entryHandler) {

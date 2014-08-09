@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,15 +33,15 @@ public class NursingFragment extends HistoryFragment
     private static final int LOADER_GENERAL_ENTRY = 1;
     private static final int LOADER_LAST_SIDE_ENTRY = 2;
 
-    // Information handler
+    // Entry handler
     private TextView leftPercentHandler;
     private TextView rightPercentHandler;
     private TextView rightDurationHandler;
     private TextView leftDurationHandler;
     private TextView formulaDurationHandler;
     private TextView lastSideHandler;
-    private ImageView lastSideImage;
-    private PieGraph leftRightGraph;
+    private ImageView lastSideImageHandler;
+    private PieGraph pieGraphHandler;
 
     // List view operation
     private NursingAdapter adapter;
@@ -82,8 +81,8 @@ public class NursingFragment extends HistoryFragment
         leftDurationHandler = (TextView) root.findViewById(R.id.left_duration);
         formulaDurationHandler = (TextView) root.findViewById(R.id.formula_volume);
         lastSideHandler = (TextView) root.findViewById(R.id.last_side_title);
-        lastSideImage = (ImageView) root.findViewById(R.id.last_side);
-        leftRightGraph = (PieGraph) root.findViewById(R.id.nursing_left_right_pie_chart);
+        lastSideImageHandler = (ImageView) root.findViewById(R.id.last_side);
+        pieGraphHandler = (PieGraph) root.findViewById(R.id.nursing_left_right_pie_chart);
     }
 
     @Override
@@ -159,28 +158,27 @@ public class NursingFragment extends HistoryFragment
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
-        Log.i("_DBG_LOADER", " onLoaderReset is called");
         adapter.swapCursor(null);
     }
 
     private void inflateGeneralEntry(Cursor cursor) {
-        NursingFragmentEntries entries = new NursingFragmentEntries();
-        entries.prepareEntries(cursor);
-        inflateLeftPercentageEntry(entries);
-        inflateRightPercentageEntry(entries);
-        inflateLeftDurationEntry(entries);
-        inflateRightDurationEntry(entries);
-        inflateFormulaVolumeEntry(entries);
-        inflatePieChart(entries);
+        NursingFragmentEntry entry = new NursingFragmentEntry();
+        entry.prepareEntry(cursor);
+        inflateLeftPercentageEntry(entry);
+        inflateRightPercentageEntry(entry);
+        inflateLeftDurationEntry(entry);
+        inflateRightDurationEntry(entry);
+        inflateFormulaVolumeEntry(entry);
+        inflatePieChart(entry);
     }
 
     private void inflateLastSideEntry(Cursor cursor) {
         if (isLeftSideLast(cursor)) {
             lastSideHandler.setTextColor(getResources().getColor(R.color.green));
-            lastSideImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_nursing_right));
+            lastSideImageHandler.setImageDrawable(getResources().getDrawable(R.drawable.ic_nursing_right));
         } else if (isRightSideLast(cursor)) {
             lastSideHandler.setTextColor(getResources().getColor(R.color.orange));
-            lastSideImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_nursing_left));
+            lastSideImageHandler.setImageDrawable(getResources().getDrawable(R.drawable.ic_nursing_left));
         }
     }
 
@@ -192,63 +190,58 @@ public class NursingFragment extends HistoryFragment
         return (cursor.getString(0).compareTo(Nursing.NursingType.LEFT.getTitle()) == 0);
     }
 
-    private void inflateLeftPercentageEntry(NursingFragmentEntries data) {
+    private void inflateLeftPercentageEntry(NursingFragmentEntry data) {
         leftPercentHandler.setText(
-                FormatUtils.fmtNursingPct(getActivity(), data.getLeftPercentage())
-        );
+                FormatUtils.fmtNursingPct(getActivity(), data.getLeftPercentage()));
     }
 
-    private void inflateRightPercentageEntry(NursingFragmentEntries data) {
+    private void inflateRightPercentageEntry(NursingFragmentEntry data) {
         rightPercentHandler.setText(
-                FormatUtils.fmtNursingPct(getActivity(), data.getRightPercentage())
-        );
+                FormatUtils.fmtNursingPct(getActivity(), data.getRightPercentage()));
     }
 
-    private void inflateLeftDurationEntry(NursingFragmentEntries data) {
+    private void inflateLeftDurationEntry(NursingFragmentEntry data) {
         leftDurationHandler.setText(
-                FormatUtils.fmtNursingDrt(getActivity(), String.valueOf(data.getLeftDuration()))
-        );
+                FormatUtils.fmtNursingDrt(getActivity(), String.valueOf(data.getLeftDuration())));
     }
 
-    private void inflateRightDurationEntry(NursingFragmentEntries data) {
+    private void inflateRightDurationEntry(NursingFragmentEntry data) {
         rightDurationHandler.setText(
-                FormatUtils.fmtNursingDrt(getActivity(), String.valueOf(data.getRightDuration()))
-        );
+                FormatUtils.fmtNursingDrt(getActivity(), String.valueOf(data.getRightDuration())));
     }
 
-    private void inflatePieChart(NursingFragmentEntries data) {
+    private void inflatePieChart(NursingFragmentEntry entry) {
         removeSlices();
-        drawLeftSlice(data);
-        drawRightSlice(data);
+        drawLeftSlice(entry);
+        drawRightSlice(entry);
     }
 
     private void removeSlices() {
-        leftRightGraph.removeSlices();
+        pieGraphHandler.removeSlices();
     }
 
-    private void drawLeftSlice(NursingFragmentEntries data) {
+    private void drawLeftSlice(NursingFragmentEntry data) {
         PieSlice leftSlice = new PieSlice();
         leftSlice.setColor(getResources().getColor(R.color.orange));
         leftSlice.setValue(data.getLeftDuration());
-        leftRightGraph.addSlice(leftSlice);
+        pieGraphHandler.addSlice(leftSlice);
     }
 
-    private void drawRightSlice(NursingFragmentEntries data) {
+    private void drawRightSlice(NursingFragmentEntry data) {
         PieSlice rightSlice = new PieSlice();
         rightSlice.setColor(getResources().getColor(R.color.green));
         rightSlice.setValue(data.getRightDuration());
-        leftRightGraph.addSlice(rightSlice);
+        pieGraphHandler.addSlice(rightSlice);
     }
 
-    private void inflateFormulaVolumeEntry(NursingFragmentEntries data) {
+    private void inflateFormulaVolumeEntry(NursingFragmentEntry data) {
         formulaDurationHandler.setText(
-                FormatUtils.fmtVolumeToday(getActivity(), String.valueOf(data.getFormulaVolume()))
-        );
+                FormatUtils.fmtVolumeToday(getActivity(), String.valueOf(data.getFormulaVolume())));
     }
 
-    private class NursingFragmentEntries {
+    private class NursingFragmentEntry {
 
-        DecimalFormat decimalConverter = new DecimalFormat("0.00");
+        private DecimalFormat decimalConverter = new DecimalFormat("0.00");
         private long duration;
         private long totalDuration;
         private long leftDuration;
@@ -256,7 +249,7 @@ public class NursingFragment extends HistoryFragment
         private long formulaVolume;
         private String side;
 
-        public void prepareEntries(Cursor cursor) {
+        public void prepareEntry(Cursor cursor) {
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
                 side = cursor.getString(BabyLogContract.Nursing.Query.OFFSET_SIDES);
                 duration = Long.valueOf(cursor.getString(BabyLogContract.Nursing.Query.OFFSET_DURATION));
