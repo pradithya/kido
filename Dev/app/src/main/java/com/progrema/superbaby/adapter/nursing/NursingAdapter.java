@@ -89,9 +89,13 @@ public class NursingAdapter extends CursorAdapter implements EntryAdapterService
                                 new PopupMenu.OnMenuItemClickListener() {
                                     @Override
                                     public boolean onMenuItemClick(MenuItem item) {
-                                        if (item.getTitle().equals("Edit")) {
-                                            editEntry(context, menuHandler);
-                                        } else if (item.getTitle().equals("Delete")) {
+                                        if (item.getTitle()
+                                                .equals(context.getResources()
+                                                        .getString(R.string.menu_update))) {
+                                            updateEntry(context, menuHandler);
+                                        } else if (item.getTitle()
+                                                .equals(context.getResources()
+                                                        .getString(R.string.menu_delete))) {
                                             deleteEntry(context, menuHandler);
                                         }
                                         return false;
@@ -114,7 +118,7 @@ public class NursingAdapter extends CursorAdapter implements EntryAdapterService
     }
 
     @Override
-    public void editEntry(Context context, View vEntry) {
+    public void updateEntry(Context context, View vEntry) {
     }
 
     private boolean isEntryType(String type) {

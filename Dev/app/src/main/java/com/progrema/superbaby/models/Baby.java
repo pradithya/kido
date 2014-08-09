@@ -90,4 +90,9 @@ public class Baby extends BaseActor {
     @Override
     public void delete(Context context) {
     }
+
+    @Override
+    public void update(Context context) {
+
+    }
 }

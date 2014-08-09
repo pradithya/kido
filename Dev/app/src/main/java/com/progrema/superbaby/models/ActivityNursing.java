@@ -90,6 +90,11 @@ public class ActivityNursing extends BaseActivity {
                 selectionArgs);
     }
 
+    @Override
+    public void update(Context context) {
+
+    }
+
     public enum NursingType {
         LEFT("LEFT"),
         RIGHT("RIGHT"),

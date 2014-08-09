@@ -89,4 +89,9 @@ public class User extends BaseActor {
     @Override
     public void delete(Context context) {
     }
+
+    @Override
+    public void update(Context context) {
+
+    }
 }

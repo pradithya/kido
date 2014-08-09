@@ -57,7 +57,10 @@ public class ActivityDiaper extends BaseActivity {
                 selectionArgs);
     }
 
+    @Override
+    public void update(Context context) {
 
+    }
 
     /**
      * enumeration for diaper type

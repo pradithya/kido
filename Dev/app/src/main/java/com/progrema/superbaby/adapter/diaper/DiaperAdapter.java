@@ -83,9 +83,13 @@ public class DiaperAdapter extends CursorAdapter implements EntryAdapterServices
                                 new PopupMenu.OnMenuItemClickListener() {
                                     @Override
                                     public boolean onMenuItemClick(MenuItem item) {
-                                        if (item.getTitle().equals("Edit")) {
-                                            editEntry(context, menuHandler);
-                                        } else if (item.getTitle().equals("Delete")) {
+                                        if (item.getTitle()
+                                                .equals(context.getResources()
+                                                        .getString(R.string.menu_update))) {
+                                            updateEntry(context, menuHandler);
+                                        } else if (item.getTitle()
+                                                .equals(context.getResources()
+                                                        .getString(R.string.menu_delete))) {
                                             deleteEntry(context, menuHandler);
                                         }
                                         return false;
@@ -109,7 +113,7 @@ public class DiaperAdapter extends CursorAdapter implements EntryAdapterServices
     }
 
     @Override
-    public void editEntry(Context context, View entry) {
+    public void updateEntry(Context context, View entry) {
 
     }
 

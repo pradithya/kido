@@ -63,4 +63,9 @@ public class UserBabyMap extends BaseModel {
     @Override
     public void delete(Context context) {
     }
+
+    @Override
+    public void update(Context context) {
+
+    }
 }

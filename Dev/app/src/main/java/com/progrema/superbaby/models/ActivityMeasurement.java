@@ -49,4 +49,9 @@ public class ActivityMeasurement extends BaseActivity {
                 "baby_id = ? AND activity_id = ?",
                 selectionArgs);
     }
+
+    @Override
+    public void update(Context context) {
+
+    }
 }
