@@ -92,7 +92,7 @@ public class NursingAdapter extends CursorAdapter implements EntryAdapterService
                                         if (item.getTitle()
                                                 .equals(context.getResources()
                                                         .getString(R.string.menu_edit))) {
-                                            editEntry(context, menuHandler);
+                                            editEntry(menuHandler);
                                         } else if (item.getTitle()
                                                 .equals(context.getResources()
                                                         .getString(R.string.menu_delete))) {
@@ -118,7 +118,7 @@ public class NursingAdapter extends CursorAdapter implements EntryAdapterService
     }
 
     @Override
-    public void editEntry(Context context, View vEntry) {
+    public void editEntry(View vEntry) {
     }
 
     private boolean isEntryType(String type) {

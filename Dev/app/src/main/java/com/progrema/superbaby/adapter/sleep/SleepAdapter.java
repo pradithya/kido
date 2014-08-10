@@ -87,7 +87,7 @@ public class SleepAdapter extends CursorAdapter implements EntryAdapterServices 
                                         if (item.getTitle()
                                                 .equals(context.getResources()
                                                         .getString(R.string.menu_edit))) {
-                                            editEntry(context, menuHandler);
+                                            editEntry(menuHandler);
                                         } else if (item.getTitle()
                                                 .equals(context.getResources()
                                                         .getString(R.string.menu_delete))) {
@@ -114,7 +114,7 @@ public class SleepAdapter extends CursorAdapter implements EntryAdapterServices 
     }
 
     @Override
-    public void editEntry(Context context, View entry) {
+    public void editEntry(View entry) {
 
     }
 

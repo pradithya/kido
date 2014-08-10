@@ -31,9 +31,14 @@ public class MeasurementAdapter extends CursorAdapter implements EntryAdapterSer
     private TextView heightHandler;
     private TextView weightHandler;
     private ImageView menuHandler;
+    private Callbacks callbacks;
 
     public MeasurementAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
+    }
+
+    public void setCallbacks(Callbacks listener) {
+        callbacks = listener;
     }
 
     @Override
@@ -79,13 +84,11 @@ public class MeasurementAdapter extends CursorAdapter implements EntryAdapterSer
                                 new PopupMenu.OnMenuItemClickListener() {
                                     @Override
                                     public boolean onMenuItemClick(MenuItem item) {
-                                        if (item.getTitle()
-                                                .equals(context.getResources()
-                                                        .getString(R.string.menu_edit))) {
-                                            editEntry(context, menuHandler);
-                                        } else if (item.getTitle()
-                                                .equals(context.getResources()
-                                                        .getString(R.string.menu_delete))) {
+                                        if (item.getTitle().equals(
+                                                context.getResources().getString(R.string.menu_edit))) {
+                                            editEntry(menuHandler);
+                                        } else if (item.getTitle().equals(
+                                                context.getResources().getString(R.string.menu_delete))) {
                                             deleteEntry(context, menuHandler);
                                         }
                                         return false;
@@ -109,8 +112,12 @@ public class MeasurementAdapter extends CursorAdapter implements EntryAdapterSer
     }
 
     @Override
-    public void editEntry(Context context, View entry) {
+    public void editEntry(View entry) {
+        callbacks.onMeasurementEntryEditSelected(entry);
+    }
 
+    public static interface Callbacks {
+        public void onMeasurementEntryEditSelected(View entry);
     }
 
 }

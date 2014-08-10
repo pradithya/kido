@@ -103,7 +103,7 @@ public class TimelineAdapter extends CursorAdapter implements EntryAdapterServic
                                     @Override
                                     public boolean onMenuItemClick(MenuItem item) {
                                         if (item.getTitle().equals("Edit")) {
-                                            editEntry(context, menuHandler);
+                                            editEntry(menuHandler);
                                         } else if (item.getTitle().equals("Delete")) {
                                             deleteEntry(context, menuHandler);
                                         }
@@ -161,7 +161,7 @@ public class TimelineAdapter extends CursorAdapter implements EntryAdapterServic
     }
 
     @Override
-    public void editEntry(Context context, View entry) {
+    public void editEntry(View entry) {
 
     }
 

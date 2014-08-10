@@ -52,6 +52,13 @@ public class ActivityMeasurement extends BaseActivity {
 
     @Override
     public void edit(Context context) {
-
+        String [] selectionArgs = {
+                String.valueOf(ActiveContext.getActiveBaby(context).getActivityId()),
+                String.valueOf(getActivityId())};
+        ContentValues values = new ContentValues();
+        values.put(BabyLogContract.Measurement.HEIGHT, getHeight());
+        values.put(BabyLogContract.Measurement.WEIGHT, getWeight());
+        context.getContentResolver().update(BabyLogContract.Measurement.CONTENT_URI, values,
+                "baby_id = ? AND activity_id = ?", selectionArgs);
     }
 }

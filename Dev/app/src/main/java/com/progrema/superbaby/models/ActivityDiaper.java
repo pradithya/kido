@@ -51,10 +51,8 @@ public class ActivityDiaper extends BaseActivity {
         String [] selectionArgs = {
                 String.valueOf(ActiveContext.getActiveBaby(context).getActivityId()),
                 String.valueOf(getActivityId())};
-        context.getContentResolver().delete(
-                BabyLogContract.Diaper.CONTENT_URI,
-                "baby_id = ? AND activity_id = ?",
-                selectionArgs);
+        context.getContentResolver().delete(BabyLogContract.Diaper.CONTENT_URI,
+                "baby_id = ? AND activity_id = ?", selectionArgs);
     }
 
     @Override
@@ -62,15 +60,10 @@ public class ActivityDiaper extends BaseActivity {
         String [] selectionArgs = {
                 String.valueOf(ActiveContext.getActiveBaby(context).getActivityId()),
                 String.valueOf(getActivityId())};
-
         ContentValues values = new ContentValues();
         values.put(BabyLogContract.Diaper.TYPE, getType().getTitle());
-
-        context.getContentResolver().update(
-                BabyLogContract.Diaper.CONTENT_URI,
-                values,
-                "baby_id = ? AND activity_id = ?",
-                selectionArgs);
+        context.getContentResolver().update(BabyLogContract.Diaper.CONTENT_URI, values,
+                "baby_id = ? AND activity_id = ?", selectionArgs);
     }
 
     /**

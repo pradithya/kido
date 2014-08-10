@@ -38,7 +38,7 @@ public class DiaperFragment extends HistoryFragment
     private static final int LOADER_TOTAL_WET = 4;
     private static final int LOADER_TOTAL_DRY = 5;
     private static final int LOADER_TOTAL_MIXED = 6;
-    private final static int RESULT_OK = 0;
+    private static final int RESULT_OK = 0;
 
     // Entry handler
     private TextView wetTotalHandler;

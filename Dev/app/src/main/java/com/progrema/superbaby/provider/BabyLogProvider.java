@@ -278,28 +278,20 @@ public class BabyLogProvider extends ContentProvider {
         switch (match) {
             case USER:
                 return builder.table(BabyLogDatabase.Tables.USER);
-
             case BABY:
                 return builder.table(BabyLogDatabase.Tables.BABY);
-
             case USER_BABY_MAP:
                 return builder.table(BabyLogDatabase.Tables.USER_BABY_MAP);
-
             case SLEEP:
                 return builder.table(BabyLogDatabase.Tables.SLEEP);
-
             case DIAPER:
                 return builder.table(BabyLogDatabase.Tables.DIAPER);
-
             case NURSING:
                 return builder.table(BabyLogDatabase.Tables.NURSING);
-
             case MEASUREMENT:
                 return builder.table(BabyLogDatabase.Tables.MEASUREMENT);
-
             case ACTIVITY:
                 return builder.table(BabyLogDatabase.Tables.ACTIVITY);
-
             default:
                 return null;
         }
