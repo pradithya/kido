@@ -22,6 +22,7 @@ import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 public class StopwatchFragment extends Fragment implements View.OnClickListener {
+
     private Stopwatch firstStopwatch;
     private Stopwatch secondStopwatch;
     private Stopwatch activeStopWatch;
@@ -36,6 +37,8 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
     private LinearLayout containerStopWatch2;
     private Calendar startTime;
     private String sourceTrigger;
+    private String editTrigger;
+    private String currentEntryTag;
     private String nursingType;
     private String formulaVolume;
     private boolean isTwoStopWatch;
@@ -52,12 +55,17 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
             sourceTrigger = args.getString(HomeActivity.ACTIVITY_TRIGGER_KEY);
         }
 
-        if (args.containsKey(ActivityNursing.NURSING_TYPE_KEY)) {
+        if (args != null && args.containsKey(HomeActivity.ACTIVITY_EDIT_KEY)) {
+            editTrigger = args.getString(HomeActivity.ACTIVITY_EDIT_KEY);
+            currentEntryTag = args.getString("currentEntryTag");
+        }
+
+        if (args != null && args.containsKey(ActivityNursing.NURSING_TYPE_KEY)) {
             nursingType = args.getString(ActivityNursing.NURSING_TYPE_KEY);
             isTwoStopWatch = true;
         }
 
-        if (args.containsKey(ActivityNursing.FORMULA_VOLUME_KEY)) {
+        if (args != null && args.containsKey(ActivityNursing.FORMULA_VOLUME_KEY)) {
             formulaVolume = args.getString(ActivityNursing.FORMULA_VOLUME_KEY);
             isTwoStopWatch = false;
         }
@@ -193,21 +201,49 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
             activityNursing.setBabyID(ActiveContext.getActiveBaby(getActivity()).getActivityId());
             if (isTwoStopWatch) {
                 if (firstDuration != 0) {
-                    activityNursing.setDuration(TimeUnit.SECONDS.toMillis(firstDuration));
-                    activityNursing.setType(ActivityNursing.NursingType.LEFT);
-                    activityNursing.insert(getActivity());
+                    if(editTrigger.compareTo(getResources().getString(R.string.menu_edit)) == 0) {
+                        //TODO: implement nursing update operation
+                        ActivityNursing editNursingEntry = new ActivityNursing();
+                        editNursingEntry.setActivityId(Long.valueOf(currentEntryTag));
+                        editNursingEntry.setDuration(TimeUnit.SECONDS.toMillis(firstDuration));
+                        editNursingEntry.setType(ActivityNursing.NursingType.LEFT);
+                        editNursingEntry.edit(getActivity());
+                    } else {
+                        activityNursing.setDuration(TimeUnit.SECONDS.toMillis(firstDuration));
+                        activityNursing.setType(ActivityNursing.NursingType.LEFT);
+                        activityNursing.insert(getActivity());
+                    }
                 }
                 if (secondDuration != 0) {
-                    activityNursing.setDuration(TimeUnit.SECONDS.toMillis(secondDuration));
-                    activityNursing.setType(ActivityNursing.NursingType.RIGHT);
-                    activityNursing.insert(getActivity());
+                    if(editTrigger.compareTo(getResources().getString(R.string.menu_edit)) == 0) {
+                        //TODO: implement nursing update operation
+                        ActivityNursing editNursingEntry = new ActivityNursing();
+                        editNursingEntry.setActivityId(Long.valueOf(currentEntryTag));
+                        editNursingEntry.setDuration(TimeUnit.SECONDS.toMillis(secondDuration));
+                        editNursingEntry.setType(ActivityNursing.NursingType.RIGHT);
+                        editNursingEntry.edit(getActivity());
+                    } else {
+                        activityNursing.setDuration(TimeUnit.SECONDS.toMillis(secondDuration));
+                        activityNursing.setType(ActivityNursing.NursingType.RIGHT);
+                        activityNursing.insert(getActivity());
+                    }
                 }
             } else {
                 // formula
-                activityNursing.setDuration(TimeUnit.SECONDS.toMillis(firstDuration));
-                activityNursing.setType(ActivityNursing.NursingType.valueOf(nursingType));
-                activityNursing.setVolume(Long.parseLong(formulaVolume, 10));
-                activityNursing.insert(getActivity());
+                if(editTrigger.compareTo(getResources().getString(R.string.menu_edit)) == 0) {
+                    //TODO: implement nursing update operation
+                    ActivityNursing editNursingEntry = new ActivityNursing();
+                    editNursingEntry.setActivityId(Long.valueOf(currentEntryTag));
+                    editNursingEntry.setDuration(TimeUnit.SECONDS.toMillis(firstDuration));
+                    editNursingEntry.setType(ActivityNursing.NursingType.FORMULA);
+                    editNursingEntry.setVolume(Long.parseLong(formulaVolume, 10));
+                    editNursingEntry.edit(getActivity());
+                } else {
+                    activityNursing.setDuration(TimeUnit.SECONDS.toMillis(firstDuration));
+                    activityNursing.setType(ActivityNursing.NursingType.FORMULA);
+                    activityNursing.setVolume(Long.parseLong(formulaVolume, 10));
+                    activityNursing.insert(getActivity());
+                }
             }
 
             // Go back to timeLine fragment
@@ -218,10 +254,6 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.home_activity_container, NursingFragment.getInstance());
             fragmentTransaction.commit();
-
         }
-
-
     }
-
 }

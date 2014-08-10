@@ -32,9 +32,14 @@ public class NursingAdapter extends CursorAdapter implements EntryAdapterService
     private TextView volumeHandler;
     private ImageView typeHandler;
     private ImageView menuHandler;
+    private Callbacks callbacks;
 
     public NursingAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
+    }
+
+    public void setCallbacks(Callbacks listener) {
+        callbacks = listener;
     }
 
     @Override
@@ -89,13 +94,11 @@ public class NursingAdapter extends CursorAdapter implements EntryAdapterService
                                 new PopupMenu.OnMenuItemClickListener() {
                                     @Override
                                     public boolean onMenuItemClick(MenuItem item) {
-                                        if (item.getTitle()
-                                                .equals(context.getResources()
-                                                        .getString(R.string.menu_edit))) {
+                                        if (item.getTitle().equals(
+                                                context.getResources().getString(R.string.menu_edit))) {
                                             editEntry(menuHandler);
-                                        } else if (item.getTitle()
-                                                .equals(context.getResources()
-                                                        .getString(R.string.menu_delete))) {
+                                        } else if (item.getTitle().equals(
+                                                context.getResources().getString(R.string.menu_delete))) {
                                             deleteEntry(context, menuHandler);
                                         }
                                         return false;
@@ -118,7 +121,8 @@ public class NursingAdapter extends CursorAdapter implements EntryAdapterService
     }
 
     @Override
-    public void editEntry(View vEntry) {
+    public void editEntry(View entry) {
+        callbacks.onNursingEntryEditSelected(entry);
     }
 
     private boolean isEntryType(String type) {
@@ -144,5 +148,9 @@ public class NursingAdapter extends CursorAdapter implements EntryAdapterService
         durationHandler.setTextColor(view.getResources().getColor(R.color.orange));
         timeHandler.setTextColor(view.getResources().getColor(R.color.orange));
         typeHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_left));
+    }
+
+    public static interface Callbacks {
+        public void onNursingEntryEditSelected(View entry);
     }
 }

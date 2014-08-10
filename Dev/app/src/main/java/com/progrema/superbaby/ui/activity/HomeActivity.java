@@ -43,7 +43,8 @@ public class HomeActivity extends FragmentActivity
         MeasurementDialog.Callbacks, ActionBar.OnNavigationListener {
 
     public final static int RESULT_OK = 0;
-    public final static String ACTIVITY_TRIGGER_KEY = "trigger";
+    public final static String ACTIVITY_TRIGGER_KEY = "triggerKey";
+    public final static String ACTIVITY_EDIT_KEY = "editKey";
 
     /**
      * Used to locate the fragment position
@@ -238,6 +239,7 @@ public class HomeActivity extends FragmentActivity
         if (resultCode == RESULT_OK) {
             Bundle bundle = data.getExtras();
             bundle.putString(HomeActivity.ACTIVITY_TRIGGER_KEY, HomeActivity.Trigger.NURSING.getTitle());
+            bundle.putString(HomeActivity.ACTIVITY_EDIT_KEY, getResources().getString(R.string.menu_edit));
             StopwatchFragment stopwatchFragment = StopwatchFragment.getInstance();
             stopwatchFragment.setArguments(bundle);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

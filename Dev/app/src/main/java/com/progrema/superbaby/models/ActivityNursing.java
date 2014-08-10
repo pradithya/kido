@@ -92,7 +92,18 @@ public class ActivityNursing extends BaseActivity {
 
     @Override
     public void edit(Context context) {
-
+        // TODO: debug on last side is not update if update left or right
+        String [] selectionArgs = {
+                String.valueOf(ActiveContext.getActiveBaby(context).getActivityId()),
+                String.valueOf(getActivityId())};
+        ContentValues values = new ContentValues();
+        values.put(BabyLogContract.Nursing.DURATION, getDuration());
+        values.put(BabyLogContract.Nursing.SIDES, getType().getTitle());
+        if(getType().getTitle().equals(NursingType.FORMULA.getTitle())){
+            values.put(BabyLogContract.Nursing.VOLUME, getVolume());
+        }
+        context.getContentResolver().update(BabyLogContract.Nursing.CONTENT_URI, values,
+                "baby_id = ? AND activity_id = ?", selectionArgs);
     }
 
     public enum NursingType {

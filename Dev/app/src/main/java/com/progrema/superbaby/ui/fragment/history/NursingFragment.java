@@ -1,8 +1,10 @@
 package com.progrema.superbaby.ui.fragment.history;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -18,6 +20,8 @@ import com.progrema.superbaby.holograph.PieGraph;
 import com.progrema.superbaby.holograph.PieSlice;
 import com.progrema.superbaby.models.ActivityNursing;
 import com.progrema.superbaby.provider.BabyLogContract;
+import com.progrema.superbaby.ui.activity.HomeActivity;
+import com.progrema.superbaby.ui.fragment.dialog.NursingDialog;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.FormatUtils;
 import com.progrema.superbaby.widget.customfragment.HistoryFragment;
@@ -26,12 +30,14 @@ import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 import java.text.DecimalFormat;
 
 public class NursingFragment extends HistoryFragment
-        implements LoaderManager.LoaderCallbacks<Cursor>, HistoryFragmentServices {
+        implements LoaderManager.LoaderCallbacks<Cursor>,
+        HistoryFragmentServices, NursingAdapter.Callbacks, NursingDialog.Callbacks {
 
     // Asynchronous cursor loader type
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_GENERAL_ENTRY = 1;
     private static final int LOADER_LAST_SIDE_ENTRY = 2;
+    private static final int RESULT_OK = 0;
 
     // Entry handler
     private TextView leftPercentHandler;
@@ -48,6 +54,7 @@ public class NursingFragment extends HistoryFragment
     private ObserveableListView nursingHistoryList;
     private View root;
     private View placeholder;
+    private String currentEntryTag;
 
     public static NursingFragment getInstance() {
         return new NursingFragment();
@@ -89,9 +96,35 @@ public class NursingFragment extends HistoryFragment
     public void prepareListView() {
         nursingHistoryList = (ObserveableListView) root.findViewById(R.id.activity_list);
         adapter = new NursingAdapter(getActivity(), null, 0);
+        adapter.setCallbacks(this);
         nursingHistoryList.addHeaderView(placeholder);
         nursingHistoryList.setAdapter(adapter);
         super.attachListView(nursingHistoryList);
+    }
+
+    @Override
+    public void onNursingEntryEditSelected(View entry) {
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        currentEntryTag = entry.getTag().toString();
+        NursingDialog nursingChoiceBox = NursingDialog.getInstance();
+        nursingChoiceBox.setCallbacks(this);
+        nursingChoiceBox.show(fragmentTransaction, "nursing_dialog");
+    }
+
+    @Override
+    public void onNursingChoiceSelected(int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            bundle.putString(HomeActivity.ACTIVITY_TRIGGER_KEY, HomeActivity.Trigger.NURSING.getTitle());
+            bundle.putString(HomeActivity.ACTIVITY_EDIT_KEY, getResources().getString(R.string.menu_edit));
+            bundle.putString("currentEntryTag", currentEntryTag);
+            //TODO: for update operation, we can't use stopwatch. Use simpler UI method instead.
+            StopwatchFragment stopwatchFragment = StopwatchFragment.getInstance();
+            stopwatchFragment.setArguments(bundle);
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.home_activity_container, stopwatchFragment);
+            fragmentTransaction.commit();
+        }
     }
 
     @Override
