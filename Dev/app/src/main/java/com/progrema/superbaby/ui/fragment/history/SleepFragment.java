@@ -3,6 +3,7 @@ package com.progrema.superbaby.ui.fragment.history;
 import android.app.ActionBar;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -16,6 +17,7 @@ import com.progrema.superbaby.adapter.sleep.SleepAdapter;
 import com.progrema.superbaby.holograph.PieGraph;
 import com.progrema.superbaby.holograph.PieSlice;
 import com.progrema.superbaby.provider.BabyLogContract;
+import com.progrema.superbaby.ui.activity.HomeActivity;
 import com.progrema.superbaby.util.FormatUtils;
 import com.progrema.superbaby.widget.customfragment.HistoryFragment;
 import com.progrema.superbaby.widget.customlistview.ObserveableListView;
@@ -23,7 +25,7 @@ import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 import java.text.DecimalFormat;
 
 public class SleepFragment extends HistoryFragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, HistoryFragmentServices {
+        LoaderManager.LoaderCallbacks<Cursor>, HistoryFragmentServices, SleepAdapter.Callbacks {
 
     // Asynchronous cursor loader type
     private static final int LOADER_LIST_VIEW = 0;
@@ -81,9 +83,24 @@ public class SleepFragment extends HistoryFragment implements
     public void prepareListView() {
         sleepHistoryList = (ObserveableListView) root.findViewById(R.id.activity_list);
         adapter = new SleepAdapter(getActivity(), null, 0);
+        adapter.setCallbacks(this);
         sleepHistoryList.addHeaderView(placeholder);
         sleepHistoryList.setAdapter(adapter);
         super.attachListView(sleepHistoryList);
+    }
+
+    @Override
+    public void onNursingSleepEditSelected(View entry) {
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        // Inform the stopwatch to start counting for sleep
+        Bundle bundle = new Bundle();
+        bundle.putString(HomeActivity.ACTIVITY_TRIGGER_KEY, HomeActivity.Trigger.SLEEP.getTitle());
+        bundle.putString(HomeActivity.ACTIVITY_EDIT_KEY, getResources().getString(R.string.menu_edit));
+        bundle.putString(HomeActivity.ACTIVITY_ENTRY_TAG_KEY, entry.getTag().toString());
+        StopwatchFragment frStopWatch = StopwatchFragment.getInstance();
+        frStopWatch.setArguments(bundle);
+        fragmentTransaction.replace(R.id.home_activity_container, frStopWatch);
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -160,13 +177,11 @@ public class SleepFragment extends HistoryFragment implements
     private void inflateNapDurationEntry(SleepFragmentEntry entry) {
         napDurationHandler.setText(
                 FormatUtils.fmtSleepNapDrt(getActivity(), String.valueOf(entry.getNapDuration())));
-
     }
 
     private void inflateNightDurationEntry(SleepFragmentEntry entry) {
         nightDurationHandler.setText(
                 FormatUtils.fmtSleepNightDrt(getActivity(), String.valueOf(entry.getNightDuration())));
-
     }
 
     private void inflateTotalSleepDurationEntry(SleepFragmentEntry entry) {

@@ -31,9 +31,14 @@ public class SleepAdapter extends CursorAdapter implements EntryAdapterServices 
     private TextView timeHandler;
     private ImageView typeHandler;
     private ImageView menuHandler;
+    private Callbacks callbacks;
 
     public SleepAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
+    }
+
+    public void setCallbacks(Callbacks listener) {
+        callbacks = listener;
     }
 
     @Override
@@ -115,7 +120,7 @@ public class SleepAdapter extends CursorAdapter implements EntryAdapterServices 
 
     @Override
     public void editEntry(View entry) {
-
+        callbacks.onNursingSleepEditSelected(entry);
     }
 
     private void inflateNightSleepEntryLayout(View view) {
@@ -130,6 +135,10 @@ public class SleepAdapter extends CursorAdapter implements EntryAdapterServices 
         durationHandler.setTextColor(view.getResources().getColor(R.color.orange));
         timeHandler.setTextColor(view.getResources().getColor(R.color.orange));
         timeBoundaryHandler.setTextColor(view.getResources().getColor(R.color.orange));
+    }
+
+    public static interface Callbacks {
+        public void onNursingSleepEditSelected(View entry);
     }
 
 }

@@ -45,6 +45,7 @@ public class HomeActivity extends FragmentActivity
     public final static int RESULT_OK = 0;
     public final static String ACTIVITY_TRIGGER_KEY = "triggerKey";
     public final static String ACTIVITY_EDIT_KEY = "editKey";
+    public final static String ACTIVITY_ENTRY_TAG_KEY = "entryTag";
 
     /**
      * Used to locate the fragment position

@@ -64,6 +64,12 @@ public class ActivitySleep extends BaseActivity {
 
     @Override
     public void edit(Context context) {
-
+        String [] selectionArgs = {
+                String.valueOf(ActiveContext.getActiveBaby(context).getActivityId()),
+                String.valueOf(getActivityId())};
+        ContentValues values = new ContentValues();
+        values.put(BabyLogContract.Sleep.DURATION, getDuration());
+        context.getContentResolver().update(BabyLogContract.Sleep.CONTENT_URI, values,
+                "baby_id = ? AND activity_id = ?", selectionArgs);
     }
 }

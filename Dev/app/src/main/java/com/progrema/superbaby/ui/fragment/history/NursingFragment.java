@@ -117,7 +117,7 @@ public class NursingFragment extends HistoryFragment
             Bundle bundle = data.getExtras();
             bundle.putString(HomeActivity.ACTIVITY_TRIGGER_KEY, HomeActivity.Trigger.NURSING.getTitle());
             bundle.putString(HomeActivity.ACTIVITY_EDIT_KEY, getResources().getString(R.string.menu_edit));
-            bundle.putString("currentEntryTag", currentEntryTag);
+            bundle.putString(HomeActivity.ACTIVITY_ENTRY_TAG_KEY, currentEntryTag);
             //TODO: for update operation, we can't use stopwatch. Use simpler UI method instead.
             StopwatchFragment stopwatchFragment = StopwatchFragment.getInstance();
             stopwatchFragment.setArguments(bundle);
