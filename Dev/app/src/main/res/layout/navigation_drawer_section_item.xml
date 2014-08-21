@@ -7,9 +7,11 @@
 
     <TextView
         android:id="@+id/text_title"
-        style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/default_font" />
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:textColor="@color/black" />
 
 </LinearLayout>
