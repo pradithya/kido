@@ -33,13 +33,10 @@ public class NursingFragment extends HistoryFragment
         implements LoaderManager.LoaderCallbacks<Cursor>,
         HistoryFragmentServices, NursingAdapter.Callbacks, NursingDialog.Callbacks {
 
-    // Asynchronous cursor loader type
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_GENERAL_ENTRY = 1;
     private static final int LOADER_LAST_SIDE_ENTRY = 2;
     private static final int RESULT_OK = 0;
-
-    // Entry handler
     private TextView leftPercentHandler;
     private TextView rightPercentHandler;
     private TextView rightDurationHandler;
@@ -48,8 +45,6 @@ public class NursingFragment extends HistoryFragment
     private TextView lastSideHandler;
     private ImageView lastSideImageHandler;
     private PieGraph pieGraphHandler;
-
-    // List view operation
     private NursingAdapter adapter;
     private ObserveableListView nursingHistoryList;
     private View root;

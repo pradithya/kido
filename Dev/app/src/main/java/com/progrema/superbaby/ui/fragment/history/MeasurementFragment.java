@@ -29,12 +29,8 @@ public class MeasurementFragment extends Fragment
         MeasurementAdapter.Callbacks, MeasurementDialog.Callbacks {
 
     //TODO: how can I improve this fragment? What information should the header contains?
-
-    // Asynchronous cursor loader type
     private static final int LOADER_LIST_VIEW = 0;
     private static final int RESULT_OK = 0;
-
-    // List view operation
     private ObserveableListView measurementHistoryList;
     private MeasurementAdapter adapter;
     private String timeFilterStart;
@@ -85,25 +81,6 @@ public class MeasurementFragment extends Fragment
             activityMeasurement.setHeight(Float.valueOf(recordData.getString(ActivityMeasurement.HEIGHT_KEY)));
             activityMeasurement.setWeight(Float.valueOf(recordData.getString(ActivityMeasurement.WEIGHT_KEY)));
             activityMeasurement.edit(getActivity());
-
-//            Bundle recordData = data.getExtras();
-//            String diaperType = (String) recordData.get(ActivityDiaper.DIAPER_TYPE_KEY);
-//            ActivityDiaper activityDiaper = new ActivityDiaper();
-//            activityDiaper.setActivityId(Long.valueOf(currentEntryTag));
-//            activityDiaper.setType(ActivityDiaper.DiaperType.valueOf(diaperType));
-//            activityDiaper.edit(getActivity());
-
-//            Calendar currentTime = Calendar.getInstance();
-//            Bundle recordData = data.getExtras();
-//            ActivityMeasurement activityMeasurement = new ActivityMeasurement();
-//            activityMeasurement.setBabyID(ActiveContext.getActiveBaby(this).getActivityId());
-//            activityMeasurement.setTimeStamp(String.valueOf(currentTime.getTimeInMillis()));
-//            activityMeasurement.setHeight(Float.valueOf(recordData.getString(ActivityMeasurement.HEIGHT_KEY)));
-//            activityMeasurement.setWeight(Float.valueOf(recordData.getString(ActivityMeasurement.WEIGHT_KEY)));
-//            activityMeasurement.insert(this);
-//            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//            fragmentTransaction.replace(R.id.home_activity_container, MeasurementFragment.getInstance());
-//            fragmentTransaction.commit();
         }
     }
 

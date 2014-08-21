@@ -30,7 +30,6 @@ public class DiaperFragment extends HistoryFragment
         implements LoaderManager.LoaderCallbacks<Cursor>,
         HistoryFragmentServices, DiaperAdapter.Callbacks, DiaperDialog.Callbacks {
 
-    // Asynchronous cursor loader type
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_LAST_WET = 1;
     private static final int LOADER_LAST_DRY = 2;
@@ -39,8 +38,6 @@ public class DiaperFragment extends HistoryFragment
     private static final int LOADER_TOTAL_DRY = 5;
     private static final int LOADER_TOTAL_MIXED = 6;
     private static final int RESULT_OK = 0;
-
-    // Entry handler
     private TextView wetTotalHandler;
     private TextView WetLastHandler;
     private TextView dryTotalHandler;
@@ -48,8 +45,6 @@ public class DiaperFragment extends HistoryFragment
     private TextView mixedTotalHandler;
     private TextView mixedLastHandler;
     private PieGraph pieGraphHandler;
-
-    // List view operation
     private ObserveableListView diaperHistoryList;
     private DiaperAdapter adapter;
     private View root;

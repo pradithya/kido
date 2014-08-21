@@ -27,19 +27,14 @@ import java.text.DecimalFormat;
 public class SleepFragment extends HistoryFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, HistoryFragmentServices, SleepAdapter.Callbacks {
 
-    // Asynchronous cursor loader type
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_GENERAL_ENTRY = 1;
-
-    // Entry handler
     private TextView nightPercentHandler;
     private TextView napPercentHandler;
     private TextView nightDurationHandler;
     private TextView napDurationHandler;
     private TextView totalDurationHandler;
     private PieGraph pieGraphHandler;
-
-    // List view operation
     private ObserveableListView sleepHistoryList;
     private SleepAdapter adapter;
     private View root;
@@ -92,7 +87,6 @@ public class SleepFragment extends HistoryFragment implements
     @Override
     public void onNursingSleepEditSelected(View entry) {
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        // Inform the stopwatch to start counting for sleep
         Bundle bundle = new Bundle();
         bundle.putString(HomeActivity.ACTIVITY_TRIGGER_KEY, HomeActivity.Trigger.SLEEP.getTitle());
         bundle.putString(HomeActivity.ACTIVITY_EDIT_KEY, getResources().getString(R.string.menu_edit));
