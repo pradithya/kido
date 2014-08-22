@@ -8,9 +8,10 @@
     <ImageView
         android:id="@+id/thumbnail_section"
         android:layout_width="0dp"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="?android:attr/activatedBackgroundIndicator"
         android:padding="8dp"/>
 
     <TextView

@@ -7,20 +7,26 @@
 
     <Button
         android:id="@+id/dialog_choice_dry"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_diaper_dry"
         android:text="Dry" />
 
     <Button
         android:id="@+id/dialog_choice_wet"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_diaper_wet"
         android:text="Wet" />
 
     <Button
         android:id="@+id/dialog_choice_mixed"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_diaper_mixed"
         android:text="Mixed" />
 
 </LinearLayout>
