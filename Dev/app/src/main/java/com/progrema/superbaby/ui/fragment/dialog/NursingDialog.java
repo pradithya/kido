@@ -1,5 +1,8 @@
 package com.progrema.superbaby.ui.fragment.dialog;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -16,7 +19,11 @@ import com.progrema.superbaby.models.ActivityNursing;
 import com.progrema.superbaby.util.FormatUtils;
 
 public class NursingDialog extends DialogFragment {
+
     private Callbacks mCallbacks;
+    private static final int LEFT = 0;
+    private static final int RIGHT = 1;
+    private static final int FORMULA = 2;
 
     public static NursingDialog getInstance() {
         return new NursingDialog();
@@ -27,58 +34,56 @@ public class NursingDialog extends DialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_fragment_nursing, parent, false);
-        Button buttonLeft = (Button) view.findViewById(R.id.dialog_choice_left);
-        buttonLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent result = new Intent();
-                result.putExtra(ActivityNursing.NURSING_TYPE_KEY, ActivityNursing.NursingType.LEFT.getTitle());
-                NursingDialog.this.mCallbacks.onNursingChoiceSelected(0, result);
-                getDialog().dismiss();
-            }
-        });
-        Button buttonRight = (Button) view.findViewById(R.id.dialog_choice_right);
-        buttonRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent result = new Intent();
-                result.putExtra(ActivityNursing.NURSING_TYPE_KEY, ActivityNursing.NursingType.RIGHT.getTitle());
-                NursingDialog.this.mCallbacks.onNursingChoiceSelected(0, result);
-                getDialog().dismiss();
-            }
-        });
-        Button buttonFormula = (Button) view.findViewById(R.id.dialog_choice_formula);
-        buttonFormula.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LinearLayout extraInfoFormula =
-                        (LinearLayout) getDialog().findViewById(R.id.container_formula_entry);
-                extraInfoFormula.setVisibility(View.VISIBLE);
-            }
-        });
-        Button formulaOK = (Button) view.findViewById(R.id.button_formula_ok);
-        formulaOK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText inputVolume = (EditText) getDialog().findViewById(R.id.entry_text_volume);
-                String volume = inputVolume.getText().toString();
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.nursing_dialog_title)
+                .setItems(R.array.nursing_selection, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case LEFT:
+                                insertLeftEntry();
+                                break;
+                            case RIGHT:
+                                insertRightEntry();
+                                break;
+                            case FORMULA:
+                                insertFormulaEntry();
+                                break;
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.diaper_dialog_negative_button, null);
+        return builder.create();
+    }
 
-                if (!FormatUtils.isValidNumber(volume)) {
-                    Toast invalidNumber =
-                            Toast.makeText(getActivity(), "invalid number", Toast.LENGTH_LONG);
-                    invalidNumber.show();
-                    return; //invalid volume
-                }
-                Intent result = new Intent();
-                result.putExtra(ActivityNursing.NURSING_TYPE_KEY, ActivityNursing.NursingType.FORMULA.getTitle());
-                result.putExtra(ActivityNursing.FORMULA_VOLUME_KEY, volume);
-                NursingDialog.this.mCallbacks.onNursingChoiceSelected(0, result);
-                getDialog().dismiss();
-            }
-        });
-        return view;
+    private void insertLeftEntry() {
+        Intent result = new Intent();
+        result.putExtra(ActivityNursing.NURSING_TYPE_KEY, ActivityNursing.NursingType.LEFT.getTitle());
+        NursingDialog.this.mCallbacks.onNursingChoiceSelected(0, result);
+        getDialog().dismiss();
+    }
+
+    private void insertRightEntry() {
+        Intent result = new Intent();
+        result.putExtra(ActivityNursing.NURSING_TYPE_KEY, ActivityNursing.NursingType.RIGHT.getTitle());
+        NursingDialog.this.mCallbacks.onNursingChoiceSelected(0, result);
+        getDialog().dismiss();
+    }
+
+    private void insertFormulaEntry() {
+        EditText inputVolume = (EditText) getDialog().findViewById(R.id.entry_text_volume);
+        String volume = inputVolume.getText().toString();
+        if (!FormatUtils.isValidNumber(volume)) {
+            Toast invalidNumber =
+                    Toast.makeText(getActivity(), "invalid number", Toast.LENGTH_LONG);
+            invalidNumber.show();
+            return; //invalid volume
+        }
+        Intent result = new Intent();
+        result.putExtra(ActivityNursing.NURSING_TYPE_KEY, ActivityNursing.NursingType.FORMULA.getTitle());
+        result.putExtra(ActivityNursing.FORMULA_VOLUME_KEY, volume);
+        NursingDialog.this.mCallbacks.onNursingChoiceSelected(0, result);
+        getDialog().dismiss();
     }
 
     public static interface Callbacks {

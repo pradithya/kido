@@ -114,6 +114,14 @@
         <item>Mixed</item>
     </string-array>
 
+    <string name="nursing_dialog_title">Choose nursing type</string>
+    <string name="nursing_dialog_negative_button">Cancel</string>
+    <string-array name="nursing_selection">
+        <item>Left</item>
+        <item>Right</item>
+        <item>Formula</item>
+    </string-array>
+
     <string name="menu_edit">Edit</string>
     <string name="menu_delete">Delete</string>
 
