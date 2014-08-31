@@ -106,7 +106,7 @@
         <item>All</item>
     </string-array>
 
-    <string name="diaper_dialog_title">Choose diaper type</string>
+    <string name="diaper_dialog_title">Diaper type</string>
     <string name="diaper_dialog_negative_button">Cancel</string>
     <string-array name="diaper_selection">
         <item>Dry</item>
@@ -114,13 +114,17 @@
         <item>Mixed</item>
     </string-array>
 
-    <string name="nursing_dialog_title">Choose nursing type</string>
+    <string name="nursing_dialog_title">Nursing type</string>
     <string name="nursing_dialog_negative_button">Cancel</string>
     <string-array name="nursing_selection">
         <item>Left</item>
         <item>Right</item>
         <item>Formula</item>
     </string-array>
+
+    <string name="measurement_dialog_title">Baby growth data</string>
+    <string name="measurement_dialog_negative_button">Cancel</string>
+    <string name="measurement_dialog_positive_button">OK</string>
 
     <string name="menu_edit">Edit</string>
     <string name="menu_delete">Delete</string>
