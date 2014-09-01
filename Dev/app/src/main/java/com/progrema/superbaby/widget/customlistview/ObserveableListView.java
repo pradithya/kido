@@ -10,7 +10,7 @@ import android.widget.ListView;
 
 public class ObserveableListView extends ListView {
 
-    private Callbacks cCallbacks;
+    private Callback callback;
     private boolean bIsScrollUp = true;
     private boolean bScrollIsComputed = false;
     private float fLastTouchX;
@@ -37,8 +37,8 @@ public class ObserveableListView extends ListView {
         super(context, attrs, defStyle);
     }
 
-    public void setCallbacks(Callbacks listener) {
-        cCallbacks = listener;
+    public void setCallbacks(Callback listener) {
+        callback = listener;
     }
 
     public int getListHeight() {
@@ -53,6 +53,7 @@ public class ObserveableListView extends ListView {
 
         for (int i = 0; i < iItemCount; ++i) {
             /**
+             * Performance improvement:
              * First iteration is Header, second and the rest are Entry.
              * We don't measure all the entry's height since it's all the same to
              * improve the performance.
@@ -104,7 +105,7 @@ public class ObserveableListView extends ListView {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        if (cCallbacks != null) {
+        if (callback != null) {
             switch (ev.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN: {
                     final int iPointerIndex = MotionEventCompat.getActionIndex(ev);
@@ -140,12 +141,12 @@ public class ObserveableListView extends ListView {
 
                     if (fDeltaY > SCROLLING_BUFFER) {
                         if (!bIsScrollUp) {
-                            cCallbacks.onScrollDown();
+                            callback.onScrollDown();
                             bIsScrollUp = true;
                         }
                     } else if (fDeltaY < -SCROLLING_BUFFER) {
                         if (bIsScrollUp) {
-                            cCallbacks.onScrollUp();
+                            callback.onScrollUp();
                             bIsScrollUp = false;
                         }
                     }
@@ -183,7 +184,7 @@ public class ObserveableListView extends ListView {
         return super.onTouchEvent(ev);
     }
 
-    public static interface Callbacks {
+    public static interface Callback {
         public void onScrollUp();
         public void onScrollDown();
     }

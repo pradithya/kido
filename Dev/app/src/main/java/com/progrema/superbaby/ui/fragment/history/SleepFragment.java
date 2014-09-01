@@ -25,7 +25,7 @@ import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 import java.text.DecimalFormat;
 
 public class SleepFragment extends HistoryFragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, HistoryFragmentServices, SleepAdapter.Callbacks {
+        LoaderManager.LoaderCallbacks<Cursor>, HistoryFragmentServices, SleepAdapter.Callback {
 
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_GENERAL_ENTRY = 1;
@@ -78,7 +78,7 @@ public class SleepFragment extends HistoryFragment implements
     public void prepareListView() {
         sleepHistoryList = (ObserveableListView) root.findViewById(R.id.activity_list);
         adapter = new SleepAdapter(getActivity(), null, 0);
-        adapter.setCallbacks(this);
+        adapter.setCallback(this);
         sleepHistoryList.addHeaderView(placeholder);
         sleepHistoryList.setAdapter(adapter);
         super.attachListView(sleepHistoryList);

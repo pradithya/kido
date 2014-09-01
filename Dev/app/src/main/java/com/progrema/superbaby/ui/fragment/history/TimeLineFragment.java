@@ -1,7 +1,6 @@
 package com.progrema.superbaby.ui.fragment.history;
 
 import android.app.ActionBar;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -30,8 +29,8 @@ import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 
 public class TimelineFragment extends HistoryFragment
         implements LoaderManager.LoaderCallbacks<Cursor>, HistoryFragmentServices,
-        TimelineAdapter.Callbacks, DiaperDialog.Callbacks, NursingDialog.Callbacks ,
-        MeasurementDialog.Callbacks{
+        TimelineAdapter.Callback, DiaperDialog.Callback, NursingDialog.Callback,
+        MeasurementDialog.Callback {
 
     private static final int LOADER_LIST_VIEW = 0;
     private static final int RESULT_OK = 0;
@@ -81,7 +80,7 @@ public class TimelineFragment extends HistoryFragment
     public void prepareListView() {
         timelineHistoryList = (ObserveableListView) root.findViewById(R.id.activity_list);
         adapter = new TimelineAdapter(getActivity(), null, 0);
-        adapter.setCallbacks(this);
+        adapter.setCallback(this);
         timelineHistoryList.addHeaderView(placeholder);
         timelineHistoryList.setAdapter(adapter);
         super.attachListView(timelineHistoryList);
@@ -119,7 +118,7 @@ public class TimelineFragment extends HistoryFragment
         activityId = id;
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         DiaperDialog diaperChoiceBox = DiaperDialog.getInstance();
-        diaperChoiceBox.setCallbacks(this);
+        diaperChoiceBox.setCallback(this);
         diaperChoiceBox.show(fragmentTransaction, "diaper_dialog");
     }
 
@@ -139,7 +138,7 @@ public class TimelineFragment extends HistoryFragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         activityId = id;
         NursingDialog nursingChoiceBox = NursingDialog.getInstance();
-        nursingChoiceBox.setCallbacks(this);
+        nursingChoiceBox.setCallback(this);
         nursingChoiceBox.show(fragmentTransaction, "nursing_dialog");
     }
 
@@ -163,7 +162,7 @@ public class TimelineFragment extends HistoryFragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         activityId = id;
         MeasurementDialog measurementChoiceBox = MeasurementDialog.getInstance();
-        measurementChoiceBox.setCallbacks(this);
+        measurementChoiceBox.setCallback(this);
         measurementChoiceBox.show(fragmentTransaction, "measurement_dialog");
     }
 

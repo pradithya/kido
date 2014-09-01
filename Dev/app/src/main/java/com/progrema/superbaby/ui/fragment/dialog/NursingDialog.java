@@ -6,12 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.progrema.superbaby.R;
@@ -20,7 +15,7 @@ import com.progrema.superbaby.util.FormatUtils;
 
 public class NursingDialog extends DialogFragment {
 
-    private Callbacks mCallbacks;
+    private Callback callback;
     private static final int LEFT = 0;
     private static final int RIGHT = 1;
     private static final int FORMULA = 2;
@@ -29,8 +24,8 @@ public class NursingDialog extends DialogFragment {
         return new NursingDialog();
     }
 
-    public void setCallbacks(Callbacks listener) {
-        mCallbacks = listener;
+    public void setCallback(Callback listener) {
+        callback = listener;
     }
 
     @Override
@@ -59,34 +54,38 @@ public class NursingDialog extends DialogFragment {
     private void insertLeftEntry() {
         Intent result = new Intent();
         result.putExtra(ActivityNursing.NURSING_TYPE_KEY, ActivityNursing.NursingType.LEFT.getTitle());
-        NursingDialog.this.mCallbacks.onNursingChoiceSelected(0, result);
+        NursingDialog.this.callback.onNursingChoiceSelected(0, result);
         getDialog().dismiss();
     }
 
     private void insertRightEntry() {
         Intent result = new Intent();
         result.putExtra(ActivityNursing.NURSING_TYPE_KEY, ActivityNursing.NursingType.RIGHT.getTitle());
-        NursingDialog.this.mCallbacks.onNursingChoiceSelected(0, result);
+        NursingDialog.this.callback.onNursingChoiceSelected(0, result);
         getDialog().dismiss();
     }
 
     private void insertFormulaEntry() {
         EditText inputVolume = (EditText) getDialog().findViewById(R.id.entry_text_volume);
         String volume = inputVolume.getText().toString();
-        if (!FormatUtils.isValidNumber(volume)) {
-            Toast invalidNumber =
-                    Toast.makeText(getActivity(), "invalid number", Toast.LENGTH_LONG);
-            invalidNumber.show();
-            return; //invalid volume
-        }
+        if (!checkFormulaEntry(volume)) return;
         Intent result = new Intent();
         result.putExtra(ActivityNursing.NURSING_TYPE_KEY, ActivityNursing.NursingType.FORMULA.getTitle());
         result.putExtra(ActivityNursing.FORMULA_VOLUME_KEY, volume);
-        NursingDialog.this.mCallbacks.onNursingChoiceSelected(0, result);
+        NursingDialog.this.callback.onNursingChoiceSelected(0, result);
         getDialog().dismiss();
     }
 
-    public static interface Callbacks {
+    private boolean checkFormulaEntry(String volume) {
+        if (!FormatUtils.isValidNumber(volume)) {
+            Toast invalidNumber = Toast.makeText(getActivity(), "invalid number", Toast.LENGTH_LONG);
+            invalidNumber.show();
+            return false;
+        }
+        return true;
+    }
+
+    public static interface Callback {
         public void onNursingChoiceSelected(int resultCode, Intent data);
     }
 }

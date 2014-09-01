@@ -17,7 +17,7 @@ import com.progrema.superbaby.util.FormatUtils;
 
 public class MeasurementDialog extends DialogFragment {
 
-    private Callbacks mCallbacks;
+    private Callback callback;
     private String height;
     private String weight;
 
@@ -25,8 +25,8 @@ public class MeasurementDialog extends DialogFragment {
         return new MeasurementDialog();
     }
 
-    public void setCallbacks(Callbacks listener) {
-        mCallbacks = listener;
+    public void setCallback(Callback listener) {
+        callback = listener;
     }
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class MeasurementDialog extends DialogFragment {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 getHeight();
-                                getWeigh();
+                                getWeight();
                                 if (!checkHeightAndWeight()) return;
                                 submitAndDismissDialog();
                             }
@@ -53,7 +53,7 @@ public class MeasurementDialog extends DialogFragment {
         height = inputHeight.getText().toString();
     }
 
-    private void getWeigh() {
+    private void getWeight() {
         EditText inputWeight = (EditText) getDialog().findViewById(R.id.entry_text_weight);
         weight = inputWeight.getText().toString();
     }
@@ -71,11 +71,11 @@ public class MeasurementDialog extends DialogFragment {
         Intent result = new Intent();
         result.putExtra(BabyLogContract.Measurement.HEIGHT, height);
         result.putExtra(BabyLogContract.Measurement.WEIGHT, weight);
-        MeasurementDialog.this.mCallbacks.onMeasurementChoiceSelected(0, result);
+        MeasurementDialog.this.callback.onMeasurementChoiceSelected(0, result);
         getDialog().dismiss();
     }
 
-    public static interface Callbacks {
+    public static interface Callback {
         public void onMeasurementChoiceSelected(int resultCode, Intent data);
     }
 

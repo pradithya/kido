@@ -30,14 +30,14 @@ public class DiaperAdapter extends CursorAdapter implements EntryAdapterServices
     private TextView timeHandler;
     private ImageView typeHandler;
     private ImageView menuHandler;
-    private Callbacks callbacks;
+    private Callback callback;
 
     public DiaperAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
 
-    public void setCallbacks(Callbacks listener) {
-        callbacks = listener;
+    public void setCallback(Callback listener) {
+        callback = listener;
     }
 
     @Override
@@ -117,7 +117,7 @@ public class DiaperAdapter extends CursorAdapter implements EntryAdapterServices
 
     @Override
     public void editEntry(View entry) {
-        callbacks.onDiaperEntryEditSelected(entry);
+        callback.onDiaperEntryEditSelected(entry);
     }
 
     private boolean isEntryType(String type) {
@@ -142,7 +142,7 @@ public class DiaperAdapter extends CursorAdapter implements EntryAdapterServices
         dateHandler.setTextColor(view.getResources().getColor(R.color.purple));
     }
 
-    public static interface Callbacks {
+    public static interface Callback {
         public void onDiaperEntryEditSelected(View entry);
     }
 

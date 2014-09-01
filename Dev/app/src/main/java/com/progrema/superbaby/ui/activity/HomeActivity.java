@@ -39,8 +39,8 @@ import java.util.concurrent.TimeUnit;
 
 public class HomeActivity extends FragmentActivity
         implements NavigationFragment.NavigationDrawerCallbacks, View.OnClickListener,
-        ObserveableListView.Callbacks, NursingDialog.Callbacks, DiaperDialog.Callbacks,
-        MeasurementDialog.Callbacks, ActionBar.OnNavigationListener {
+        ObserveableListView.Callback, NursingDialog.Callback, DiaperDialog.Callback,
+        MeasurementDialog.Callback, ActionBar.OnNavigationListener {
 
     public final static int RESULT_OK = 0;
     public final static String ACTIVITY_TRIGGER_KEY = "triggerKey";
@@ -201,21 +201,21 @@ public class HomeActivity extends FragmentActivity
     private void handleButtonDiaper() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         DiaperDialog diaperChoiceBox = DiaperDialog.getInstance();
-        diaperChoiceBox.setCallbacks(this);
+        diaperChoiceBox.setCallback(this);
         diaperChoiceBox.show(fragmentTransaction, "diaper_dialog");
     }
 
     private void handleButtonNursing() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         NursingDialog nursingChoiceBox = NursingDialog.getInstance();
-        nursingChoiceBox.setCallbacks(this);
+        nursingChoiceBox.setCallback(this);
         nursingChoiceBox.show(fragmentTransaction, "nursing_dialog");
     }
 
     private void handleButtonMeasurement() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         MeasurementDialog measurementChoiceBox = MeasurementDialog.getInstance();
-        measurementChoiceBox.setCallbacks(this);
+        measurementChoiceBox.setCallback(this);
         measurementChoiceBox.show(fragmentTransaction, "measurement_dialog");
     }
 

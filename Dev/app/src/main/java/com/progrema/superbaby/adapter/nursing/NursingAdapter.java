@@ -32,14 +32,14 @@ public class NursingAdapter extends CursorAdapter implements EntryAdapterService
     private TextView volumeHandler;
     private ImageView typeHandler;
     private ImageView menuHandler;
-    private Callbacks callbacks;
+    private Callback callback;
 
     public NursingAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
 
-    public void setCallbacks(Callbacks listener) {
-        callbacks = listener;
+    public void setCallback(Callback listener) {
+        callback = listener;
     }
 
     @Override
@@ -122,7 +122,7 @@ public class NursingAdapter extends CursorAdapter implements EntryAdapterService
 
     @Override
     public void editEntry(View entry) {
-        callbacks.onNursingEntryEditSelected(entry);
+        callback.onNursingEntryEditSelected(entry);
     }
 
     private boolean isEntryType(String type) {
@@ -150,7 +150,7 @@ public class NursingAdapter extends CursorAdapter implements EntryAdapterService
         typeHandler.setImageDrawable(view.getResources().getDrawable(R.drawable.ic_nursing_left));
     }
 
-    public static interface Callbacks {
+    public static interface Callback {
         public void onNursingEntryEditSelected(View entry);
     }
 }

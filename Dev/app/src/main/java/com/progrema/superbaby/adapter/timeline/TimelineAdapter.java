@@ -41,7 +41,7 @@ public class TimelineAdapter extends CursorAdapter implements EntryAdapterServic
     private TextView thirdHandler;
     private ImageView iconHandler;
     private ImageView menuHandler;
-    private Callbacks callbacks;
+    private Callback callback;
 
     public TimelineAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
@@ -53,8 +53,8 @@ public class TimelineAdapter extends CursorAdapter implements EntryAdapterServic
         return layoutInflater.inflate(R.layout.adapter_timeline, parent, false);
     }
 
-    public void setCallbacks(Callbacks listener) {
-        callbacks = listener;
+    public void setCallback(Callback listener) {
+        callback = listener;
     }
 
     @Override
@@ -167,7 +167,7 @@ public class TimelineAdapter extends CursorAdapter implements EntryAdapterServic
 
     @Override
     public void editEntry(View entry) {
-        callbacks.onTimelineEntryEditSelected(entry);
+        callback.onTimelineEntryEditSelected(entry);
     }
 
     public boolean isEntryType(String type) {
@@ -242,7 +242,7 @@ public class TimelineAdapter extends CursorAdapter implements EntryAdapterServic
         timeHandler.setTextColor(view.getResources().getColor(R.color.orange));
     }
 
-    public static interface Callbacks {
+    public static interface Callback {
         public void onTimelineEntryEditSelected(View entry);
     }
 

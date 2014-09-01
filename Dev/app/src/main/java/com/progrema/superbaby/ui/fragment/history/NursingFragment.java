@@ -31,7 +31,7 @@ import java.text.DecimalFormat;
 
 public class NursingFragment extends HistoryFragment
         implements LoaderManager.LoaderCallbacks<Cursor>,
-        HistoryFragmentServices, NursingAdapter.Callbacks, NursingDialog.Callbacks {
+        HistoryFragmentServices, NursingAdapter.Callback, NursingDialog.Callback {
 
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_GENERAL_ENTRY = 1;
@@ -91,7 +91,7 @@ public class NursingFragment extends HistoryFragment
     public void prepareListView() {
         nursingHistoryList = (ObserveableListView) root.findViewById(R.id.activity_list);
         adapter = new NursingAdapter(getActivity(), null, 0);
-        adapter.setCallbacks(this);
+        adapter.setCallback(this);
         nursingHistoryList.addHeaderView(placeholder);
         nursingHistoryList.setAdapter(adapter);
         super.attachListView(nursingHistoryList);
@@ -102,7 +102,7 @@ public class NursingFragment extends HistoryFragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         currentEntryTag = entry.getTag().toString();
         NursingDialog nursingChoiceBox = NursingDialog.getInstance();
-        nursingChoiceBox.setCallbacks(this);
+        nursingChoiceBox.setCallback(this);
         nursingChoiceBox.show(fragmentTransaction, "nursing_dialog");
     }
 

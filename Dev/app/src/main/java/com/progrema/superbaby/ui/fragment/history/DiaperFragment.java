@@ -28,7 +28,7 @@ import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 
 public class DiaperFragment extends HistoryFragment
         implements LoaderManager.LoaderCallbacks<Cursor>,
-        HistoryFragmentServices, DiaperAdapter.Callbacks, DiaperDialog.Callbacks {
+        HistoryFragmentServices, DiaperAdapter.Callback, DiaperDialog.Callback {
 
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_LAST_WET = 1;
@@ -90,7 +90,7 @@ public class DiaperFragment extends HistoryFragment
     public void prepareListView() {
         diaperHistoryList = (ObserveableListView) root.findViewById(R.id.activity_list);
         adapter = new DiaperAdapter(getActivity(), null, 0);
-        adapter.setCallbacks(this);
+        adapter.setCallback(this);
         diaperHistoryList.addHeaderView(placeholder);
         diaperHistoryList.addFooterView(new View(getActivity()));//TODO: do I need this API?
         diaperHistoryList.setAdapter(adapter);
@@ -102,7 +102,7 @@ public class DiaperFragment extends HistoryFragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         currentEntryTag = entry.getTag().toString();
         DiaperDialog diaperChoiceBox = DiaperDialog.getInstance();
-        diaperChoiceBox.setCallbacks(this);
+        diaperChoiceBox.setCallback(this);
         diaperChoiceBox.show(fragmentTransaction, "diaper_dialog");
     }
 

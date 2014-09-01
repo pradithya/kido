@@ -26,7 +26,7 @@ import java.util.Calendar;
 
 public class MeasurementFragment extends Fragment
         implements LoaderManager.LoaderCallbacks<Cursor>,
-        MeasurementAdapter.Callbacks, MeasurementDialog.Callbacks {
+        MeasurementAdapter.Callback, MeasurementDialog.Callback {
 
     //TODO: how can I improve this fragment? What information should the header contains?
     private static final int LOADER_LIST_VIEW = 0;
@@ -59,7 +59,7 @@ public class MeasurementFragment extends Fragment
     private void prepareListView() {
         measurementHistoryList = (ObserveableListView) root.findViewById(R.id.activity_list);
         adapter = new MeasurementAdapter(getActivity(), null, 0);
-        adapter.setCallbacks(this);
+        adapter.setCallback(this);
         measurementHistoryList.setAdapter(adapter);
     }
 
@@ -68,7 +68,7 @@ public class MeasurementFragment extends Fragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         currentEntryTag = entry.getTag().toString();
         MeasurementDialog measurementChoiceBox = MeasurementDialog.getInstance();
-        measurementChoiceBox.setCallbacks(this);
+        measurementChoiceBox.setCallback(this);
         measurementChoiceBox.show(fragmentTransaction, "measurement_dialog");
     }
 

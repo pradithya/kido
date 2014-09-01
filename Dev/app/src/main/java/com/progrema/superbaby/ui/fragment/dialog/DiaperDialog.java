@@ -6,17 +6,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.models.ActivityDiaper;
 
 public class DiaperDialog extends DialogFragment {
 
-    private Callbacks mCallbacks;
+    private Callback callback;
     private static final int DRY = 0;
     private static final int WET = 1;
     private static final int MIXED = 2;
@@ -25,8 +21,8 @@ public class DiaperDialog extends DialogFragment {
         return new DiaperDialog();
     }
 
-    public void setCallbacks(Callbacks listener) {
-        mCallbacks = listener;
+    public void setCallback(Callback listener) {
+        callback = listener;
     }
 
     @Override
@@ -55,25 +51,25 @@ public class DiaperDialog extends DialogFragment {
     private void insertDryEntry() {
         Intent result = new Intent();
         result.putExtra(ActivityDiaper.DIAPER_TYPE_KEY, ActivityDiaper.DiaperType.DRY.getTitle());
-        DiaperDialog.this.mCallbacks.onDiaperChoiceSelected(0, result);
+        DiaperDialog.this.callback.onDiaperChoiceSelected(0, result);
         getDialog().dismiss();
     }
 
     private void insertWetEntry() {
         Intent result = new Intent();
         result.putExtra(ActivityDiaper.DIAPER_TYPE_KEY, ActivityDiaper.DiaperType.WET.getTitle());
-        DiaperDialog.this.mCallbacks.onDiaperChoiceSelected(0, result);
+        DiaperDialog.this.callback.onDiaperChoiceSelected(0, result);
         getDialog().dismiss();
     }
 
     private void insertMixedEntry() {
         Intent result = new Intent();
         result.putExtra(ActivityDiaper.DIAPER_TYPE_KEY, ActivityDiaper.DiaperType.MIXED.getTitle());
-        DiaperDialog.this.mCallbacks.onDiaperChoiceSelected(0, result);
+        DiaperDialog.this.callback.onDiaperChoiceSelected(0, result);
         getDialog().dismiss();
     }
 
-    public static interface Callbacks {
+    public static interface Callback {
         public void onDiaperChoiceSelected(int result, Intent data);
     }
 }

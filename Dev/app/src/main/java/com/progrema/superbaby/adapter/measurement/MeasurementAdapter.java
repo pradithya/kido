@@ -31,14 +31,14 @@ public class MeasurementAdapter extends CursorAdapter implements EntryAdapterSer
     private TextView heightHandler;
     private TextView weightHandler;
     private ImageView menuHandler;
-    private Callbacks callbacks;
+    private Callback callback;
 
     public MeasurementAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
 
-    public void setCallbacks(Callbacks listener) {
-        callbacks = listener;
+    public void setCallback(Callback listener) {
+        callback = listener;
     }
 
     @Override
@@ -113,10 +113,10 @@ public class MeasurementAdapter extends CursorAdapter implements EntryAdapterSer
 
     @Override
     public void editEntry(View entry) {
-        callbacks.onMeasurementEntryEditSelected(entry);
+        callback.onMeasurementEntryEditSelected(entry);
     }
 
-    public static interface Callbacks {
+    public static interface Callback {
         public void onMeasurementEntryEditSelected(View entry);
     }
 
