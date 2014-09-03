@@ -5,12 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/stopwatch_title_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center" />
-
     <LinearLayout
         android:id="@+id/container_stopwatch1"
         android:layout_width="match_parent"
@@ -36,6 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:textColor="@color/transparent_black"
                 android:textSize="50sp" />
 
         </LinearLayout>
@@ -60,25 +55,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:textColor="@color/transparent_black"
                 android:textSize="50sp" />
 
         </LinearLayout>
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/stopwatch_duration_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:hint="Total duration" />
-
-    <Button
+    <ImageButton
         android:id="@+id/button_stopwatch_switch"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="75dp"
         android:layout_gravity="center"
-        android:text="Switch Side"
+        android:src="@drawable/ic_action_shuffle"
         android:visibility="gone" />
 
     <LinearLayout
@@ -92,19 +81,19 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <Button
+            <ImageButton
                 android:id="@+id/button_stopwatch_start"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="75dp"
                 android:layout_gravity="center"
-                android:text="Start" />
+                android:src="@drawable/ic_action_play" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/button_stopwatch_pause"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="75dp"
                 android:layout_gravity="center"
-                android:text="Pause" />
+                android:src="@drawable/ic_action_pause" />
 
         </LinearLayout>
 
@@ -114,18 +103,19 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <Button
+            <ImageButton
                 android:id="@+id/button_stopwatch_reset"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="75dp"
                 android:layout_gravity="center"
-                android:text="Reset" />
+                android:src="@drawable/ic_action_refresh" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/button_stopwatch_done"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="75dp"
                 android:layout_gravity="center"
+                android:src="@drawable/ic_action_accept"
                 android:text="Done" />
 
         </LinearLayout>

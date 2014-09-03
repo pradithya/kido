@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,12 +29,11 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
     private Stopwatch activeStopWatch;
     private Stopwatch inActiveStopWatch;
     private TextView titleView;
-    private Button startButton;
-    private Button pauseButton;
-    private Button resetButton;
-    private Button doneButton;
-    private Button switchButton;
-    private TextView durationView;
+    private ImageButton startButton;
+    private ImageButton pauseButton;
+    private ImageButton resetButton;
+    private ImageButton doneButton;
+    private ImageButton switchButton;
     private LinearLayout containerStopWatch2;
     private Calendar startTime;
     private String sourceTrigger;
@@ -76,22 +76,17 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
         // inflate fragment layout
         View rootView = inflater.inflate(R.layout.fragment_stopwatch, container, false);
 
-        // get object from fragment layout
-        titleView = (TextView) rootView.findViewById(R.id.stopwatch_title_view);
-        titleView.setText(sourceTrigger);
-
         ActionBar abActionBar = getActivity().getActionBar();
         abActionBar.setDisplayShowTitleEnabled(true);
         abActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        abActionBar.setTitle(sourceTrigger);
+        abActionBar.setTitle(titleConversion(sourceTrigger));
 
-        startButton = (Button) rootView.findViewById(R.id.button_stopwatch_start);
-        pauseButton = (Button) rootView.findViewById(R.id.button_stopwatch_pause);
-        resetButton = (Button) rootView.findViewById(R.id.button_stopwatch_reset);
-        doneButton = (Button) rootView.findViewById(R.id.button_stopwatch_done);
-        durationView = (TextView) rootView.findViewById(R.id.stopwatch_duration_view);
+        startButton = (ImageButton) rootView.findViewById(R.id.button_stopwatch_start);
+        pauseButton = (ImageButton) rootView.findViewById(R.id.button_stopwatch_pause);
+        resetButton = (ImageButton) rootView.findViewById(R.id.button_stopwatch_reset);
+        doneButton = (ImageButton) rootView.findViewById(R.id.button_stopwatch_done);
         containerStopWatch2 = (LinearLayout) rootView.findViewById(R.id.container_stopwatch2);
-        switchButton = (Button) rootView.findViewById(R.id.button_stopwatch_switch);
+        switchButton = (ImageButton) rootView.findViewById(R.id.button_stopwatch_switch);
 
         // set onClickListener to button
         startButton.setOnClickListener(this);
@@ -152,6 +147,15 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
         }
     }
 
+    private String titleConversion(String activityName){
+        if (activityName.equals(HomeActivity.Trigger.NURSING.getTitle())) {
+            return "Nursing Timer";
+        } else if (activityName.equals(HomeActivity.Trigger.SLEEP.getTitle())){
+            return "Sleep Timer";
+        }
+        return "";
+    }
+
     private void handleSwitchButton() {
         activeStopWatch.stop();
         Stopwatch temp = activeStopWatch;
@@ -166,9 +170,6 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
 
     private void handlePauseButton() {
         activeStopWatch.stop();
-        String sDuration;
-        sDuration = String.valueOf(activeStopWatch.getDuration());
-        durationView.setText(sDuration);
     }
 
     private void handleResetButton() {
