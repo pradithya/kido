@@ -55,6 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_margin="8dp"
                 android:textColor="@color/transparent_black"
                 android:textSize="50sp" />
 
@@ -67,6 +68,8 @@
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:background="@drawable/button_background"
         android:src="@drawable/ic_action_shuffle"
         android:visibility="gone" />
 
@@ -86,6 +89,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
                 android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_background"
                 android:src="@drawable/ic_action_play" />
 
             <ImageButton
@@ -93,6 +98,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
                 android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_background"
                 android:src="@drawable/ic_action_pause" />
 
         </LinearLayout>
@@ -108,6 +115,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
                 android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_background"
                 android:src="@drawable/ic_action_refresh" />
 
             <ImageButton
@@ -115,6 +124,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
                 android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_background"
                 android:src="@drawable/ic_action_accept"
                 android:text="Done" />
 
