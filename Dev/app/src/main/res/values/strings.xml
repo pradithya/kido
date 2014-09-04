@@ -122,6 +122,12 @@
         <item>Formula</item>
     </string-array>
 
+    <string name="baby_image_selector_title">Add baby image</string>
+    <string-array name="add_image_method">
+        <item>Use camera</item>
+        <item>From gallery</item>
+    </string-array>
+
     <string name="measurement_dialog_title">Baby growth data</string>
     <string name="measurement_dialog_negative_button">Cancel</string>
     <string name="measurement_dialog_positive_button">OK</string>

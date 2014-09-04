@@ -8,15 +8,15 @@
     android:padding="16dp">
 
     <ImageButton
-        android:id="@+id/fragment_baby_input_camera"
+        android:id="@+id/baby_input_picture"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_margin="8dp"
         android:background="@drawable/button_background"
-        android:src="@drawable/ic_action_camera" />
+        android:src="@drawable/ic_action_picture" />
 
     <EditText
-        android:id="@+id/fragment_baby_input_name"
+        android:id="@+id/baby_input_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -25,26 +25,28 @@
         android:inputType="text" />
 
     <Button
-        android:id="@+id/fragment_baby_input_birthday"
+        android:id="@+id/baby_input_birthday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:gravity="center" />
+        android:background="@drawable/button_background"
+        android:textColor="@color/transparent_black"
+        android:gravity="center"/>
 
     <Spinner
-        android:id="@+id/fragment_baby_input_sex_type"
+        android:id="@+id/baby_input_sex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:gravity="center" />
 
     <ImageButton
-        android:id="@+id/fragment_baby_input_button_done"
-        android:background="@drawable/button_background"
+        android:id="@+id/baby_input_accept"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_margin="8dp"
+        android:background="@drawable/button_background"
         android:src="@drawable/ic_action_accept"/>
 
 </LinearLayout>

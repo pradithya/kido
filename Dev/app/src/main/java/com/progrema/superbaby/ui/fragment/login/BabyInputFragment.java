@@ -1,5 +1,6 @@
 package com.progrema.superbaby.ui.fragment.login;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,10 +29,14 @@ import java.util.Calendar;
 public class BabyInputFragment extends Fragment implements
         View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
-    private EditText babyNameInput;
-    private Button babyBirthdayInput;
-    private Spinner babySexTypeInput;
-    private ImageButton doneButton;
+    private EditText nameHandler;
+    private Button birthdayHandler;
+    private Spinner sexHandler;
+    private ImageButton acceptHandler;
+    private ImageButton pictureHandler;
+    private View root;
+    private ArrayAdapter<String> adapter;
+    private String babyName, babyBirthday, babySexType;
     private int year, month, date;
 
     public static BabyInputFragment getInstance() {
@@ -39,81 +44,122 @@ public class BabyInputFragment extends Fragment implements
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_baby_input_login, container, false);
+        root = inflater.inflate(R.layout.fragment_baby_input_login, container, false);
+        prepareCalendar();
+        prepareNameHandler();
+        prepareBirthdayHandler();
+        prepareSexHandler();
+        prepareAcceptHandler();
+        preparePictureHandler();
+        return root;
+    }
 
-        doneButton = (ImageButton) rootView.findViewById(R.id.fragment_baby_input_button_done);
-        babyNameInput = (EditText) rootView.findViewById(R.id.fragment_baby_input_name);
-
+    private void prepareCalendar() {
         Calendar now = Calendar.getInstance();
         year = now.get(Calendar.YEAR);
         month = now.get(Calendar.MONTH);
         date = now.get(Calendar.DATE);
+    }
 
-        babyBirthdayInput = (Button) rootView.findViewById(R.id.fragment_baby_input_birthday);
-        babyBirthdayInput.setText(FormatUtils.fmtDate(getActivity(),
+    private void prepareNameHandler() {
+        nameHandler = (EditText) root.findViewById(R.id.baby_input_name);
+    }
+
+    private void prepareBirthdayHandler() {
+        birthdayHandler = (Button) root.findViewById(R.id.baby_input_birthday);
+        birthdayHandler.setText(FormatUtils.fmtDate(getActivity(),
                 String.valueOf(Calendar.getInstance().getTimeInMillis())));
-        babyBirthdayInput.setOnClickListener(this);
+        birthdayHandler.setOnClickListener(this);
+    }
 
-        babySexTypeInput = (Spinner) rootView.findViewById(R.id.fragment_baby_input_sex_type);
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(getActivity(),
-                        android.R.layout.simple_spinner_item,
-                        getResources().getStringArray(R.array.gender_array));
+    private void prepareSexHandler() {
+        sexHandler = (Spinner) root.findViewById(R.id.baby_input_sex);
+        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,
+                getResources().getStringArray(R.array.gender_array));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        babySexTypeInput.setAdapter(adapter);
+        sexHandler.setAdapter(adapter);
+    }
 
-        doneButton.setOnClickListener(this);
+    private void prepareAcceptHandler() {
+        acceptHandler = (ImageButton) root.findViewById(R.id.baby_input_accept);
+        acceptHandler.setOnClickListener(this);
+    }
 
-        return rootView;
+    private void preparePictureHandler() {
+        pictureHandler = (ImageButton) root.findViewById(R.id.baby_input_picture);
+        pictureHandler.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-
         switch (view.getId()) {
-            case R.id.fragment_baby_input_birthday: {
-
-                DatePickerDialog dateChooser =
-                        new DatePickerDialog(getActivity(), this, year, month, date);
-                dateChooser.show();
+            case R.id.baby_input_birthday:
+                onBirthdayClick();
                 break;
-            }
-            case R.id.fragment_baby_input_button_done: {
-                String babyName, babyBirthday, babySexType;
-                babyName = babyNameInput.getText().toString();
-                Calendar dob = Calendar.getInstance();
-                dob.set(year, month, date);
-                babyBirthday = String.valueOf(dob.getTimeInMillis());
-                babySexType = (String) babySexTypeInput.
-                        getAdapter().getItem(babySexTypeInput.getSelectedItemPosition());
-
-                // get new baby info and store it to DB
-                Baby baby = new Baby();
-                baby.setName(babyName);
-                baby.setBirthday(babyBirthday);
-                if (babySexType.equals(BaseActor.Sex.MALE.getTitle())) {
-                    baby.setSex(BaseActor.Sex.MALE);
-                } else if (babySexType.equals(BaseActor.Sex.FEMALE.getTitle())) {
-                    baby.setSex(BaseActor.Sex.FEMALE);
-                }
-                baby.insert(getActivity());
-
-                // save active baby in preference
-                ActiveContext.setActiveBaby(getActivity(), babyName);
-
-                // skip login for the next application startup
-                SharedPreferences setting = getActivity().getSharedPreferences(LoginActivity.PREF_LOGIN, 0);
-                SharedPreferences.Editor editor = setting.edit();
-                editor.putBoolean(LoginActivity.PREF_SKIP_LOGIN, true);
-                editor.commit();
-
-                // Go to HomeActivity
-                startActivity(new Intent(getActivity(), HomeActivity.class));
-                getActivity().finish();
+            case R.id.baby_input_accept:
+                onAcceptClick();
                 break;
-            }
+            case R.id.baby_input_picture:
+                onPictureClick();
+                break;
         }
+    }
 
+    private void onBirthdayClick() {
+        DatePickerDialog dateChooser = new DatePickerDialog(getActivity(), this, year, month, date);
+        dateChooser.show();
+    }
+
+    private void onAcceptClick() {
+        getBabyProperty();
+        storeBabyToDataBase();
+        setActiveBabyContext();
+        skipLoginNextStartup();
+        goToHomeActivity();
+     }
+
+    private void getBabyProperty() {
+        Calendar dob = Calendar.getInstance();
+        dob.set(year, month, date);
+        babyName = nameHandler.getText().toString();
+        babyBirthday = String.valueOf(dob.getTimeInMillis());
+        babySexType = (String) sexHandler.getAdapter().getItem(sexHandler.getSelectedItemPosition());
+    }
+
+    private void storeBabyToDataBase() {
+        Baby baby = new Baby();
+        baby.setName(babyName);
+        baby.setBirthday(babyBirthday);
+        if (babySexType.equals(BaseActor.Sex.MALE.getTitle())) {
+            baby.setSex(BaseActor.Sex.MALE);
+        } else if (babySexType.equals(BaseActor.Sex.FEMALE.getTitle())) {
+            baby.setSex(BaseActor.Sex.FEMALE);
+        }
+        baby.insert(getActivity());
+    }
+
+    private void setActiveBabyContext() {
+        ActiveContext.setActiveBaby(getActivity(), babyName);
+    }
+
+    private void skipLoginNextStartup() {
+        SharedPreferences setting = getActivity().getSharedPreferences(LoginActivity.PREF_LOGIN, 0);
+        SharedPreferences.Editor editor = setting.edit();
+        editor.putBoolean(LoginActivity.PREF_SKIP_LOGIN, true);
+        editor.commit();
+    }
+
+    private void goToHomeActivity() {
+        startActivity(new Intent(getActivity(), HomeActivity.class));
+        getActivity().finish();
+    }
+
+    private void onPictureClick() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.baby_image_selector_title);
+        builder.setItems(R.array.add_image_method, null);
+        builder.setNegativeButton(R.string.diaper_dialog_negative_button, null);
+        builder.show();
     }
 
     @Override
@@ -121,10 +167,9 @@ public class BabyInputFragment extends Fragment implements
         this.year = year;
         this.month = monthOfYear;
         this.date = dayOfMonth;
-
         Calendar dob = Calendar.getInstance();
         dob.set(year, month, date);
-        babyBirthdayInput.setText(FormatUtils.fmtDate(getActivity(), String.valueOf(dob.getTimeInMillis())));
+        birthdayHandler.setText(FormatUtils.fmtDate(getActivity(), String.valueOf(dob.getTimeInMillis())));
     }
 
 }
