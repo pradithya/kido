@@ -7,10 +7,19 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <ImageButton
+        android:id="@+id/fragment_baby_input_camera"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="8dp"
+        android:background="@drawable/button_background"
+        android:src="@drawable/ic_action_camera" />
+
     <EditText
         android:id="@+id/fragment_baby_input_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:gravity="center"
         android:hint="Baby Name"
         android:inputType="text" />
@@ -19,20 +28,23 @@
         android:id="@+id/fragment_baby_input_birthday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:gravity="center" />
 
     <Spinner
         android:id="@+id/fragment_baby_input_sex_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:gravity="center" />
 
-    <Button
+    <ImageButton
         android:id="@+id/fragment_baby_input_button_done"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:text="Done" />
+        android:layout_margin="8dp"
+        android:src="@drawable/ic_action_accept"/>
 
 </LinearLayout>
