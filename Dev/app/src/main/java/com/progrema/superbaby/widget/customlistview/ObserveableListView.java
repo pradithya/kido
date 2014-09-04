@@ -73,7 +73,7 @@ public class ObserveableListView extends ListView {
 
         }
         bScrollIsComputed = true;
-        Log.i("_DB2", " iTot=" + iTotalHeight + " iCount=" + iItemCount);
+        //Log.i("_DB2", " iTot=" + iTotalHeight + " iCount=" + iItemCount);
     }
 
     public boolean scrollYIsComputed() {
@@ -96,9 +96,9 @@ public class ObserveableListView extends ListView {
             sExceptionTrace = "yes";
         }
 
-        Log.i("_DB3", " iScrollY=" + iScrollY +
-                " iPosition=" + iPosition +
-                " sException=" + sExceptionTrace);
+        //Log.i("_DB3", " iScrollY=" + iScrollY +
+        //        " iPosition=" + iPosition +
+        //        " sException=" + sExceptionTrace);
 
         return iScrollY;
     }

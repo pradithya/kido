@@ -98,7 +98,7 @@ public class MeasurementAdapter extends CursorAdapter implements EntryAdapterSer
                         MenuInflater menuInflater = ((Activity) context).getMenuInflater();
                         menuInflater.inflate(R.menu.entry, popupMenu.getMenu());
                         popupMenu.show();
-                        Log.i("_DBG_MENU", " Tag = " + menuHandler.getTag());
+                        //Log.i("_DBG_MENU", " Tag = " + menuHandler.getTag());
                     }
                 }
         );

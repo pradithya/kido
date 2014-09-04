@@ -119,7 +119,7 @@ public class TimelineAdapter extends CursorAdapter implements EntryAdapterServic
                         MenuInflater menuInflater = ((Activity) context).getMenuInflater();
                         menuInflater.inflate(R.menu.entry, popup.getMenu());
                         popup.show();
-                        Log.i("_DBG_MENU", " Tag = " + menuHandler.getTag());
+                        //Log.i("_DBG_MENU", " Tag = " + menuHandler.getTag());
                     }
                 }
         );

@@ -149,14 +149,14 @@ public class HistoryFragment extends Fragment {
                         break;
                 }
 
-                Log.i("_DB1", " iScrY=" + iScrollY +
-                        " iRawY=" + iRawY +
-                        " iStte=" + iStateTrace +
-                        " iTranY=" + iTranslationY +
-                        " iCache=" + iCacheVerticalRange +
-                        " iHght=" + olvListView.getHeight() +
-                        " iFun=" + (iCacheVerticalRange - olvListView.getHeight()) +
-                        " iQuic=" + iQuickReturnHeight);
+//                Log.i("_DB1", " iScrY=" + iScrollY +
+//                        " iRawY=" + iRawY +
+//                        " iStte=" + iStateTrace +
+//                        " iTranY=" + iTranslationY +
+//                        " iCache=" + iCacheVerticalRange +
+//                        " iHght=" + olvListView.getHeight() +
+//                        " iFun=" + (iCacheVerticalRange - olvListView.getHeight()) +
+//                        " iQuic=" + iQuickReturnHeight);
 
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB) {
                     taAnimation = new TranslateAnimation(0, 0, iTranslationY, iTranslationY);

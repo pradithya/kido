@@ -102,7 +102,7 @@ public class DiaperAdapter extends CursorAdapter implements EntryAdapterServices
                         MenuInflater menuInflater = ((Activity) context).getMenuInflater();
                         menuInflater.inflate(R.menu.entry, popupMenu.getMenu());
                         popupMenu.show();
-                        Log.i("_DBG_MENU", " Tag = " + menuHandler.getTag());
+                        //Log.i("_DBG_MENU", " Tag = " + menuHandler.getTag());
                     }
                 }
         );

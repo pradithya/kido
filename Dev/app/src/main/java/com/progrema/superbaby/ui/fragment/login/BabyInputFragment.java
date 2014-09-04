@@ -1,11 +1,18 @@
 package com.progrema.superbaby.ui.fragment.login;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +21,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.models.Baby;
@@ -24,11 +33,14 @@ import com.progrema.superbaby.ui.activity.LoginActivity;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.FormatUtils;
 
+import java.io.File;
 import java.util.Calendar;
 
 public class BabyInputFragment extends Fragment implements
         View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
+    private static final int REQUEST_CODE_TAKE_PHOTO = 0;
+    private static final int REQUEST_CODE_SELECT_PHOTO = 1;
     private EditText nameHandler;
     private Button birthdayHandler;
     private Spinner sexHandler;
@@ -36,7 +48,9 @@ public class BabyInputFragment extends Fragment implements
     private ImageButton pictureHandler;
     private View root;
     private ArrayAdapter<String> adapter;
-    private String babyName, babyBirthday, babySexType;
+    private String babyName, babyBirthday, babySexType, imageUriString;
+    private Uri imageUri;
+    private Bitmap babyBitmap;
     private int year, month, date;
 
     public static BabyInputFragment getInstance() {
@@ -116,7 +130,7 @@ public class BabyInputFragment extends Fragment implements
         setActiveBabyContext();
         skipLoginNextStartup();
         goToHomeActivity();
-     }
+    }
 
     private void getBabyProperty() {
         Calendar dob = Calendar.getInstance();
@@ -157,9 +171,62 @@ public class BabyInputFragment extends Fragment implements
     private void onPictureClick() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.baby_image_selector_title);
-        builder.setItems(R.array.add_image_method, null);
+        builder.setItems(R.array.add_image_method, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == 0) {
+                    onCameraClick();
+                } else {
+                    onGalleryClick();
+                }
+            }
+        });
         builder.setNegativeButton(R.string.diaper_dialog_negative_button, null);
         builder.show();
+    }
+
+    private void onCameraClick() {
+        Intent cameraShoot = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        imageUri = Uri.fromFile(getImageDir()); // create a file to save the image
+        cameraShoot.putExtra(MediaStore.EXTRA_OUTPUT, imageUri); // set the image file name
+        startActivityForResult(cameraShoot, REQUEST_CODE_TAKE_PHOTO);
+    }
+
+    private void onGalleryClick() {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, REQUEST_CODE_SELECT_PHOTO);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_CODE_SELECT_PHOTO:
+                if (resultCode == Activity.RESULT_OK) {
+                    imageUriString = data.getData().toString();
+                }
+                break;
+            case REQUEST_CODE_TAKE_PHOTO:
+                if (resultCode == Activity.RESULT_OK) {
+                    imageUriString = imageUri.toString();
+                }
+                break;
+        }
+        try {
+            babyBitmap = FormatUtils.decodeUri(Uri.parse(imageUriString), getActivity());
+            pictureHandler.setImageBitmap(babyBitmap);
+        } catch (Exception e) {
+            Log.e("_DBG_IMAGE", Log.getStackTraceString(e));
+        }
+    }
+
+    private static File getImageDir() {
+        //TODO: Can we get from camera directory?
+        File imageDirectory =
+                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Superbaby");
+        if ((!imageDirectory.exists()) && (!imageDirectory.mkdir())) return null;
+        String name = String.valueOf(Calendar.getInstance().getTimeInMillis());
+        return new File(imageDirectory.getPath() + File.separator + "IMG_" + name + ".jpg");
     }
 
     @Override
