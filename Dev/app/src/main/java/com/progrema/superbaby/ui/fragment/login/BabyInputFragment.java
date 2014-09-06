@@ -3,10 +3,13 @@ package com.progrema.superbaby.ui.fragment.login;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,7 +24,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -34,27 +36,38 @@ import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.FormatUtils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Calendar;
 
 public class BabyInputFragment extends Fragment implements
         View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
-    private static final int REQUEST_CODE_TAKE_PHOTO = 0;
-    private static final int REQUEST_CODE_SELECT_PHOTO = 1;
+    private final int INTENT_USE_CAMERA = 0;
+    private final int INTENT_FROM_GALLERY = 1;
+    private final int INTENT_CROP_PICTURE = 2;
     private EditText nameHandler;
     private Button birthdayHandler;
     private Spinner sexHandler;
     private ImageButton acceptHandler;
-    private ImageButton pictureHandler;
+    private ImageButton imageHandler;
     private View root;
     private ArrayAdapter<String> adapter;
     private String babyName, babyBirthday, babySexType, imageUriString;
-    private Uri imageUri;
-    private Bitmap babyBitmap;
+    private Uri cameraImageUri;
+    private Bitmap imageBitmap;
     private int year, month, date;
 
     public static BabyInputFragment getInstance() {
         return new BabyInputFragment();
+    }
+
+    private static File getImageDir() {
+        //TODO: Can we get from camera directory?
+        File imageDirectory =
+                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Superbaby");
+        if ((!imageDirectory.exists()) && (!imageDirectory.mkdir())) return null;
+        String name = String.valueOf(Calendar.getInstance().getTimeInMillis());
+        return new File(imageDirectory.getPath() + File.separator + "IMG_" + name + ".jpg");
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,7 +77,7 @@ public class BabyInputFragment extends Fragment implements
         prepareBirthdayHandler();
         prepareSexHandler();
         prepareAcceptHandler();
-        preparePictureHandler();
+        prepareImageHandler();
         return root;
     }
 
@@ -99,9 +112,9 @@ public class BabyInputFragment extends Fragment implements
         acceptHandler.setOnClickListener(this);
     }
 
-    private void preparePictureHandler() {
-        pictureHandler = (ImageButton) root.findViewById(R.id.baby_input_picture);
-        pictureHandler.setOnClickListener(this);
+    private void prepareImageHandler() {
+        imageHandler = (ImageButton) root.findViewById(R.id.baby_input_image);
+        imageHandler.setOnClickListener(this);
     }
 
     @Override
@@ -113,7 +126,7 @@ public class BabyInputFragment extends Fragment implements
             case R.id.baby_input_accept:
                 onAcceptClick();
                 break;
-            case R.id.baby_input_picture:
+            case R.id.baby_input_image:
                 onPictureClick();
                 break;
         }
@@ -186,47 +199,113 @@ public class BabyInputFragment extends Fragment implements
     }
 
     private void onCameraClick() {
-        Intent cameraShoot = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        imageUri = Uri.fromFile(getImageDir()); // create a file to save the image
-        cameraShoot.putExtra(MediaStore.EXTRA_OUTPUT, imageUri); // set the image file name
-        startActivityForResult(cameraShoot, REQUEST_CODE_TAKE_PHOTO);
+        try {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            cameraImageUri = Uri.fromFile(getImageDir());
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraImageUri);
+            startActivityForResult(intent, INTENT_USE_CAMERA);
+        } catch (ActivityNotFoundException error) {
+            String errorMessage = getString(R.string.camera_intent_error);
+            Toast toast = Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
     private void onGalleryClick() {
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-        photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, REQUEST_CODE_SELECT_PHOTO);
+        try {
+            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+            photoPickerIntent.setType("image/*");
+            startActivityForResult(photoPickerIntent, INTENT_FROM_GALLERY);
+        } catch (ActivityNotFoundException error) {
+            String errorMessage = getString(R.string.gallery_intent_error);
+            Toast toast = Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case REQUEST_CODE_SELECT_PHOTO:
-                if (resultCode == Activity.RESULT_OK) {
-                    imageUriString = data.getData().toString();
-                }
+            case INTENT_FROM_GALLERY:
+                processImageFromGallery(resultCode, data);
                 break;
-            case REQUEST_CODE_TAKE_PHOTO:
-                if (resultCode == Activity.RESULT_OK) {
-                    imageUriString = imageUri.toString();
-                }
+            case INTENT_USE_CAMERA:
+                processImageFromCamera(resultCode);
+                break;
+            case INTENT_CROP_PICTURE:
+                showFinalImage(resultCode, data);
                 break;
         }
+    }
+
+    private void processImageFromCamera(int resultCode) {
+        if (resultCode == Activity.RESULT_OK)
+            imageUriString = cameraImageUri.toString();
+        performImageCrop(Uri.parse(imageUriString));
+    }
+
+    private void processImageFromGallery(int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK)
+            imageUriString = data.getData().toString();
+        performImageCrop(Uri.parse(imageUriString));
+    }
+
+    private void showFinalImage(int resultCode, Intent data) {
+        Bundle extras;
+        if (resultCode == Activity.RESULT_OK){
+            extras = data.getExtras();
+            imageBitmap = extras.getParcelable("data");
+            imageHandler.setImageBitmap(imageBitmap);
+        }
+    }
+
+    private void performImageCrop(Uri selectedImage) {
         try {
-            babyBitmap = FormatUtils.decodeUri(Uri.parse(imageUriString), getActivity());
-            pictureHandler.setImageBitmap(babyBitmap);
+            Intent intent = new Intent("com.android.camera.action.CROP");
+            intent.setDataAndType(selectedImage, "image/*");
+            intent.putExtra("crop", "true");
+            intent.putExtra("aspectX", 1);
+            intent.putExtra("aspectY", 1);
+            intent.putExtra("outputX", 256);
+            intent.putExtra("outputY", 256);
+            intent.putExtra("return-data", true);
+            startActivityForResult(intent, INTENT_CROP_PICTURE);
+        } catch (ActivityNotFoundException error) {
+            String errorMessage = getString(R.string.crop_intent_error);
+            Toast toast = Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT);
+            toast.show();
+            performDefaultImageCrop();
+        }
+    }
+
+    private void performDefaultImageCrop() {
+        try {
+            imageBitmap = decodeUri(Uri.parse(imageUriString), getActivity());
+            imageHandler.setImageBitmap(imageBitmap);
         } catch (Exception e) {
             Log.e("_DBG_IMAGE", Log.getStackTraceString(e));
         }
     }
 
-    private static File getImageDir() {
-        //TODO: Can we get from camera directory?
-        File imageDirectory =
-                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Superbaby");
-        if ((!imageDirectory.exists()) && (!imageDirectory.mkdir())) return null;
-        String name = String.valueOf(Calendar.getInstance().getTimeInMillis());
-        return new File(imageDirectory.getPath() + File.separator + "IMG_" + name + ".jpg");
+    private Bitmap decodeUri(Uri selectedImage, Context inputContext) throws FileNotFoundException {
+        int REQUIRED_SIZE = 140;
+        BitmapFactory.Options optionsOne = new BitmapFactory.Options();
+        BitmapFactory.Options optionsTwo = new BitmapFactory.Options();
+        int width = optionsOne.outWidth, height = optionsOne.outHeight;
+        int scale = 1;
+        optionsOne.inJustDecodeBounds = true;
+        BitmapFactory.decodeStream(
+                inputContext.getContentResolver().openInputStream(selectedImage), null, optionsOne);
+        while (true) {
+            if (width / 2 < REQUIRED_SIZE || height / 2 < REQUIRED_SIZE)
+                break;
+            width /= 2;
+            height /= 2;
+            scale *= 2;
+        }
+        optionsTwo.inSampleSize = scale;
+        return BitmapFactory.decodeStream(
+                inputContext.getContentResolver().openInputStream(selectedImage), null, optionsTwo);
     }
 
     @Override

@@ -8,7 +8,7 @@
     android:padding="16dp">
 
     <ImageButton
-        android:id="@+id/baby_input_picture"
+        android:id="@+id/baby_input_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_margin="8dp"
