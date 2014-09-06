@@ -10,6 +10,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -263,6 +269,7 @@ public class BabyInputFragment extends Fragment implements
         if (resultCode == Activity.RESULT_OK) {
             extras = data.getExtras();
             imageBitmap = extras.getParcelable("data");
+            imageBitmap = getRoundedCornerBitmap(imageBitmap);
             imageHandler.setImageBitmap(imageBitmap);
         }
     }
@@ -362,4 +369,22 @@ public class BabyInputFragment extends Fragment implements
     private void setCameraIntent(boolean isCameraIntent) {
         this.isCameraIntent = isCameraIntent;
     }
+
+    private Bitmap getRoundedCornerBitmap(Bitmap bitmap) {
+        int color = 0xff424242;
+        float roundPx = 10;
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+        Paint paint = new Paint();
+        Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        RectF rectF = new RectF(rect);
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        return output;
+    }
+
 }
