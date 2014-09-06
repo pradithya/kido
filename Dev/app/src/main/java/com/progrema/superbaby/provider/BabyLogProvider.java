@@ -75,7 +75,7 @@ public class BabyLogProvider extends ContentProvider {
                 cursor.setNotificationUri(getContext().getContentResolver(), uri);
                 return cursor;
             case NURSING_LAST_SIDE:
-                cursor =  db.rawQuery("SELECT sides FROM nursing WHERE baby_id = ? AND timestamp = (SELECT MAX(timestamp) FROM nursing)", selectionArgs);
+                cursor = db.rawQuery("SELECT sides FROM nursing WHERE baby_id = ? AND timestamp = (SELECT MAX(timestamp) FROM nursing)", selectionArgs);
                 cursor.setNotificationUri(getContext().getContentResolver(), uri);
                 return cursor;
             case SLEEP_MAX_TIMESTAMP:
@@ -228,8 +228,7 @@ public class BabyLogProvider extends ContentProvider {
         SelectionBuilder builder;
 
         // Delete whole table
-        if (uri == BabyLogContract.BASE_CONTENT_URI)
-        {
+        if (uri == BabyLogContract.BASE_CONTENT_URI) {
             // Handle whole database deletes (e.g. when signing out)
             deleteDataBase();
             notifyChange(uri);

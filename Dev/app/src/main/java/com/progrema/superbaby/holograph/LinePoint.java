@@ -52,24 +52,24 @@ public class LinePoint {
         return mX;
     }
 
-    public void setX(double x) {
-        this.mX = (float) x;
-    }
-
     public void setX(float x) {
         this.mX = x;
+    }
+
+    public void setX(double x) {
+        this.mX = (float) x;
     }
 
     public float getY() {
         return mY;
     }
 
-    public void setY(double y) {
-        this.mY = (float) y;
-    }
-
     public void setY(float y) {
         this.mY = y;
+    }
+
+    public void setY(double y) {
+        this.mY = (float) y;
     }
 
     public Region getRegion() {

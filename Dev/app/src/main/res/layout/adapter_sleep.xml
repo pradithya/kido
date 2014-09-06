@@ -34,8 +34,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.5"
-            android:orientation="vertical"
             android:gravity="center|left"
+            android:orientation="vertical"
             android:padding="4dp">
 
             <TextView
@@ -58,19 +58,19 @@
         <TextView
             android:id="@+id/history_item_duration"
             android:layout_width="0dp"
-            android:layout_weight="0.9"
             android:layout_height="match_parent"
+            android:layout_weight="0.9"
             android:gravity="center"
-            android:text="0h 0m 0s"
             android:padding="4dp"
+            android:text="0h 0m 0s"
             android:textSize="@dimen/text_size_small" />
 
         <ImageView
             android:id="@+id/menu_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_action_overflow"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:src="@drawable/ic_action_overflow" />
 
     </LinearLayout>
 

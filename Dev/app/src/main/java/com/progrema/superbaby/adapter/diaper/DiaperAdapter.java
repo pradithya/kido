@@ -3,7 +3,6 @@ package com.progrema.superbaby.adapter.diaper;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,7 +19,7 @@ import com.progrema.superbaby.models.ActivityDiaper;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.FormatUtils;
 
-public class DiaperAdapter extends CursorAdapter implements EntryAdapterServices{
+public class DiaperAdapter extends CursorAdapter implements EntryAdapterServices {
 
     private String timestamp;
     private String type;

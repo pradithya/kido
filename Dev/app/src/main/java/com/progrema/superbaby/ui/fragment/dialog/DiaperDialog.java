@@ -12,10 +12,10 @@ import com.progrema.superbaby.models.ActivityDiaper;
 
 public class DiaperDialog extends DialogFragment {
 
-    private Callback callback;
     private static final int DRY = 0;
     private static final int WET = 1;
     private static final int MIXED = 2;
+    private Callback callback;
 
     public static DiaperDialog getInstance() {
         return new DiaperDialog();
@@ -31,7 +31,7 @@ public class DiaperDialog extends DialogFragment {
         builder.setTitle(R.string.diaper_dialog_title)
                 .setItems(R.array.diaper_selection, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
+                        switch (which) {
                             case DRY:
                                 insertDryEntry();
                                 break;

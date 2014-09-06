@@ -12,17 +12,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 import com.progrema.superbaby.R;
-import com.progrema.superbaby.models.User;
 import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.util.SecurityUtils;
-
-import com.parse.Parse;
 
 public class LogInFragment extends Fragment implements View.OnClickListener {
     /**
@@ -246,7 +242,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener {
 //        return getResources().getString(R.string.ok_message);
 
         try {
-            ParseUser.logIn(userName,password);
+            ParseUser.logIn(userName, password);
             return getResources().getString(R.string.ok_message);
         } catch (ParseException e) {
             return getResources().getString(R.string.wrong_username_and_password_message);

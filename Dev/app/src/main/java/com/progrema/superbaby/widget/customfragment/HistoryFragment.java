@@ -3,7 +3,6 @@ package com.progrema.superbaby.widget.customfragment;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.TranslateAnimation;
@@ -23,9 +22,9 @@ public class HistoryFragment extends Fragment {
      * Animation State and calculation variable used for managing the animation
      */
     private static final int STATE_ONSCREEN = 0;
+    private int iState = STATE_ONSCREEN;
     private static final int STATE_OFFSCREEN = 1;
     private static final int STATE_RETURNING = 2;
-    private int iState = STATE_ONSCREEN;
     ObserveableListView olvListView;
     private LinearLayout llPlaceHolder;
     private TranslateAnimation taAnimation;
@@ -84,7 +83,7 @@ public class HistoryFragment extends Fragment {
                     iScrollY = olvListView.getComputedScrollY();
                 }
 
-                iRawY = - iScrollY;
+                iRawY = -iScrollY;
 
                 switch (iState) {
                     case STATE_ONSCREEN: // state 0
@@ -124,7 +123,7 @@ public class HistoryFragment extends Fragment {
                                 setShadowBackground(R.drawable.header_shadow);
                                 bShowBackground = true;
                                 iStateTrace = "24";
-                            } else if (iRawY >= 0 && bShowBackground){
+                            } else if (iRawY >= 0 && bShowBackground) {
                                 setShadowBackground(0);
                                 bShowBackground = false;
                                 iStateTrace = "25";

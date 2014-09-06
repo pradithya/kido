@@ -5,7 +5,10 @@ import android.view.ViewGroup;
 
 public interface HistoryFragmentServices {
     public void prepareFragment(LayoutInflater inflater, ViewGroup container);
+
     public void prepareHandler();
+
     public void prepareListView();
+
     public void prepareLoaderManager();
 }

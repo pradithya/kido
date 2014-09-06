@@ -15,10 +15,10 @@ import com.progrema.superbaby.util.FormatUtils;
 
 public class NursingDialog extends DialogFragment {
 
-    private Callback callback;
     private static final int LEFT = 0;
     private static final int RIGHT = 1;
     private static final int FORMULA = 2;
+    private Callback callback;
 
     public static NursingDialog getInstance() {
         return new NursingDialog();
@@ -34,7 +34,7 @@ public class NursingDialog extends DialogFragment {
         builder.setTitle(R.string.nursing_dialog_title)
                 .setItems(R.array.nursing_selection, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
+                        switch (which) {
                             case LEFT:
                                 insertLeftEntry();
                                 break;

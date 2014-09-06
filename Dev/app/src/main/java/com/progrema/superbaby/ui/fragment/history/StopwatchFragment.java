@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -147,10 +146,10 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-    private String titleConversion(String activityName){
+    private String titleConversion(String activityName) {
         if (activityName.equals(HomeActivity.Trigger.NURSING.getTitle())) {
             return "Nursing Timer";
-        } else if (activityName.equals(HomeActivity.Trigger.SLEEP.getTitle())){
+        } else if (activityName.equals(HomeActivity.Trigger.SLEEP.getTitle())) {
             return "Sleep Timer";
         }
         return "";
@@ -184,7 +183,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
         long secondDuration = secondStopwatch.getDuration();
 
         if (sourceTrigger.compareTo(HomeActivity.Trigger.SLEEP.getTitle()) == 0) {
-            if(editTrigger!= null &&
+            if (editTrigger != null &&
                     (editTrigger.compareTo(getResources().getString(R.string.menu_edit)) == 0)) {
                 ActivitySleep activitySleep = new ActivitySleep();
                 activitySleep.setActivityId(Long.valueOf(currentEntryTag));
@@ -210,7 +209,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
             activityNursing.setBabyID(ActiveContext.getActiveBaby(getActivity()).getActivityId());
             if (isTwoStopWatch) {
                 if (firstDuration != 0) {
-                    if(editTrigger!= null &&
+                    if (editTrigger != null &&
                             editTrigger.compareTo(getResources().getString(R.string.menu_edit)) == 0) {
                         //TODO: implement nursing update operation
                         ActivityNursing editNursingEntry = new ActivityNursing();
@@ -225,7 +224,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
                     }
                 }
                 if (secondDuration != 0) {
-                    if(editTrigger!= null &&
+                    if (editTrigger != null &&
                             editTrigger.compareTo(getResources().getString(R.string.menu_edit)) == 0) {
                         //TODO: implement nursing update operation
                         ActivityNursing editNursingEntry = new ActivityNursing();
@@ -241,7 +240,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
                 }
             } else {
                 // formula
-                if(editTrigger!= null &&
+                if (editTrigger != null &&
                         editTrigger.compareTo(getResources().getString(R.string.menu_edit)) == 0) {
                     //TODO: implement nursing update operation
                     ActivityNursing editNursingEntry = new ActivityNursing();

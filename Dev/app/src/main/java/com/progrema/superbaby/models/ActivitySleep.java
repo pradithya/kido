@@ -53,7 +53,7 @@ public class ActivitySleep extends BaseActivity {
 
     @Override
     public void delete(Context context) {
-        String [] selectionArgs = {
+        String[] selectionArgs = {
                 String.valueOf(ActiveContext.getActiveBaby(context).getActivityId()),
                 String.valueOf(getActivityId())};
         context.getContentResolver().delete(
@@ -64,7 +64,7 @@ public class ActivitySleep extends BaseActivity {
 
     @Override
     public void edit(Context context) {
-        String [] selectionArgs = {
+        String[] selectionArgs = {
                 String.valueOf(ActiveContext.getActiveBaby(context).getActivityId()),
                 String.valueOf(getActivityId())};
         ContentValues values = new ContentValues();

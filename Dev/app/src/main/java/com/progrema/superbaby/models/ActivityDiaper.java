@@ -48,7 +48,7 @@ public class ActivityDiaper extends BaseActivity {
 
     @Override
     public void delete(Context context) {
-        String [] selectionArgs = {
+        String[] selectionArgs = {
                 String.valueOf(ActiveContext.getActiveBaby(context).getActivityId()),
                 String.valueOf(getActivityId())};
         context.getContentResolver().delete(BabyLogContract.Diaper.CONTENT_URI,
@@ -57,7 +57,7 @@ public class ActivityDiaper extends BaseActivity {
 
     @Override
     public void edit(Context context) {
-        String [] selectionArgs = {
+        String[] selectionArgs = {
                 String.valueOf(ActiveContext.getActiveBaby(context).getActivityId()),
                 String.valueOf(getActivityId())};
         ContentValues values = new ContentValues();
@@ -77,9 +77,11 @@ public class ActivityDiaper extends BaseActivity {
         WET("WET"),
         MIXED("MIXED");
         private String title;
+
         DiaperType(String title) {
             this.title = title;
         }
+
         public String getTitle() {
             return this.title;
         }

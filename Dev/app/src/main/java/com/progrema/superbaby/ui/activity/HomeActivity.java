@@ -55,13 +55,11 @@ public class HomeActivity extends FragmentActivity
     private static final int POSITION_DIAPER_FRAGMENT = 2;
     private static final int POSITION_SLEEP_FRAGMENT = 3;
     private static final int POSITION_MEASUREMENT_FRAGMENT = 4;
-    private int currentFragment;
-
     private static final int TIME_FILTER_POSITION_TODAY = 0;
     private static final int TIME_FILTER_POSITION_THIS_WEEK = 1;
     private static final int TIME_FILTER_POSITION_THIS_MONTH = 2;
     private static final int TIME_FILTER_POSITION_ALL = 3;
-
+    private int currentFragment;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -89,7 +87,7 @@ public class HomeActivity extends FragmentActivity
         mNavigationFragment.setUp(R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
         String[] items = getResources().getStringArray(R.array.time_selection);
-        spinnerAdapter = new ActionBarDropDownAdapter(this, R.layout.action_bar_spinner, items,"");
+        spinnerAdapter = new ActionBarDropDownAdapter(this, R.layout.action_bar_spinner, items, "");
         getActionBar().setListNavigationCallbacks(spinnerAdapter, this);
     }
 
@@ -128,7 +126,7 @@ public class HomeActivity extends FragmentActivity
     @Override
     public void onNavigationDrawerItemSelected(int position, int calibration) {
         currentFragment = position - calibration;
-        switchFragment(currentFragment,previousQuery);
+        switchFragment(currentFragment, previousQuery);
     }
 
     public void restoreActionBar() {
@@ -283,39 +281,8 @@ public class HomeActivity extends FragmentActivity
         }
     }
 
-    public enum Trigger {
-        SLEEP("ActivitySleep"),
-        NURSING("ActivityNursing"),
-        DIAPER("ActivityDiaper");
-        private String title;
-        Trigger(String title) {
-            this.title = title;
-        }
-        public String getTitle() {
-            return this.title;
-        }
-    }
-
-    public enum TimeFilter{
-        START("start"),
-        END("end"),
-        FILTER_TYPE("filter_type"),
-        FILTER_TODAY("filter_today"),
-        FILTER_THIS_WEEK("filter_this_week"),
-        FILTER_THIS_MONTH("filter_this_month"),
-        FILTER_ALL("filter_all");
-        private String title;
-        TimeFilter(String title) {
-            this.title = title;
-        }
-        public String getTitle() {
-            return this.title;
-        }
-    }
-
-
     @Override
-    public boolean onNavigationItemSelected(int position, long itemId){
+    public boolean onNavigationItemSelected(int position, long itemId) {
         //TODO: change query of active fragment
         Bundle timeFilterBundler = createTimeFilter(position);
         previousQuery = timeFilterBundler;
@@ -323,7 +290,7 @@ public class HomeActivity extends FragmentActivity
         return true;
     }
 
-    private void switchFragment(int fragmentPosition, Bundle argument){
+    private void switchFragment(int fragmentPosition, Bundle argument) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = null;
         switch (fragmentPosition) {
@@ -356,7 +323,7 @@ public class HomeActivity extends FragmentActivity
         }
     }
 
-    private Bundle createTimeFilter (int position){
+    private Bundle createTimeFilter(int position) {
         /**
          * as stated here: http://developer.android.com/reference/java/util/Calendar.html
          * 24:00:00 "belongs" to the following day.
@@ -372,7 +339,7 @@ public class HomeActivity extends FragmentActivity
         startCalendar.set(Calendar.MINUTE, 0);
         startCalendar.set(Calendar.SECOND, 0);
         startCalendar.set(Calendar.MILLISECOND, 0);
-        switch (position){
+        switch (position) {
             case TIME_FILTER_POSITION_TODAY:
                 timeFilterType = TimeFilter.FILTER_TODAY.getTitle();
                 break;
@@ -390,10 +357,44 @@ public class HomeActivity extends FragmentActivity
                 break;
         }
         startTime = String.valueOf(startCalendar.getTimeInMillis());
-        Bundle timeFilterBundle  = new Bundle();
+        Bundle timeFilterBundle = new Bundle();
         timeFilterBundle.putString(TimeFilter.START.getTitle(), startTime);
         timeFilterBundle.putString(TimeFilter.END.getTitle(), endTime);
         timeFilterBundle.putString(TimeFilter.FILTER_TYPE.getTitle(), timeFilterType);
         return timeFilterBundle;
+    }
+
+    public enum Trigger {
+        SLEEP("ActivitySleep"),
+        NURSING("ActivityNursing"),
+        DIAPER("ActivityDiaper");
+        private String title;
+
+        Trigger(String title) {
+            this.title = title;
+        }
+
+        public String getTitle() {
+            return this.title;
+        }
+    }
+
+    public enum TimeFilter {
+        START("start"),
+        END("end"),
+        FILTER_TYPE("filter_type"),
+        FILTER_TODAY("filter_today"),
+        FILTER_THIS_WEEK("filter_this_week"),
+        FILTER_THIS_MONTH("filter_this_month"),
+        FILTER_ALL("filter_all");
+        private String title;
+
+        TimeFilter(String title) {
+            this.title = title;
+        }
+
+        public String getTitle() {
+            return this.title;
+        }
     }
 }

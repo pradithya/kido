@@ -1,15 +1,11 @@
 package com.progrema.superbaby.util;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.text.format.DateUtils;
 
 import com.progrema.superbaby.R;
 import com.squareup.phrase.Phrase;
 
-import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
@@ -118,7 +114,7 @@ public class FormatUtils {
         if ((lMinutes != 0) && (lHours != 0)) {
             lSeconds = TimeUnit.MILLISECONDS.toSeconds(
                     (lDurationInMilliseconds % TimeUnit.HOURS.toMillis(lHours))
-                    % TimeUnit.MINUTES.toMillis(lMinutes));
+                            % TimeUnit.MINUTES.toMillis(lMinutes));
         } else if ((lMinutes == 0) && (lHours != 0)) {
             lSeconds = TimeUnit.MILLISECONDS.toSeconds(
                     lDurationInMilliseconds % TimeUnit.HOURS.toMillis(lHours));
@@ -151,7 +147,7 @@ public class FormatUtils {
         if ((lMinutes != 0) && (lHours != 0)) {
             lSeconds = TimeUnit.MILLISECONDS.toSeconds(
                     (lDurationInMilliseconds % TimeUnit.HOURS.toMillis(lHours))
-                    % TimeUnit.MINUTES.toMillis(lMinutes));
+                            % TimeUnit.MINUTES.toMillis(lMinutes));
         } else if ((lMinutes == 0) && (lHours != 0)) {
             lSeconds = TimeUnit.MILLISECONDS.toSeconds(
                     lDurationInMilliseconds % TimeUnit.HOURS.toMillis(lHours));
@@ -200,7 +196,7 @@ public class FormatUtils {
         if ((lMinutes != 0) && (lHours != 0)) {
             lSeconds = TimeUnit.MILLISECONDS.toSeconds(
                     (lDurationInMilliseconds % TimeUnit.HOURS.toMillis(lHours))
-                    % TimeUnit.MINUTES.toMillis(lMinutes));
+                            % TimeUnit.MINUTES.toMillis(lMinutes));
         } else if ((lMinutes == 0) && (lHours != 0)) {
             lSeconds = TimeUnit.MILLISECONDS.toSeconds(
                     lDurationInMilliseconds % TimeUnit.HOURS.toMillis(lHours));
@@ -232,7 +228,7 @@ public class FormatUtils {
         if ((lMinutes != 0) && (lHours != 0)) {
             lSeconds = TimeUnit.MILLISECONDS.toSeconds(
                     (lDurationInMilliseconds % TimeUnit.HOURS.toMillis(lHours))
-                    % TimeUnit.MINUTES.toMillis(lMinutes));
+                            % TimeUnit.MINUTES.toMillis(lMinutes));
         } else if ((lMinutes == 0) && (lHours != 0)) {
             lSeconds = TimeUnit.MILLISECONDS.toSeconds(
                     lDurationInMilliseconds % TimeUnit.HOURS.toMillis(lHours));

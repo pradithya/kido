@@ -12,7 +12,8 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="10:00"
-        android:textSize="@dimen/text_size_small"/>
+        android:textSize="@dimen/text_size_small"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -35,8 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:orientation="vertical"
             android:gravity="center|left"
+            android:orientation="vertical"
             android:padding="4dp">
 
             <TextView
@@ -45,7 +46,8 @@
                 android:layout_height="wrap_content"
                 android:text="Tuesday"
                 android:textColor="@color/default_font"
-                android:textSize="@dimen/text_size_micro" />
+                android:textSize="@dimen/text_size_micro"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/history_item_date"
@@ -60,8 +62,8 @@
             android:id="@+id/menu_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_action_overflow"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:src="@drawable/ic_action_overflow" />
 
     </LinearLayout>
 

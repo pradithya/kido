@@ -4,10 +4,10 @@
 
     <item
         android:id="@+id/action_new_baby"
+        android:icon="@drawable/ic_action_new"
         android:orderInCategory="99"
         android:showAsAction="ifRoom"
-        android:title="@string/action_new_baby"
-        android:icon="@drawable/ic_action_new"/>
+        android:title="@string/action_new_baby" />
 
     <item
         android:id="@+id/action_settings"

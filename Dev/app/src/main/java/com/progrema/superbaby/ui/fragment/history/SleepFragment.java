@@ -213,7 +213,7 @@ public class SleepFragment extends HistoryFragment implements
         private long totalSleepDuration;
         private long duration;
         private long nightDuration;
-        private long napDuration ;
+        private long napDuration;
         private long timestamp;
 
         public void prepareEntry(Cursor cursor) {
@@ -230,11 +230,11 @@ public class SleepFragment extends HistoryFragment implements
         }
 
         public String getNightPercentage() {
-            return decimalConverter.format((float)nightDuration / (float)totalSleepDuration * 100);
+            return decimalConverter.format((float) nightDuration / (float) totalSleepDuration * 100);
         }
 
         public String getNapPercentage() {
-            return decimalConverter.format((float)napDuration / (float)totalSleepDuration * 100);
+            return decimalConverter.format((float) napDuration / (float) totalSleepDuration * 100);
         }
 
         public long getTotalSleepDuration() {

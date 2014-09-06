@@ -68,6 +68,10 @@ public class ActionBarDropDownAdapter extends ArrayAdapter<String> {
         this.notifyDataSetChanged();
     }
 
+    private LayoutInflater getLayoutInflater(Context context) {
+        return (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
     private class ViewHolder {
         private TextView title;
         private TextView subtitle;
@@ -75,9 +79,5 @@ public class ActionBarDropDownAdapter extends ArrayAdapter<String> {
 
     public class DropDownViewHolder {
         private TextView title;
-    }
-
-    private LayoutInflater getLayoutInflater(Context context) {
-        return (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 }

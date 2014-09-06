@@ -30,8 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="@drawable/button_background"
-        android:textColor="@color/transparent_black"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:textColor="@color/transparent_black" />
 
     <Spinner
         android:id="@+id/baby_input_sex"
@@ -47,6 +47,6 @@
         android:layout_gravity="center"
         android:layout_margin="8dp"
         android:background="@drawable/button_background"
-        android:src="@drawable/ic_action_accept"/>
+        android:src="@drawable/ic_action_accept" />
 
 </LinearLayout>

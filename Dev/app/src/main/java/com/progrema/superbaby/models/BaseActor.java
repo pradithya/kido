@@ -1,6 +1,5 @@
 package com.progrema.superbaby.models;
 
-import android.net.Uri;
 import android.os.Parcel;
 
 abstract public class BaseActor extends BaseModel {
@@ -51,9 +50,11 @@ abstract public class BaseActor extends BaseModel {
         MALE("Boy"),
         FEMALE("Girl");
         private String title;
+
         Sex(String title) {
             this.title = title;
         }
+
         public String getTitle() {
             return this.title;
         }

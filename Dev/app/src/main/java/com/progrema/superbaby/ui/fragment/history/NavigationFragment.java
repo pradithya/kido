@@ -128,9 +128,9 @@ public class NavigationFragment extends Fragment {
         cursor = babyQuery(getActivity());
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
             //TODO: "Icon made by Freepik from Flaticon.com"
-            String sType = cursor.getString(BabyLogContract.Baby.Query.OFFSET_SEX );
+            String sType = cursor.getString(BabyLogContract.Baby.Query.OFFSET_SEX);
             Baby bBabyEntry = new Baby(cursor.getString(BabyLogContract.Baby.Query.OFFSET_NAME));
-            if (sType.equals(BaseActor.Sex.FEMALE.getTitle())){
+            if (sType.equals(BaseActor.Sex.FEMALE.getTitle())) {
                 bBabyEntry.setThumbnail(getResources().getDrawable(R.drawable.ic_baby_girl));
             } else if (sType.equals(BaseActor.Sex.MALE.getTitle())) {
                 bBabyEntry.setThumbnail(getResources().getDrawable(R.drawable.ic_baby_boy));

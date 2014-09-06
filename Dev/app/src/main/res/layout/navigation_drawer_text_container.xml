@@ -12,7 +12,7 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:background="?android:attr/activatedBackgroundIndicator"
-        android:padding="8dp"/>
+        android:padding="8dp" />
 
     <TextView
         android:id="@+id/text_title"

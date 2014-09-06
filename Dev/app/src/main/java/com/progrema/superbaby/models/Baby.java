@@ -19,6 +19,7 @@ public class Baby extends BaseActor {
         public Baby createFromParcel(Parcel parcel) {
             return new Baby(parcel);
         }
+
         @Override
         public Baby[] newArray(int size) {
             return new Baby[size];
@@ -26,7 +27,7 @@ public class Baby extends BaseActor {
     };
 
     private Calendar birthday;
-    private  Uri picture;
+    private Uri picture;
 
     public Baby() {
     }
