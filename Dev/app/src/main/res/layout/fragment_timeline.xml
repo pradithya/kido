@@ -34,9 +34,8 @@
                 android:layout_height="wrap_content">
 
                 <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_margin="4dp"
                     android:background="@drawable/box_frame"
                     android:gravity="center">

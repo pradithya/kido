@@ -57,38 +57,10 @@ public class BabyInputFragment extends Fragment implements
     private Uri cameraImageUri;
     private Bitmap imageBitmap;
     private int year, month, date;
+    private boolean isCameraIntent;
 
     public static BabyInputFragment getInstance() {
         return new BabyInputFragment();
-    }
-
-    private File createImageOnDirectory() {
-        File imageDirectory =
-                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Superbaby");
-        if ((!imageDirectory.exists()) && (!imageDirectory.mkdir())) return null;
-        return new File(imageDirectory.getPath() + File.separator + "IMG_TMP.jpg");
-    }
-
-    private void deleteTemporaryBitmap() {
-        File imageDirectory =
-                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Superbaby");
-        File tempFile = new File(imageDirectory.getPath() + File.separator + "IMG_TMP.jpg");
-        if (tempFile.exists())
-                tempFile.delete();
-    }
-
-    private void saveBitmapOnDirectory() {
-        File imageDirectory =
-                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Superbaby");
-        Baby baby = ActiveContext.getActiveBaby(getActivity());
-        try {
-            FileOutputStream out = new FileOutputStream(imageDirectory.getPath() + File.separator + "IMG_" + baby.getName() + ".jpg");
-            imageBitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
-            out.flush();
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -190,7 +162,13 @@ public class BabyInputFragment extends Fragment implements
     }
 
     private String replaceFileName(String fileName) {
-        return fileName.replace("IMG_TMP", "IMG_" + babyName);
+        if (isCameraIntent()) {
+            return (fileName.replace("IMG_TMP", "IMG_" + babyName));
+        } else {
+            File imageDirectory =
+                    new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Superbaby");
+            return ("file://" + imageDirectory.getPath() + File.separator + "IMG_" + babyName + ".jpg");
+        }
     }
 
     private void setActiveBabyContext() {
@@ -267,12 +245,14 @@ public class BabyInputFragment extends Fragment implements
     }
 
     private void processImageFromCamera(int resultCode) {
+        setCameraIntent(true);
         if (resultCode == Activity.RESULT_OK)
             imageUriString = cameraImageUri.toString();
         performImageCrop(Uri.parse(imageUriString));
     }
 
     private void processImageFromGallery(int resultCode, Intent data) {
+        setCameraIntent(false);
         if (resultCode == Activity.RESULT_OK)
             imageUriString = data.getData().toString();
         performImageCrop(Uri.parse(imageUriString));
@@ -280,7 +260,7 @@ public class BabyInputFragment extends Fragment implements
 
     private void showFinalImage(int resultCode, Intent data) {
         Bundle extras;
-        if (resultCode == Activity.RESULT_OK){
+        if (resultCode == Activity.RESULT_OK) {
             extras = data.getExtras();
             imageBitmap = extras.getParcelable("data");
             imageHandler.setImageBitmap(imageBitmap);
@@ -294,8 +274,8 @@ public class BabyInputFragment extends Fragment implements
             intent.putExtra("crop", "true");
             intent.putExtra("aspectX", 1);
             intent.putExtra("aspectY", 1);
-            intent.putExtra("outputX", 256);
-            intent.putExtra("outputY", 256);
+            intent.putExtra("outputX", 300);
+            intent.putExtra("outputY", 300);
             intent.putExtra("return-data", true);
             startActivityForResult(intent, INTENT_CROP_PICTURE);
         } catch (ActivityNotFoundException error) {
@@ -346,4 +326,40 @@ public class BabyInputFragment extends Fragment implements
         birthdayHandler.setText(FormatUtils.fmtDate(getActivity(), String.valueOf(dob.getTimeInMillis())));
     }
 
+    private File createImageOnDirectory() {
+        File imageDirectory =
+                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Superbaby");
+        if ((!imageDirectory.exists()) && (!imageDirectory.mkdir())) return null;
+        return new File(imageDirectory.getPath() + File.separator + "IMG_TMP.jpg");
+    }
+
+    private void deleteTemporaryBitmap() {
+        File imageDirectory =
+                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Superbaby");
+        File tempFile = new File(imageDirectory.getPath() + File.separator + "IMG_TMP.jpg");
+        if (tempFile.exists())
+            tempFile.delete();
+    }
+
+    private void saveBitmapOnDirectory() {
+        File imageDirectory =
+                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Superbaby");
+        Baby baby = ActiveContext.getActiveBaby(getActivity());
+        try {
+            FileOutputStream out = new FileOutputStream(imageDirectory.getPath() + File.separator + "IMG_" + baby.getName() + ".jpg");
+            imageBitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean isCameraIntent() {
+        return isCameraIntent;
+    }
+
+    private void setCameraIntent(boolean isCameraIntent) {
+        this.isCameraIntent = isCameraIntent;
+    }
 }
