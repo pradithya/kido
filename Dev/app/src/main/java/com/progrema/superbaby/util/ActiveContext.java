@@ -3,6 +3,7 @@ package com.progrema.superbaby.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.Uri;
 
 import com.progrema.superbaby.models.Baby;
 import com.progrema.superbaby.models.BaseActor;
@@ -24,6 +25,7 @@ public class ActiveContext {
     private static final String PREF_BABY_NAME = "prefBabyName";
     private static final String PREF_BABY_BIRTHDAY = "prefBabyBirthday";
     private static final String PREF_BABY_SEX = "prefBabySex";
+    private static final String PREF_BABY_PICTURE = "prefBabyPicture";
     private static final String PREF_USER_ID = "prefUserId";
     private static final String PREF_USER_NAME = "prefUserName";
 
@@ -37,12 +39,12 @@ public class ActiveContext {
         Cursor cursor = babyQuery(context, babyName);
         SharedPreferences setting = context.getSharedPreferences(PREF_CONTEXT, 0);
         SharedPreferences.Editor editor = setting.edit();
-
         cursor.moveToFirst();
         editor.putLong(PREF_BABY_ID, cursor.getLong(BabyLogContract.Baby.Query.OFFSET_ID));
         editor.putString(PREF_BABY_NAME, cursor.getString(BabyLogContract.Baby.Query.OFFSET_NAME));
         editor.putString(PREF_BABY_BIRTHDAY, cursor.getString(BabyLogContract.Baby.Query.OFFSET_BIRTHDAY));
         editor.putString(PREF_BABY_SEX, cursor.getString(BabyLogContract.Baby.Query.OFFSET_SEX));
+        editor.putString(PREF_BABY_PICTURE, cursor.getString(BabyLogContract.Baby.Query.OFFSET_PICTURE));
         editor.commit();
     }
 
@@ -55,10 +57,10 @@ public class ActiveContext {
     public static Baby getActiveBaby(Context context) {
         SharedPreferences setting = context.getSharedPreferences(PREF_CONTEXT, 0);
         Baby baby = new Baby();
-
         baby.setActivityId(setting.getLong(PREF_BABY_ID, 0));
         baby.setName(setting.getString(PREF_BABY_NAME, ""));
         baby.setBirthday(setting.getString(PREF_BABY_BIRTHDAY, ""));
+        baby.setPicture(Uri.parse(setting.getString(PREF_BABY_PICTURE, "")));
         if (setting.getString(PREF_BABY_SEX, "").equals(BaseActor.Sex.MALE.getTitle())) {
             baby.setSex(BaseActor.Sex.MALE);
         } else if (setting.getString(PREF_BABY_SEX, "").equals(BaseActor.Sex.FEMALE.getTitle())) {

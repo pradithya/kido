@@ -1,16 +1,22 @@
 package com.progrema.superbaby.ui.fragment.history;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.progrema.superbaby.R;
@@ -27,6 +33,8 @@ import com.progrema.superbaby.util.ActiveContext;
 import com.progrema.superbaby.widget.customfragment.HistoryFragment;
 import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 
+import java.io.InputStream;
+
 public class TimelineFragment extends HistoryFragment
         implements LoaderManager.LoaderCallbacks<Cursor>, HistoryFragmentServices,
         TimelineAdapter.Callback, DiaperDialog.Callback, NursingDialog.Callback,
@@ -38,6 +46,7 @@ public class TimelineFragment extends HistoryFragment
     private TextView birthdayHandler;
     private TextView ageHandler;
     private TextView sexHandler;
+    private ImageView imageHandler;
     private TimelineAdapter adapter;
     private ObserveableListView timelineHistoryList;
     private View root;
@@ -74,6 +83,7 @@ public class TimelineFragment extends HistoryFragment
         birthdayHandler = (TextView) root.findViewById(R.id.birthday_content);
         ageHandler = (TextView) root.findViewById(R.id.age_content);
         sexHandler = (TextView) root.findViewById(R.id.sex_content);
+        imageHandler = (ImageView) root.findViewById(R.id.baby_image);
     }
 
     @Override
@@ -192,6 +202,21 @@ public class TimelineFragment extends HistoryFragment
         birthdayHandler.setText(baby.getBirthdayInReadableFormat(getActivity()));
         ageHandler.setText(baby.getAgeInReadableFormat(getActivity()));
         sexHandler.setText(baby.getSex().getTitle());
+        showBabyImage(baby, getActivity());
+    }
+
+    private void showBabyImage(Baby baby, Context context) {
+        Uri image;
+        Bitmap bitmap;
+        InputStream inputStream = null;
+        try {
+            image = baby.getPicture();
+            inputStream = context.getContentResolver().openInputStream(image);
+        } catch (Exception error) {
+            Log.e("_DBG_IMAGE", Log.getStackTraceString(error));
+        }
+        bitmap = BitmapFactory.decodeStream(inputStream, null, null);
+        imageHandler.setImageBitmap(bitmap);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.progrema.superbaby.models;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Parcel;
 
 import com.progrema.superbaby.provider.BabyLogContract;
@@ -25,6 +26,7 @@ public class Baby extends BaseActor {
     };
 
     private Calendar birthday;
+    private  Uri picture;
 
     public Baby() {
     }
@@ -76,6 +78,14 @@ public class Baby extends BaseActor {
         birthday.setTime(dateOfBirth);
     }
 
+    public Uri getPicture() {
+        return picture;
+    }
+
+    public void setPicture(Uri picture) {
+        this.picture = picture;
+    }
+
     @Override
     public void insert(Context context) {
         User user = ActiveContext.getActiveUser(context);
@@ -83,6 +93,7 @@ public class Baby extends BaseActor {
         values.put(BabyLogContract.Baby.NAME, getName());
         values.put(BabyLogContract.Baby.BIRTHDAY, getBirthdayInString());
         values.put(BabyLogContract.Baby.SEX, getSex().getTitle());
+        values.put(BabyLogContract.Baby.PICTURE, getPicture().toString());
         values.put(BabyLogContract.UserBabyMap.USER_ID, user.getActivityId());
         context.getContentResolver().insert(BabyLogContract.Baby.CONTENT_URI, values);
     }

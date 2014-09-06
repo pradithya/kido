@@ -122,6 +122,7 @@ public class BabyLogProvider extends ContentProvider {
                 values.put(BabyLogContract.Baby.NAME, contentValues.getAsString(BabyLogContract.Baby.NAME));
                 values.put(BabyLogContract.Baby.BIRTHDAY, contentValues.getAsString(BabyLogContract.Baby.BIRTHDAY));
                 values.put(BabyLogContract.Baby.SEX, contentValues.getAsString(BabyLogContract.Baby.SEX));
+                values.put(BabyLogContract.Baby.PICTURE, contentValues.getAsString(BabyLogContract.Baby.PICTURE));
                 long babyID = db.insertOrThrow(BabyLogDatabase.Tables.BABY, null, values);
 
                 // add new user-baby map to user-baby map table
@@ -222,9 +223,9 @@ public class BabyLogProvider extends ContentProvider {
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
 
-        int iRetVal;
-        SQLiteDatabase dbTable;
-        SelectionBuilder sbBuilder;
+        int returnValue;
+        SQLiteDatabase table;
+        SelectionBuilder builder;
 
         // Delete whole table
         if (uri == BabyLogContract.BASE_CONTENT_URI)
@@ -236,21 +237,21 @@ public class BabyLogProvider extends ContentProvider {
         }
 
         // Delete specified data from user
-        dbTable = dbOpenHelper.getWritableDatabase();
-        sbBuilder = buildSelection(sUriMatcher.match(uri));
-        sbBuilder.where(selection, selectionArgs).delete(dbTable);
+        table = dbOpenHelper.getWritableDatabase();
+        builder = buildSelection(sUriMatcher.match(uri));
+        builder.where(selection, selectionArgs).delete(table);
 
         // Delete corresponding data on activity table
         selection = "baby_id = ? AND _id = ?";
-        dbTable = dbOpenHelper.getWritableDatabase();
-        sbBuilder = buildSelection(sUriMatcher.match(BabyLogContract.Activity.CONTENT_URI));
-        iRetVal = sbBuilder.where(selection, selectionArgs).delete(dbTable);
+        table = dbOpenHelper.getWritableDatabase();
+        builder = buildSelection(sUriMatcher.match(BabyLogContract.Activity.CONTENT_URI));
+        returnValue = builder.where(selection, selectionArgs).delete(table);
 
         // Notify user specified table and activity table
         notifyChange(uri);
         notifyChange(BabyLogContract.Activity.CONTENT_URI);
 
-        return iRetVal;
+        return returnValue;
     }
 
     private void deleteDataBase() {

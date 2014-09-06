@@ -51,11 +51,11 @@ public class BabyLogDatabase extends SQLiteOpenHelper {
      */
     private static final int VER_2014_01 = 100; // 1.0
     private static final int DATABASE_VERSION = VER_2014_01;
-    private final Context mContext;
+    private final Context context;
 
     public BabyLogDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        mContext = context;
+        this.context = context;
     }
 
     public static void deleteDataBase(Context context) {
@@ -83,7 +83,8 @@ public class BabyLogDatabase extends SQLiteOpenHelper {
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + BabyColumns.NAME + " TEXT NOT NULL,"
                 + BabyColumns.BIRTHDAY + " TEXT NOT NULL,"
-                + BabyColumns.SEX + " TEXT NOT NULL)");
+                + BabyColumns.SEX + " TEXT NOT NULL,"
+                + BabyColumns.PICTURE + " TEXT NOT NULL)");
 
         db.execSQL("CREATE TABLE " + Tables.ACTIVITY + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"

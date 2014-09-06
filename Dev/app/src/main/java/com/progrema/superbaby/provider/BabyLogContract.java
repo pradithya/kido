@@ -34,6 +34,7 @@ public class BabyLogContract {
         String NAME = "name";
         String BIRTHDAY = "birthday";
         String SEX = "sex";
+        String PICTURE = "picture";
     }
 
     interface ActivityColumns {
@@ -138,12 +139,14 @@ public class BabyLogContract {
                             BaseColumns._ID,
                             Baby.NAME,
                             Baby.BIRTHDAY,
-                            Baby.SEX
+                            Baby.SEX,
+                            Baby.PICTURE
                     };
             final int OFFSET_ID = 0;
             final int OFFSET_NAME = 1;
             final int OFFSET_BIRTHDAY = 2;
             final int OFFSET_SEX = 3;
+            final int OFFSET_PICTURE = 4;
         }
     }
 

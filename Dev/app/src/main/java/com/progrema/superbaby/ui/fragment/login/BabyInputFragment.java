@@ -37,6 +37,7 @@ import com.progrema.superbaby.util.FormatUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.Calendar;
 
 public class BabyInputFragment extends Fragment implements
@@ -61,13 +62,33 @@ public class BabyInputFragment extends Fragment implements
         return new BabyInputFragment();
     }
 
-    private static File getImageDir() {
-        //TODO: Can we get from camera directory?
+    private File createImageOnDirectory() {
         File imageDirectory =
                 new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Superbaby");
         if ((!imageDirectory.exists()) && (!imageDirectory.mkdir())) return null;
-        String name = String.valueOf(Calendar.getInstance().getTimeInMillis());
-        return new File(imageDirectory.getPath() + File.separator + "IMG_" + name + ".jpg");
+        return new File(imageDirectory.getPath() + File.separator + "IMG_TMP.jpg");
+    }
+
+    private void deleteTemporaryBitmap() {
+        File imageDirectory =
+                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Superbaby");
+        File tempFile = new File(imageDirectory.getPath() + File.separator + "IMG_TMP.jpg");
+        if (tempFile.exists())
+                tempFile.delete();
+    }
+
+    private void saveBitmapOnDirectory() {
+        File imageDirectory =
+                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Superbaby");
+        Baby baby = ActiveContext.getActiveBaby(getActivity());
+        try {
+            FileOutputStream out = new FileOutputStream(imageDirectory.getPath() + File.separator + "IMG_" + baby.getName() + ".jpg");
+            imageBitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -142,6 +163,8 @@ public class BabyInputFragment extends Fragment implements
         storeBabyToDataBase();
         setActiveBabyContext();
         skipLoginNextStartup();
+        deleteTemporaryBitmap();
+        saveBitmapOnDirectory();
         goToHomeActivity();
     }
 
@@ -157,12 +180,17 @@ public class BabyInputFragment extends Fragment implements
         Baby baby = new Baby();
         baby.setName(babyName);
         baby.setBirthday(babyBirthday);
+        baby.setPicture(Uri.parse(replaceFileName(imageUriString)));
         if (babySexType.equals(BaseActor.Sex.MALE.getTitle())) {
             baby.setSex(BaseActor.Sex.MALE);
         } else if (babySexType.equals(BaseActor.Sex.FEMALE.getTitle())) {
             baby.setSex(BaseActor.Sex.FEMALE);
         }
         baby.insert(getActivity());
+    }
+
+    private String replaceFileName(String fileName) {
+        return fileName.replace("IMG_TMP", "IMG_" + babyName);
     }
 
     private void setActiveBabyContext() {
@@ -201,7 +229,7 @@ public class BabyInputFragment extends Fragment implements
     private void onCameraClick() {
         try {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            cameraImageUri = Uri.fromFile(getImageDir());
+            cameraImageUri = Uri.fromFile(createImageOnDirectory());
             intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraImageUri);
             startActivityForResult(intent, INTENT_USE_CAMERA);
         } catch (ActivityNotFoundException error) {

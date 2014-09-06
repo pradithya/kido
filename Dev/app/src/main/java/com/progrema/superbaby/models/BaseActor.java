@@ -1,11 +1,13 @@
 package com.progrema.superbaby.models;
 
+import android.net.Uri;
 import android.os.Parcel;
 
 abstract public class BaseActor extends BaseModel {
 
     protected String name;
     protected Sex sex;
+
 
     public BaseActor() {
     }
