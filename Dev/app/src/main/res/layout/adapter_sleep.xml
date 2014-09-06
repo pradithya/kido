@@ -12,7 +12,8 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="10:00"
-        android:textSize="@dimen/text_size_small" />
+        android:textSize="@dimen/text_size_small"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -43,7 +44,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Thur, 8 Jun 2014"
-                android:textSize="@dimen/text_size_micro" />
+                android:textSize="@dimen/text_size_micro"
+                android:textStyle="bold" />
 
 
             <TextView

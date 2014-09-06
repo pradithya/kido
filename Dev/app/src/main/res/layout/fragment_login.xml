@@ -11,6 +11,7 @@
         android:id="@+id/fragment_authentication_edit_text_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:gravity="center"
         android:hint="User Name"
         android:inputType="text" />
@@ -19,6 +20,7 @@
         android:id="@+id/fragment_authentication_edit_text_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:gravity="center"
         android:hint="User Password"
         android:inputType="textPassword" />
@@ -45,13 +47,17 @@
         android:id="@+id/fragment_authentication_button_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:layout_marginTop="16dp"
+        android:background="@drawable/button_background"
         android:text="Login" />
 
     <Button
         android:id="@+id/fragment_authentication_button_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/button_background"
         android:text="Register" />
 
     <Button

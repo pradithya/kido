@@ -42,7 +42,8 @@
                     android:padding="4dp"
                     android:text="Safiya's Activities Summary"
                     android:textColor="@color/default_font"
-                    android:textSize="@dimen/text_size_small" />
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold" />
 
                 <View
                     android:layout_width="match_parent"
@@ -88,7 +89,8 @@
                         android:padding="4dp"
                         android:text="Left"
                         android:textColor="@color/orange"
-                        android:textSize="@dimen/text_size_small" />
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/left_duration"
@@ -102,7 +104,8 @@
                         android:paddingTop="4dp"
                         android:text="0h 0m 0s"
                         android:textColor="@color/orange"
-                        android:textSize="@dimen/text_size_small" />
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/percent_left"
@@ -114,7 +117,8 @@
                         android:padding="4dp"
                         android:text="0%"
                         android:textColor="@color/orange"
-                        android:textSize="@dimen/text_size_small" />
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/title_right"
@@ -125,7 +129,8 @@
                         android:padding="4dp"
                         android:text="Right"
                         android:textColor="@color/green"
-                        android:textSize="@dimen/text_size_small" />
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/right_duration"
@@ -137,7 +142,8 @@
                         android:padding="4dp"
                         android:text="0h 0m 0s"
                         android:textColor="@color/green"
-                        android:textSize="@dimen/text_size_small" />
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/percent_right"
@@ -150,7 +156,8 @@
                         android:padding="4dp"
                         android:text="0%"
                         android:textColor="@color/green"
-                        android:textSize="@dimen/text_size_small" />
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
 
 
                     <TextView
@@ -161,7 +168,8 @@
                         android:padding="4dp"
                         android:text="Formula"
                         android:textColor="@color/red"
-                        android:textSize="@dimen/text_size_small" />
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/formula_volume"
@@ -174,7 +182,8 @@
                         android:padding="4dp"
                         android:text="0mL"
                         android:textColor="@color/red"
-                        android:textSize="@dimen/text_size_small" />
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
@@ -200,7 +209,8 @@
                         android:layout_below="@id/last_side_title"
                         android:layout_centerHorizontal="true"
                         android:padding="8dp"
-                        android:src="@drawable/ic_nursing_right" />
+                        android:src="@drawable/ic_nursing_right"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 

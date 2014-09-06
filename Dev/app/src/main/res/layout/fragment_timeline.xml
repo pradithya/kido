@@ -60,7 +60,8 @@
                         android:padding="4dp"
                         android:text="Safiya Salsabila"
                         android:textColor="@color/blue"
-                        android:textSize="@dimen/text_size_small" />
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/birthday_content"
@@ -70,7 +71,8 @@
                         android:padding="4dp"
                         android:text="Sat, 13 April 2013"
                         android:textColor="@color/red"
-                        android:textSize="@dimen/text_size_small" />
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/age_content"
@@ -80,7 +82,8 @@
                         android:padding="4dp"
                         android:text="12 months 2 days"
                         android:textColor="@color/green"
-                        android:textSize="@dimen/text_size_small" />
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/sex_content"
@@ -90,7 +93,8 @@
                         android:padding="4dp"
                         android:text="Female"
                         android:textColor="@color/orange"
-                        android:textSize="@dimen/text_size_small" />
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 

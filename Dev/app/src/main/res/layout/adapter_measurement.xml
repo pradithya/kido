@@ -13,7 +13,8 @@
         android:gravity="center"
         android:text="10.00"
         android:textColor="@color/orange"
-        android:textSize="@dimen/text_size_micro" />
+        android:textSize="@dimen/text_size_micro"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -45,7 +46,8 @@
                 android:layout_height="wrap_content"
                 android:text="Thur, 12 Jun 2014"
                 android:textColor="@color/default_font"
-                android:textSize="@dimen/text_size_micro" />
+                android:textSize="@dimen/text_size_micro"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/history_item_height"
