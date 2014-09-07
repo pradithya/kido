@@ -114,11 +114,11 @@ public class NavigationFragment extends Fragment {
         // prepare user name
         Cursor cursor = userQuery(getActivity());
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-            StandardItem siUserEntry = new StandardItem(cursor
+            StandardItem userEntry = new StandardItem(cursor
                     .getString(BabyLogContract.User.Query.OFFSET_NAME));
-            siUserEntry.setThumbnail(getResources().getDrawable(R.drawable.ic_user));
-            siUserEntry.setTextColor(getResources().getColor(R.color.black));
-            items.add(siUserEntry);
+            userEntry.setThumbnail(getResources().getDrawable(R.drawable.ic_user));
+            userEntry.setTextColor(getResources().getColor(R.color.black));
+            items.add(userEntry);
         }
 
         // Set section divider

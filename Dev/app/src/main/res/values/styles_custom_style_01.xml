@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- File created by the Android Action Bar Style Generator
+<?xml version="1.0" encoding="utf-8"?><!-- File created by the Android Action Bar Style Generator
 
      Copyright (C) 2011 The Android Open Source Project
      Copyright (C) 2012 readyState Software Ltd
@@ -20,17 +19,24 @@
 <resources>
 
     <style name="Theme.Custom_style_01" parent="@android:style/Theme.Holo.Light">
-        <item name="android:actionBarItemBackground">@drawable/selectable_background_custom_style_01</item>
+        <item name="android:actionBarItemBackground">
+            @drawable/selectable_background_custom_style_01
+        </item>
         <item name="android:popupMenuStyle">@style/PopupMenu.Custom_style_01</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Custom_style_01</item>
         <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.Custom_style_01</item>
         <item name="android:actionDropDownStyle">@style/DropDownNav.Custom_style_01</item>
         <item name="android:actionBarStyle">@style/ActionBar.Solid.Custom_style_01</item>
-        <item name="android:actionModeBackground">@drawable/cab_background_top_custom_style_01</item>
-        <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_custom_style_01</item>
-        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Custom_style_01</item>
+        <item name="android:actionModeBackground">@drawable/cab_background_top_custom_style_01
+        </item>
+        <item name="android:actionModeSplitBackground">
+            @drawable/cab_background_bottom_custom_style_01
+        </item>
+        <item name="android:actionModeCloseButtonStyle">
+            @style/ActionButton.CloseMode.Custom_style_01
+        </item>
         <item name="android:textViewStyle">@style/RobotTextStyle</item>
-        
+
     </style>
 
     <style name="ActionBar.Solid.Custom_style_01" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
@@ -46,7 +52,7 @@
     </style>
 
     <style name="PopupMenu.Custom_style_01" parent="@android:style/Widget.Holo.Light.ListPopupWindow">
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_custom_style_01</item>	
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_custom_style_01</item>
     </style>
 
     <style name="DropDownListView.Custom_style_01" parent="@android:style/Widget.Holo.Light.ListView.DropDown">
@@ -62,11 +68,11 @@
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_custom_style_01</item>
         <item name="android:dropDownSelector">@drawable/selectable_background_custom_style_01</item>
     </style>
-    
+
     <style name="ProgressBar.Custom_style_01" parent="@android:style/Widget.Holo.Light.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal_custom_style_01</item>
     </style>
-    
+
     <style name="ActionButton.CloseMode.Custom_style_01" parent="@android:style/Widget.Holo.Light.ActionButton.CloseMode">
         <item name="android:background">@drawable/btn_cab_done_custom_style_01</item>
     </style>

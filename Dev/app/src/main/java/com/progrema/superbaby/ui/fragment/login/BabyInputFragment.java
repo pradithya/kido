@@ -56,6 +56,7 @@ public class BabyInputFragment extends Fragment implements
     private Button birthdayHandler;
     private Spinner sexHandler;
     private ImageButton acceptHandler;
+    private ImageButton cancelHandler;
     private ImageButton imageHandler;
     private View root;
     private ArrayAdapter<String> adapter;
@@ -76,6 +77,7 @@ public class BabyInputFragment extends Fragment implements
         prepareBirthdayHandler();
         prepareSexHandler();
         prepareAcceptHandler();
+        prepareCancelHandler();
         prepareImageHandler();
         return root;
     }
@@ -111,6 +113,11 @@ public class BabyInputFragment extends Fragment implements
         acceptHandler.setOnClickListener(this);
     }
 
+    private void prepareCancelHandler() {
+        cancelHandler = (ImageButton) root.findViewById(R.id.baby_input_cancel);
+        cancelHandler.setOnClickListener(this);
+    }
+
     private void prepareImageHandler() {
         imageHandler = (ImageButton) root.findViewById(R.id.baby_input_image);
         imageHandler.setOnClickListener(this);
@@ -122,13 +129,20 @@ public class BabyInputFragment extends Fragment implements
             case R.id.baby_input_birthday:
                 onBirthdayClick();
                 break;
+            case R.id.baby_input_image:
+                onImageClick();
+                break;
             case R.id.baby_input_accept:
                 onAcceptClick();
                 break;
-            case R.id.baby_input_image:
-                onPictureClick();
+            case R.id.baby_input_cancel:
+                onCancelClick();
                 break;
         }
+    }
+
+    private void onCancelClick() {
+        goToHomeActivity();
     }
 
     private void onBirthdayClick() {
@@ -193,7 +207,7 @@ public class BabyInputFragment extends Fragment implements
         getActivity().finish();
     }
 
-    private void onPictureClick() {
+    private void onImageClick() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.baby_image_selector_title);
         builder.setItems(R.array.add_image_method, new DialogInterface.OnClickListener() {
