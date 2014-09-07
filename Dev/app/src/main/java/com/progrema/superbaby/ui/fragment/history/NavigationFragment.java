@@ -99,8 +99,7 @@ public class NavigationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mDrawerListView = (ListView) inflater.
-                inflate(R.layout.fragment_navigation, container, false);
+        mDrawerListView = (ListView) inflater.inflate(R.layout.fragment_navigation, container, false);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

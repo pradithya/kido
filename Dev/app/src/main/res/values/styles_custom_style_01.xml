@@ -40,6 +40,7 @@
     </style>
 
     <style name="ActionBar.Solid.Custom_style_01" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
+        <item name="android:titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
         <item name="android:background">@drawable/ab_solid_custom_style_01</item>
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_custom_style_01</item>
         <item name="android:backgroundSplit">@drawable/ab_bottom_solid_custom_style_01</item>
@@ -85,6 +86,11 @@
 
     <!-- Roboto Text Style-->
     <style name="RobotTextStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
+    <style name="MyTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 
