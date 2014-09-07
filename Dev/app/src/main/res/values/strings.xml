@@ -10,8 +10,8 @@
     <string name="title_measure_fragment">Growth</string>
     <string name="title_pumping_fragment">Pumping</string>
     <string name="title_vaccine_fragment">Vaccine</string>
-    <string name="title_section_baby">baby</string>
-    <string name="title_section_activity">action</string>
+    <string name="title_section_baby">Baby</string>
+    <string name="title_section_activity">Activity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
