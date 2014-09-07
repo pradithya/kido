@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name">Superbaby</string>
-
     <string name="title_timeline_fragment">Timeline</string>
     <string name="title_nursing_fragment">Nursing</string>
     <string name="title_food_fragment">Food</string>
@@ -13,20 +12,15 @@
     <string name="title_vaccine_fragment">Vaccine</string>
     <string name="title_section_baby">baby</string>
     <string name="title_section_activity">action</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
     <string name="action_new_baby">New Baby</string>
-
     <string name="quick_button_title_sleep">Sleep</string>
     <string name="quick_button_title_nursing">Nursing</string>
     <string name="quick_button_title_diaper">Diaper</string>
     <string name="quick_button_title_measurement">Growth</string>
-
-    <!--activityNursing fragment string-->
     <string name="nursing_percentage">{percentage}%</string>
     <string name="nursing_left_percentage_initial">Left ...%</string>
     <string name="nursing_right_percentage_initial">Right ...%</string>
@@ -37,8 +31,6 @@
     <string name="nursing_today_initial">...h ...m ...s</string>
     <string name="nursing_formula_today_initial">Formula ...mL</string>
     <string name="nursing_per_day_initial">Type ... ...</string>
-
-    <!--activitySleep fragment string-->
     <string name="date_complete_format">{day}, {date} {month} {year}</string>
     <string name="day_only_format">{day}</string>
     <string name="date_simple_format">{date} {month} {year}</string>
@@ -64,8 +56,6 @@
     <string name="sleep_duration_initial">Sleep ...h ...m ...s</string>
     <string name="active_duration">Active {hour}h {minute}m {second}s</string>
     <string name="active_duration_initial">Active ...h ...m ...s</string>
-
-    <!--activityDiaper fragment string-->
     <string name="wet_icon">Wet</string>
     <string name="dry_icon">Dry</string>
     <string name="mix_icon">Mix</string>
@@ -73,8 +63,6 @@
     <string name="total_activity_number_initial">0 times</string>
     <string name="activity_last">{value}</string>
     <string name="activity_last_initial">No data</string>
-
-    <!--warning message-->
     <string name="ok_message">ok</string>
     <string name="input_not_complete_message">Please input all required data.</string>
     <string name="username_already_exist_message">This user name is already exist. Please login.</string>
@@ -84,8 +72,6 @@
     <string name="camera_intent_error">Device is not supporting image capture</string>
     <string name="gallery_intent_error">Gallery is not exist on device</string>
     <string name="crop_intent_error">Device is not supporting image crop</string>
-
-    <!--widget text-->
     <string name="ok_button">OK</string>
     <string name="volume_hint">volume</string>
     <string name="height_hint">height</string>
@@ -96,46 +82,45 @@
     <string name="left_side">left</string>
     <string name="right_side">right</string>
     <string name="formula">formula</string>
+    <string name="diaper_dialog_title">Diaper type</string>
+    <string name="diaper_dialog_negative_button">Cancel</string>
+    <string name="nursing_dialog_title">Nursing type</string>
+    <string name="nursing_dialog_negative_button">Cancel</string>
+    <string name="measurement_dialog_title">Baby growth data</string>
+    <string name="measurement_dialog_negative_button">Cancel</string>
+    <string name="measurement_dialog_positive_button">OK</string>
+    <string name="menu_edit">Edit</string>
+    <string name="menu_delete">Delete</string>
+    <string name="timeline_title">All activities summary</string>
+    <string name="sleep_title">Sleep activity summary</string>
+    <string name="nursing_title">Nursing activity summary</string>
+    <string name="diaper_title">Diaper activity summary</string>
+    <string name="measure_title">Growing log summary</string>
 
     <string-array name="gender_array">
         <item>Boy</item>
         <item>Girl</item>
     </string-array>
-
     <string-array name="time_selection">
         <item>Today</item>
         <item>This Week</item>
         <item>This Month</item>
         <item>All</item>
     </string-array>
-
-    <string name="diaper_dialog_title">Diaper type</string>
-    <string name="diaper_dialog_negative_button">Cancel</string>
     <string-array name="diaper_selection">
         <item>Dry</item>
         <item>Wet</item>
         <item>Mixed</item>
     </string-array>
-
-    <string name="nursing_dialog_title">Nursing type</string>
-    <string name="nursing_dialog_negative_button">Cancel</string>
     <string-array name="nursing_selection">
         <item>Left</item>
         <item>Right</item>
         <item>Formula</item>
     </string-array>
-
     <string name="baby_image_selector_title">Add baby image</string>
     <string-array name="add_image_method">
         <item>Use camera</item>
         <item>From gallery</item>
     </string-array>
-
-    <string name="measurement_dialog_title">Baby growth data</string>
-    <string name="measurement_dialog_negative_button">Cancel</string>
-    <string name="measurement_dialog_positive_button">OK</string>
-
-    <string name="menu_edit">Edit</string>
-    <string name="menu_delete">Delete</string>
 
 </resources>

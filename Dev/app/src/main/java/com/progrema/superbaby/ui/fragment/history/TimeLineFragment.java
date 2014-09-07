@@ -198,10 +198,10 @@ public class TimelineFragment extends HistoryFragment
     public void onResume() {
         super.onResume();
         Baby baby = ActiveContext.getActiveBaby(getActivity());
-        nameHandler.setText(baby.getName());
-        birthdayHandler.setText(baby.getBirthdayInReadableFormat(getActivity()));
-        ageHandler.setText(baby.getAgeInReadableFormat(getActivity()));
-        sexHandler.setText(baby.getSex().getTitle());
+        nameHandler.setText("Name is " + baby.getName());
+        birthdayHandler.setText("Birthday on " + baby.getBirthdayInReadableFormat(getActivity()));
+        ageHandler.setText("Age is " + baby.getAgeInReadableFormat(getActivity()));
+        sexHandler.setText("Gender is " + baby.getSex().getTitle());
         showBabyImage(baby, getActivity());
     }
 

@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fragment_background"
+    android:background="@color/pink"
     android:orientation="vertical">
 
     <com.progrema.superbaby.widget.customlistview.ObserveableListView
@@ -54,10 +54,32 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:text="@string/timeline_title"
+                        android:textColor="@color/default_font"
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:background="@color/card_shadow" />
+
+                    <TextView
                         android:id="@+id/name_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="4dp"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp"
+                        android:paddingBottom="2dp"
                         android:text="Safiya Salsabila"
                         android:textColor="@color/blue"
                         android:textSize="@dimen/text_size_small"
@@ -68,7 +90,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/name_content"
-                        android:padding="4dp"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp"
+                        android:paddingBottom="2dp"
                         android:text="Sat, 13 April 2013"
                         android:textColor="@color/red"
                         android:textSize="@dimen/text_size_small"
@@ -79,7 +103,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/birthday_content"
-                        android:padding="4dp"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp"
+                        android:paddingBottom="2dp"
                         android:text="12 months 2 days"
                         android:textColor="@color/green"
                         android:textSize="@dimen/text_size_small"
@@ -90,7 +116,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/age_content"
-                        android:padding="4dp"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp"
+                        android:paddingBottom="2dp"
                         android:text="Female"
                         android:textColor="@color/orange"
                         android:textSize="@dimen/text_size_small"
