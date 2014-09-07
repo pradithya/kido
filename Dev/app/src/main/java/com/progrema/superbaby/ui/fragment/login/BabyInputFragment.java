@@ -186,7 +186,7 @@ public class BabyInputFragment extends Fragment implements
             return (fileName.replace("IMG_TMP", "IMG_" + babyName));
         } else {
             File imageDirectory =
-                    new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Superbaby");
+                    new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Superbaby");
             return ("file://" + imageDirectory.getPath() + File.separator + "IMG_" + babyName + ".jpg");
         }
     }
@@ -198,7 +198,7 @@ public class BabyInputFragment extends Fragment implements
     private void skipLoginNextStartup() {
         SharedPreferences setting = getActivity().getSharedPreferences(LoginActivity.PREF_LOGIN, 0);
         SharedPreferences.Editor editor = setting.edit();
-        editor.putBoolean(LoginActivity.PREF_SKIP_LOGIN, false);
+        editor.putBoolean(LoginActivity.PREF_SKIP_LOGIN, true);
         editor.commit();
     }
 
@@ -241,6 +241,7 @@ public class BabyInputFragment extends Fragment implements
         try {
             Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
             photoPickerIntent.setType("image/*");
+            createImageOnDirectory();
             startActivityForResult(photoPickerIntent, INTENT_FROM_GALLERY);
         } catch (ActivityNotFoundException error) {
             String errorMessage = getString(R.string.gallery_intent_error);
@@ -349,14 +350,14 @@ public class BabyInputFragment extends Fragment implements
 
     private File createImageOnDirectory() {
         File imageDirectory =
-                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Superbaby");
+                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Superbaby");
         if ((!imageDirectory.exists()) && (!imageDirectory.mkdir())) return null;
-        return new File(imageDirectory.getPath() + File.separator + "IMG_TMP.jpg");
+        return (new File(imageDirectory.getPath() + File.separator + "IMG_TMP.jpg"));
     }
 
     private void deleteTemporaryBitmap() {
         File imageDirectory =
-                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Superbaby");
+                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Superbaby");
         File tempFile = new File(imageDirectory.getPath() + File.separator + "IMG_TMP.jpg");
         if (tempFile.exists())
             tempFile.delete();
@@ -364,7 +365,7 @@ public class BabyInputFragment extends Fragment implements
 
     private void saveBitmapOnDirectory() {
         File imageDirectory =
-                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Superbaby");
+                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Superbaby");
         Baby baby = ActiveContext.getActiveBaby(getActivity());
         try {
             FileOutputStream out = new FileOutputStream(imageDirectory.getPath() + File.separator + "IMG_" + baby.getName() + ".jpg");

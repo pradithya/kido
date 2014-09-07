@@ -81,7 +81,7 @@
             android:background="@drawable/button_background"
             android:fontFamily="sans-serif-condensed"
             android:textColor="@color/default_font"
-            android:text="Login" />
+            android:text="@string/login_sign_in" />
 
         <Button
             android:id="@+id/fragment_authentication_button_register"
@@ -91,7 +91,7 @@
             android:background="@drawable/button_background"
             android:fontFamily="sans-serif-condensed"
             android:textColor="@color/default_font"
-            android:text="Register" />
+            android:text="@string/login_new_account" />
 
         <Button
             android:id="@+id/fragment_authentication_button_finish_register"

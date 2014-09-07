@@ -8,6 +8,16 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="32dp"
+        android:paddingTop="2dp"
+        android:text="@string/baby_input_instruction"
+        android:textColor="@color/pink"
+        android:textSize="@dimen/text_size_medium" />
+
     <ImageButton
         android:id="@+id/baby_input_image"
         android:layout_width="100dp"
@@ -22,7 +32,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:gravity="center"
-        android:hint="Baby Name"
+        android:hint="@string/baby_input_baby_name"
+        android:fontFamily="sans-serif-condensed"
         android:inputType="text" />
 
     <Button
@@ -32,6 +43,7 @@
         android:layout_margin="8dp"
         android:background="@drawable/button_background"
         android:gravity="center"
+        android:fontFamily="sans-serif-condensed"
         android:textColor="@color/transparent_black" />
 
     <Spinner

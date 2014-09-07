@@ -96,12 +96,16 @@
     <string name="nursing_title">Nursing activity summary</string>
     <string name="diaper_title">Diaper activity summary</string>
     <string name="measure_title">Growing log summary</string>
-    <string name="about_apps_title">Superbaby</string>
+    <string name="about_apps_title">Growing Tree</string>
     <string name="about_apps_version">Version 1.0.0</string>
     <string name="about_apps_progrema">© 2014 Progrema, Inc.</string>
     <string name="about_apps_copy_right">All rights reserved.</string>
     <string name="login_instruction">Welcome Parent</string>
     <string name="login_sub_instruction">Please sign in or create new user account</string>
+    <string name="login_sign_in">Sign in</string>
+    <string name="login_new_account">Create new user account</string>
+    <string name="baby_input_baby_name">Baby name</string>
+    <string name="baby_input_instruction">Please fill in your baby information</string>
 
     <string-array name="gender_array">
         <item>Boy</item>
