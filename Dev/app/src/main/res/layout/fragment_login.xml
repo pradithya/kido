@@ -4,69 +4,132 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/pink_transparent"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/fragment_authentication_edit_text_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:gravity="center"
-        android:hint="User Name"
-        android:inputType="text" />
-
-    <EditText
-        android:id="@+id/fragment_authentication_edit_text_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:gravity="center"
-        android:hint="User Password"
-        android:inputType="textPassword" />
-
-    <EditText
-        android:id="@+id/fragment_authentication_edit_text_security_question"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:hint="Security Question"
-        android:inputType="text"
-        android:visibility="gone" />
+        android:paddingBottom="2dp"
+        android:paddingTop="16dp"
+        android:text="@string/login_instruction"
+        android:textColor="@color/pink"
+        android:textSize="@dimen/text_size_large" />
 
-    <EditText
-        android:id="@+id/fragment_authentication_edit_text_security_answer"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:hint="Security Answer"
-        android:inputType="textPassword"
-        android:visibility="gone" />
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp"
+        android:text="@string/login_sub_instruction"
+        android:textColor="@color/pink"
+        android:textSize="@dimen/text_size_micro" />
 
-    <Button
-        android:id="@+id/fragment_authentication_button_login"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/fragment_authentication_edit_text_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:hint="User Name"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/fragment_authentication_edit_text_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:hint="User Password"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/fragment_authentication_edit_text_security_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="Security Question"
+            android:inputType="text"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/fragment_authentication_edit_text_security_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="Security Answer"
+            android:inputType="textPassword"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/fragment_authentication_button_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_background"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="@color/default_font"
+            android:text="Login" />
+
+        <Button
+            android:id="@+id/fragment_authentication_button_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/button_background"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="@color/default_font"
+            android:text="Register" />
+
+        <Button
+            android:id="@+id/fragment_authentication_button_finish_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Done"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_background"
-        android:text="Login" />
+        android:layout_gravity="start|bottom"
+        android:background="@color/pink"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/fragment_authentication_button_register"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@drawable/button_background"
-        android:text="Register" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="2dp"
+            android:paddingTop="4dp"
+            android:text="@string/about_apps_progrema"
+            android:textColor="@color/default_font"
+            android:textSize="@dimen/text_size_medium" />
 
-    <Button
-        android:id="@+id/fragment_authentication_button_finish_register"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Done"
-        android:visibility="gone" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="4dp"
+            android:paddingTop="2dp"
+            android:text="@string/about_apps_copy_right"
+            android:textColor="@color/default_font"
+            android:textSize="@dimen/text_size_small" />
+
+    </LinearLayout>
 
 </LinearLayout>

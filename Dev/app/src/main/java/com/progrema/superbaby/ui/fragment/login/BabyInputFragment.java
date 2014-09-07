@@ -198,7 +198,7 @@ public class BabyInputFragment extends Fragment implements
     private void skipLoginNextStartup() {
         SharedPreferences setting = getActivity().getSharedPreferences(LoginActivity.PREF_LOGIN, 0);
         SharedPreferences.Editor editor = setting.edit();
-        editor.putBoolean(LoginActivity.PREF_SKIP_LOGIN, true);
+        editor.putBoolean(LoginActivity.PREF_SKIP_LOGIN, false);
         editor.commit();
     }
 

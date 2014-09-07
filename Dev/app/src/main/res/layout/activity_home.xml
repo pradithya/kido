@@ -38,6 +38,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:paddingBottom="2dp"
+                android:paddingTop="4dp"
                 android:text="@string/about_apps_progrema"
                 android:textColor="@color/default_font"
                 android:textSize="@dimen/text_size_medium" />
@@ -46,6 +48,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:paddingBottom="4dp"
+                android:paddingTop="2dp"
                 android:text="@string/about_apps_copy_right"
                 android:textColor="@color/default_font"
                 android:textSize="@dimen/text_size_small" />
