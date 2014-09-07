@@ -58,6 +58,8 @@
             android:id="@+id/fragment_authentication_edit_text_security_question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:fontFamily="sans-serif-condensed"
             android:gravity="center"
             android:hint="Security Question"
             android:inputType="text"
@@ -67,6 +69,8 @@
             android:id="@+id/fragment_authentication_edit_text_security_answer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:fontFamily="sans-serif-condensed"
             android:gravity="center"
             android:hint="Security Answer"
             android:inputType="textPassword"
@@ -77,11 +81,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:layout_marginTop="16dp"
             android:background="@drawable/button_background"
             android:fontFamily="sans-serif-condensed"
-            android:textColor="@color/default_font"
-            android:text="@string/login_sign_in" />
+            android:text="@string/login_sign_in"
+            android:textColor="@color/default_font" />
 
         <Button
             android:id="@+id/fragment_authentication_button_register"
@@ -90,15 +93,17 @@
             android:layout_margin="8dp"
             android:background="@drawable/button_background"
             android:fontFamily="sans-serif-condensed"
-            android:textColor="@color/default_font"
-            android:text="@string/login_new_account" />
+            android:text="@string/login_new_account"
+            android:textColor="@color/default_font" />
 
         <Button
             android:id="@+id/fragment_authentication_button_finish_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Done"
+            android:layout_margin="8dp"
+            android:background="@drawable/button_background"
+            android:fontFamily="sans-serif-condensed"
+            android:text="@string/login_new_account"
             android:visibility="gone" />
 
     </LinearLayout>
