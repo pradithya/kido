@@ -309,16 +309,11 @@ public class FormatUtils {
         return String.valueOf(formatted);
     }
 
-    public static String fmtAge(Context context, long dob, long now) {
-        long duration = Math.abs(now - dob);
-        long days = duration / DAY_MILLIS;
-
-        // TODO: to show correct month and year different
-
-        CharSequence formatted = Phrase.from(context.getResources().getString(R.string.age_format))
-                .put("day", String.valueOf(days))
-                .format();
-        return String.valueOf(formatted);
+    public static String fmtAge(long birthdayInMilis) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(birthdayInMilis);
+        AgeCalculator age = new AgeCalculator(calendar);
+        return age.getFormattedBirthday();
     }
 
     public static String fmtLastActivity(Context context, String time) {
