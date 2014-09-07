@@ -155,16 +155,16 @@ public class HomeActivity extends FragmentActivity
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_sleep:
-                handleButtonSleep();
+                handleQuickButtonSleep();
                 break;
             case R.id.button_nursing:
-                handleButtonNursing();
+                handleQuickButtonNursing();
                 break;
             case R.id.button_diaper:
-                handleButtonDiaper();
+                handleQuickButtonDiaper();
                 break;
             case R.id.button_measurement:
-                handleButtonMeasurement();
+                handleQuickButtonMeasurement();
                 break;
         }
     }
@@ -185,7 +185,7 @@ public class HomeActivity extends FragmentActivity
         finish();
     }
 
-    private void handleButtonSleep() {
+    private void handleQuickButtonSleep() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         // Inform the stopwatch to start counting for sleep
         Bundle bundle = new Bundle();
@@ -196,21 +196,21 @@ public class HomeActivity extends FragmentActivity
         fragmentTransaction.commit();
     }
 
-    private void handleButtonDiaper() {
+    private void handleQuickButtonDiaper() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         DiaperDialog diaperChoiceBox = DiaperDialog.getInstance();
         diaperChoiceBox.setCallback(this);
         diaperChoiceBox.show(fragmentTransaction, "diaper_dialog");
     }
 
-    private void handleButtonNursing() {
+    private void handleQuickButtonNursing() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         NursingDialog nursingChoiceBox = NursingDialog.getInstance();
         nursingChoiceBox.setCallback(this);
         nursingChoiceBox.show(fragmentTransaction, "nursing_dialog");
     }
 
-    private void handleButtonMeasurement() {
+    private void handleQuickButtonMeasurement() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         MeasurementDialog measurementChoiceBox = MeasurementDialog.getInstance();
         measurementChoiceBox.setCallback(this);
@@ -238,7 +238,6 @@ public class HomeActivity extends FragmentActivity
         if (resultCode == RESULT_OK) {
             Bundle bundle = data.getExtras();
             bundle.putString(HomeActivity.ACTIVITY_TRIGGER_KEY, HomeActivity.Trigger.NURSING.getTitle());
-            bundle.putString(HomeActivity.ACTIVITY_EDIT_KEY, getResources().getString(R.string.menu_edit));
             StopwatchFragment stopwatchFragment = StopwatchFragment.getInstance();
             stopwatchFragment.setArguments(bundle);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
