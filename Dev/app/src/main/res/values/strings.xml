@@ -15,8 +15,10 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
-    <string name="action_settings">Settings</string>
     <string name="action_new_baby">New Baby</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_about">About</string>
+    <string name="action_help">Help</string>
     <string name="quick_button_title_sleep">Sleep</string>
     <string name="quick_button_title_nursing">Nursing</string>
     <string name="quick_button_title_diaper">Diaper</string>
@@ -106,6 +108,8 @@
     <string name="login_new_account">Create new user account</string>
     <string name="baby_input_baby_name">Baby name</string>
     <string name="baby_input_instruction">Please fill in your baby information</string>
+    <string name="sleep_stopwatch">Baby sleep timer</string>
+    <string name="nursing_stopwatch">Baby nursing timer</string>
 
     <string-array name="gender_array">
         <item>Boy</item>

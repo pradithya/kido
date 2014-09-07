@@ -24,7 +24,7 @@
         android:paddingTop="2dp"
         android:text="@string/login_sub_instruction"
         android:textColor="@color/pink"
-        android:textSize="@dimen/text_size_micro" />
+        android:textSize="@dimen/text_size_small" />
 
     <LinearLayout
         android:layout_width="match_parent"
