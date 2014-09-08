@@ -3,6 +3,7 @@ package com.progrema.superbaby.adapter.diaper;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -101,7 +102,7 @@ public class DiaperAdapter extends CursorAdapter implements EntryAdapterServices
                         MenuInflater menuInflater = ((Activity) context).getMenuInflater();
                         menuInflater.inflate(R.menu.entry, popupMenu.getMenu());
                         popupMenu.show();
-                        //Log.i("_DBG_MENU", " Tag = " + menuHandler.getTag());
+                        Log.i("_DBG_MENU", " Tag = " + menuHandler.getTag());
                     }
                 }
         );

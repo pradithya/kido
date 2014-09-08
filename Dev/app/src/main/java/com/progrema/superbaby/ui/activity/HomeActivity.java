@@ -42,7 +42,6 @@ public class HomeActivity extends FragmentActivity
         ObserveableListView.Callback, NursingDialog.Callback, DiaperDialog.Callback,
         MeasurementDialog.Callback, ActionBar.OnNavigationListener {
 
-    public final static int RESULT_OK = 0;
     public final static String ACTIVITY_TRIGGER_KEY = "triggerKey";
     public final static String ACTIVITY_EDIT_KEY = "editKey";
     public final static String ACTIVITY_ENTRY_TAG_KEY = "entryTag";
@@ -234,10 +233,11 @@ public class HomeActivity extends FragmentActivity
     }
 
     @Override
-    public void onNursingChoiceSelected(int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
+    public void onNursingDialogSelected(int requestCode, Intent data) {
+        if (requestCode == 0) {
             Bundle bundle = data.getExtras();
             bundle.putString(HomeActivity.ACTIVITY_TRIGGER_KEY, HomeActivity.Trigger.NURSING.getTitle());
+            bundle.putString(HomeActivity.ACTIVITY_EDIT_KEY, getResources().getString(R.string.new_content));
             StopwatchFragment stopwatchFragment = StopwatchFragment.getInstance();
             stopwatchFragment.setArguments(bundle);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -247,25 +247,23 @@ public class HomeActivity extends FragmentActivity
     }
 
     @Override
-    public void onDiaperChoiceSelected(int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            Calendar currentTime = Calendar.getInstance();
-            Bundle recordData = data.getExtras();
-            String diaperType = (String) recordData.get(ActivityDiaper.DIAPER_TYPE_KEY);
-            ActivityDiaper activityDiaper = new ActivityDiaper();
-            activityDiaper.setBabyID(ActiveContext.getActiveBaby(this).getActivityId());
-            activityDiaper.setTimeStamp(String.valueOf(currentTime.getTimeInMillis()));
-            activityDiaper.setType(ActivityDiaper.DiaperType.valueOf(diaperType));
-            activityDiaper.insert(this);
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.home_activity_container, DiaperFragment.getInstance());
-            fragmentTransaction.commit();
-        }
+    public void onDiaperDialogSelected(Intent data) {
+        Calendar now = Calendar.getInstance();
+        Bundle bundle = data.getExtras();
+        String type = (String) bundle.get(ActivityDiaper.DIAPER_TYPE_KEY);
+        ActivityDiaper activityDiaper = new ActivityDiaper();
+        activityDiaper.setBabyID(ActiveContext.getActiveBaby(this).getActivityId());
+        activityDiaper.setTimeStamp(String.valueOf(now.getTimeInMillis()));
+        activityDiaper.setType(ActivityDiaper.DiaperType.valueOf(type));
+        activityDiaper.insert(this);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.home_activity_container, DiaperFragment.getInstance());
+        fragmentTransaction.commit();
     }
 
     @Override
-    public void onMeasurementChoiceSelected(int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
+    public void onMeasurementDialogSelected(int resultCode, Intent data) {
+        if (resultCode == 0) {
             Calendar currentTime = Calendar.getInstance();
             Bundle recordData = data.getExtras();
             ActivityMeasurement activityMeasurement = new ActivityMeasurement();

@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.widget.Chronometer;
 
 public class Stopwatch extends Chronometer implements TimerService {
+
     private long miliSeconds;
     private long timeWhenStop;
 
@@ -31,21 +32,13 @@ public class Stopwatch extends Chronometer implements TimerService {
     public long getDuration() {
         String value;
         String[] parts;
-        long seconds;
-        long minutes;
-        long hours;
-
+        long seconds, minutes, hours;
         value = super.getText().toString();
         parts = value.split(":");
         seconds = 0;
         minutes = 0;
         hours = 0;
-
-        // wrong format
-        if (parts.length < 2 || parts.length > 3) {
-            return 0;
-        }
-
+        if (parts.length < 2 || parts.length > 3) return 0; // wrong format checking
         if (parts.length == 2) {
             seconds = Integer.parseInt(parts[1]);
             minutes = Integer.parseInt(parts[0]);
@@ -54,7 +47,6 @@ public class Stopwatch extends Chronometer implements TimerService {
             minutes = Integer.parseInt(parts[1]);
             hours = Integer.parseInt(parts[0]);
         }
-
         return seconds + (minutes * 60) + (hours * 3600);
     }
 

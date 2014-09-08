@@ -49,7 +49,7 @@ public class DiaperFragment extends HistoryFragment
     private DiaperAdapter adapter;
     private View root;
     private View placeholder;
-    private String currentEntryTag;
+    private String entryTag;
 
     public static DiaperFragment getInstance() {
         return new DiaperFragment();
@@ -100,22 +100,20 @@ public class DiaperFragment extends HistoryFragment
     @Override
     public void onDiaperEntryEditSelected(View entry) {
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        currentEntryTag = entry.getTag().toString();
+        entryTag = entry.getTag().toString();
         DiaperDialog diaperChoiceBox = DiaperDialog.getInstance();
         diaperChoiceBox.setCallback(this);
         diaperChoiceBox.show(fragmentTransaction, "diaper_dialog");
     }
 
     @Override
-    public void onDiaperChoiceSelected(int result, Intent data) {
-        if (result == RESULT_OK) {
-            Bundle recordData = data.getExtras();
-            String diaperType = (String) recordData.get(ActivityDiaper.DIAPER_TYPE_KEY);
-            ActivityDiaper activityDiaper = new ActivityDiaper();
-            activityDiaper.setActivityId(Long.valueOf(currentEntryTag));
-            activityDiaper.setType(ActivityDiaper.DiaperType.valueOf(diaperType));
-            activityDiaper.edit(getActivity());
-        }
+    public void onDiaperDialogSelected(Intent data) {
+        Bundle bundle = data.getExtras();
+        String type = (String) bundle.get(ActivityDiaper.DIAPER_TYPE_KEY);
+        ActivityDiaper activityDiaper = new ActivityDiaper();
+        activityDiaper.setActivityId(Long.valueOf(entryTag));
+        activityDiaper.setType(ActivityDiaper.DiaperType.valueOf(type));
+        activityDiaper.edit(getActivity());
     }
 
     @Override

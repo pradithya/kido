@@ -133,15 +133,13 @@ public class TimelineFragment extends HistoryFragment
     }
 
     @Override
-    public void onDiaperChoiceSelected(int result, Intent data) {
-        if (result == RESULT_OK) {
-            Bundle recordData = data.getExtras();
-            String diaperType = (String) recordData.get(ActivityDiaper.DIAPER_TYPE_KEY);
-            ActivityDiaper activityDiaper = new ActivityDiaper();
-            activityDiaper.setActivityId(Long.valueOf(activityId));
-            activityDiaper.setType(ActivityDiaper.DiaperType.valueOf(diaperType));
-            activityDiaper.edit(getActivity());
-        }
+    public void onDiaperDialogSelected(Intent data) {
+        Bundle bundle = data.getExtras();
+        String type = (String) bundle.get(ActivityDiaper.DIAPER_TYPE_KEY);
+        ActivityDiaper activityDiaper = new ActivityDiaper();
+        activityDiaper.setActivityId(Long.valueOf(activityId));
+        activityDiaper.setType(ActivityDiaper.DiaperType.valueOf(type));
+        activityDiaper.edit(getActivity());
     }
 
     private void updateNursingEntry(String id) {
@@ -153,8 +151,8 @@ public class TimelineFragment extends HistoryFragment
     }
 
     @Override
-    public void onNursingChoiceSelected(int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
+    public void onNursingDialogSelected(int requestCode, Intent data) {
+        if (requestCode == RESULT_OK) {
             Bundle bundle = data.getExtras();
             bundle.putString(HomeActivity.ACTIVITY_TRIGGER_KEY, HomeActivity.Trigger.NURSING.getTitle());
             bundle.putString(HomeActivity.ACTIVITY_EDIT_KEY, getResources().getString(R.string.menu_edit));
@@ -177,7 +175,7 @@ public class TimelineFragment extends HistoryFragment
     }
 
     @Override
-    public void onMeasurementChoiceSelected(int resultCode, Intent data) {
+    public void onMeasurementDialogSelected(int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             Bundle recordData = data.getExtras();
             ActivityMeasurement activityMeasurement = new ActivityMeasurement();

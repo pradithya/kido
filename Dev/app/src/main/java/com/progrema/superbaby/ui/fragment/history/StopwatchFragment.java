@@ -23,24 +23,27 @@ import java.util.concurrent.TimeUnit;
 
 public class StopwatchFragment extends Fragment implements View.OnClickListener {
 
-    private Stopwatch firstStopwatch;
-    private Stopwatch secondStopwatch;
+    private Stopwatch firstStopwatchHandler;
+    private Stopwatch secondStopwatchHandler;
     private Stopwatch activeStopWatch;
     private Stopwatch inActiveStopWatch;
-    private TextView titleView;
-    private ImageButton startButton;
-    private ImageButton pauseButton;
-    private ImageButton resetButton;
-    private ImageButton doneButton;
-    private ImageButton switchButton;
-    private LinearLayout containerStopWatch2;
+    private TextView titleHandler;
+    private ImageButton startHandler;
+    private ImageButton pauseHandler;
+    private ImageButton resetHandler;
+    private ImageButton doneHandler;
+    private ImageButton switchHandler;
+    private LinearLayout stopwatchTwoContainer;
     private Calendar startTime;
     private String sourceTrigger;
     private String editTrigger;
     private String currentEntryTag;
     private String nursingType;
     private String formulaVolume;
+    private View root;
     private boolean isTwoStopWatch;
+    private long firstStopwatchDuration;
+    private long secondStopwatchDuration;
 
     public static StopwatchFragment getInstance() {
         return new StopwatchFragment();
@@ -48,77 +51,96 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        intentCheck();
+        prepareActionBar();
+        prepareHandler(inflater, container);
+        setOnClickListenerToHandler();
+        prepareStopwatch();
+        return root;
+    }
 
-        Bundle args = getArguments();
-        if (args != null && args.containsKey(HomeActivity.ACTIVITY_TRIGGER_KEY)) {
-            sourceTrigger = args.getString(HomeActivity.ACTIVITY_TRIGGER_KEY);
-        }
+    private void prepareHandler(LayoutInflater inflater, ViewGroup container) {
+        root = inflater.inflate(R.layout.fragment_stopwatch, container, false);
+        startHandler = (ImageButton) root.findViewById(R.id.button_stopwatch_start);
+        pauseHandler = (ImageButton) root.findViewById(R.id.button_stopwatch_pause);
+        resetHandler = (ImageButton) root.findViewById(R.id.button_stopwatch_reset);
+        doneHandler = (ImageButton) root.findViewById(R.id.button_stopwatch_done);
+        stopwatchTwoContainer = (LinearLayout) root.findViewById(R.id.stopwatch_two_container);
+        switchHandler = (ImageButton) root.findViewById(R.id.button_stopwatch_switch);
+        titleHandler = (TextView) root.findViewById(R.id.stopwatch_title);
+        firstStopwatchHandler = (Stopwatch) root.findViewById(R.id.chronometer_widget_a);
+        secondStopwatchHandler = (Stopwatch) root.findViewById(R.id.chronometer_widget_b);
+    }
 
-        if (args != null && args.containsKey(HomeActivity.ACTIVITY_EDIT_KEY)) {
-            editTrigger = args.getString(HomeActivity.ACTIVITY_EDIT_KEY);
-        }
-
-        if (args != null && args.containsKey(HomeActivity.ACTIVITY_ENTRY_TAG_KEY)) {
-            currentEntryTag = args.getString(HomeActivity.ACTIVITY_ENTRY_TAG_KEY);
-        }
-
-        if (args != null && args.containsKey(ActivityNursing.NURSING_TYPE_KEY)) {
-            nursingType = args.getString(ActivityNursing.NURSING_TYPE_KEY);
-            isTwoStopWatch = true;
-        }
-
-        if (args != null && args.containsKey(ActivityNursing.FORMULA_VOLUME_KEY)) {
-            formulaVolume = args.getString(ActivityNursing.FORMULA_VOLUME_KEY);
-            isTwoStopWatch = false;
-        }
-
-        // inflate fragment layout
-        View rootView = inflater.inflate(R.layout.fragment_stopwatch, container, false);
-
-        ActionBar abActionBar = getActivity().getActionBar();
-        abActionBar.setDisplayShowTitleEnabled(true);
-        abActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        abActionBar.setTitle(titleConversion(sourceTrigger));
-
-        startButton = (ImageButton) rootView.findViewById(R.id.button_stopwatch_start);
-        pauseButton = (ImageButton) rootView.findViewById(R.id.button_stopwatch_pause);
-        resetButton = (ImageButton) rootView.findViewById(R.id.button_stopwatch_reset);
-        doneButton = (ImageButton) rootView.findViewById(R.id.button_stopwatch_done);
-        containerStopWatch2 = (LinearLayout) rootView.findViewById(R.id.container_stopwatch2);
-        switchButton = (ImageButton) rootView.findViewById(R.id.button_stopwatch_switch);
-
-        // set onClickListener to button
-        startButton.setOnClickListener(this);
-        pauseButton.setOnClickListener(this);
-        resetButton.setOnClickListener(this);
-        doneButton.setOnClickListener(this);
-        switchButton.setOnClickListener(this);
-
-        // get firstStopwatch & start
-        firstStopwatch = (Stopwatch) rootView.findViewById(R.id.chronometer_widget_a);
-        secondStopwatch = (Stopwatch) rootView.findViewById(R.id.chronometer_widget_b);
-
-        if (isTwoStopWatch) {
-            containerStopWatch2.setVisibility(View.VISIBLE);
-            switchButton.setVisibility(View.VISIBLE);
-
-            if (nursingType.equals(ActivityNursing.NursingType.LEFT.getTitle())) {
-                activeStopWatch = firstStopwatch;
-                inActiveStopWatch = secondStopwatch;
-            } else {
-                activeStopWatch = secondStopwatch;
-                inActiveStopWatch = firstStopwatch;
-            }
-        } else {
-            containerStopWatch2.setVisibility(View.GONE);
-            switchButton.setVisibility(View.GONE);
-            activeStopWatch = firstStopwatch;
-        }
-
+    private void prepareStopwatch() {
+        if (isTwoStopWatch) activateTwoStopwatch();
+        else activateOneStopwatch();
         startTime = Calendar.getInstance();
         activeStopWatch.start();
+    }
 
-        return rootView;
+    private void activateTwoStopwatch() {
+        titleHandler.setText(getString(R.string.nursing_stopwatch));
+        stopwatchTwoContainer.setVisibility(View.VISIBLE);
+        switchHandler.setVisibility(View.VISIBLE);
+        if (isStopwatchForNursing()) {
+            activeStopWatch = firstStopwatchHandler;
+            inActiveStopWatch = secondStopwatchHandler;
+        } else {
+            activeStopWatch = secondStopwatchHandler;
+            inActiveStopWatch = firstStopwatchHandler;
+        }
+    }
+
+    private boolean isStopwatchForNursing() {
+        return (nursingType.equals(ActivityNursing.NursingType.LEFT.getTitle()));
+    }
+
+    private boolean isStopwatchForSleeping() {
+        return (sourceTrigger.compareTo(HomeActivity.Trigger.SLEEP.getTitle()) == 0);
+    }
+
+    private void activateOneStopwatch() {
+        titleHandler.setText(getString(R.string.sleep_stopwatch));
+        stopwatchTwoContainer.setVisibility(View.GONE);
+        switchHandler.setVisibility(View.GONE);
+        activeStopWatch = firstStopwatchHandler;
+    }
+
+    private void setOnClickListenerToHandler() {
+        startHandler.setOnClickListener(this);
+        pauseHandler.setOnClickListener(this);
+        resetHandler.setOnClickListener(this);
+        doneHandler.setOnClickListener(this);
+        switchHandler.setOnClickListener(this);
+    }
+
+    private void intentCheck() {
+        Bundle bundle = getArguments();
+        if ((bundle != null) && bundle.containsKey(HomeActivity.ACTIVITY_TRIGGER_KEY)) {
+            sourceTrigger = bundle.getString(HomeActivity.ACTIVITY_TRIGGER_KEY);
+        }
+        if ((bundle != null) && (bundle.containsKey(HomeActivity.ACTIVITY_EDIT_KEY))) {
+            editTrigger = bundle.getString(HomeActivity.ACTIVITY_EDIT_KEY);
+        }
+        if ((bundle != null) && bundle.containsKey(HomeActivity.ACTIVITY_ENTRY_TAG_KEY)) {
+            currentEntryTag = bundle.getString(HomeActivity.ACTIVITY_ENTRY_TAG_KEY);
+        }
+        if ((bundle != null) && bundle.containsKey(ActivityNursing.NURSING_TYPE_KEY)) {
+            nursingType = bundle.getString(ActivityNursing.NURSING_TYPE_KEY);
+            isTwoStopWatch = true;
+        }
+        if ((bundle != null) && bundle.containsKey(ActivityNursing.FORMULA_VOLUME_KEY)) {
+            formulaVolume = bundle.getString(ActivityNursing.FORMULA_VOLUME_KEY);
+            isTwoStopWatch = false;
+        }
+    }
+
+    private void prepareActionBar() {
+        ActionBar actionbar = getActivity().getActionBar();
+        actionbar.setDisplayShowTitleEnabled(true);
+        actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        actionbar.setTitle(titleConversion(sourceTrigger));
     }
 
     @Override
@@ -127,19 +149,15 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
             case R.id.button_stopwatch_switch:
                 handleSwitchButton();
                 return;
-
             case R.id.button_stopwatch_start:
                 handleStartButton();
                 return;
-
             case R.id.button_stopwatch_pause:
                 handlePauseButton();
                 return;
-
             case R.id.button_stopwatch_reset:
                 handleResetButton();
                 return;
-
             case R.id.button_stopwatch_done:
                 handleDoneButton();
                 return;
@@ -147,12 +165,9 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
     }
 
     private String titleConversion(String activityName) {
-        if (activityName.equals(HomeActivity.Trigger.NURSING.getTitle())) {
-            return "Nursing Timer";
-        } else if (activityName.equals(HomeActivity.Trigger.SLEEP.getTitle())) {
-            return "Sleep Timer";
-        }
-        return "";
+        if (activityName.equals(HomeActivity.Trigger.NURSING.getTitle())) return ("Nursing Timer");
+        else if (activityName.equals(HomeActivity.Trigger.SLEEP.getTitle())) return ("Sleep Timer");
+        else return null;
     }
 
     private void handleSwitchButton() {
@@ -172,97 +187,103 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
     }
 
     private void handleResetButton() {
-        firstStopwatch.reset();
-        secondStopwatch.reset();
+        firstStopwatchHandler.reset();
+        secondStopwatchHandler.reset();
     }
 
     private void handleDoneButton() {
-
         activeStopWatch.stop();
-        long firstDuration = firstStopwatch.getDuration();
-        long secondDuration = secondStopwatch.getDuration();
+        firstStopwatchDuration = firstStopwatchHandler.getDuration();
+        secondStopwatchDuration = secondStopwatchHandler.getDuration();
+        if (isStopwatchForSleeping()) {
+            proceedWithSleepStopwatch();
+        } else if (isStopwatchForNursing()) {
+            proceedWithNursingStopwatch();
+        }
+        jumpBackToTimelineFragment();
+    }
 
-        if (sourceTrigger.compareTo(HomeActivity.Trigger.SLEEP.getTitle()) == 0) {
-            if (editTrigger != null &&
-                    (editTrigger.compareTo(getResources().getString(R.string.menu_edit)) == 0)) {
-                ActivitySleep activitySleep = new ActivitySleep();
-                activitySleep.setActivityId(Long.valueOf(currentEntryTag));
-                activitySleep.setDuration(TimeUnit.SECONDS.toMillis(firstDuration));
-                activitySleep.edit(getActivity());
-            } else {
-                ActivitySleep activitySleep = new ActivitySleep();
-                activitySleep.setTimeStamp(String.valueOf(startTime.getTimeInMillis()));
-                activitySleep.setBabyID(ActiveContext.getActiveBaby(getActivity()).getActivityId());
-                activitySleep.setDuration(TimeUnit.SECONDS.toMillis(firstDuration));
-                activitySleep.insert(getActivity());
-            }
-            // Go back to timeLine fragment
-            ActionBar actionBar = getActivity().getActionBar();
-            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-            actionBar.setDisplayShowTitleEnabled(false);
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.home_activity_container, SleepFragment.getInstance());
-            fragmentTransaction.commit();
-        } else if (sourceTrigger.compareTo(HomeActivity.Trigger.NURSING.getTitle()) == 0) {
+    private void proceedWithNursingStopwatch() {
+        if (isTwoStopWatch) {
+            if (firstStopwatchDuration != 0) editStoreLeftSideEntry();
+            if (secondStopwatchDuration != 0) editStoreRightSideEntry();
+        } else editStoreFormulaEntry();
+    }
+
+    private void editStoreLeftSideEntry() {
+        if (editTrigger.compareTo(getResources().getString(R.string.menu_edit)) == 0) {
+            ActivityNursing editNursingEntry = new ActivityNursing();
+            editNursingEntry.setActivityId(Long.valueOf(currentEntryTag));
+            editNursingEntry.setDuration(TimeUnit.SECONDS.toMillis(firstStopwatchDuration));
+            editNursingEntry.setType(ActivityNursing.NursingType.LEFT);
+            editNursingEntry.edit(getActivity());
+        } else {
             ActivityNursing activityNursing = new ActivityNursing();
             activityNursing.setTimeStamp(String.valueOf(startTime.getTimeInMillis()));
             activityNursing.setBabyID(ActiveContext.getActiveBaby(getActivity()).getActivityId());
-            if (isTwoStopWatch) {
-                if (firstDuration != 0) {
-                    if (editTrigger != null &&
-                            editTrigger.compareTo(getResources().getString(R.string.menu_edit)) == 0) {
-                        //TODO: implement nursing update operation
-                        ActivityNursing editNursingEntry = new ActivityNursing();
-                        editNursingEntry.setActivityId(Long.valueOf(currentEntryTag));
-                        editNursingEntry.setDuration(TimeUnit.SECONDS.toMillis(firstDuration));
-                        editNursingEntry.setType(ActivityNursing.NursingType.LEFT);
-                        editNursingEntry.edit(getActivity());
-                    } else {
-                        activityNursing.setDuration(TimeUnit.SECONDS.toMillis(firstDuration));
-                        activityNursing.setType(ActivityNursing.NursingType.LEFT);
-                        activityNursing.insert(getActivity());
-                    }
-                }
-                if (secondDuration != 0) {
-                    if (editTrigger != null &&
-                            editTrigger.compareTo(getResources().getString(R.string.menu_edit)) == 0) {
-                        //TODO: implement nursing update operation
-                        ActivityNursing editNursingEntry = new ActivityNursing();
-                        editNursingEntry.setActivityId(Long.valueOf(currentEntryTag));
-                        editNursingEntry.setDuration(TimeUnit.SECONDS.toMillis(secondDuration));
-                        editNursingEntry.setType(ActivityNursing.NursingType.RIGHT);
-                        editNursingEntry.edit(getActivity());
-                    } else {
-                        activityNursing.setDuration(TimeUnit.SECONDS.toMillis(secondDuration));
-                        activityNursing.setType(ActivityNursing.NursingType.RIGHT);
-                        activityNursing.insert(getActivity());
-                    }
-                }
-            } else {
-                // formula
-                if (editTrigger != null &&
-                        editTrigger.compareTo(getResources().getString(R.string.menu_edit)) == 0) {
-                    //TODO: implement nursing update operation
-                    ActivityNursing editNursingEntry = new ActivityNursing();
-                    editNursingEntry.setActivityId(Long.valueOf(currentEntryTag));
-                    editNursingEntry.setDuration(TimeUnit.SECONDS.toMillis(firstDuration));
-                    editNursingEntry.setType(ActivityNursing.NursingType.FORMULA);
-                    editNursingEntry.setVolume(Long.parseLong(formulaVolume, 10));
-                    editNursingEntry.edit(getActivity());
-                } else {
-                    activityNursing.setDuration(TimeUnit.SECONDS.toMillis(firstDuration));
-                    activityNursing.setType(ActivityNursing.NursingType.FORMULA);
-                    activityNursing.setVolume(Long.parseLong(formulaVolume, 10));
-                    activityNursing.insert(getActivity());
-                }
-            }
-            // Go back to timeLine fragment
-            ActionBar actionBar = getActivity().getActionBar();
-            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-            actionBar.setDisplayShowTitleEnabled(false);
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.home_activity_container, NursingFragment.getInstance());
-            fragmentTransaction.commit();
+            activityNursing.setDuration(TimeUnit.SECONDS.toMillis(firstStopwatchDuration));
+            activityNursing.setType(ActivityNursing.NursingType.LEFT);
+            activityNursing.insert(getActivity());
         }
+    }
+
+    private void editStoreRightSideEntry() {
+        if (editTrigger.compareTo(getResources().getString(R.string.menu_edit)) == 0) {
+            ActivityNursing editNursingEntry = new ActivityNursing();
+            editNursingEntry.setActivityId(Long.valueOf(currentEntryTag));
+            editNursingEntry.setDuration(TimeUnit.SECONDS.toMillis(secondStopwatchDuration));
+            editNursingEntry.setType(ActivityNursing.NursingType.RIGHT);
+            editNursingEntry.edit(getActivity());
+        } else {
+            ActivityNursing activityNursing = new ActivityNursing();
+            activityNursing.setTimeStamp(String.valueOf(startTime.getTimeInMillis()));
+            activityNursing.setBabyID(ActiveContext.getActiveBaby(getActivity()).getActivityId());
+            activityNursing.setDuration(TimeUnit.SECONDS.toMillis(secondStopwatchDuration));
+            activityNursing.setType(ActivityNursing.NursingType.RIGHT);
+            activityNursing.insert(getActivity());
+        }
+    }
+
+    private void editStoreFormulaEntry() {
+        if (editTrigger.compareTo(getResources().getString(R.string.menu_edit)) == 0) {
+            ActivityNursing editNursingEntry = new ActivityNursing();
+            editNursingEntry.setActivityId(Long.valueOf(currentEntryTag));
+            editNursingEntry.setDuration(TimeUnit.SECONDS.toMillis(firstStopwatchDuration));
+            editNursingEntry.setType(ActivityNursing.NursingType.FORMULA);
+            editNursingEntry.setVolume(Long.parseLong(formulaVolume, 10));
+            editNursingEntry.edit(getActivity());
+        } else {
+            ActivityNursing activityNursing = new ActivityNursing();
+            activityNursing.setTimeStamp(String.valueOf(startTime.getTimeInMillis()));
+            activityNursing.setBabyID(ActiveContext.getActiveBaby(getActivity()).getActivityId());
+            activityNursing.setDuration(TimeUnit.SECONDS.toMillis(firstStopwatchDuration));
+            activityNursing.setType(ActivityNursing.NursingType.FORMULA);
+            activityNursing.setVolume(Long.parseLong(formulaVolume, 10));
+            activityNursing.insert(getActivity());
+        }
+    }
+
+    private void proceedWithSleepStopwatch() {
+        if (editTrigger.compareTo(getResources().getString(R.string.menu_edit)) == 0) {
+            ActivitySleep activitySleep = new ActivitySleep();
+            activitySleep.setActivityId(Long.valueOf(currentEntryTag));
+            activitySleep.setDuration(TimeUnit.SECONDS.toMillis(firstStopwatchDuration));
+            activitySleep.edit(getActivity());
+        } else {
+            ActivitySleep activitySleep = new ActivitySleep();
+            activitySleep.setTimeStamp(String.valueOf(startTime.getTimeInMillis()));
+            activitySleep.setBabyID(ActiveContext.getActiveBaby(getActivity()).getActivityId());
+            activitySleep.setDuration(TimeUnit.SECONDS.toMillis(firstStopwatchDuration));
+            activitySleep.insert(getActivity());
+        }
+    }
+
+    private void jumpBackToTimelineFragment() {
+        ActionBar actionBar = getActivity().getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        actionBar.setDisplayShowTitleEnabled(false);
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.home_activity_container, NursingFragment.getInstance());
+        fragmentTransaction.commit();
     }
 }

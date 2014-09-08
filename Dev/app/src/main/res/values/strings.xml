@@ -92,6 +92,7 @@
     <string name="measurement_dialog_negative_button">Cancel</string>
     <string name="measurement_dialog_positive_button">OK</string>
     <string name="menu_edit">Edit</string>
+    <string name="new_content">New Content</string>
     <string name="menu_delete">Delete</string>
     <string name="timeline_title">All activities summary</string>
     <string name="sleep_title">Sleep activity summary</string>

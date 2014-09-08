@@ -73,7 +73,7 @@ public class MeasurementFragment extends Fragment
     }
 
     @Override
-    public void onMeasurementChoiceSelected(int resultCode, Intent data) {
+    public void onMeasurementDialogSelected(int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             Bundle recordData = data.getExtras();
             ActivityMeasurement activityMeasurement = new ActivityMeasurement();

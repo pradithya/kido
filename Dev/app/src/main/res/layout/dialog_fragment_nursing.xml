@@ -9,19 +9,40 @@
         android:id="@+id/dialog_choice_left"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Left" />
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_background"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Left Breastfeeding"
+        android:textColor="@color/default_font" />
 
     <Button
         android:id="@+id/dialog_choice_right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Right" />
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_background"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Right Breastfeeding"
+        android:textColor="@color/default_font" />
 
     <Button
         android:id="@+id/dialog_choice_formula"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Formula" />
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_background"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Formula"
+        android:textColor="@color/default_font" />
 
     <LinearLayout
         android:id="@+id/container_formula_entry"
@@ -35,19 +56,37 @@
             android:id="@+id/entry_text_volume"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-condensed"
             android:hint="@string/volume_hint" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-condensed"
             android:gravity="center"
-            android:text="@string/volume_unit" />
+            android:text="@string/volume_unit"
+            android:textColor="@color/default_font" />
 
         <Button
             android:id="@+id/button_formula_ok"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/ok_button" />
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/button_background"
+            android:fontFamily="sans-serif-condensed"
+            android:text="@string/ok_button"
+            android:textColor="@color/default_font" />
 
     </LinearLayout>
 

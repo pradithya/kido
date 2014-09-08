@@ -71,12 +71,12 @@ public class MeasurementDialog extends DialogFragment {
         Intent result = new Intent();
         result.putExtra(BabyLogContract.Measurement.HEIGHT, height);
         result.putExtra(BabyLogContract.Measurement.WEIGHT, weight);
-        MeasurementDialog.this.callback.onMeasurementChoiceSelected(0, result);
+        MeasurementDialog.this.callback.onMeasurementDialogSelected(0, result);
         getDialog().dismiss();
     }
 
     public static interface Callback {
-        public void onMeasurementChoiceSelected(int resultCode, Intent data);
+        public void onMeasurementDialogSelected(int resultCode, Intent data);
     }
 
 

@@ -36,7 +36,8 @@ public class NursingFragment extends HistoryFragment
     private static final int LOADER_LIST_VIEW = 0;
     private static final int LOADER_GENERAL_ENTRY = 1;
     private static final int LOADER_LAST_SIDE_ENTRY = 2;
-    private static final int RESULT_OK = 0;
+    private static final int REQ_BREASFEEDING = 0;
+    private final int REQ_FORMULA = 1;
     private TextView leftPercentHandler;
     private TextView rightPercentHandler;
     private TextView rightDurationHandler;
@@ -107,8 +108,8 @@ public class NursingFragment extends HistoryFragment
     }
 
     @Override
-    public void onNursingChoiceSelected(int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
+    public void onNursingDialogSelected(int requestCode, Intent data) {
+        if (requestCode == REQ_BREASFEEDING) {
             Bundle bundle = data.getExtras();
             bundle.putString(HomeActivity.ACTIVITY_TRIGGER_KEY, HomeActivity.Trigger.NURSING.getTitle());
             bundle.putString(HomeActivity.ACTIVITY_EDIT_KEY, getResources().getString(R.string.menu_edit));
@@ -119,6 +120,8 @@ public class NursingFragment extends HistoryFragment
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.home_activity_container, stopwatchFragment);
             fragmentTransaction.commit();
+        } else if (requestCode == REQ_FORMULA) {
+
         }
     }
 
