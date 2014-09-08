@@ -195,11 +195,8 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
         activeStopWatch.stop();
         firstStopwatchDuration = firstStopwatchHandler.getDuration();
         secondStopwatchDuration = secondStopwatchHandler.getDuration();
-        if (isStopwatchForSleeping()) {
-            proceedWithSleepStopwatch();
-        } else if (isStopwatchForNursing()) {
-            proceedWithNursingStopwatch();
-        }
+        if (isStopwatchForSleeping()) proceedWithSleepStopwatch();
+        else if (isStopwatchForNursing()) proceedWithNursingStopwatch();
         jumpBackToTimelineFragment();
     }
 
@@ -269,7 +266,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
             activitySleep.setActivityId(Long.valueOf(currentEntryTag));
             activitySleep.setDuration(TimeUnit.SECONDS.toMillis(firstStopwatchDuration));
             activitySleep.edit(getActivity());
-        } else {
+        } else if(editTrigger.compareTo(getResources().getString(R.string.new_content)) == 0) {
             ActivitySleep activitySleep = new ActivitySleep();
             activitySleep.setTimeStamp(String.valueOf(startTime.getTimeInMillis()));
             activitySleep.setBabyID(ActiveContext.getActiveBaby(getActivity()).getActivityId());

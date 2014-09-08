@@ -91,9 +91,9 @@ public class SleepFragment extends HistoryFragment implements
         bundle.putString(HomeActivity.ACTIVITY_TRIGGER_KEY, HomeActivity.Trigger.SLEEP.getTitle());
         bundle.putString(HomeActivity.ACTIVITY_EDIT_KEY, getResources().getString(R.string.menu_edit));
         bundle.putString(HomeActivity.ACTIVITY_ENTRY_TAG_KEY, entry.getTag().toString());
-        StopwatchFragment frStopWatch = StopwatchFragment.getInstance();
-        frStopWatch.setArguments(bundle);
-        fragmentTransaction.replace(R.id.home_activity_container, frStopWatch);
+        StopwatchFragment stopwatch = StopwatchFragment.getInstance();
+        stopwatch.setArguments(bundle);
+        fragmentTransaction.replace(R.id.home_activity_container, stopwatch);
         fragmentTransaction.commit();
     }
 

@@ -170,14 +170,13 @@ public class HomeActivity extends FragmentActivity
 
     @Override
     public void onBackPressed() {
-        Intent goBackToAndroidLauncher = new Intent(Intent.ACTION_MAIN);
-        goBackToAndroidLauncher.addCategory(Intent.CATEGORY_HOME);
-        goBackToAndroidLauncher.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(goBackToAndroidLauncher);
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     private void handleNewBaby() {
-        // Go to Baby input fragment in LoginActivity
         Intent intent = new Intent(this, LoginActivity.class);
         intent.putExtra(LoginActivity.INTENT_NEW_BABY_REQUEST, true);
         startActivity(intent);
@@ -186,12 +185,12 @@ public class HomeActivity extends FragmentActivity
 
     private void handleQuickButtonSleep() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        // Inform the stopwatch to start counting for sleep
         Bundle bundle = new Bundle();
         bundle.putString(ACTIVITY_TRIGGER_KEY, Trigger.SLEEP.getTitle());
-        StopwatchFragment frStopWatch = StopwatchFragment.getInstance();
-        frStopWatch.setArguments(bundle);
-        fragmentTransaction.replace(R.id.home_activity_container, frStopWatch);
+        bundle.putString(HomeActivity.ACTIVITY_EDIT_KEY, getResources().getString(R.string.new_content));
+        StopwatchFragment stopwatch = StopwatchFragment.getInstance();
+        stopwatch.setArguments(bundle);
+        fragmentTransaction.replace(R.id.home_activity_container, stopwatch);
         fragmentTransaction.commit();
     }
 
