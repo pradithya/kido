@@ -86,7 +86,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
     private void activateTwoStopwatch() {
         stopwatchTwoContainer.setVisibility(View.VISIBLE);
         switchHandler.setVisibility(View.VISIBLE);
-        if (isStopwatchForNursing()) {
+        if (nursingType.equals(ActivityNursing.NursingType.LEFT.getTitle())) {
             activeStopWatch = firstStopwatchHandler;
             inActiveStopWatch = secondStopwatchHandler;
         } else {
