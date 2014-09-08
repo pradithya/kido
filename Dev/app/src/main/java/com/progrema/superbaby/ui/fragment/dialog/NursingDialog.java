@@ -56,7 +56,7 @@ public class NursingDialog extends DialogFragment {
                 Intent intent = new Intent();
                 intent.putExtra(ActivityNursing.NURSING_TYPE_KEY,
                         ActivityNursing.NursingType.LEFT.getTitle());
-                NursingDialog.this.callback.onNursingDialogSelected(REQ_BREASTFEEDING, intent);
+                NursingDialog.this.callback.onNursingDialogSelected(intent);
                 getDialog().dismiss();
             }
         });
@@ -70,7 +70,7 @@ public class NursingDialog extends DialogFragment {
                 Intent intent = new Intent();
                 intent.putExtra(ActivityNursing.NURSING_TYPE_KEY,
                         ActivityNursing.NursingType.RIGHT.getTitle());
-                NursingDialog.this.callback.onNursingDialogSelected(REQ_BREASTFEEDING, intent);
+                NursingDialog.this.callback.onNursingDialogSelected(intent);
                 getDialog().dismiss();
             }
         });
@@ -95,7 +95,7 @@ public class NursingDialog extends DialogFragment {
                         intent.putExtra(ActivityNursing.NURSING_TYPE_KEY,
                                 ActivityNursing.NursingType.FORMULA.getTitle());
                         intent.putExtra(ActivityNursing.FORMULA_VOLUME_KEY, volume);
-                        NursingDialog.this.callback.onNursingDialogSelected(REQ_FORMULA, intent);
+                        NursingDialog.this.callback.onNursingDialogSelected(intent);
                         getDialog().dismiss();
                     }
                 });
@@ -114,7 +114,7 @@ public class NursingDialog extends DialogFragment {
     }
 
     public static interface Callback {
-        public void onNursingDialogSelected(int requestCode, Intent data);
+        public void onNursingDialogSelected(Intent intent);
     }
 
 }

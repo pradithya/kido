@@ -73,6 +73,10 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
     }
 
     private void prepareStopwatch() {
+        //set stop watch name
+        if(isStopwatchForNursing()) titleHandler.setText(getString(R.string.nursing_stopwatch));
+        else if (isStopwatchForSleeping()) titleHandler.setText(getString(R.string.sleep_stopwatch));
+        //set active stopwatch
         if (isTwoStopWatch) activateTwoStopwatch();
         else activateOneStopwatch();
         startTime = Calendar.getInstance();
@@ -80,7 +84,6 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
     }
 
     private void activateTwoStopwatch() {
-        titleHandler.setText(getString(R.string.nursing_stopwatch));
         stopwatchTwoContainer.setVisibility(View.VISIBLE);
         switchHandler.setVisibility(View.VISIBLE);
         if (isStopwatchForNursing()) {
@@ -93,7 +96,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
     }
 
     private boolean isStopwatchForNursing() {
-        return (nursingType.equals(ActivityNursing.NursingType.LEFT.getTitle()));
+        return (sourceTrigger.compareTo(HomeActivity.Trigger.NURSING.getTitle()) == 0);
     }
 
     private boolean isStopwatchForSleeping() {
@@ -101,7 +104,6 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
     }
 
     private void activateOneStopwatch() {
-        titleHandler.setText(getString(R.string.sleep_stopwatch));
         stopwatchTwoContainer.setVisibility(View.GONE);
         switchHandler.setVisibility(View.GONE);
         activeStopWatch = firstStopwatchHandler;
@@ -214,7 +216,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
             editNursingEntry.setDuration(TimeUnit.SECONDS.toMillis(firstStopwatchDuration));
             editNursingEntry.setType(ActivityNursing.NursingType.LEFT);
             editNursingEntry.edit(getActivity());
-        } else {
+        } else if (editTrigger.compareTo(getResources().getString(R.string.new_content)) == 0) {
             ActivityNursing activityNursing = new ActivityNursing();
             activityNursing.setTimeStamp(String.valueOf(startTime.getTimeInMillis()));
             activityNursing.setBabyID(ActiveContext.getActiveBaby(getActivity()).getActivityId());
@@ -231,7 +233,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
             editNursingEntry.setDuration(TimeUnit.SECONDS.toMillis(secondStopwatchDuration));
             editNursingEntry.setType(ActivityNursing.NursingType.RIGHT);
             editNursingEntry.edit(getActivity());
-        } else {
+        } else if (editTrigger.compareTo(getResources().getString(R.string.new_content)) == 0) {
             ActivityNursing activityNursing = new ActivityNursing();
             activityNursing.setTimeStamp(String.valueOf(startTime.getTimeInMillis()));
             activityNursing.setBabyID(ActiveContext.getActiveBaby(getActivity()).getActivityId());
@@ -249,7 +251,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
             editNursingEntry.setType(ActivityNursing.NursingType.FORMULA);
             editNursingEntry.setVolume(Long.parseLong(formulaVolume, 10));
             editNursingEntry.edit(getActivity());
-        } else {
+        } else if (editTrigger.compareTo(getResources().getString(R.string.new_content)) == 0) {
             ActivityNursing activityNursing = new ActivityNursing();
             activityNursing.setTimeStamp(String.valueOf(startTime.getTimeInMillis()));
             activityNursing.setBabyID(ActiveContext.getActiveBaby(getActivity()).getActivityId());
@@ -266,7 +268,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
             activitySleep.setActivityId(Long.valueOf(currentEntryTag));
             activitySleep.setDuration(TimeUnit.SECONDS.toMillis(firstStopwatchDuration));
             activitySleep.edit(getActivity());
-        } else if(editTrigger.compareTo(getResources().getString(R.string.new_content)) == 0) {
+        } else if (editTrigger.compareTo(getResources().getString(R.string.new_content)) == 0) {
             ActivitySleep activitySleep = new ActivitySleep();
             activitySleep.setTimeStamp(String.valueOf(startTime.getTimeInMillis()));
             activitySleep.setBabyID(ActiveContext.getActiveBaby(getActivity()).getActivityId());
@@ -280,7 +282,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         actionBar.setDisplayShowTitleEnabled(false);
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.home_activity_container, NursingFragment.getInstance());
+        fragmentTransaction.replace(R.id.home_activity_container, TimelineFragment.getInstance());
         fragmentTransaction.commit();
     }
 }

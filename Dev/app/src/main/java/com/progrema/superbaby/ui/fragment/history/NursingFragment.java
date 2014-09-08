@@ -108,21 +108,17 @@ public class NursingFragment extends HistoryFragment
     }
 
     @Override
-    public void onNursingDialogSelected(int requestCode, Intent data) {
-        if (requestCode == REQ_BREASFEEDING) {
-            Bundle bundle = data.getExtras();
-            bundle.putString(HomeActivity.ACTIVITY_TRIGGER_KEY, HomeActivity.Trigger.NURSING.getTitle());
-            bundle.putString(HomeActivity.ACTIVITY_EDIT_KEY, getResources().getString(R.string.menu_edit));
-            bundle.putString(HomeActivity.ACTIVITY_ENTRY_TAG_KEY, currentEntryTag);
-            //TODO: for update operation, we can't use stopwatch. Use simpler UI method instead.
-            StopwatchFragment stopwatchFragment = StopwatchFragment.getInstance();
-            stopwatchFragment.setArguments(bundle);
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.home_activity_container, stopwatchFragment);
-            fragmentTransaction.commit();
-        } else if (requestCode == REQ_FORMULA) {
-
-        }
+    public void onNursingDialogSelected(Intent intent) {
+        Bundle bundle = intent.getExtras();
+        bundle.putString(HomeActivity.ACTIVITY_TRIGGER_KEY, HomeActivity.Trigger.NURSING.getTitle());
+        bundle.putString(HomeActivity.ACTIVITY_EDIT_KEY, getResources().getString(R.string.menu_edit));
+        bundle.putString(HomeActivity.ACTIVITY_ENTRY_TAG_KEY, currentEntryTag);
+        //TODO: for update operation, we can't use stopwatch. Use simpler UI method instead.
+        StopwatchFragment stopwatchFragment = StopwatchFragment.getInstance();
+        stopwatchFragment.setArguments(bundle);
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.home_activity_container, stopwatchFragment);
+        fragmentTransaction.commit();
     }
 
     @Override
