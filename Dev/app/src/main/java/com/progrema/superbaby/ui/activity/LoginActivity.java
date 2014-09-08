@@ -11,7 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import com.parse.Parse;
 import com.progrema.superbaby.R;
 import com.progrema.superbaby.ui.fragment.login.BabyInputFragment;
-import com.progrema.superbaby.ui.fragment.login.SplashScreenFragment;
+import com.progrema.superbaby.ui.fragment.login.IntroductionFragment;
 
 public class LoginActivity extends FragmentActivity {
     public static final String PREF_LOGIN = "PrefLogin";
@@ -42,7 +42,7 @@ public class LoginActivity extends FragmentActivity {
         } else {
             // Go to LoginPage
             FragmentManager fragmentManager = getSupportFragmentManager();
-            Fragment module = SplashScreenFragment.getInstance();
+            Fragment module = IntroductionFragment.getInstance();
             fragmentManager.beginTransaction().replace(R.id.login_activity_container, module).commit();
         }
     }

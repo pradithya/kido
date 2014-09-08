@@ -141,8 +141,6 @@ public class HomeActivity extends FragmentActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                return true;
             case R.id.action_new_baby:
                 handleNewBaby();
                 return true;

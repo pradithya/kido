@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
@@ -341,8 +342,16 @@ public class NavigationFragment extends Fragment {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
+        switch (item.getItemId()) {
+            case R.id.action_about:
+                showAboutPage();
+                return true;
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showAboutPage() {
+
     }
 
     /**

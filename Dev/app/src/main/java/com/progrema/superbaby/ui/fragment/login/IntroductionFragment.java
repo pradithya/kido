@@ -10,20 +10,20 @@ import android.view.ViewGroup;
 
 import com.progrema.superbaby.R;
 
-public class SplashScreenFragment extends Fragment {
+public class IntroductionFragment extends Fragment {
     private final int SPLASH_TIME = 5000;
     private final String TAG = "SplashActivity";
     private boolean isActive = true;
 
-    public static SplashScreenFragment getInstance() {
-        return new SplashScreenFragment();
+    public static IntroductionFragment getInstance() {
+        return new IntroductionFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // inflate fragment layout
-        View rootView = inflater.inflate(R.layout.fragment_splash_screen, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_introduction, container, false);
 
         //a separate thread to manage splash screen
         final Thread splashScreenThread = new Thread() {
