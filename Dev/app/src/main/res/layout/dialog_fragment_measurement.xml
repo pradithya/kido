@@ -16,13 +16,18 @@
             android:id="@+id/entry_text_height"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:fontFamily="sans-serif-condensed"
             android:hint="@string/height_hint" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:fontFamily="sans-serif-condensed"
             android:gravity="center"
-            android:text="@string/height_unit" />
+            android:text="@string/height_unit"
+            android:textColor="@color/default_font" />
 
     </LinearLayout>
 
@@ -37,21 +42,19 @@
             android:id="@+id/entry_text_weight"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:fontFamily="sans-serif-condensed"
             android:hint="@string/weight_hint" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:fontFamily="sans-serif-condensed"
             android:gravity="center"
-            android:text="@string/weight_unit" />
+            android:text="@string/weight_unit"
+            android:textColor="@color/default_font" />
 
     </LinearLayout>
-
-    <!-- Button
-        android:id="@+id/button_ok"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/ok_button" / !-->
 
 </LinearLayout>

@@ -68,15 +68,15 @@ public class MeasurementDialog extends DialogFragment {
     }
 
     private void submitAndDismissDialog() {
-        Intent result = new Intent();
-        result.putExtra(BabyLogContract.Measurement.HEIGHT, height);
-        result.putExtra(BabyLogContract.Measurement.WEIGHT, weight);
-        MeasurementDialog.this.callback.onMeasurementDialogSelected(0, result);
+        Intent intent = new Intent();
+        intent.putExtra(BabyLogContract.Measurement.HEIGHT, height);
+        intent.putExtra(BabyLogContract.Measurement.WEIGHT, weight);
+        MeasurementDialog.this.callback.onMeasurementDialogSelected(intent);
         getDialog().dismiss();
     }
 
     public static interface Callback {
-        public void onMeasurementDialogSelected(int resultCode, Intent data);
+        public void onMeasurementDialogSelected(Intent data);
     }
 
 

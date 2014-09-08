@@ -262,20 +262,18 @@ public class HomeActivity extends FragmentActivity
     }
 
     @Override
-    public void onMeasurementDialogSelected(int resultCode, Intent data) {
-        if (resultCode == 0) {
-            Calendar currentTime = Calendar.getInstance();
-            Bundle recordData = data.getExtras();
-            ActivityMeasurement activityMeasurement = new ActivityMeasurement();
-            activityMeasurement.setBabyID(ActiveContext.getActiveBaby(this).getActivityId());
-            activityMeasurement.setTimeStamp(String.valueOf(currentTime.getTimeInMillis()));
-            activityMeasurement.setHeight(Float.valueOf(recordData.getString(ActivityMeasurement.HEIGHT_KEY)));
-            activityMeasurement.setWeight(Float.valueOf(recordData.getString(ActivityMeasurement.WEIGHT_KEY)));
-            activityMeasurement.insert(this);
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.home_activity_container, MeasurementFragment.getInstance());
-            fragmentTransaction.commit();
-        }
+    public void onMeasurementDialogSelected(Intent data) {
+        Calendar now = Calendar.getInstance();
+        Bundle bundle = data.getExtras();
+        ActivityMeasurement activityMeasurement = new ActivityMeasurement();
+        activityMeasurement.setBabyID(ActiveContext.getActiveBaby(this).getActivityId());
+        activityMeasurement.setTimeStamp(String.valueOf(now.getTimeInMillis()));
+        activityMeasurement.setHeight(Float.valueOf(bundle.getString(ActivityMeasurement.HEIGHT_KEY)));
+        activityMeasurement.setWeight(Float.valueOf(bundle.getString(ActivityMeasurement.WEIGHT_KEY)));
+        activityMeasurement.insert(this);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.home_activity_container, MeasurementFragment.getInstance());
+        fragmentTransaction.commit();
     }
 
     @Override

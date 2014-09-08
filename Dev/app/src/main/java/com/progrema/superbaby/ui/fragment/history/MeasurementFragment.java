@@ -30,13 +30,12 @@ public class MeasurementFragment extends Fragment
 
     //TODO: how can I improve this fragment? What information should the header contains?
     private static final int LOADER_LIST_VIEW = 0;
-    private static final int RESULT_OK = 0;
     private ObserveableListView measurementHistoryList;
     private MeasurementAdapter adapter;
     private String timeFilterStart;
     private String timeFilterEnd;
     private View root;
-    private String currentEntryTag;
+    private String entryTag;
 
     public static MeasurementFragment getInstance() {
         return new MeasurementFragment();
@@ -66,22 +65,20 @@ public class MeasurementFragment extends Fragment
     @Override
     public void onMeasurementEntryEditSelected(View entry) {
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        currentEntryTag = entry.getTag().toString();
+        entryTag = entry.getTag().toString();
         MeasurementDialog measurementChoiceBox = MeasurementDialog.getInstance();
         measurementChoiceBox.setCallback(this);
         measurementChoiceBox.show(fragmentTransaction, "measurement_dialog");
     }
 
     @Override
-    public void onMeasurementDialogSelected(int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            Bundle recordData = data.getExtras();
-            ActivityMeasurement activityMeasurement = new ActivityMeasurement();
-            activityMeasurement.setActivityId(Long.valueOf(currentEntryTag));
-            activityMeasurement.setHeight(Float.valueOf(recordData.getString(ActivityMeasurement.HEIGHT_KEY)));
-            activityMeasurement.setWeight(Float.valueOf(recordData.getString(ActivityMeasurement.WEIGHT_KEY)));
-            activityMeasurement.edit(getActivity());
-        }
+    public void onMeasurementDialogSelected(Intent data) {
+        Bundle bundle = data.getExtras();
+        ActivityMeasurement activityMeasurement = new ActivityMeasurement();
+        activityMeasurement.setActivityId(Long.valueOf(entryTag));
+        activityMeasurement.setHeight(Float.valueOf(bundle.getString(ActivityMeasurement.HEIGHT_KEY)));
+        activityMeasurement.setWeight(Float.valueOf(bundle.getString(ActivityMeasurement.WEIGHT_KEY)));
+        activityMeasurement.edit(getActivity());
     }
 
     private void prepareLoaderManager() {
