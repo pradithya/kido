@@ -20,22 +20,24 @@ import com.progrema.superbaby.provider.BabyLogContract;
 import com.progrema.superbaby.ui.activity.HomeActivity;
 import com.progrema.superbaby.ui.fragment.dialog.MeasurementDialog;
 import com.progrema.superbaby.util.ActiveContext;
+import com.progrema.superbaby.widget.customfragment.HistoryFragment;
 import com.progrema.superbaby.widget.customlistview.ObserveableListView;
 
 import java.util.Calendar;
 
-public class MeasurementFragment extends Fragment
+public class MeasurementFragment extends HistoryFragment
         implements LoaderManager.LoaderCallbacks<Cursor>,
-        MeasurementAdapter.Callback, MeasurementDialog.Callback {
+        MeasurementAdapter.Callback, MeasurementDialog.Callback, HistoryFragmentServices {
 
-    //TODO: how can I improve this fragment? What information should the header contains?
     private static final int LOADER_LIST_VIEW = 0;
+    private static final int LOADER_HEADER = 1;
     private ObserveableListView measurementHistoryList;
     private MeasurementAdapter adapter;
     private String timeFilterStart;
     private String timeFilterEnd;
     private View root;
     private String entryTag;
+    private View placeholder;
 
     public static MeasurementFragment getInstance() {
         return new MeasurementFragment();
@@ -49,18 +51,31 @@ public class MeasurementFragment extends Fragment
         return root;
     }
 
-    private void prepareFragment(LayoutInflater inflater, ViewGroup container) {
+    @Override
+    public void prepareFragment(LayoutInflater inflater, ViewGroup container) {
         root = inflater.inflate(R.layout.fragment_measurement, container, false);
+        placeholder = inflater.inflate(R.layout.placeholder_header, null);
+        super.attachQuickReturnView(root, R.id.header_container);
+        super.attachPlaceHolderLayout(placeholder, R.id.placeholder_header);
         ActionBar actionBar = getActivity().getActionBar();
         actionBar.setIcon(getResources().getDrawable(R.drawable.ic_measurement_top));
     }
 
-    private void prepareListView() {
+    @Override
+    public void prepareHandler() {
+
+    }
+
+    @Override
+    public void prepareListView() {
         measurementHistoryList = (ObserveableListView) root.findViewById(R.id.activity_list);
         adapter = new MeasurementAdapter(getActivity(), null, 0);
         adapter.setCallback(this);
+        measurementHistoryList.addHeaderView(placeholder);
         measurementHistoryList.setAdapter(adapter);
+        super.attachListView(measurementHistoryList);
     }
+
 
     @Override
     public void onMeasurementEntryEditSelected(View entry) {
@@ -81,7 +96,8 @@ public class MeasurementFragment extends Fragment
         activityMeasurement.edit(getActivity());
     }
 
-    private void prepareLoaderManager() {
+    @Override
+    public void prepareLoaderManager() {
         LoaderManager loaderManager = getLoaderManager();
         loaderManager.initLoader(LOADER_LIST_VIEW, getArguments(), this);
     }

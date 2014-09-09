@@ -71,7 +71,7 @@ public class BabyInputFragment extends Fragment implements
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_baby_input_login, container, false);
+        root = inflater.inflate(R.layout.fragment_baby_input, container, false);
         prepareCalendar();
         prepareNameHandler();
         prepareBirthdayHandler();

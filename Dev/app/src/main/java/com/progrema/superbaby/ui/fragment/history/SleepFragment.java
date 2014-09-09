@@ -28,7 +28,7 @@ public class SleepFragment extends HistoryFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, HistoryFragmentServices, SleepAdapter.Callback {
 
     private static final int LOADER_LIST_VIEW = 0;
-    private static final int LOADER_GENERAL_ENTRY = 1;
+    private static final int LOADER_HEADER = 1;
     private TextView nightPercentHandler;
     private TextView napPercentHandler;
     private TextView nightDurationHandler;
@@ -101,7 +101,7 @@ public class SleepFragment extends HistoryFragment implements
     public void prepareLoaderManager() {
         LoaderManager loaderManager = getLoaderManager();
         loaderManager.initLoader(LOADER_LIST_VIEW, getArguments(), this);
-        loaderManager.initLoader(LOADER_GENERAL_ENTRY, getArguments(), this);
+        loaderManager.initLoader(LOADER_HEADER, getArguments(), this);
     }
 
     @Override
@@ -115,7 +115,7 @@ public class SleepFragment extends HistoryFragment implements
                         "baby_id = ? AND timestamp >= ? AND timestamp <= ?",
                         timeFilterArg,
                         BabyLogContract.Sleep.Query.SORT_BY_TIMESTAMP_DESC);
-            case LOADER_GENERAL_ENTRY:
+            case LOADER_HEADER:
                 return new CursorLoader(getActivity(),
                         BabyLogContract.Sleep.CONTENT_URI,
                         BabyLogContract.Sleep.Query.PROJECTION,
@@ -135,7 +135,7 @@ public class SleepFragment extends HistoryFragment implements
                 case LOADER_LIST_VIEW:
                     adapter.swapCursor(cursor);
                     break;
-                case LOADER_GENERAL_ENTRY:
+                case LOADER_HEADER:
                     inflateGeneralEntry(cursor);
                     break;
             }
